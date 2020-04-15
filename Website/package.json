@@ -1,5 +1,8 @@
 {
   "name": "tkot-online-web",
+  "description": "Te Kahu o Taonui (TKoT) Online - Website",
+  "repository": "https://github.com/Piki-Tech-Social-Enterprise/TKoTOnline",
+  "license": "MIT",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
