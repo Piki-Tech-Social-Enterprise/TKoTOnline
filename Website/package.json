@@ -1,0 +1,46 @@
+{
+  "name": "tkot-online-web",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "moment": "2.24.0",
+    "node-sass": "4.12.0",
+    "nouislider": "14.0.2",
+    "react": "16.8.6",
+    "react-bootstrap-switch": "15.5.3",
+    "react-datetime": "2.16.3",
+    "react-dom": "16.8.6",
+    "react-router": "5.0.1",
+    "react-router-dom": "5.0.1",
+    "react-scripts": "3.0.1",
+    "reactstrap": "8.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css",
+    "minify-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css --source-map true"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {
+    "typescript": "3.5.3"
+  }
+}
