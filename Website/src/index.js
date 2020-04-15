@@ -17,7 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch /*, Redirect */ } from "react-router-dom";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -30,12 +30,16 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
+import HomeView from 'views/HomeView';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Switch>
-        <Route path="/index" render={props => <Index {...props} />} />
+        <Route path="/" render={props => (
+          <HomeView {...props} />
+        )} exact />
+        <Route path="/index" render={props => <Index {...props} />} exact />
         <Route
           path="/nucleo-icons"
           render={props => <NucleoIcons {...props} />}
@@ -49,8 +53,8 @@ ReactDOM.render(
           render={props => <ProfilePage {...props} />}
         />
         <Route path="/login-page" render={props => <LoginPage {...props} />} />
-        <Redirect to="/index" />
-        <Redirect from="/" to="/index" />
+        {/* <Redirect to="/index" /> */}
+        {/* <Redirect from="/" to="/index" /> */}
       </Switch>
     </Switch>
   </BrowserRouter>,
