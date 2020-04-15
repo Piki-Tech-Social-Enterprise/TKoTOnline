@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "tkot-online-dev"
+  },
+  "targets": {
+    "tkot-online-dev": {
+      "hosting": {
+        "pwa": [
+          "tkot-online-pwa"
+        ]
+      }
+    }
+  }
+}
