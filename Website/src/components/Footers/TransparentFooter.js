@@ -10,7 +10,7 @@ function TransparentFooter() {
       <Container>
         <nav>
           <ul>
-            <li>
+            {/* <li>
               <a
                 href="https://www.creative-tim.com?ref=nukr-transparent-footer"
                 target="_blank"
@@ -33,24 +33,24 @@ function TransparentFooter() {
               >
                 Blog
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
         <div className="copyright" id="copyright">
-          © {new Date().getFullYear()}, Designed by{" "}
+          © {new Date().getFullYear()}Created by{" "}
           <a
             href="https://www.invisionapp.com?ref=nukr-transparent-footer"
             target="_blank"
           >
-            Invision
+            Pikitech
           </a>
-          . Coded by{" "}
+          {/* . Coded by{" "}
           <a
             href="https://www.creative-tim.com?ref=nukr-transparent-footer"
             target="_blank"
           >
             Creative Tim
-          </a>
+          </a> */}
           .
         </div>
       </Container>
