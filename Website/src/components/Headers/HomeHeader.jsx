@@ -40,7 +40,7 @@ function IndexHeader() {
               src={require("assets/img/now-logo.png")}
             ></img>
             <h1 className="h1-seo">Te Kahu o Taonui</h1>
-            <h3>Nau mai, Haere Mai</h3>
+            <h3>Nau mai, haere mai</h3>
           </div>
           {/* <h6 className="category category-absolute">
             Designed by{" "}
