@@ -11,6 +11,12 @@ const publicRoutes = [
   },
   {
     layout: '/public',
+    path: '/Register',
+    name: 'Register',
+    component: lazy(() => import('views/Public/RegisterView'))
+  },
+  {
+    layout: '/public',
     path: '/PrivacyPolicy',
     name: 'Privacy Policy',
     component: lazy(() => import('views/Public/PrivacyPolicyView'))

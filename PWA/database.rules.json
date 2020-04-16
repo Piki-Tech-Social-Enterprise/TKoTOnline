@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      ".indexOn": [
+        "active",
+        "displayName"
+      ],
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "$uid === auth.uid || root.child('users/'+auth.uid).child('roles').hasChildren(['systemAdminRole']) || root.child('users/'+auth.uid).child('roles').hasChildren(['adminRole'])"
+      },
+      ".read": "auth != null",
+      ".write": "root.child('users/'+auth.uid).child('roles').hasChildren(['systemAdminRole']) || root.child('users/'+auth.uid).child('roles').hasChildren(['adminRole'])"
+    }
+  }
+}

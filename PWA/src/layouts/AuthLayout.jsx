@@ -9,12 +9,13 @@ import {
   Redirect
 } from 'react-router-dom';
 import PerfectScrollbar from 'perfect-scrollbar';
+import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import AuthSidebar from 'components/Sidebar/AuthSidebar';
 import AuthNavbar from 'components/Navbars/AuthNavbar';
 import AuthFooter from 'components/Footer/AuthFooter';
 import authRoutes from 'authRoutes';
 
-const Auth = props => {
+const AuthLayout = props => {
   const mainPanel = createRef();
   useEffect(() => {
     const {
@@ -48,7 +49,7 @@ const Auth = props => {
       <div className="main-panel" ref={mainPanel}>
         <AuthNavbar {...props} routes={authRoutes} />
         <Switch>
-          <Suspense fallback={<h1>TODO: Loading Overlay Modal...</h1>}>
+          <Suspense fallback={<LoadingOverlayModal />}>
             {authRoutes.map((prop, key) => {
               const {
                 layout,
@@ -61,8 +62,8 @@ const Auth = props => {
                 <Route path={routePath} component={component} key={key} />
               );
             })}
+            <Redirect from="/auth" to="/auth/Dashboard" />
           </Suspense>
-          <Redirect from="/auth" to="/auth/dashboard" />
         </Switch>
         <AuthFooter isFluid />
       </div>
@@ -70,4 +71,4 @@ const Auth = props => {
   );
 };
 
-export default Auth;
+export default AuthLayout;

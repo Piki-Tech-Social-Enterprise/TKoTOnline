@@ -9,7 +9,7 @@ import {
   Nav
 } from 'reactstrap';
 import PerfectScrollbar from 'perfect-scrollbar';
-import logo from 'logo-white.svg';
+import logo from 'assets/img/tkot/now-logo.png';
 
 const AuthSidebar = props => {
   const sidebar = createRef();
@@ -46,11 +46,11 @@ const AuthSidebar = props => {
       <div className="logo text-white">
           <div className="logo-img" style={{
             display: 'inline-block',
-            width: '34px'
+            width: '1.5rem'
           }}>
             <img src={logo} alt="react-logo" />
           </div>
-          <span className="py-2">TODO: TKoT PWA Name</span>
+          <span className="p-3 h6">Te Kahu o Taonui</span>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>

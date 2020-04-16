@@ -41,7 +41,7 @@ const AuthDashboardView = props => {
             options={dashboardPanelChart.options}
           />
         }
-        bgImage={require('assets/img/tkot/Te-Takarangi-hero-2-80pct.jpg')}
+        bgImage={require('assets/img/tkot/Te-Takarangi-hero-2-2000x1121-80pct.jpg')}
       />
       <div className="content">
         <Row>

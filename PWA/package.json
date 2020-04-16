@@ -7,6 +7,7 @@
   "dependencies": {
     "bootstrap": "4.4.1",
     "chart.js": "2.9.3",
+    "firebase": "^7.14.0",
     "history": "4.10.1",
     "node-sass": "4.13.1",
     "perfect-scrollbar": "1.5.0",
@@ -18,7 +19,8 @@
     "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
-    "reactstrap": "8.4.1"
+    "reactstrap": "8.4.1",
+    "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,11 +28,34 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.css",
-    "minify-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.css --source-map true",
+    "compile-sass": "run-p -sn now-ui-dashboard-compile-sass tkot-compile-sass",
+    "minify-sass": "run-p -sn now-ui-dashboard-minify-sass tkot-minify-sass",
+    "map-sass": "run-p -sn now-ui-dashboard-map-sass tkot-map-sass",
+    "now-ui-dashboard-compile-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.css",
+    "now-ui-dashboard-minify-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.min.css --output-style compressed",
+    "now-ui-dashboard-map-sass": "node-sass src/assets/scss/now-ui-dashboard.scss src/assets/css/now-ui-dashboard.css --source-map true",
+    "tkot-compile-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css",
+    "tkot-minify-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.min.css --output-style compressed",
+    "tkot-map-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css --source-map true",
     "firebaseServe": "firebase serve",
-    "firebaseDeploy": "firebase deploy"
+    "firebaseDeploy": "firebase deploy",
+    "firebaseUseDev": "firebase use \"tkot-online-dev\"",
+    "firebaseUseTest": "firebase use \"tkot-online-test\"",
+    "firebaseUseProd": "firebase use \"tkot-online-prod\"",
+    "envCmdLocal": "env-cmd -e local run-s -sn",
+    "envCmdDev": "env-cmd -e dev run-s -sn",
+    "envCmdTest": "env-cmd -e test run-s -sn",
+    "envCmdProd": "env-cmd -e prod run-s -sn",
+    "startLocal": "run-s -sn firebaseUseDev \"envCmdLocal start\"",
+    "startDev": "run-s -sn firebaseUseDev \"envCmdDev start\"",
+    "startTest": "run-s -sn firebaseUseTest \"envCmdTest start\"",
+    "startProd": "run-s -sn firebaseUseProd \"envCmdProd start\"",
+    "firebaseServeDev": "run-s -sn firebaseUseDev \"envCmdDev build firebaseServe\"",
+    "firebaseServeTest": "run-s -sn firebaseUseDev \"envCmdTest build firebaseServe\"",
+    "firebaseServeProd": "run-s -sn firebaseUseDev \"envCmdProd build firebaseServe\"",
+    "firebaseDeployDev": "run-s -sn firebaseUseDev \"envCmdDev build firebaseDeploy\"",
+    "firebaseDeployTest": "run-s -sn firebaseUseDev \"envCmdTest build firebaseDeploy\"",
+    "firebaseDeployProd": "run-s -sn firebaseUseDev \"envCmdProd build firebaseDeploy\""
   },
   "optionalDependencies": {
     "@types/googlemaps": "3.39.3",
@@ -50,5 +75,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "npm-run-all": "^4.1.5"
   }
 }
