@@ -22,26 +22,32 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/now-ui-dashboard.scss?v1.2.0";
+import "assets/scss/tkot.scss?v1.0.0";
 import "assets/css/demo.css";
 
 import AdminLayout from "layouts/Admin.jsx";
-import Auth from 'layouts/Auth';
+import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
+import Firebase, {
+  FirebaseContext
+} from './components/Firebase';
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/public" render={props =>
-        <PublicLayout {...props} />
-      } />
-      <Route path="/auth" render={props =>
-        <Auth {...props} />
-      } />
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/public/Login" />
-    </Switch>
-  </Router>,
+  <FirebaseContext.Provider value={new Firebase()}>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/public" render={props =>
+          <PublicLayout {...props} />
+        } />
+        <Route path="/auth" render={props =>
+          <AuthLayout {...props} />
+        } />
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Redirect from="/" to="/public/Login" />
+      </Switch>
+    </Router>
+  </FirebaseContext.Provider>,
   document.getElementById("root")
 );
