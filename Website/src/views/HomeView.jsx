@@ -1,18 +1,29 @@
-import React from 'react';
+import React, {
+  useEffect
+} from 'react';
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 
-const HomeView = props => {
-  React.useEffect(() => {
-    document.body.classList.add("index-page");
-    document.body.classList.add("sidebar-collapse");
-    document.documentElement.classList.remove("nav-open");
+const HomeView = () => {
+  useEffect(() => {
+    const {
+      body
+    } = document;
+    const {
+      classList: bodyClassNames
+    } = body;
+    const indexPageClassName = 'index-page';
+    const sidebarCollapseClassName = 'sidebar-collapse';
+    const navOpenClassName = 'nav-open';
+    bodyClassNames.add(indexPageClassName);
+    bodyClassNames.add(sidebarCollapseClassName);
+    document.documentElement.classList.remove(navOpenClassName);
     window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-    return function cleanup() {
-      document.body.classList.remove("index-page");
-      document.body.classList.remove("sidebar-collapse");
+    body.scrollTop = 0;
+    return () => {
+      bodyClassNames.remove(indexPageClassName);
+      bodyClassNames.remove(sidebarCollapseClassName);
     };
   });
   return (
@@ -21,20 +32,11 @@ const HomeView = props => {
     <div className="wrapper">
       <HomeHeader />
       <div className="main">
-        {/* <Images />
-        <BasicElements />
-        <Navbars />
-        <Tabs />
-        <Pagination />
-        <Notifications />
-        <Typography />
-        <Javascript />
-        <Carousel />
-        <NucleoIcons />
-        <CompleteExamples />
-        <SignUp />
-        <Examples />
-        <Download /> */}
+        {/* TODO: Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+        {/* TODO: Interactive Map of Iwi Links */}
+        {/* TODO: Gather Volunteers for different tribal groups via Mutual Aid */}
+        {/* TODO: Social Media Links */}
+        {/* TODO: Join TKoT Volunteers via Mutual Aid */}
       </div>
       <HomeFooter />
     </div>

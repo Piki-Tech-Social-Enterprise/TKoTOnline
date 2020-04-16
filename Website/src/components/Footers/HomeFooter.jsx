@@ -1,61 +1,55 @@
-/*eslint-disable*/
-import React from "react";
+import React from 'react';
+import {
+  Link
+} from 'react-router-dom';
+import {
+  Container
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
-// reactstrap components
-import { Container } from "reactstrap";
-
-function HomeFooter() {
+const HomeFooterLink = props => {
+  const {
+    to,
+    title,
+    text
+  } = props;
   return (
-    <footer className="footer" data-background-color="black">
-      <Container>
-        <nav>
-          <ul>
-            {/* <li>
-              <a
-                href="https://www.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                Creative Tim
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://presentation.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                About Us
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://blog.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                Blog
-              </a>
-            </li> */}
-          </ul>
-        </nav>
-        <div className="copyright" id="copyright">
-          © {new Date().getFullYear()} Created by{" "}
-          <a
-            href="https://pikitech.co.nz/"
-            target="_blank"
-          >
-            Pikitech
-          </a>
-            {/* . Coded by{" "}
-        <a
-            href="https://www.creative-tim.com?ref=nukr-dark-footer"
-            target="_blank"
-          >
-            Creative Tim
-          </a> */}
-          .
-        </div>
-      </Container>
-    </footer>
+    <Link to={to} title={title}>{text}</Link>
   );
-}
+};
+const HomePrivacyLink = () => {
+  return (
+    <HomeFooterLink to="/PrivacyPolicy" title="Privacy Policy" text="Privacy" />
+  );
+};
+const HomeTermsLink = () => {
+  return (
+    <HomeFooterLink to="/TermsOfUse" title="Terms of Use" text="Terms" />
+  );
+};
+const HomeFooter = props => {
+    const {
+      isDefault,
+      isFluid
+    } = props;
+    const {
+      REACT_APP_WEB_NAME
+    } = process.env;
+    const thisYear = 1900 + new Date().getYear();
+    return (
+      <footer className={`footer${((isDefault && ' footer-default') || '')}`}>
+        <Container fluid={isFluid}>
+          <div className="copyright">
+            {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />
+          </div>
+        </Container>
+      </footer>
+    );
+};
+
+HomeFooter.propTypes = {
+  isDefault: PropTypes.bool,
+  isFluid: PropTypes.bool
+};
 
 export default HomeFooter;
