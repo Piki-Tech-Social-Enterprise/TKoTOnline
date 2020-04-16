@@ -1,6 +1,9 @@
 {
   "name": "tkot-online-pwa",
-  "version": "1.2.0",
+  "description": "Te Kahu o Taonui (TKoT) Online - PWA",
+  "repository": "https://github.com/Piki-Tech-Social-Enterprise/TKoTOnline",
+  "license": "MIT",
+  "version": "1.0.0",
   "dependencies": {
     "bootstrap": "4.4.1",
     "chart.js": "2.9.3",

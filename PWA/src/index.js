@@ -26,17 +26,21 @@ import "assets/css/demo.css";
 
 import AdminLayout from "layouts/Admin.jsx";
 import Auth from 'layouts/Auth';
+import PublicLayout from 'layouts/PublicLayout';
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
+      <Route path="/public" render={props =>
+        <PublicLayout {...props} />
+      } />
       <Route path="/auth" render={props =>
         <Auth {...props} />
       } />
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/auth/Dashboard" />
+      <Redirect from="/" to="/public/Login" />
     </Switch>
   </Router>,
   document.getElementById("root")
