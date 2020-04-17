@@ -7,6 +7,9 @@ import {
   Link
 } from 'react-router-dom';
 import {
+  withFirebase
+} from '../Firebase/Contexts/firebaseContext';
+import {
   Collapse,
   Navbar,
   NavbarToggler,
@@ -31,6 +34,9 @@ const AuthNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [color, setColor] = useState('transparent');
+  const {
+    firebase
+  } = props;
   const sidebarToggle = createRef();
   const toggle = () => {
     setColor(isOpen
@@ -163,16 +169,20 @@ const AuthNavbar = props => {
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag='a'>Action</DropdownItem>
+                <DropdownItem tag='a' >Action</DropdownItem>
                 <DropdownItem tag='a'>Another Action</DropdownItem>
                 <DropdownItem tag='a'>Something else here</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <NavItem>
-              <Link to='#pablo' className='nav-link'>
-                <i className='now-ui-icons users_single-02' />
+              <Link to='#pablo' className='nav-link' onClick={async e => {
+                e.preventDefault();
+                await firebase.signOut();
+                props.history.push('/');
+              }}>
+                <i className='now-ui-icons sport_user-run' />
                 <p>
-                  <span className='d-lg-none d-md-block'>Account</span>
+                  <span className='d-lg-none d-md-block'>LogOut</span>
                 </p>
               </Link>
             </NavItem>
@@ -183,4 +193,4 @@ const AuthNavbar = props => {
   );
 }
 
-export default AuthNavbar;
+export default withFirebase(AuthNavbar);

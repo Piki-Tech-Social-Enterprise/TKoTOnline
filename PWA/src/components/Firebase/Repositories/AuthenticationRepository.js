@@ -59,6 +59,7 @@ class AuthenticationRepository extends BaseRepository {
   };
 
   signOut = async () => {
+    console.log(`Current User: ${this.auth.currentUser}`);
     return await this.auth.signOut();
   };
 
