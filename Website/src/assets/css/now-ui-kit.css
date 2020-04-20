@@ -2777,8 +2777,8 @@ Created using IcoMoon - icomoon.io
 -------------------------------- */
 @font-face {
   font-family: 'Nucleo Outline';
-  src: url("../fonts/nucleo-outline.eot");
-  src: url("../fonts/nucleo-outline.eot") format("embedded-opentype"), url("../fonts/nucleo-outline.woff2") format("woff2"), url("../fonts/nucleo-outline.woff") format("woff"), url("../fonts/nucleo-outline.ttf") format("truetype");
+  src: url("../../fonts/nucleo-outline.eot");
+  src: url("../../fonts/nucleo-outline.eot") format("embedded-opentype"), url("../../fonts/nucleo-outline.woff2") format("woff2"), url("../../fonts/nucleo-outline.woff") format("woff"), url("../../fonts/nucleo-outline.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
 
@@ -5955,9 +5955,13 @@ td.rdtYear:hover {
 @media screen and (max-width: 991px) {
   .sidebar-collapse .navbar-collapse:before {
     background: #2CA8FF;
-    background: linear-gradient(#2CA8FF, #2c2c2c 80%); } }
+    background: linear-gradient(#2CA8FF, #2c2c2c 80%); }
+  .navbar-nav .dropdown-menu {
+    position: static !important; } }
 
 @media screen and (max-width: 768px) {
   .nav-tabs {
     padding-left: 10px;
     padding-right: 10px; } }
+
+/*# sourceMappingURL=now-ui-kit.css.map */

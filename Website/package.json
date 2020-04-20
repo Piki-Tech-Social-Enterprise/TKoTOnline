@@ -25,9 +25,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css",
-    "minify-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css --source-map true",
+    "process-sass": "run-s -sn compile-sass map-sass minify-sass",
+    "compile-sass": "run-p -sn now-ui-kit-compile-sass tkot-compile-sass",
+    "minify-sass": "run-p -sn now-ui-kit-minify-sass tkot-minify-sass",
+    "map-sass": "run-p -sn now-ui-kit-map-sass tkot-map-sass",
+    "now-ui-kit-compile-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css",
+    "now-ui-kit-minify-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.min.css --output-style compressed",
+    "now-ui-kit-map-sass": "node-sass src/assets/scss/now-ui-kit.scss src/assets/css/now-ui-kit.css --source-map true",
+    "tkot-compile-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css",
+    "tkot-minify-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.min.css --output-style compressed",
+    "tkot-map-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css --source-map true",
     "firebaseServe": "firebase serve",
     "firebaseDeploy": "firebase deploy"
   },
@@ -48,5 +55,8 @@
   },
   "optionalDependencies": {
     "typescript": "3.8.3"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

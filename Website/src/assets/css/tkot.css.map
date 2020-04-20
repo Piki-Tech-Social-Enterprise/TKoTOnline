@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "tkot.css",
+	"sources": [
+		"../scss/tkot.scss"
+	],
+	"names": [],
+	"mappings": ""
+}
