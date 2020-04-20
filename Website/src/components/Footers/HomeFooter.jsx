@@ -6,6 +6,7 @@ import {
   Container
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import SocialMedia from './SocialMedia';
 
 const HomeFooterLink = props => {
   const {
@@ -38,6 +39,7 @@ const HomeFooter = props => {
     const thisYear = 1900 + new Date().getYear();
     return (
       <footer className={`footer${((isDefault && ' footer-default') || '')}`}>
+        <SocialMedia />
         <Container fluid={isFluid}>
           <div className="copyright">
             {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />

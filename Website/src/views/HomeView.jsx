@@ -5,6 +5,8 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeedSection';
+import SocialMedia from 'components/Footers/SocialMedia'
+
 
 const HomeView = () => {
   useEffect(() => {
@@ -37,7 +39,7 @@ const HomeView = () => {
         <NewsFeedSection />
         {/* TODO: Interactive Map of Iwi Links */}
         {/* TODO: Gather Volunteers for different tribal groups via Mutual Aid */}
-        {/* TODO: Social Media Links */}
+        {/* TODO: Social Media Links */}         
         {/* TODO: Join TKoT Volunteers via Mutual Aid */}
       </div>
       <HomeFooter />
