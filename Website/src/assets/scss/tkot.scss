@@ -1,0 +1,21 @@
+.fab.fa-facebook, .fa-instagram, .fa-linkedin-in {
+	font-size:35px;
+}
+
+.social-ul {
+	list-style: none;
+	display: inline-block;
+	padding-left: 0
+	}
+
+.social-media-fill {
+   fill:black;
+   -webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.social-media-fill:hover {
+   fill: rgb(255, 101, 101);
+   -webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
