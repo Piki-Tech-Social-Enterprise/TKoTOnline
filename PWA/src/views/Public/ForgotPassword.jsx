@@ -2,54 +2,46 @@ import React, {
   useState
 } from 'react';
 import {
-  AuthUserContext,
   withFirebase
 } from 'components/Firebase';
 import {
-  compose
-} from 'recompose';
-import {
-  withRouter,
-  Redirect
+  Link
 } from 'react-router-dom';
 import {
+  Button,
   Card,
-  Form,
   CardHeader,
   CardBody,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
+  Form,
   Input,
-  CardFooter,
-  Button
+  Container,
 } from 'reactstrap';
 import SweetAlert from 'sweetalert2-react';
 
 const ForgotPassword = props => {
-  const defaultDisplayTitle = 'Password Recovery Failed';
-  const [firstFocus, setFirstFocus] = useState(false);
-  const [lastFocus, setLastFocus] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const defaultDisplayTitle = 'An email has been sent';
+  // const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [text, setText] = useState('');
   const [title, setTitle] = useState(defaultDisplayTitle);
   const [show, setShow] = useState(false);
   const handleSubmit = async e => {
-    e.preventDefault();
     let displayTitle = defaultDisplayTitle;
+    let email = document.getElementById('Email').value;
     let displayMessage = '';
+    e.preventDefault();
     if (!email) {
+      displayTitle = 'Error';
       displayMessage = 'Email is a required field.';
     } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+      displayTitle = 'Error';
       displayMessage = 'Email is invalid.';
     } else {
+      console.log("firebase is ready to attach");
+      displayMessage='Success';
       try {
-        setIsSubmitting(true);
         await props.firebase.sendPasswordResetEmail(email);
-        props.history.push('/public/Login');
-        setIsSubmitting(false);
+        console.log('anything');
       } catch (error) {
         displayMessage = error.message;
       }
@@ -69,75 +61,35 @@ const ForgotPassword = props => {
     REACT_APP_PWA_BUILD_VERSION
   } = process.env;
   return (
-    <AuthUserContext.Consumer>
-      {authUser =>
-        authUser && !!authUser.active
-          ? <Redirect to="/public/Login" />
-          : <div className="login-view text-center">
-            <Card className="card-login card-plain">
-              <Form className="form" onSubmit={handleSubmit} noValidate>
-                <CardHeader className="text-center">
-                  <div className="logo-container">
-                    <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/tkot-logo-512x512.png")} />
-                  </div>
-                  {REACT_APP_PWA_NAME} v{REACT_APP_PWA_BUILD_VERSION}
-                </CardHeader>
-                <CardBody className="pb-0">
-                  <InputGroup className={`no-border input-lg${(firstFocus && ' input-group-focus') || ''}`}>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="text-white now-ui-icons ui-1_email-85"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      placeholder="Email Address"
-                      type="email"
-                      onFocus={() => setFirstFocus(true)}
-                      onBlur={() => setFirstFocus(false)}
-                      value={email}
-                      onChange={async e => setEmail(e.target.value)}
-                      disabled={isSubmitting}
-                    ></Input>
-                  </InputGroup>
-                  <InputGroup className={`no-border input-lg${(lastFocus && ' input-group-focus') || ''}`}>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="now-ui-icons ui-1_lock-circle-open"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      placeholder="Password"
-                      type="password"
-                      onFocus={() => setLastFocus(true)}
-                      onBlur={() => setLastFocus(false)}
-                      value={password}
-                      onChange={async e => setPassword(e.target.value)}
-                      disabled={isSubmitting}
-                    ></Input>
-                  </InputGroup>
-                </CardBody>
-                <CardFooter className="text-center pt-0">
-                  <Button
-                    block
-                    className="btn-round my-2"
-                    color="primary"
-                    size="lg"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    Reset Password
-                  </Button>
-                </CardFooter>
-                <SweetAlert show={show} title={title} text={text} onConfirm={() => setSweetAlertStates()} />
-              </Form>
-            </Card>
-          </div>
-      }
-    </AuthUserContext.Consumer>
-  );
+    <Container className="login-view text-center">
+        <Card className="card-login card-plain">
+          <CardHeader className="text-center">
+            <div className="logo-container">
+              <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/tkot-logo-512x512.png")} />
+            </div>
+          {REACT_APP_PWA_NAME} v{REACT_APP_PWA_BUILD_VERSION}
+          </CardHeader>
+          <CardBody className="pb-0">
+            <p>Reset your password</p>
+              <Form className="register-form" onSubmit={handleSubmit} noValidate>
+                <Input id="Email" placeholder="Email" type="text" />
+                <Button type="submit" block className="mt-4 btn-round btn btn-danger btn-block" disabled={isSubmitting}>
+                  Reset
+              </Button>
+                <SweetAlert
+                  show={show}
+                  title={title}
+                  text={text}
+                  onConfirm={() => setSweetAlertStates()}/>
+                <Link to="/Login" className="mt-4 btn-round btn btn-primary btn-block">Back</Link>
+                {/* <CopyrightInfomation
+                  rowClassName="mt-4"
+                /> */}
+            </Form>
+          </CardBody>
+        </Card>
+  </Container>
+);
 };
 
-export default compose(
-  withRouter,
-  withFirebase
-)(ForgotPassword);
+export default withFirebase (ForgotPassword);
