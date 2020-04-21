@@ -9,7 +9,7 @@ import {
   Nav
 } from 'reactstrap';
 import PerfectScrollbar from 'perfect-scrollbar';
-import logo from 'assets/img/tkot/now-logo.png';
+import logo from 'assets/img/tkot/tkot-logo-512x512.png';
 
 const AuthSidebar = props => {
   const sidebar = createRef();
