@@ -80,7 +80,7 @@ const LoginView = props => {
               <Form className="form" onSubmit={handleSubmit} noValidate>
                 <CardHeader className="text-center">
                   <div className="logo-container">
-                    <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/now-logo.png")} />
+                    <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/tkot-logo-512x512.png")} />
                   </div>
                   {REACT_APP_PWA_NAME} v{REACT_APP_PWA_BUILD_VERSION}
                 </CardHeader>
