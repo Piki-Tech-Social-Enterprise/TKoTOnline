@@ -36,7 +36,24 @@
     "tkot-minify-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.min.css --output-style compressed",
     "tkot-map-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css --source-map true",
     "firebaseServe": "firebase serve",
-    "firebaseDeploy": "firebase deploy"
+    "firebaseDeploy": "firebase deploy",
+    "firebaseUseDev": "firebase use \"tkot-online-dev\"",
+    "firebaseUseTest": "firebase use \"tkot-online-test\"",
+    "firebaseUseProd": "firebase use \"tkot-online-prod\"",
+    "envCmdLocal": "env-cmd -e local run-s -sn",
+    "envCmdDev": "env-cmd -e dev run-s -sn",
+    "envCmdTest": "env-cmd -e test run-s -sn",
+    "envCmdProd": "env-cmd -e prod run-s -sn",
+    "startLocal": "run-s -sn firebaseUseDev \"envCmdLocal start\"",
+    "startDev": "run-s -sn firebaseUseDev \"envCmdDev start\"",
+    "startTest": "run-s -sn firebaseUseTest \"envCmdTest start\"",
+    "startProd": "run-s -sn firebaseUseProd \"envCmdProd start\"",
+    "firebaseServeDev": "run-s -sn firebaseUseDev \"envCmdDev build firebaseServe\"",
+    "firebaseServeTest": "run-s -sn firebaseUseDev \"envCmdTest build firebaseServe\"",
+    "firebaseServeProd": "run-s -sn firebaseUseDev \"envCmdProd build firebaseServe\"",
+    "firebaseDeployDev": "run-s -sn firebaseUseDev \"envCmdDev build firebaseDeploy\"",
+    "firebaseDeployTest": "run-s -sn firebaseUseDev \"envCmdTest build firebaseDeploy\"",
+    "firebaseDeployProd": "run-s -sn firebaseUseDev \"envCmdProd build firebaseDeploy\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +74,7 @@
     "typescript": "3.8.3"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "npm-run-all": "^4.1.5"
   }
 }
