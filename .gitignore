@@ -112,3 +112,6 @@ firebase-debug.log*
 .env.test.local
 .env.production.local
 .env-cmdrc
+.firebaserc
+.gitignore
+database.rules.json
