@@ -6,8 +6,6 @@ import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeedSection';
 
-
-
 const HomeView = () => {
   useEffect(() => {
     const {
