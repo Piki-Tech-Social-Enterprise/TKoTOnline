@@ -28,6 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "process-sass": "run-s -sn compile-sass map-sass minify-sass",
     "compile-sass": "run-p -sn now-ui-dashboard-compile-sass tkot-compile-sass",
     "minify-sass": "run-p -sn now-ui-dashboard-minify-sass tkot-minify-sass",
     "map-sass": "run-p -sn now-ui-dashboard-map-sass tkot-map-sass",

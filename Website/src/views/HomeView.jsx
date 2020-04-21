@@ -5,8 +5,6 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeedSection';
-import SocialMedia from 'components/Footers/SocialMedia'
-
 
 const HomeView = () => {
   useEffect(() => {

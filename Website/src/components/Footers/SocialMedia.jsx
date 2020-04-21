@@ -10,7 +10,7 @@ const SocialMedia = props => {
 	<Container >
 		<ul className="social-ul d-flex justify-content-center">
 			<li className={"box-social" + props.margin}>
-				<a href="">
+				<a href="#TKoTOnline">
 					<Facebook
 						className="social-media-fill"
 						width={props.size}
@@ -19,7 +19,7 @@ const SocialMedia = props => {
 				</a>
 			</li>
 			<li className={"box-social " + props.margin}>
-				<a href="">
+				<a href="#TKoTOnline">
 					<Instagram
 						className="social-media-fill"
 						width={props.size}
@@ -29,7 +29,7 @@ const SocialMedia = props => {
 			</li>
 
 			<li className={"box-social " + props.margin}>
-				<a href="">
+				<a href="#TKoTOnline">
 					<Linkedin
 						className="social-media-fill"
 						width={props.size}

@@ -34,11 +34,11 @@ function IndexHeader() {
         ></div>
         <Container>
           <div className="content-center brand">
-            {/* <img
+            <img
               alt="..."
               className="n-logo"
-              src={require("assets/img/now-logo.png")}
-            ></img> */}
+              src={require("assets/img/tkot/tkot-logo-512x512.png")}
+            ></img>
             <h1 className="h1-seo">Te Kahu o Taonui</h1>
             <h3>Nau mai, haere mai</h3>
           </div>
