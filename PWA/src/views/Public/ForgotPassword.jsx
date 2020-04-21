@@ -26,8 +26,8 @@ import {
 } from 'reactstrap';
 import SweetAlert from 'sweetalert2-react';
 
-const LoginView = props => {
-  const defaultDisplayTitle = 'Login Failed';
+const ForgotPassword = props => {
+  const defaultDisplayTitle = 'Password Recovery Failed';
   const [firstFocus, setFirstFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
   const [email, setEmail] = useState('');
@@ -40,17 +40,15 @@ const LoginView = props => {
     e.preventDefault();
     let displayTitle = defaultDisplayTitle;
     let displayMessage = '';
-    if (!email || !password) {
-      displayMessage = 'Email and Password are required fields.';
+    if (!email) {
+      displayMessage = 'Email is a required field.';
     } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
       displayMessage = 'Email is invalid.';
-    } else if (!password.match(/(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,15}/)) {
-      displayMessage = 'Password is too weak. Needs to be 6 characters or more. It can be any combination of letters, numbers, and symbols (ASCII characters).';
     } else {
       try {
         setIsSubmitting(true);
-        await props.firebase.signInWithEmailAndPassword(email, password);
-        props.history.push('/auth/Dashboard');
+        await props.firebase.sendPasswordResetEmail(email);
+        props.history.push('/public/Login');
         setIsSubmitting(false);
       } catch (error) {
         displayMessage = error.message;
@@ -74,7 +72,7 @@ const LoginView = props => {
     <AuthUserContext.Consumer>
       {authUser =>
         authUser && !!authUser.active
-          ? <Redirect to="/auth/Dashboard" />
+          ? <Redirect to="/public/Login" />
           : <div className="login-view text-center">
             <Card className="card-login card-plain">
               <Form className="form" onSubmit={handleSubmit} noValidate>
@@ -127,22 +125,8 @@ const LoginView = props => {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    Login
+                    Reset Password
                   </Button>
-                  <div className="pull-left">
-                    <h6>
-                      <a className="link" href="/public/Register">
-                        Regsiter?
-                      </a>
-                    </h6>
-                  </div>
-                  <div className="pull-right">
-                    <h6>
-                      <a className="link" href="#pablo" onClick={async e => alert('TODO: Forgot Password')}>
-                        Forgot Password?
-                      </a>
-                    </h6>
-                  </div>
                 </CardFooter>
                 <SweetAlert show={show} title={title} text={text} onConfirm={() => setSweetAlertStates()} />
               </Form>
@@ -156,4 +140,4 @@ const LoginView = props => {
 export default compose(
   withRouter,
   withFirebase
-)(LoginView);
+)(ForgotPassword);

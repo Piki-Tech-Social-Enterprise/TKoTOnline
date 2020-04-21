@@ -53,7 +53,7 @@ function LoginPage() {
                     <div className="logo-container">
                       <img
                         alt="..."
-                        src={require("assets/img/now-logo.png")}
+                        src={require("assets/img/tkot/tkot-logo-512x512.png")}
                       ></img>
                     </div>
                   </CardHeader>
