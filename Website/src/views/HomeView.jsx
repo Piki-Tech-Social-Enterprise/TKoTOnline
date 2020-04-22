@@ -4,7 +4,9 @@ import React, {
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
-import NewsFeedSection from 'components/Sections/NewsFeedSection';
+import NewsFeedSection from 'components/Sections/NewsFeed';
+import InteractiveMapSection from 'components/Sections/InteractiveMap';
+import VolunteersSection from 'components/Sections/Volunteers';
 
 const HomeView = () => {
   useEffect(() => {
@@ -33,12 +35,12 @@ const HomeView = () => {
     <div className="wrapper">
       <HomeHeader />
       <div className="main">
-        {/* TODO: Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+        {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
         <NewsFeedSection />
-        {/* TODO: Interactive Map of Iwi Links */}
-        {/* TODO: Gather Volunteers for different tribal groups via Mutual Aid */}
-        {/* TODO: Social Media Links */}         
-        {/* TODO: Join TKoT Volunteers via Mutual Aid */}
+        {/* Interactive Map of Iwi Links */}
+        <InteractiveMapSection />
+        {/* Volunteers via Mutual Aid */}
+        <VolunteersSection />
       </div>
       <HomeFooter />
     </div>
