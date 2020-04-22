@@ -6,31 +6,17 @@ import {
   Navbar,
   NavItem,
   Nav,
-  Container
+  Container,
+  Button
 } from "reactstrap";
 
 function HomeNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
-  React.useEffect(() => {
-    const updateNavbarColor = () => {
-      if (
-        document.documentElement.scrollTop > 399 ||
-        document.body.scrollTop > 399
-      ) {
-        setNavbarColor("");
-      } else if (
-        document.documentElement.scrollTop < 400 ||
-        document.body.scrollTop < 400
-      ) {
-        setNavbarColor("navbar-transparent");
-      }
-    };
-    window.addEventListener("scroll", updateNavbarColor);
-    return function cleanup() {
-      window.removeEventListener("scroll", updateNavbarColor);
-    };
-  });
+
+  const navItem = {
+    padding: '10px'
+  };
+  
   return (
     <>
       {collapseOpen ? (
@@ -42,16 +28,15 @@ function HomeNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
+      <Navbar className={"fixed-top "} style={{backgroundColor: '#171b5d'}} expand="lg">
         <Container>
           <div className="navbar-translate">
-            <NavbarBrand
-              href="https://demos.creative-tim.com/now-ui-kit-react/#/index?ref=nukr-index-navbar"
-              target="_blank"
-              id="navbar-brand"
-            >
-             LOGO
-            </NavbarBrand>
+          <img
+              alt="..."
+              className="n-logo"
+              src={require("assets/img/tkot/tkot-logo-512x512.png")}
+              width="75"
+            ></img>
         
             <button
               className="navbar-toggler navbar-toggler"
@@ -72,17 +57,25 @@ function HomeNavbar() {
             isOpen={collapseOpen}
             navbar
           >
-            <Nav navbar>
-              <NavItem>
-            
+            <Nav navbar style={{color: '#ffffff', background: '#171b5d', marginTop: '0px', paddingTop: '50px'}}>
+              <NavItem style={{padding: '15px'}}>
+              Link 1 
               </NavItem>
-              <UncontrolledDropdown nav>
-         
-             
-              </UncontrolledDropdown>
-              <NavItem>
-             
+              <NavItem style={{padding: '15px'}}>
+             Link 2 
                
+              </NavItem>
+              <NavItem style={{padding: '15px'}}>
+              Link 3 
+              </NavItem>
+              <NavItem style={{padding: '15px'}}>
+             Link 4
+               
+              </NavItem>
+              <NavItem style={{paddingLeft: '15px'}}>
+                <Button outline color="white">
+                      Login
+                </Button>
               </NavItem>
             </Nav>
           </Collapse>
