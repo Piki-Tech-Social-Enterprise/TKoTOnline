@@ -1,8 +1,6 @@
 import React from "react";
 import {
   Collapse,
-  UncontrolledDropdown,
-  NavbarBrand,
   Navbar,
   NavItem,
   Nav,
@@ -12,10 +10,6 @@ import {
 
 function HomeNavbar() {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
-
-  const navItem = {
-    padding: '10px'
-  };
   
   return (
     <>
