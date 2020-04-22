@@ -2,3 +2,58 @@
   padding: 5rem 0;
 }
 
+/* --- News Feed Carousel --- */
+.news-feed-carousel {
+  .carousel-caption {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: left;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    text-shadow: none;
+  }
+  .news-feed-sidebar,
+  .news-feed-form {
+    position: absolute;
+    right: 0;
+  }
+  .news-feed-sidebar {
+    max-height: 300px;
+    overflow-y: auto;
+    top: 2.1875rem;
+  }
+  .news-feed-form {
+    bottom: 0;
+  }
+  .news-feed-sidebar-item {
+    border-radius: 0px;
+    cursor: pointer;
+    list-style-type: none;
+    text-align: left;
+  }
+  .news-feed-sidebar .active {
+    background-color: #eee;
+  }
+}
+@media (min-width: 992px) {
+  .news-feed-carousel {
+    padding-right: 33.3333%;
+    .carousel-controls {
+      display: none;
+    }
+  }
+}
+@media (max-width: 991px) {
+  .carousel-caption p,
+  .news-feed-carousel {
+    .news-feed-sidebar {
+      display: none;
+    }
+  }
+}
+.card-block {
+  height: 225px;
+  max-height: 225px;
+  min-height: 225px;
+}

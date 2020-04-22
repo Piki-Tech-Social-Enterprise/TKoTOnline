@@ -4,6 +4,7 @@ import {
   Row,
   Col
 } from 'reactstrap';
+import NewsFeedCarousel from './NewsFeedCarousel';
 
 const NewsFeedSection = () => {
   return (
@@ -12,6 +13,7 @@ const NewsFeedSection = () => {
         <Col>
           <div className="mx-auto text-center bg-warning">
             <h3>Live News Feeds/Updates</h3>
+            <NewsFeedCarousel />
           </div>
         </Col>
       </Row>
