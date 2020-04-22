@@ -6,6 +6,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.9.3",
     "moment": "2.24.0",
     "node-sass": "4.13.1",
     "nouislider": "14.2.0",
@@ -24,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run startLocal",
     "process-sass": "run-s -sn compile-sass map-sass minify-sass",
     "compile-sass": "run-p -sn now-ui-kit-compile-sass tkot-compile-sass",
     "minify-sass": "run-p -sn now-ui-kit-minify-sass tkot-minify-sass",

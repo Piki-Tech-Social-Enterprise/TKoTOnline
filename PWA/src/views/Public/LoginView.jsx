@@ -132,13 +132,13 @@ const LoginView = props => {
                   <div className="pull-left">
                     <h6>
                       <a className="link" href="/public/Register">
-                        Regsiter?
+                        Register?
                       </a>
                     </h6>
                   </div>
                   <div className="pull-right">
-                    <h6>
-                      <a className="link" href="#pablo" onClick={async e => alert('TODO: Forgot Password')}>
+                    <h6 className="link">
+                      <a className="link" href="/public/ForgotPassword">
                         Forgot Password?
                       </a>
                     </h6>
