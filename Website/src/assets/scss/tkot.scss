@@ -96,3 +96,8 @@
 .btn, .navbar .navbar-nav> a.btn{
   margin: 0px;
 }
+
+.sidebar-collapse .navbar-collapse:before {
+  background: #171b5d;
+  opacity: 1;
+}
