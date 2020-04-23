@@ -17,6 +17,7 @@ const HomeFooterLink = props => {
 };
 const HomePrivacyLink = () => {
   return (
+    
     <HomeFooterLink to="/PrivacyPolicy" title="Privacy Policy" text="Privacy" />
   );
 };

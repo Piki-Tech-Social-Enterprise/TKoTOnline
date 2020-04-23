@@ -1,5 +1,5 @@
 .fab.fa-facebook, .fa-instagram, .fa-linkedin-in {
-  font-size: 35px; }
+  font-size: 25px; }
 
 .social-ul {
   list-style: none;
@@ -15,5 +15,19 @@
   fill: #ff6565;
   -webkit-transition: all 0.3s;
   transition: all 0.3s; }
+
+.network-links {
+  align-items: center;
+  flex-wrap: wrap;
+  height: 80%;
+  line-height: 50px;
+  font-size: 13px;
+  margin: -2; }
+
+.li {
+  padding: 0 20px 0 20px; }
+
+p {
+  font-size: 10px; }
 
 /*# sourceMappingURL=tkot.css.map */
