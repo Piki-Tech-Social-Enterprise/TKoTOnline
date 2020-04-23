@@ -1,5 +1,8 @@
 .footer{
-    padding: 24px 0;
+    padding-top: 150px;
+    padding-bottom: 100px;
+    background: #171b5d;
+    color: white;
 
     &.footer-default{
         background-color: #f2f2f2;
@@ -34,6 +37,7 @@
 
     .copyright{
         font-size: $font-size-small;
+        margin-left: 50%;
     }
 
     &:after{
@@ -42,3 +46,18 @@
         content: " ";
     }
 }
+
+.footer-logo {
+    margin-left: 100px;
+}
+
+@media screen and (max-width: 768px){
+    .footer-logo {
+        text-align: center;
+    }
+
+    .nav-item {
+        text-align: center;
+    }
+}
+
