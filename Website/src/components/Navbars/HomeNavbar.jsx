@@ -5,11 +5,23 @@ import {
   NavItem,
   Nav,
   Container,
-  Button
+  Button,
+  NavLink
 } from "reactstrap";
+
+import Routes from '../Routes/routes';
+
+const {
+  newsFeed,
+  interactiveMap,
+  volunter
+} = Routes;
 
 function HomeNavbar() {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
+  const {
+    pathname
+  } = window.location;
   
   return (
     <>
@@ -51,27 +63,22 @@ function HomeNavbar() {
             isOpen={collapseOpen}
             navbar
           >
-            <Nav navbar className="main-navbar">
-              <NavItem>
-              Link 1 
+            <Nav navbar>
+              <NavItem active={pathname.endsWith(newsFeed)}>
+                   <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
-              <NavItem>
-             Link 2 
-               
+              <NavItem active={pathname.endsWith(interactiveMap)}>
+                   <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem>
-              <NavItem>
-              Link 3 
-              </NavItem>
-              <NavItem>
-             Link 4
-               
+              <NavItem active={pathname.endsWith(volunter)}>
+                   <NavLink href={volunter}>Volunter</NavLink>
               </NavItem>
               <NavItem>
                 <Button outline color="white">
                       Login
                 </Button>
               </NavItem>
-            </Nav>
+              </Nav>
           </Collapse>
         </Container>
       </Navbar>

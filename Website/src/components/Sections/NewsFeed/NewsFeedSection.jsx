@@ -8,7 +8,7 @@ import NewsFeedCarousel from './NewsFeedCarousel';
 
 const NewsFeedSection = () => {
   return (
-    <Container className="tkot-section">
+    <Container className="tkot-section"  id="NewsFeed">
       <Row>
         <Col>
           <div className="mx-auto text-center bg-warning">
@@ -17,7 +17,7 @@ const NewsFeedSection = () => {
           </div>
         </Col>
       </Row>
-    </Container >
+    </Container>
   );
 };
 
