@@ -57,3 +57,42 @@
   max-height: 225px;
   min-height: 225px;
 }
+
+#header {
+   background:  rgba(23,27,93, 0.8);
+
+}
+
+#header-container {
+  margin-top: 100px;
+}
+
+.h1-seo{
+  font-family: 'Roboto', sans-serif;
+}
+
+.h3-seo{
+  color: #8f95c3;
+  text-align: left;
+}
+
+.fixed-top {
+ background-color: #171b5d;
+}
+
+.main-navbar {
+  color: #ffffff;
+  background: #171b5d;
+  margin-top: 0px;
+  padding-top: 50px;
+
+}
+
+.nav-item {
+  padding: 15px;
+}
+
+
+.btn, .navbar .navbar-nav> a.btn{
+  margin: 0px;
+}

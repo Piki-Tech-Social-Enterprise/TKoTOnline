@@ -22,7 +22,7 @@ function HomeNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top "} style={{backgroundColor: '#171b5d'}} expand="lg">
+      <Navbar className={"fixed-top"} expand="lg">
         <Container>
           <div className="navbar-translate">
           <img
@@ -51,22 +51,22 @@ function HomeNavbar() {
             isOpen={collapseOpen}
             navbar
           >
-            <Nav navbar style={{color: '#ffffff', background: '#171b5d', marginTop: '0px', paddingTop: '50px'}}>
-              <NavItem style={{padding: '15px'}}>
+            <Nav navbar className="main-navbar">
+              <NavItem>
               Link 1 
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
+              <NavItem>
              Link 2 
                
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
+              <NavItem>
               Link 3 
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
+              <NavItem>
              Link 4
                
               </NavItem>
-              <NavItem style={{paddingLeft: '15px'}}>
+              <NavItem>
                 <Button outline color="white">
                       Login
                 </Button>

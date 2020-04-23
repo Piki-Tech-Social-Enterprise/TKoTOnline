@@ -24,7 +24,7 @@ function IndexHeader() {
 
   return (
     <>
-      <div className="page-header clear-filter" style={{backgroundColor: 'rgb(23,27,93, 0.8)'}}>
+      <div className="page-header clear-filter" id="header">
         <div
           className="page-header-image"
           style={{
@@ -33,10 +33,10 @@ function IndexHeader() {
           ref={pageHeader}
         ></div>
         <Container>
-          <div className="float-left" style={{paddingLeft: '10px', paddingTop: '200px'}}>
+          <div className="float-left" id="header-container">
             
-            <h1 className="h1-seo" style={{fontFamily: 'Roboto'}}>Te Kahu o Taonui</h1>
-            <h3 style={{color: '#8f95c3', textAlign: 'left'}}>Nau mai, haere mai</h3>
+            <h1 className="h1-seo">Te Kahu o Taonui</h1>
+            <h3 className="h3-seo">Nau mai, haere mai</h3>
           </div>
           {/* <h6 className="category category-absolute">
             Designed by{" "}
