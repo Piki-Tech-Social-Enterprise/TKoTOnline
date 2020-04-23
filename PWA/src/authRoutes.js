@@ -9,6 +9,13 @@ const authRoutes = [
     name: 'Dashboard',
     component: lazy(() => import('views/Auth/AuthDashboardView')),
     icon: 'design_app'
+  },
+  {
+    layout: '/auth',
+    path: '/ResourceDrive',
+    name: 'Resource Drive',
+    component: lazy(() => import('views/Auth/AuthResourceDriveView')),
+    icon: 'business_bank'
   }
 ];
 
