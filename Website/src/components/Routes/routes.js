@@ -2,7 +2,7 @@ const Routes = {
     home: '/',
     newsFeed: '#NewsFeed',
     interactiveMap: '#InteractiveMap',
-    volunter: '#Volunter'
+    volunteer: '#Volunteer'
     
   };
 

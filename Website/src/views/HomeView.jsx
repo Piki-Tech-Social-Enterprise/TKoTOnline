@@ -36,11 +36,11 @@ const HomeView = () => {
       <HomeHeader />
       <div className="main">
         {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-        <NewsFeedSection/>
+        <NewsFeedSection />
         {/* Interactive Map of Iwi Links */}
-        <InteractiveMapSection/>
+        <InteractiveMapSection />
         {/* Volunteers via Mutual Aid */}
-        <VolunteersSection/>
+        <VolunteersSection />
       </div>
       <HomeFooter />
     </div>

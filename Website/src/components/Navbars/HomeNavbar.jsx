@@ -14,7 +14,7 @@ import Routes from '../Routes/routes';
 const {
   newsFeed,
   interactiveMap,
-  volunter
+  volunteer
 } = Routes;
 
 function HomeNavbar() {
@@ -70,8 +70,8 @@ function HomeNavbar() {
               <NavItem active={pathname.endsWith(interactiveMap)}>
                    <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem>
-              <NavItem active={pathname.endsWith(volunter)}>
-                   <NavLink href={volunter}>Volunter</NavLink>
+              <NavItem active={pathname.endsWith(volunteer)}>
+                   <NavLink href={volunteer}>Volunteer</NavLink>
               </NavItem>
               <NavItem>
                 <Button outline color="white">
