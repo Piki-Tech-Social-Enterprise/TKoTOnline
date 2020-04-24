@@ -100,3 +100,44 @@
   background: #171b5d;
   opacity: 1;
 }
+
+@media screen and (min-width: 1024px){
+  .footer-content {
+    padding-left: 100px;
+  }
+  
+  .copyright{
+    margin-left: 50%;
+    padding-top: 50px;
+}
+}
+
+.footer {
+  padding-top: 150px;
+  padding-bottom: 100px;
+  color: white;
+  background: #171b5d;
+
+}
+
+@media screen and (max-width: 768px){
+
+  .footer{
+    padding-top: 50px;
+  }
+
+  .footer-logo {
+      text-align: center;
+  }
+
+  .nav-item {
+      text-align: center;
+  }
+}
+
+@media screen and (max-width: 991px){
+    .footer .copyright {
+      text-align: center;
+      padding-top: 50px;
+  }
+}
