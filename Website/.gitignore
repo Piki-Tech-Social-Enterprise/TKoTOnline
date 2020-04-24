@@ -115,5 +115,3 @@ firebase-debug.log*
 .firebaserc
 database.rules.json
 firebase.json
-
-package-lock.json

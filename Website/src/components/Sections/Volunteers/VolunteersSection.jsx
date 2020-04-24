@@ -10,12 +10,12 @@ const VolunteersSection = () => {
     <Container className="tkot-section">
       <Row>
         <Col>
-          <div className="mx-auto text-center bg-warning">
+          <div className="mx-auto text-center bg-warning" id="Volunteer">
             <h3>Volunteers</h3>
           </div>
         </Col>
       </Row>
-    </Container >
+    </Container>
   );
 };
 

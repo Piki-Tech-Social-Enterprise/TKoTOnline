@@ -5,11 +5,23 @@ import {
   NavItem,
   Nav,
   Container,
-  Button
+  Button,
+  NavLink
 } from "reactstrap";
+
+import Routes from '../Routes/routes';
+
+const {
+  newsFeed,
+  interactiveMap,
+  volunteer
+} = Routes;
 
 function HomeNavbar() {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
+  const {
+    pathname
+  } = window.location;
   
   return (
     <>
@@ -22,7 +34,7 @@ function HomeNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top "} style={{backgroundColor: '#171b5d'}} expand="lg">
+      <Navbar className={"fixed-top"} expand="lg">
         <Container>
           <div className="navbar-translate">
           <img
@@ -51,27 +63,22 @@ function HomeNavbar() {
             isOpen={collapseOpen}
             navbar
           >
-            <Nav navbar style={{color: '#ffffff', background: '#171b5d', marginTop: '0px', paddingTop: '50px'}}>
-              <NavItem style={{padding: '15px'}}>
-              Link 1 
+            <Nav navbar>
+              <NavItem active={pathname.endsWith(newsFeed)}>
+                   <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
-             Link 2 
-               
+              <NavItem active={pathname.endsWith(interactiveMap)}>
+                   <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
-              Link 3 
+              <NavItem active={pathname.endsWith(volunteer)}>
+                   <NavLink href={volunteer}>Volunteer</NavLink>
               </NavItem>
-              <NavItem style={{padding: '15px'}}>
-             Link 4
-               
-              </NavItem>
-              <NavItem style={{paddingLeft: '15px'}}>
+              <NavItem>
                 <Button outline color="white">
                       Login
                 </Button>
               </NavItem>
-            </Nav>
+              </Nav>
           </Collapse>
         </Container>
       </Navbar>
