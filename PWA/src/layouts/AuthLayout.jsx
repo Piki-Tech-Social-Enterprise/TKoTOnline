@@ -14,17 +14,12 @@ import AuthSidebar from 'components/Sidebar/AuthSidebar';
 import AuthNavbar from 'components/Navbars/AuthNavbar';
 import AuthFooter from 'components/Footer/AuthFooter';
 import authRoutes from 'authRoutes';
-// import {
-//   withEmailVerification,
-//   withAuthorization,
-//   withAuthentication
-// } from 'components/Firebase';
-// import withAuthentication from 'components/Firebase/HighOrder/withAuthentication';
-// import withEmailVerification from 'components/Firebase/HighOrder/withEmailVerification';
-// import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
-// import {
-//   compose
-// } from 'recompose';
+import withAuthentication from 'components/Firebase/HighOrder/withAuthentication';
+import withEmailVerification from 'components/Firebase/HighOrder/withEmailVerification';
+import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
+import {
+  compose
+} from 'recompose';
 
 const AuthLayout = props => {
   const mainPanel = createRef();
@@ -81,11 +76,11 @@ const AuthLayout = props => {
     </div>
   );
 };
-// const condition = authUser => !!authUser && !!authUser.active;
-// export default compose(
-//   // withEmailVerification,
-//   withAuthentication,
-//   withAuthorization(condition),
-// )(AuthLayout);
-export default AuthLayout;
-// export default withAuthentication(AuthLayout);
+
+const condition = authUser => !!authUser && !!authUser.active;
+
+export default compose(
+  withAuthentication,
+  withEmailVerification,
+  withAuthorization(condition)
+)(AuthLayout);
