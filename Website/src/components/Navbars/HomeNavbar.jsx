@@ -1,36 +1,28 @@
 import React from "react";
 import {
   Collapse,
-  UncontrolledDropdown,
-  NavbarBrand,
   Navbar,
   NavItem,
   Nav,
-  Container
+  Container,
+  Button,
+  NavLink
 } from "reactstrap";
 
+import Routes from '../Routes/routes';
+
+const {
+  newsFeed,
+  interactiveMap,
+  volunteer
+} = Routes;
+
 function HomeNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
-  React.useEffect(() => {
-    const updateNavbarColor = () => {
-      if (
-        document.documentElement.scrollTop > 399 ||
-        document.body.scrollTop > 399
-      ) {
-        setNavbarColor("");
-      } else if (
-        document.documentElement.scrollTop < 400 ||
-        document.body.scrollTop < 400
-      ) {
-        setNavbarColor("navbar-transparent");
-      }
-    };
-    window.addEventListener("scroll", updateNavbarColor);
-    return function cleanup() {
-      window.removeEventListener("scroll", updateNavbarColor);
-    };
-  });
+  const {
+    pathname
+  } = window.location;
+  
   return (
     <>
       {collapseOpen ? (
@@ -42,16 +34,15 @@ function HomeNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
+      <Navbar className={"fixed-top"} expand="lg">
         <Container>
           <div className="navbar-translate">
-            <NavbarBrand
-              href="https://demos.creative-tim.com/now-ui-kit-react/#/index?ref=nukr-index-navbar"
-              target="_blank"
-              id="navbar-brand"
-            >
-             LOGO
-            </NavbarBrand>
+          <img
+              alt="..."
+              className="n-logo"
+              src={require("assets/img/tkot/tkot-logo-512x512.png")}
+              width="75"
+            ></img>
         
             <button
               className="navbar-toggler navbar-toggler"
@@ -73,18 +64,21 @@ function HomeNavbar() {
             navbar
           >
             <Nav navbar>
-              <NavItem>
-            
+              <NavItem active={pathname.endsWith(newsFeed)}>
+                   <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav>
-         
-             
-              </UncontrolledDropdown>
-              <NavItem>
-             
-               
+              <NavItem active={pathname.endsWith(interactiveMap)}>
+                   <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem>
-            </Nav>
+              <NavItem active={pathname.endsWith(volunteer)}>
+                   <NavLink href={volunteer}>Volunteer</NavLink>
+              </NavItem>
+              <NavItem>
+                <Button outline color="white">
+                      Login
+                </Button>
+              </NavItem>
+              </Nav>
           </Collapse>
         </Container>
       </Navbar>
