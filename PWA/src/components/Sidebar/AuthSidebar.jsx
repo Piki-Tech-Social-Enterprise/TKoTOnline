@@ -12,7 +12,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import logo from 'assets/img/tkot/tkot-logo-512x512.png';
 
 const AuthSidebar = props => {
-  const sidebar = createRef();
+  const sidebarRef = createRef();
   const activeRoute = routeName => {
     return props.location.pathname.indexOf(routeName) > -1
       ? 'active'
@@ -29,7 +29,7 @@ const AuthSidebar = props => {
     } = document.body;
     const perfectScrollbarOn = 'perfect-scrollbar-on';
     if (platform.indexOf(platformWin) > -1) {
-      perfectScrollbar = new PerfectScrollbar(sidebar.current, {
+      perfectScrollbar = new PerfectScrollbar(sidebarRef.current, {
         suppressScrollX: true,
         suppressScrollY: false
       });
@@ -40,7 +40,7 @@ const AuthSidebar = props => {
         perfectScrollbar.destroy();
       }
     };
-  }, [props, sidebar]);
+  }, [props, sidebarRef]);
   return (
     <div className="sidebar" data-color={props.backgroundColor}>
       <div className="logo text-white">
@@ -52,13 +52,13 @@ const AuthSidebar = props => {
           </div>
           <span className="p-3 h6">Te Kahu o Taonui</span>
       </div>
-      <div className="sidebar-wrapper" ref={sidebar}>
+      <div className="sidebar-wrapper" ref={sidebarRef}>
         <Nav>
           {props.routes.map((prop, key) => {
             if (prop.redirect) return null;
-            const { layout, path, pro, icon, name } = prop;
+            const { layout, path, icon, name } = prop;
             const routePath = layout + path;
-            const activeRouteClassName = `${activeRoute(routePath)}${((pro && ' active-pro') || '')}`;
+            const activeRouteClassName = `${activeRoute(routePath)}`;
             return (
               <li className={activeRouteClassName} key={key}>
                 <NavLink to={routePath} className="nav-link" activeClassName="active">

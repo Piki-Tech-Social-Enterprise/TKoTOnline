@@ -50,7 +50,7 @@ const LoginView = props => {
       try {
         setIsSubmitting(true);
         await props.firebase.signInWithEmailAndPassword(email, password);
-        props.history.push('/auth/Dashboard');
+        props.history.push('/auth');
         setIsSubmitting(false);
       } catch (error) {
         displayMessage = error.message;
@@ -74,7 +74,7 @@ const LoginView = props => {
     <AuthUserContext.Consumer>
       {authUser =>
         authUser && !!authUser.active
-          ? <Redirect to="/auth/Dashboard" />
+          ? <Redirect to="/auth" />
           : <div className="login-view text-center">
             <Card className="card-login card-plain">
               <Form className="form" onSubmit={handleSubmit} noValidate>
