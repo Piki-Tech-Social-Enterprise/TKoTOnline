@@ -141,12 +141,13 @@ const AuthLayout = props => {
                     const {
                       layout,
                       path,
-                      component
+                      component,
+                      exact
                     } = prop;
                     const routePath = layout + path;
                     console.log(`prop: ${JSON.stringify(prop, null, 2)}`);
                     return (
-                      <Route path={routePath} component={component} key={key} />
+                      <Route path={routePath} component={component} exact={exact} key={key} />
                     );
                   })}
                 </Suspense>

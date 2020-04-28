@@ -52,11 +52,34 @@ const AuthNavbar = props => {
   const getBrand = () => {
     const {
       routes,
-      location
+      location,
+      match
     } = props;
     const {
       pathname
     } = location;
+    const isMatch = (routeLayout, routePath, pathName) => {
+      console.log(`routeLayout: ${routeLayout}, routePath: ${routePath}, pathname: ${pathname}`);
+      let fullRoutePath = `${routeLayout}${routePath}`;
+      if (fullRoutePath === pathName) {
+        return true;
+      }
+      const  {
+        params
+      } = match;
+      console.log(`params: ${JSON.stringify(params, null, 2)}`);
+      let isParamAMatch = false;
+      Object.keys(params).map(paramKey => {
+        const param = params[paramKey];
+        console.log(`routeLayout: ${routeLayout}, paramKey: ${paramKey}, param: ${param}, pathname: ${pathname}`);
+        fullRoutePath = `${routeLayout}${routePath.replace(paramKey, param)}`;
+        if (!isParamAMatch && fullRoutePath === pathName) {
+          isParamAMatch = true;
+        }
+        return null;
+      });
+      return isParamAMatch;
+    };
     let name = null;
     routes.map(route => {
       if (route.collapse) {
@@ -66,7 +89,7 @@ const AuthNavbar = props => {
           }
           return null;
         });
-      } else if (route.path === pathname) {
+      } else if (isMatch(route.layout, route.path, pathname)) {
         name = route.name;
       }
       return null;

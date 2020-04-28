@@ -13,17 +13,18 @@
     background: rgba(0, 0, 0, 0.6);
     text-shadow: none;
   }
-  .news-feed-sidebar,
-  .news-feed-form {
+  .news-feed-sidebar {
     position: absolute;
+    top: 2rem;
     right: 0;
   }
-  .news-feed-sidebar {
+  .news-feed-sidebar ul {
     max-height: 300px;
     overflow-y: auto;
     top: 2.1875rem;
   }
   .news-feed-form {
+    position: relative;
     bottom: 0;
   }
   .news-feed-sidebar-item {
@@ -47,10 +48,15 @@
 @media (max-width: 991px) {
   .carousel-caption p,
   .news-feed-carousel {
-    .news-feed-sidebar {
+    .news-feed-sidebar,
+    .news-feed-form {
       display: none;
     }
   }
+}
+.news-feed-cards-row {
+  min-height: 25.625rem;
+  overflow: scroll hidden;
 }
 .card-block {
   height: 225px;
@@ -59,40 +65,38 @@
 }
 
 #header {
-   background:  rgba(23,27,93, 0.8);
-
+  background: rgba(23, 27, 93, 0.8);
 }
 
 #header-container {
   margin-top: 100px;
 }
 
-.h1-seo{
+.h1-seo {
   font-family: 'Roboto', sans-serif;
 }
 
-.h3-seo{
+.h3-seo {
   color: #8f95c3;
   text-align: left;
 }
 
 .fixed-top {
- background-color: #171b5d;
+  background-color: #171b5d;
 }
 
 .navbar-nav {
   color: #ffffff;
   background: #171b5d;
   margin-top: 0px;
-
 }
 
 .nav-item {
   padding: 15px;
 }
 
-
-.btn, .navbar .navbar-nav> a.btn{
+.btn,
+.navbar .navbar-nav > a.btn {
   margin: 0px;
 }
 
@@ -101,15 +105,15 @@
   opacity: 1;
 }
 
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1024px) {
   .footer-content {
     padding-left: 100px;
   }
-  
-  .copyright{
+
+  .copyright {
     margin-left: 50%;
     padding-top: 50px;
-}
+  }
 }
 
 .footer {
@@ -117,27 +121,54 @@
   padding-bottom: 100px;
   color: white;
   background: #171b5d;
-
 }
 
-@media screen and (max-width: 768px){
-
-  .footer{
+@media screen and (max-width: 768px) {
+  .footer {
     padding-top: 50px;
   }
 
   .footer-logo {
-      text-align: center;
+    text-align: center;
   }
 
   .nav-item {
-      text-align: center;
+    text-align: center;
   }
 }
 
-@media screen and (max-width: 991px){
-    .footer .copyright {
-      text-align: center;
-      padding-top: 50px;
+@media screen and (max-width: 991px) {
+  .footer .copyright {
+    text-align: center;
+    padding-top: 50px;
   }
+}
+
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount; 
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  &:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.block-with-text {
+  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);  
 }

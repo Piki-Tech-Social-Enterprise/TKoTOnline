@@ -20,6 +20,10 @@ node_modules
 .firebaserc
 database.rules.json
 firebase.json
+storage.rules
+cors.dev.json
+cors.test.json
+cors.json
 
 npm-debug.log*
 yarn-debug.log*

@@ -54,15 +54,16 @@ const AuthSidebar = props => {
       </div>
       <div className="sidebar-wrapper" ref={sidebarRef}>
         <Nav>
-          {props.routes.map((prop, key) => {
-            if (prop.redirect) return null;
-            const { layout, path, icon, name } = prop;
+          {props.routes.map((route, key) => {
+            if (route.redirect || route.excludeFromSidebar) return null;
+            const { layout, path, iconLibrary, icon, name } = route;
             const routePath = layout + path;
             const activeRouteClassName = `${activeRoute(routePath)}`;
+            const iconClassNames = `${iconLibrary || 'now-ui-icons'} ${icon}`;
             return (
               <li className={activeRouteClassName} key={key}>
                 <NavLink to={routePath} className="nav-link" activeClassName="active">
-                  <i className={'now-ui-icons ' + icon} />
+                  <i className={iconClassNames} />
                   <p>{name}</p>
                 </NavLink>
               </li>
