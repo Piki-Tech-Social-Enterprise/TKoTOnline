@@ -18,8 +18,8 @@ import {
   CardImg,
   CardBody,
   CardTitle,
-  CardSubtitle,
-  CardText
+  CardText,
+  CardLink
 } from 'reactstrap';
 
 const NewsFeedCarousel = () => {
@@ -55,12 +55,13 @@ const NewsFeedCarousel = () => {
     const createNewsFeed = (text, index, isCard) => {
       return {
         src: isCard
-          ? '//placehold.it/256x186/cccccc/ffffff'
-          : '//placehold.it/760x400/cccccc/ffffff',
+          ? '//placehold.it/290x163/cccccc/ffffff'
+          : '//placehold.it/760x427/cccccc/ffffff',
         alt: `${text} Alt`,
+        header: `${text} ${isCard
+          ? 'A mates\' trip to New York, a rugby team and a stag party - NZ\'s 16 Covid-19 clusters'
+          : 'Covid 19 coronavirus: So we are moving into level 3 - what does that mean for you?'}`,
         caption: `${text} Caption`,
-        subtitle: `${text} Subtitle`,
-        header: `${text} Header`,
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         key: `${index}`
       };
@@ -95,40 +96,43 @@ const NewsFeedCarousel = () => {
             <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleCarouselIndicatorsClick} />
             {createCarouselItems}
           </Carousel>
-          <ul className="news-feed-sidebar col-sm-4 bg-primary">
-            {
-              carouselItems.map((uncontrolledCarouselItem, index) => {
-                return (
-                  <li data-target="#NewsFeedCarousel" data-slide-to={`${index}`} className="news-feed-sidebar-item" key={index}>
-                    <h4>{uncontrolledCarouselItem.caption}</h4>
-                  </li>
-                );
-              })
-            }
-          </ul>
-          <Form className="news-feed-form col-sm-4 bg-light pt-3">
-            <FormGroup>
-              <Input placeholder="Search" type="text" />
-            </FormGroup>
-          </Form>
+          <div className="news-feed-sidebar col-sm-4 px-0 bg-primary">
+            <ul>
+              {
+                carouselItems.map((uncontrolledCarouselItem, index) => {
+                  return (
+                    <li onClick={async e => {
+                      e.preventDefault();
+                      handleCarouselIndicatorsClick(index);
+                    }} className="news-feed-sidebar-item" key={index}>
+                      <h4>{uncontrolledCarouselItem.header}</h4>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+            <Form className="news-feed-form bg-light px-0 pt-3">
+              <FormGroup>
+                <Input placeholder="Search" type="text" />
+              </FormGroup>
+            </Form>
+          </div>
         </div>
         <Container className="my-3" fluid>
-          <Row className="flex-row flex-nowrap" style={{
-            overflowX: 'scroll'
-          }}>
+          <Row className="flex-row flex-nowrap news-feed-cards-row">
             {
               cardItems.map((cardItem, index) => {
                 return (
-                  <Col xs={12} sm={4} key={index}>
+                  <Col xs={12} md={4} key={index}>
                     <Card className="card-block">
                       <CardHeader>
-                        <CardTitle>{cardItem.caption}</CardTitle>
-                        <CardSubtitle>{cardItem.subtitle}</CardSubtitle>
+                        <CardTitle>{cardItem.header}</CardTitle>
                       </CardHeader>
                       <CardImg src={cardItem.src} alt={cardItem.alt} />
-                      <CardBody className="text-left">
-                        <h6>{cardItem.header}</h6>
-                        <CardText className="small">{cardItem.content}</CardText>
+                      <CardBody className="text-left bg-light">
+                        <h6>{cardItem.caption}</h6>
+                        <CardText className="small d-inline-block block-with-text" >{cardItem.content}</CardText>
+                        <CardLink href="#NewsFeed">Read more...</CardLink>
                       </CardBody>
                     </Card>
                   </Col>

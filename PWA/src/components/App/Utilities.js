@@ -57,10 +57,29 @@ const handleLoadBlob = (blob, handleLoadBlobComplete) => {
     fileReader.readAsDataURL(blob);
   }
 };
+const formatBytes = (bytes, dp = 2) => {
+  if (bytes === 0) {
+    return '0 Bytes';
+  }
+  const oneKiloByte = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(oneKiloByte));
+  const fractionDigits = dp < 0
+    ? 0
+    : dp;
+  const refactoredBytes = parseFloat((bytes / Math.pow(oneKiloByte, i)).toFixed(fractionDigits));
+  const formattedBytes = `${refactoredBytes} ${sizes[i]}`;
+  return formattedBytes;
+};
+const formatInteger = (integer) => (
+  integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+);
 export default shallowCompare;
 export {
   useWindowEvent,
   shallowEqual,
   isEmptyObject,
-  handleLoadBlob
+  handleLoadBlob,
+  formatBytes,
+  formatInteger
 };

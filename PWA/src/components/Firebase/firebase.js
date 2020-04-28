@@ -2,7 +2,8 @@ import * as firebaseApp from 'firebase/app';
 import {
   AuthenticationRepository,
   UserRepository,
-  StorageRepository
+  StorageRepository,
+  NewsFeedRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -15,6 +16,7 @@ class Firebase {
     this.authenticationRepository = new AuthenticationRepository(firebaseApp);
     this.userRepository = new UserRepository(firebaseApp);
     this.storageRepository = new StorageRepository(firebaseApp);
+    this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -39,6 +41,13 @@ class Firebase {
   getStorageFileDownloadURL = async path => await this.storageRepository.getStorageFileDownloadURL(path);
   saveStorageFile = async (path, file) => await this.storageRepository.saveStorageFile(path, file);
   deleteStorageFile = async path => await this.storageRepository.deleteStorageFile(path);
+  getStorageFiles = async (path, listOptions) => await this.storageRepository.getStorageFiles(path, listOptions);
+  getDbNewsFeeds = async () => await this.newsFeedRepository.getDbNewsFeeds();
+  getDbNewsFeedsAsArray = async includeInactive => await this.newsFeedRepository.getDbNewsFeedsAsArray(includeInactive);
+  getDbNewsFeed = async nfid => await this.newsFeedRepository.getDbNewsFeed(nfid);
+  getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
+  saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
+  deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
 }
 
 export default Firebase;

@@ -22,6 +22,10 @@ class StorageRepository extends BaseRepository {
   deleteStorageFile = async (path) => {
     return await this.getStorageFileRef(path).delete();
   }
+
+  getStorageFiles = async (path, listOptions) => {
+    return await this.getStorageFileRef(path).list(listOptions);
+  }
 }
 
 export default StorageRepository;

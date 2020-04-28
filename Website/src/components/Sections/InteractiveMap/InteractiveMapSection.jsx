@@ -7,7 +7,7 @@ import {
 
 const InteractiveMapSection = () => {
   return (
-    <Container className="tkot-section">
+    <Container className="tkot-section" id="InteractiveMap">
       <Row>
         <Col>
           <div className="mx-auto text-center bg-warning">
@@ -15,7 +15,7 @@ const InteractiveMapSection = () => {
           </div>
         </Col>
       </Row>
-    </Container >
+    </Container>
   );
 };
 

@@ -5,6 +5,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "4.4.1",
     "chart.js": "2.9.3",
     "firebase": "^7.14.0",
