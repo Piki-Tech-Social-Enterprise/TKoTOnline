@@ -7,6 +7,7 @@ import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeed';
 import InteractiveMapSection from 'components/Sections/InteractiveMap';
 import VolunteersSection from 'components/Sections/Volunteers';
+import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
 const HomeView = () => {
   useEffect(() => {
@@ -35,6 +36,8 @@ const HomeView = () => {
     <div className="wrapper">
       <HomeHeader />
       <div className="main">
+        {/* Community Links Section) */}
+        <CommuintyLinksSection />
         {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
         <NewsFeedSection />
         {/* Interactive Map of Iwi Links */}
