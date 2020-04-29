@@ -100,7 +100,9 @@ const AuthNewsFeedsView = props => {
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="caption" dataSort>Caption</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="content" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                        maxWidth: '250px'
+                      }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"
