@@ -1,6 +1,8 @@
 import React, {
-  useState,
-  useEffect
+  useReducer,
+  useRef,
+  useEffect,
+  useMemo
 } from 'react';
 import {
   Carousel,
@@ -15,97 +17,209 @@ import {
   Col,
   Card,
   CardHeader,
-  CardImg,
   CardBody,
   CardTitle,
   CardText,
   CardLink
 } from 'reactstrap';
+import LoadingSpinner from 'components/App/LoadingSpinner';
+import FirebaseImage from 'components/App/FirebaseImage';
+import {
+  withFirebase
+} from 'components/Firebase';
 
-const NewsFeedCarousel = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isRefreshingItems, setIsRefreshingItems] = useState(true);
-  const [carouselItems, setCarouselItems] = useState([]);
-  const [cardItems, setCardItems] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const handleNext = () => {
-    if (animating) return;
-    const nextIndex = activeIndex === carouselItems.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
+const INITIAL_STATE = {
+  isLoading: true,
+  carouselItems: [],
+  cardItems: [],
+  activeIndex: 0,
+  isAnimating: false
+};
+const newsFeedActionTypes = {
+  load: 'LOAD',
+  obtain: 'OBTAIN',
+  animate: 'ANIMATE',
+  prev: 'PREVIOUS',
+  goto: 'GOTO',
+  next: 'NEXT'
+};
+const newsFeedReducer = (state, action) => {
+  const {
+    isLoading,
+    carouselItems,
+    cardItems,
+    activeIndex,
+    isAnimating
+  } = state;
+  const {
+    type,
+    toLoad,
+    items,
+    toAnimate,
+    clickedIndex
+  } = action;
+  const {
+    load,
+    obtain,
+    animate,
+    prev,
+    goto,
+    next
+  } = newsFeedActionTypes;
+  const getPreviousIndex = (index, items) => index === 0
+    ? items.length - 1
+    : index - 1;
+  const getNextIndex = (index, items) => index === (items.length - 1)
+    ? 0
+    : index + 1;
+  let newLoading = null;
+  let newCarouselItems = null;
+  let newCardItems = null;
+  let newAnimating = null;
+  let newActiveIndex = null;
+  switch (type) {
+    case load:
+      newLoading = !!toLoad;
+      break;
+    case obtain:
+      newCarouselItems = items.filter(item => !!item.isFeatured);
+      newCardItems = items.filter(item => !item.isFeatured);
+      newActiveIndex = getNextIndex((newCarouselItems.length - 1), newCarouselItems);
+      newLoading = false;
+      break;
+    case animate:
+      newAnimating = !!toAnimate;
+      break;
+    case prev:
+      if (isAnimating) {
+        return state;
+      }
+      newActiveIndex = getPreviousIndex(activeIndex, carouselItems);
+      newAnimating = false;
+      break;
+    case goto:
+      if (isAnimating) {
+        return state;
+      }
+      newActiveIndex = clickedIndex;
+      newAnimating = false;
+      break;
+    case next:
+      if (isAnimating) {
+        return state;
+      }
+      newActiveIndex = getNextIndex(activeIndex, carouselItems);
+      newAnimating = false;
+      break;
+    default:
+      throw new Error(`Unhandled type: ${type}`);
+  }
+  const newState = {
+    ...state,
+    isLoading: newLoading != null
+      ? newLoading
+      : isLoading,
+    carouselItems: newCarouselItems || carouselItems,
+    cardItems: newCardItems || cardItems,
+    isAnimating: newAnimating != null
+      ? newAnimating
+      : isAnimating,
+    activeIndex: newActiveIndex || activeIndex
   };
-  const handlePrevious = () => {
-    if (animating) return;
-    const nextIndex = activeIndex === 0 ? carouselItems.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
+  return newState;
+};
+const withLogger = dispatch => {
+  return action => {
+    console.groupCollapsed('Action: ', JSON.stringify(action));
+    return dispatch(action);
   };
-  const handleCarouselIndicatorsClick = (newIndex) => {
-    if (animating) return;
-    setActiveIndex(newIndex);
+};
+const useReducerWithLogger = (reducer, initialState) => {
+  let prevState = useRef(initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const dispatchWithLogger = useMemo(() => {
+    return withLogger(dispatch);
+  }, [dispatch]);
+  useEffect(() => {
+    if (state !== initialState) {
+      console.log('Prev State: ', prevState.current);
+      console.log('Next State: ', state);
+      console.groupEnd();
+    }
+    prevState.current = state;
+  }, [state, initialState]);
+  return [state, dispatchWithLogger];
+};
+const useNewsFeed = ({ reducer = newsFeedReducer, initialState = INITIAL_STATE } = {}) => {
+  const [state, dispatch] = useReducerWithLogger(reducer, initialState);
+  const handleLoad = toLoad => dispatch({ type: newsFeedActionTypes.load, toLoad: toLoad });
+  const handleItems = items => dispatch({ type: newsFeedActionTypes.obtain, items: items });
+  const handleAnimate = toAnimate => dispatch({ type: newsFeedActionTypes.animate, toAnimate: toAnimate });
+  const handlePrevious = () => dispatch({ type: newsFeedActionTypes.prev });
+  const handleGoto = clickedIndex => dispatch({ type: newsFeedActionTypes.goto, clickedIndex: clickedIndex });
+  const handleNext = () => dispatch({ type: newsFeedActionTypes.next });
+  return {
+    state,
+    handleLoad,
+    handleItems,
+    handleAnimate,
+    handlePrevious,
+    handleGoto,
+    handleNext
   };
-  const createCarouselItems = carouselItems.map((item) => {
+};
+const NewsFeedCarousel = props => {
+  const {
+    state,
+    handleItems,
+    handleAnimate,
+    handlePrevious,
+    handleGoto,
+    handleNext
+  } = useNewsFeed();
+  const {
+    isLoading,
+    carouselItems,
+    cardItems,
+    activeIndex
+  } = state;
+  const createCarouselItems = carouselItems.map((item, index) => {
     return (
-      <CarouselItem onExiting={() => setAnimating(true)} onExited={() => setAnimating(false)} key={item.key}>
-        <img src={item.src} alt={item.alt} />
+      <CarouselItem onExiting={() => handleAnimate(true)} onExited={() => handleAnimate(false)} key={index}>
+        <FirebaseImage imageURL={item.imageUrl} alt={item.header} />
         <CarouselCaption captionText={item.caption} captionHeader={item.header} />
       </CarouselItem>
     );
   });
   useEffect(() => {
-    const createNewsFeed = (text, index, isCard) => {
-      return {
-        src: isCard
-          ? '//placehold.it/290x163/cccccc/ffffff'
-          : '//placehold.it/760x427/cccccc/ffffff',
-        alt: `${text} Alt`,
-        header: `${text} ${isCard
-          ? 'A mates\' trip to New York, a rugby team and a stag party - NZ\'s 16 Covid-19 clusters'
-          : 'Covid 19 coronavirus: So we are moving into level 3 - what does that mean for you?'}`,
-        caption: `${text} Caption`,
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        key: `${index}`
-      };
-    };
-    const getNewsFeeds = (count, isCard) => {
-      const newsFeeds = [];
-      for (let i = 0; i < count; i++) {
-        newsFeeds.push(createNewsFeed(`Slide ${i + 1}`, i, isCard));
-      }
-      return newsFeeds;
-    };
     const getDbNewsFeeds = async () => {
-      setIsLoading(true);
-      const dbNewsFeedsForCarousel = getNewsFeeds(15); // await props.firebase.getDbNewsFeedsAsArray();
-      setCarouselItems(dbNewsFeedsForCarousel);
-      const dbNewsFeedsForCardDeck = getNewsFeeds(15, true);
-      setCardItems(dbNewsFeedsForCardDeck);
-      setIsRefreshingItems(false);
-      handleNext();
-      setIsLoading(false);
+      const dbNewsFeeds = await props.firebase.getDbNewsFeedsAsArray();
+      // console.log(`dbNewsFeeds: ${JSON.stringify(dbNewsFeeds, null, 2)}`);
+      handleItems(dbNewsFeeds);
     };
-    if (isRefreshingItems) {
+    if (isLoading) {
       getDbNewsFeeds();
     }
   });
   return (
     isLoading
-      ? <div />
+      ? <LoadingSpinner />
       : <>
         <div className="news-feed-carousel">
-          <Carousel activeIndex={activeIndex} next={handleNext} previous={handlePrevious}>
-            <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleCarouselIndicatorsClick} />
+          <Carousel interval={5000} activeIndex={activeIndex} next={handleNext} previous={handlePrevious}>
+            <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleGoto} />
             {createCarouselItems}
           </Carousel>
           <div className="news-feed-sidebar col-sm-4 px-0 bg-primary">
             <ul>
               {
-                carouselItems.map((uncontrolledCarouselItem, index) => {
+                carouselItems.map((carouselItem, index) => {
                   return (
                     <li onClick={async e => {
                       e.preventDefault();
-                      handleCarouselIndicatorsClick(index);
+                      handleGoto(index);
                     }} className="news-feed-sidebar-item" key={index}>
-                      <h4>{uncontrolledCarouselItem.header}</h4>
+                      <h4>{carouselItem.header}</h4>
                     </li>
                   );
                 })
@@ -128,7 +242,7 @@ const NewsFeedCarousel = () => {
                       <CardHeader>
                         <CardTitle>{cardItem.header}</CardTitle>
                       </CardHeader>
-                      <CardImg src={cardItem.src} alt={cardItem.alt} />
+                      <FirebaseImage className="card-img" imageURL={cardItem.imageUrl} alt={cardItem.header} />
                       <CardBody className="text-left bg-light">
                         <h6>{cardItem.caption}</h6>
                         <CardText className="small d-inline-block block-with-text" >{cardItem.content}</CardText>
@@ -145,4 +259,4 @@ const NewsFeedCarousel = () => {
   );
 };
 
-export default NewsFeedCarousel;
+export default withFirebase(NewsFeedCarousel);
