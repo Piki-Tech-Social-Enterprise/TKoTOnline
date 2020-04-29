@@ -115,5 +115,9 @@ firebase-debug.log*
 .firebaserc
 database.rules.json
 firebase.json
+storage.rules
+cors.dev.json
+cors.test.json
+cors.json
 
-package-lock.json
+# package-lock.json

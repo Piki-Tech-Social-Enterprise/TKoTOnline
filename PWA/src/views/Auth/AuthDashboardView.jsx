@@ -29,6 +29,7 @@ import {
   dashboardAllProductsChart,
   dashboard24HoursPerformanceChart
 } from 'variables/charts.jsx';
+import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 
 const AuthDashboardView = props => {
   return (
@@ -358,4 +359,6 @@ const AuthDashboardView = props => {
   );
 };
 
-export default AuthDashboardView;
+const condition = authUser => !!authUser && !!authUser.active;
+
+export default withAuthorization(condition)(AuthDashboardView);

@@ -32,6 +32,10 @@ import Firebase, {
   FirebaseContext
 } from './components/Firebase';
 
+if (process.env.NODE_ENV === 'production') {
+  window['console']['log'] = () => { };
+}
+
 const hist = createBrowserHistory();
 
 ReactDOM.render(

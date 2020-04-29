@@ -27,18 +27,18 @@ class UserRepository extends BaseRepository {
 
   saveDbUser = async (user, saveDbUser_completed) => {
     const {
-        active,
-        created,
-        createdBy,
-        displayName,
-        email,
-        photoURL,
-        providerData,
-        roles,
-        uid,
-        updated,
-        updatedBy
-      } = user,
+      active,
+      created,
+      createdBy,
+      displayName,
+      email,
+      photoURL,
+      providerData,
+      roles,
+      uid,
+      updated,
+      updatedBy
+    } = user,
       existingDbUser = await this.getDbUser(uid),
       now = new Date();
     let errorMessage = null,
@@ -57,7 +57,7 @@ class UserRepository extends BaseRepository {
           photoURL: photoURL || dbUser.photoURL || '',
           providerData: providerData || dbUser.providerData || {},
           roles: roles || dbUser.roles || {
-              undefinedRole
+            undefinedRole
           },
           uid: uid,
           updated: updated || now.toString(),

@@ -1,20 +1,20 @@
 @import 'now-ui-dashboard/variables';
 @import 'now-ui-dashboard/mixins';
 
-.clear-filter{
+.clear-filter {
   &:after,
-  &:before{
-      display: none;
+  &:before {
+    display: none;
   }
-  &[filter-color="orange"]{
-      @include linear-gradient(rgba($black-color,.20), rgba(224, 23, 3, 0.6));
+  &[filter-color='orange'] {
+    @include linear-gradient(rgba($black-color, 0.2), rgba(224, 23, 3, 0.6));
   }
 }
-.clear-filter[filter-color="blue"] {
-  @include linear-gradient(rgba($black-color,.20), rgba(3, 161, 224, 0.6));
+.clear-filter[filter-color='blue'] {
+  @include linear-gradient(rgba($black-color, 0.2), rgba(3, 161, 224, 0.6));
 }
 .bg-panel {
-  background-color: rgba($black-color,.8);
+  background-color: rgba($black-color, 0.8);
 }
 .login-view,
 .register-view {
@@ -58,4 +58,28 @@
     color: $white-color;
     text-decoration: none;
   }
+}
+.sidebar {
+  .logo {
+    padding: 1.15rem 0.7rem;
+  }
+}
+.panel-header-xs {
+  height: 0;
+  padding-top: 1rem;
+}
+.table {
+  > thead > tr > th {
+    font-size: 1em;
+    padding: 0;
+  }
+  .clickable,
+  > thead > tr > th.sort-column {
+    cursor: pointer;
+  }
+}
+:disabled,
+[disabled],
+.disabled {
+  cursor: not-allowed !important;
 }

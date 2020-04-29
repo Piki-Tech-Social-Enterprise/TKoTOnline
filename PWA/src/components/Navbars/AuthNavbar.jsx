@@ -35,38 +35,62 @@ const AuthNavbar = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [color, setColor] = useState('transparent');
   const {
-    firebase
+    firebase,
+    history
   } = props;
-  const sidebarToggle = createRef();
-  const toggle = () => {
+  const sidebarToggleRef = createRef();
+  const handleNavbarToggleClick = () => {
     setColor(isOpen
       ? 'transparent'
       : 'white');
     setIsOpen(!isOpen);
   };
   const dropdownToggle = async e => {
+    e.preventDefault();
     setDropdownOpen(!dropdownOpen);
   };
   const getBrand = () => {
-    var name;
-    props.routes.map((prop, key) => {
-      if (prop.collapse) {
-        prop.views.map((prop, key) => {
-          if (prop.path === props.location.pathname) {
-            name = prop.name;
+    const {
+      routes,
+      location,
+      match
+    } = props;
+    const {
+      pathname
+    } = location;
+    const isMatch = (routeLayout, routePath, pathName) => {
+      console.log(`routeLayout: ${routeLayout}, routePath: ${routePath}, pathname: ${pathname}`);
+      let fullRoutePath = `${routeLayout}${routePath}`;
+      if (fullRoutePath === pathName) {
+        return true;
+      }
+      const  {
+        params
+      } = match;
+      console.log(`params: ${JSON.stringify(params, null, 2)}`);
+      let isParamAMatch = false;
+      Object.keys(params).map(paramKey => {
+        const param = params[paramKey];
+        console.log(`routeLayout: ${routeLayout}, paramKey: ${paramKey}, param: ${param}, pathname: ${pathname}`);
+        fullRoutePath = `${routeLayout}${routePath.replace(paramKey, param)}`;
+        if (!isParamAMatch && fullRoutePath === pathName) {
+          isParamAMatch = true;
+        }
+        return null;
+      });
+      return isParamAMatch;
+    };
+    let name = null;
+    routes.map(route => {
+      if (route.collapse) {
+        route.views.map(view => {
+          if (view.path === pathname) {
+            name = view.name;
           }
           return null;
         });
-      } else {
-        if (prop.redirect) {
-          if (prop.path === props.location.pathname) {
-            name = prop.name;
-          }
-        } else {
-          if (prop.path === props.location.pathname) {
-            name = prop.name;
-          }
-        }
+      } else if (isMatch(route.layout, route.path, pathname)) {
+        name = route.name;
       }
       return null;
     });
@@ -74,18 +98,23 @@ const AuthNavbar = props => {
   };
   const openSidebar = () => {
     document.documentElement.classList.toggle('nav-open');
-    sidebarToggle.current.classList.toggle('toggled');
+    sidebarToggleRef.current.classList.toggle('toggled');
   };
   const updateColor = () => {
     setColor(window.innerWidth < 993 && isOpen
       ? 'white'
       : 'transparent');
   };
+  const handleLogoutClick = async e => {
+    e.preventDefault();
+    await firebase.signOut();
+    history.push('/');
+  };
   useWindowEvent('resize', updateColor);
   useEffect(() => {
     const {
       classList: sidebarToggleCssClasses
-    } = sidebarToggle.current;
+    } = sidebarToggleRef.current;
     return () => {
       if (
         window.innerWidth < 993 &&
@@ -96,7 +125,7 @@ const AuthNavbar = props => {
         sidebarToggleCssClasses.toggle('toggled');
       }
     };
-  }, [props, sidebarToggle]);
+  }, [props, sidebarToggleRef]);
   return (
     <Navbar
       color={
@@ -109,18 +138,15 @@ const AuthNavbar = props => {
         props.location.pathname.indexOf('full-screen-maps') !== -1
           ? 'navbar-absolute fixed-top'
           : 'navbar-absolute fixed-top ' +
-          (color === 'transparent' ? 'navbar-transparent ' : '')
+          (color === 'transparent'
+            ? 'navbar-transparent '
+            : '')
       }
     >
       <Container fluid>
         <div className='navbar-wrapper'>
           <div className='navbar-toggle'>
-            <button
-              type='button'
-              ref={sidebarToggle}
-              className='navbar-toggler'
-              onClick={openSidebar}
-            >
+            <button type='button' ref={sidebarToggleRef} className='navbar-toggler' onClick={openSidebar}>
               <span className='navbar-toggler-bar bar1' />
               <span className='navbar-toggler-bar bar2' />
               <span className='navbar-toggler-bar bar3' />
@@ -128,16 +154,12 @@ const AuthNavbar = props => {
           </div>
           <NavbarBrand href='/'>{getBrand()}</NavbarBrand>
         </div>
-        <NavbarToggler onClick={toggle}>
+        <NavbarToggler onClick={handleNavbarToggleClick}>
           <span className='navbar-toggler-bar navbar-kebab' />
           <span className='navbar-toggler-bar navbar-kebab' />
           <span className='navbar-toggler-bar navbar-kebab' />
         </NavbarToggler>
-        <Collapse
-          isOpen={isOpen}
-          navbar
-          className='justify-content-end'
-        >
+        <Collapse isOpen={isOpen} navbar className='justify-content-end'>
           <form>
             <InputGroup className='no-border'>
               <Input placeholder='Search...' />
@@ -157,11 +179,7 @@ const AuthNavbar = props => {
                 </p>
               </Link>
             </NavItem>
-            <Dropdown
-              nav
-              isOpen={dropdownOpen}
-              toggle={e => dropdownToggle(e)}
-            >
+            <Dropdown nav isOpen={dropdownOpen} toggle={e => dropdownToggle(e)}>
               <DropdownToggle caret nav>
                 <i className='now-ui-icons location_world' />
                 <p>
@@ -175,14 +193,10 @@ const AuthNavbar = props => {
               </DropdownMenu>
             </Dropdown>
             <NavItem>
-              <Link to='#pablo' className='nav-link' onClick={async e => {
-                e.preventDefault();
-                await firebase.signOut();
-                props.history.push('/');
-              }}>
+              <Link to='#pablo' className='nav-link' onClick={handleLogoutClick}>
                 <i className='now-ui-icons sport_user-run' />
                 <p>
-                  <span className='d-lg-none d-md-block'>LogOut</span>
+                  <span className='d-lg-none d-md-block'>Logout</span>
                 </p>
               </Link>
             </NavItem>
