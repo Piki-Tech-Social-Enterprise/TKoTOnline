@@ -144,6 +144,13 @@
   }
 }
 
+.community-links {
+  column-count: 4;
+  a {
+    color: black;
+  }
+}
+
 @mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
   overflow: hidden;
   position: relative;
