@@ -9,7 +9,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import PerfectScrollbar from 'perfect-scrollbar';
+// import PerfectScrollbar from 'perfect-scrollbar';f
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import AuthSidebar from 'components/Sidebar/AuthSidebar';
 import AuthNavbar from 'components/Navbars/AuthNavbar';
@@ -87,7 +87,7 @@ const AuthLayout = props => {
       platform
     } = navigator;
     const platformWin = 'Win';
-    let perfectScrollbar;
+    // let perfectScrollbar;
     const {
       classList: bodyCssClasses
     } = document.body;
@@ -99,7 +99,7 @@ const AuthLayout = props => {
     } = props;
     if (isLoading) {
       if (platform.indexOf(platformWin) > -1) {
-        perfectScrollbar = new PerfectScrollbar(mainPanel.current);
+        // perfectScrollbar = new PerfectScrollbar(mainPanel.current);
         bodyCssClasses.toggle(perfectScrollbarOn);
       }
       if (history.action === pushAction) {
@@ -117,7 +117,7 @@ const AuthLayout = props => {
     }
     return () => {
       if (platform.indexOf(platformWin) > -1) {
-        perfectScrollbar.destroy();
+        // perfectScrollbar.destroy();
         bodyCssClasses.toggle(perfectScrollbarOn);
       }
       if (isLoading) {
