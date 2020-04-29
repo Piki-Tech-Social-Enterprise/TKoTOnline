@@ -27,7 +27,7 @@ const withAuthentication = Component => {
       })();
       setIsLoading(false);
       return () => {
-        listener();
+        listener && listener();
       };
     }, [props, setAuthUser]);
     return (
