@@ -1,16 +1,124 @@
 import React, {
-    useState,
-    useEffect
-  } from 'react';
-  
-  const AuthCommunityLinksView = props => {
+  useState,
+  useEffect
+} from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody
+} from 'reactstrap';
+import {
+  BootstrapTable,
+  TableHeaderColumn,
+  InsertButton
+} from 'react-bootstrap-table';
+import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
+import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
+import StatusBadge from 'components/App/StatusBadge';
 
-    return (
-      <>
-      <h1>Community links</h1>
-      </>
-    )
+const AuthCommunityLinksView = props => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [CommunityLinksAsArray, setCommunityLinksAsArray] = useState([]);
+  useEffect(() => {
+    const retrieveCommunityLinks = async () => {
+      const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
+      setCommunityLinksAsArray(dbCommunityLinksAsArray);
+    };
+    if (isLoading) {
+      retrieveCommunityLinks();
+    }
+    return () => {
+      if (isLoading) {
+        setIsLoading(false);
+      }
+    };
+  }, [props, isLoading, setIsLoading, setCommunityLinksAsArray]);
+  const handleSortChange = async (sortName, sortOrder) => {
+    CommunityLinksAsArray.sort((a, b) => {
+      const aValue = a[sortName];
+      const bValue = b[sortName];
+      return (
+        (aValue > bValue)
+          ? (sortOrder === 'asc')
+            ? 1
+            : -1
+          : (bValue > aValue)
+            ? (sortOrder === 'asc')
+              ? -1
+              : 1
+            : 0
+      );
+    });
   };
-  
-  export default AuthCommunityLinksView;
-  
+  const createCustomInsertButton = onClick => (
+    <InsertButton btnText="Add New" onClick={() => handleAddCommunityLinksClick(onClick)} />
+  );
+  const handleAddCommunityLinksClick = async onClick => {
+    props.history.push(`/auth/CommunityLinks/New`);
+    onClick();
+  };
+  const handleCommunityLinksRowClick = async row => {
+    props.history.push(`/auth/CommunityLinks/${row.nfid}`);
+  };
+  const handleChildUpdate = updatedChildState => {
+    const indexOfDbCommunityLinks = CommunityLinksAsArray.findIndex(dbCommunityLinks => dbCommunityLinks.nfid === updatedChildState.dbId);
+    if (indexOfDbCommunityLinks > -1) {
+      if (typeof updatedChildState.dbActive === 'boolean') {
+        CommunityLinksAsArray[indexOfDbCommunityLinks].active = updatedChildState.dbActive;
+      }
+      setCommunityLinksAsArray(CommunityLinksAsArray);
+    }
+  }
+  return (
+    <>
+      <div className="panel-header panel-header-xs" />
+      <Container className="content mt-5">
+        <Row>
+          <Col>
+            <Card>
+              <CardBody className="table-responsive">
+                {
+                  isLoading
+                    ? <LoadingOverlayModal />
+                    : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
+                      trClassName="clickable"
+                      tableHeaderClass="text-primary"
+                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      search pagination options={{
+                        defaultSortName: 'header',
+                        hideSizePerPage: true,
+                        noDataText: 'No News Feeds found.',
+                        onSortChange: handleSortChange,
+                        insertBtn: createCustomInsertButton,
+                        onRowClick: handleCommunityLinksRowClick
+                      }}>
+                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="caption" dataSort>Caption</TableHeaderColumn>
+                      <TableHeaderColumn dataField="content" dataSort>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="News Feed"
+                          dbId={row.nfid}
+                          dbIdName="nfid"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbCommunityLinks}
+                          onChildUpdate={handleChildUpdate}
+                        />
+                      )}>Status</TableHeaderColumn>
+                    </BootstrapTable>
+                }
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
+};
+
+const condition = authUser => !!authUser && !!authUser.active;
+
+export default withAuthorization(condition)(AuthCommunityLinksView);
