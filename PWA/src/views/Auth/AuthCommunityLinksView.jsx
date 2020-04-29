@@ -94,9 +94,8 @@ const AuthCommunityLinksView = props => {
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleCommunityLinksRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="caption" dataSort>Caption</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort>Content</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="linkName" dataSort>Link Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="link" dataSort>Link</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"

@@ -7,70 +7,179 @@ import {
   Row,
   Col,
   Card,
-  CardBody
+  CardBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  CustomInput,
+  Button
 } from 'reactstrap';
-import {
-  BootstrapTable,
-  TableHeaderColumn,
-  InsertButton
-} from 'react-bootstrap-table';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
-import StatusBadge from 'components/App/StatusBadge';
+import swal from 'sweetalert2';
+import {
+  formatBytes,
+  formatInteger
+} from 'components/App/Utilities';
 
-const AuthCommunityLinksView = props => {
+const communityLinkKeyFormat = '{clid}';
+const INITIAL_STATE = {
+  active: true,
+  link: '',
+  linkName: '',
+  clid: null
+};
+const AuthCommunityLinkView = props => {
+  const isNew = props.match.params.clid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [CommunityLinksAsArray, setCommunityLinksAsArray] = useState([]);
+  const [communityLink, setcommunityLink] = useState(INITIAL_STATE);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleChange = async e => {
+    const {
+      name,
+      value,
+      checked
+    } = e.target;
+    const checkedNames = ['active'];
+    const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
+    setcommunityLink(nf => ({
+      ...nf,
+      [name]: useChecked
+        ? checked
+        : value
+    }));
+  };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const maxImageFileSize = 2097152;
+    const now = new Date();
+    const {
+      authUser,
+      firebase
+    } = props;
+    const {
+      uid
+    } = authUser;
+    const {
+      active,
+      link,
+      linkName,
+    } = communityLink;
+    let clid = communityLink.clid;
+    let displayType = 'success';
+    let displayTitle = 'Update Community link Successful';
+    let displayMessage = 'Changes saved';
+    try {
+      if (!linkName || !link) {
+        displayMessage = 'The Link Name and link fields are required.';
+      } else {
+          if (isNew) {
+            clid = await firebase.saveDbCommunityLink({});
+          }
+          await firebase.saveDbCommunityLink({
+            active: active,
+            created: now.toString(),
+            createdBy: uid,
+            link,
+            linkName,
+            clid: clid,
+            updated: now.toString(),
+            updatedBy: uid
+          });
+          if (isNew) {
+            handleGotoParentList();
+          }
+        }
+    } catch (error) {
+      displayType = 'error';
+      displayTitle = 'Update Community link Failed';
+      displayMessage = `${error.message}`;
+    } finally {
+      setIsSubmitting(false);
+    }
+    if (displayMessage) {
+      swal.fire({
+        type: displayType,
+        title: displayTitle,
+        html: displayMessage
+      });
+    }
+  };
+  const handleDeleteClick = async e => {
+    e.preventDefault();
+    let result = null;
+    let displayMessage = null;
+    try {
+      result = await swal.fire({
+        type: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to undo this!",
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn btn-outline-danger',
+          cancelButton: 'btn btn-outline-link',
+        }
+      });
+      if (!!result.value) {
+        const {
+          firebase,
+          match
+        } = props;
+        const {
+          clid
+        } = match.params;
+        await firebase.deleteDbcommunityLink(clid);
+        swal.fire({
+          type: 'success',
+          title: 'Delete Community link Successful',
+          text: 'Your Community link has been deleted.'
+        });
+        handleGotoParentList();
+      }
+    } catch (error) {
+      displayMessage = error.message;
+    }
+    if (displayMessage) {
+      swal.fire({
+        type: 'error',
+        title: 'Delete Community link Error',
+        html: displayMessage
+      });
+      console.log(`Delete Community link Error: ${displayMessage}`);
+    }
+  };
+  const handleGotoParentList = () => {
+    props.history.push('/auth/communityLinks');
+  };
   useEffect(() => {
-    const retrieveCommunityLinks = async () => {
-      const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
-      setCommunityLinksAsArray(dbCommunityLinksAsArray);
+    const retrievecommunityLink = async () => {
+      const dbcommunityLink = await props.firebase.getDbcommunityLinkValue(props.match.params.clid);
+      const {
+        active,
+        link,
+        linkName,
+        clid
+      } = dbcommunityLink;
+      setcommunityLink({
+        active,
+        link,
+        linkName,
+        clid
+      });
     };
     if (isLoading) {
-      retrieveCommunityLinks();
+      if (!isNew) {
+        retrievecommunityLink();
+      }
     }
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setCommunityLinksAsArray]);
-  const handleSortChange = async (sortName, sortOrder) => {
-    CommunityLinksAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
-  };
-  const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddCommunityLinkClick(onClick)} />
-  );
-  const handleAddCommunityLinkClick = async onClick => {
-    props.history.push(`/auth/CommunityLinks/New`);
-    onClick();
-  };
-  const handleCommunityLinkRowClick = async row => {
-    props.history.push(`/auth/CommunityLinks/${row.nfid}`);
-  };
-  const handleChildUpdate = updatedChildState => {
-    const indexOfDbCommunityLink = CommunityLinksAsArray.findIndex(dbCommunityLink => dbCommunityLink.nfid === updatedChildState.dbId);
-    if (indexOfDbCommunityLink > -1) {
-      if (typeof updatedChildState.dbActive === 'boolean') {
-        CommunityLinksAsArray[indexOfDbCommunityLink].active = updatedChildState.dbActive;
-      }
-      setCommunityLinksAsArray(CommunityLinksAsArray);
-    }
-  }
+  }, [props, isNew, isLoading, setIsLoading]);
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -78,37 +187,29 @@ const AuthCommunityLinksView = props => {
         <Row>
           <Col>
             <Card>
-              <CardBody className="table-responsive">
+              {/* <h3>Community link</h3> */}
+              <CardBody>
                 {
                   isLoading
                     ? <LoadingOverlayModal />
-                    : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
-                      trClassName="clickable"
-                      tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
-                      search pagination options={{
-                        defaultSortName: 'header',
-                        hideSizePerPage: true,
-                        noDataText: 'No News Feeds found.',
-                        onSortChange: handleSortChange,
-                        insertBtn: createCustomInsertButton,
-                        onRowClick: handleCommunityLinkRowClick
-                      }}>
-                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="caption" dataSort>Caption</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort>Content</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
-                        <StatusBadge
-                          dbObjectName="News Feed"
-                          dbId={row.nfid}
-                          dbIdName="nfid"
-                          dbActive={cell}
-                          authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbCommunityLink}
-                          onChildUpdate={handleChildUpdate}
-                        />
-                      )}>Status</TableHeaderColumn>
-                    </BootstrapTable>
+                    : <Form noValidate onSubmit={handleSubmit}>
+                      <FormGroup>
+                        <Label>Link Name</Label>
+                        <Input placeholder="Link name" name="linkName" value={communityLink.linkName} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Link</Label>
+                        <Input placeholder="link" name="link" value={communityLink.link} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <CustomInput label="Active" name="active" checked={communityLink.active} onChange={handleChange} type="switch" id="communityLinkActive" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 mr-3" disabled={isSubmitting}>Save</Button>
+                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                        <Button type="button" color="danger" size="lg" className="btn-round w-25" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                      </FormGroup>
+                    </Form>
                 }
               </CardBody>
             </Card>
@@ -121,4 +222,4 @@ const AuthCommunityLinksView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthCommunityLinksView);
+export default withAuthorization(condition)(AuthCommunityLinkView);

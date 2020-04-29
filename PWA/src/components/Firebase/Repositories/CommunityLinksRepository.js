@@ -48,11 +48,11 @@ class CommunityLinksRepository extends BaseRepository {
       created,
       createdBy,
       link,
-      title,
+      linkName,
       clid,
       updated,
       updatedBy
-    } = CommunityLinks;
+    } = communityLink;
     const now = new Date();
     let errorMessage = null;
     let existingDbCommunityLinks = await this.nityLinks(clid || '')
@@ -60,12 +60,12 @@ class CommunityLinksRepository extends BaseRepository {
     let dbCommunityLinks = null;
     if (!clid) {
       dbCommunityLinksRef = await existingDbCommunityLinks.push();
-      CommunityLinks = {
+      communityLink = {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
         link: link || '',
-        title: title || '',
+        linkName: linkName || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         clid: await dbCommunityLinksRef.getKey()
@@ -75,17 +75,17 @@ class CommunityLinksRepository extends BaseRepository {
       dbCommunityLinksRef = await existingDbCommunityLinks.once('value');
       dbCommunityLinks = await dbCommunityLinksRef.val();
       if (dbCommunityLinks) {
-        CommunityLinks = {
+        communityLink = {
           active: active || (typeof active === 'boolean' && active) || false,
           created: created || dbCommunityLinks.created,
           createdBy: createdBy || dbCommunityLinks.createdBy,
           link: link || dbCommunityLinks.link || '',
-          title: title || dbCommunityLinks.title || '',
+          linkName: linkName || dbCommunityLinks.title || '',
           clid: clid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbCommunityLinks.updatedBy
         };
-        existingDbCommunityLinks.set(CommunityLinks, saveDbCommunityLinks_completed);
+        existingDbCommunityLinks.set(communityLink, saveDbCommunityLink_completed);
       } else {
         errorMessage = 'Save Db CommunityLinks Error: clid (' + clid + ') not found.';
       }
@@ -94,7 +94,7 @@ class CommunityLinksRepository extends BaseRepository {
       console.log('Save Db CommunityLinks Error: ' + errorMessage);
       throw new Error(errorMessage);
     }
-    return CommunityLinks.clid;
+    return communityLink.clid;
   }
 
   deleteDbCommunityLink = async clid => {
