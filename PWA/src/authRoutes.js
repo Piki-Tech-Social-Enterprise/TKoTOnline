@@ -37,6 +37,30 @@ const authRoutes = [
   },
   {
     layout: '/auth',
+    path: '/Users',
+    name: 'Users',
+    component: lazy(() => import('views/Auth/AuthUsersView')),
+    exact: true,
+    iconLibrary: 'fas fa-users',
+    icon: '',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Users/:uid',
+    name: 'User',
+    component: lazy(() => import('views/Auth/AuthUserView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
     path: '/Dashboard',
     name: 'Dashboard',
     component: lazy(() => import('views/Auth/AuthDashboardView')),

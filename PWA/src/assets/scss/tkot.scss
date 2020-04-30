@@ -83,3 +83,8 @@
 .disabled {
   cursor: not-allowed !important;
 }
+.user-roles {
+  .custom-control-label {
+    padding-top: 0.18rem;
+  }
+}
