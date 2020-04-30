@@ -6,9 +6,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "chart.js": "^2.9.3",
+    "firebase": "^7.14.2",
     "moment": "2.24.0",
-    "node-sass": "4.13.1",
+    "node-sass": "4.14.0",
     "nouislider": "14.2.0",
     "react": "16.13.1",
     "react-bootstrap-switch": "15.5.3",

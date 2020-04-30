@@ -21,28 +21,29 @@ import swal from 'sweetalert2';
 import FirebaseInput from 'components/FirebaseInput';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
+import * as Roles from 'components/Domains/Roles';
 
-const newsFeedsRef = '/images/newsFeeds';
-const newsFeedKeyFormat = '{nfid}';
-const newsFeedFilenameFormat = '{filename}';
-const newsFeedImageFolderUrlFormat = `${newsFeedsRef}/${newsFeedKeyFormat}/`;
-const newsFeedImageUrlFormat = `${newsFeedImageFolderUrlFormat}${newsFeedFilenameFormat}`;
+const usersRef = '/images/users';
+const userKeyFormat = '{uid}';
+const userFilenameFormat = '{filename}';
+const userPhotoFolderUrlFormat = `${usersRef}/${userKeyFormat}/`;
+const userPhotoUrlFormat = `${userPhotoFolderUrlFormat}${userFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
-  caption: '',
-  content: '',
-  header: '',
-  imageUrl: '',
-  imageUrlFile: null,
-  isFeatured: false,
-  nfid: null
+  displayName: '',
+  roles: {},
+  email: '',
+  photoURL: '',
+  photoURLFile: null,
+  uid: null
 };
-const AuthNewsFeedView = props => {
-  const isNew = props.match.params.nfid === 'New';
+const AuthUserView = props => {
+  const isNew = props.match.params.uid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [newsFeed, setNewsFeed] = useState(INITIAL_STATE);
+  const [user, setUser] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
@@ -50,14 +51,35 @@ const AuthNewsFeedView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['isFeatured', 'active'];
+    const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setNewsFeed(nf => ({
-      ...nf,
-      [name]: useChecked
-        ? checked
-        : value
-    }));
+    const roles = Object.keys(Roles);
+    const isRole = roles.findIndex(role => role === name) > -1;
+    console.log(`name: ${name}, value: ${value}, checked: ${checked}, isRole: ${isRole}`);
+    if (isRole) {
+      const {
+        roles: activeRoles
+      } = user;
+      const newActiveRoles = {};
+      roles.map(role => {
+        const isActveRole = Object.keys(activeRoles).findIndex(activeRole => activeRole === role) > -1;
+        if ((role === name && checked) || (role !== name && isActveRole)) {
+          newActiveRoles[role] = role;
+        }
+        return null;
+      });
+      setUser(u => ({
+        ...u,
+        roles: newActiveRoles
+      }));
+    } else {
+      setUser(u => ({
+        ...u,
+        [name]: useChecked
+          ? checked
+          : value
+      }));
+    }
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -69,54 +91,52 @@ const AuthNewsFeedView = props => {
       firebase
     } = props;
     const {
-      uid
+      uid: authUserId
     } = authUser;
     const {
       active,
-      caption,
-      content,
-      header,
-      imageUrlFile,
-      isFeatured
-    } = newsFeed;
-    let nfid = newsFeed.nfid;
-    let imageUrl = newsFeed.imageUrl;
+      displayName,
+      roles,
+      email,
+      photoURLFile
+    } = user;
+    let uid = user.uid;
+    let photoURL = user.photoURL;
     let displayType = 'success';
-    let displayTitle = 'Update News Feed Successful';
+    let displayTitle = 'Update User Successful';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !caption || !content) {
-        displayMessage = 'The Image, Header, Caption, and Content fields are required.';
+      if (!photoURL || !email || !displayName || !roles) {
+        displayMessage = 'The Photo, Email, Display Name, and Roles fields are required.';
       } else
-        if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
+        if (photoURLFile && photoURLFile.size > maxImageFileSize) {
           const {
             size
-          } = imageUrlFile;
+          } = photoURLFile;
           throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
         } else {
           if (isNew) {
-            nfid = await firebase.saveDbNewsFeed({});
-            if (imageUrlFile && imageUrlFile.name) {
-              imageUrl = newsFeedImageUrlFormat
-                .replace(newsFeedKeyFormat, nfid)
-                .replace(newsFeedFilenameFormat, imageUrlFile.name);
+            uid = await firebase.saveDbUser({});
+            if (photoURLFile && photoURLFile.name) {
+              photoURL = userPhotoUrlFormat
+                .replace(userKeyFormat, uid)
+                .replace(userFilenameFormat, photoURLFile.name);
             }
           }
-          await firebase.saveDbNewsFeed({
+          await firebase.saveDbUser({
             active: active,
             created: now.toString(),
-            createdBy: uid,
-            caption,
-            content,
-            header,
-            imageUrl,
-            isFeatured,
-            nfid: nfid,
+            createdBy: authUserId,
+            displayName,
+            roles,
+            email,
+            photoURL,
+            uid: uid,
             updated: now.toString(),
-            updatedBy: uid
+            updatedBy: authUserId
           });
-          if (imageUrlFile) {
-            await firebase.saveStorageFile(imageUrl, imageUrlFile);
+          if (photoURLFile) {
+            await firebase.saveStorageFile(photoURL, photoURLFile);
           }
           if (isNew) {
             handleGotoParentList();
@@ -124,7 +144,7 @@ const AuthNewsFeedView = props => {
         }
     } catch (error) {
       displayType = 'error';
-      displayTitle = 'Update News Feed Failed';
+      displayTitle = 'Update User Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
@@ -158,16 +178,16 @@ const AuthNewsFeedView = props => {
           match
         } = props;
         const {
-          nfid
+          uid
         } = match.params;
-        const newsFeedImageFolderUrl = newsFeedImageFolderUrlFormat.replace(newsFeedKeyFormat, nfid);
-        const storageFiles = await firebase.getStorageFiles(newsFeedImageFolderUrl);
+        const userPhotoFolderUrl = userPhotoFolderUrlFormat.replace(userKeyFormat, uid);
+        const storageFiles = await firebase.getStorageFiles(userPhotoFolderUrl);
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
-        await firebase.deleteDbNewsFeed(nfid);
+        await firebase.deleteDbUser(uid);
         swal.fire({
           type: 'success',
-          title: 'Delete News Feed Successful',
-          text: 'Your News Feed has been deleted.'
+          title: 'Delete User Successful',
+          text: 'Your User has been deleted.'
         });
         handleGotoParentList();
       }
@@ -177,50 +197,48 @@ const AuthNewsFeedView = props => {
     if (displayMessage) {
       swal.fire({
         type: 'error',
-        title: 'Delete News Feed Error',
+        title: 'Delete User Error',
         html: displayMessage
       });
-      console.log(`Delete News Feed Error: ${displayMessage}`);
+      console.log(`Delete User Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
-    props.history.push('/auth/NewsFeeds');
+    props.history.push('/auth/Users');
   };
-  const handleImageUrlFileChange = async e => {
+  const handlePhotoUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
-      const imageUrlFile = e.target.files[0];
-      setNewsFeed(nf => ({
-        ...nf,
-        imageUrlFile: imageUrlFile
+      const photoURLFile = e.target.files[0];
+      setUser(u => ({
+        ...u,
+        photoURLFile: photoURLFile
       }));
     }
   };
   useEffect(() => {
-    const retrieveNewsFeed = async () => {
-      const dbNewsFeed = await props.firebase.getDbNewsFeedValue(props.match.params.nfid);
+    const retrieveUser = async () => {
+      const dbUser = await props.firebase.getDbUserValue(props.match.params.uid);
       const {
         active,
-        caption,
-        content,
-        header,
-        imageUrl,
-        isFeatured,
-        nfid
-      } = dbNewsFeed;
-      setNewsFeed({
+        displayName,
+        roles,
+        email,
+        photoURL,
+        uid
+      } = dbUser;
+      setUser({
         active,
-        caption,
-        content,
-        header,
-        imageUrl,
-        isFeatured,
-        nfid
+        displayName,
+        roles,
+        email,
+        photoURL,
+        uid
       });
     };
     if (isLoading) {
       if (!isNew) {
-        retrieveNewsFeed();
+        retrieveUser();
       }
     }
     return () => {
@@ -236,48 +254,51 @@ const AuthNewsFeedView = props => {
         <Row>
           <Col>
             <Card>
-              {/* <h3>News Feed</h3> */}
+              {/* <h3>User</h3> */}
               <CardBody>
                 {
                   isLoading
                     ? <LoadingOverlayModal />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
-                        <Label>Image</Label>
+                        <Label>Photo</Label>
                         <FirebaseInput
-                          value={newsFeed.imageUrl}
+                          value={user.photoURL}
                           onChange={handleChange}
                           downloadURLInputProps={{
-                            id: 'imageUrl',
-                            name: 'imageUrl',
-                            placeholder: 'Image',
+                            id: 'photoURL',
+                            name: 'photoURL',
+                            placeholder: 'Photo',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                          downloadURLFileInputOnChange={handleImageUrlFileChange}
-                          downloadURLFormat={newsFeedImageUrlFormat}
-                          downloadURLFormatKeyName={newsFeedKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.nfid}
-                          downloadURLFormatFileName={newsFeedFilenameFormat}
+                          downloadURLFileInputOnChange={handlePhotoUrlFileChange}
+                          downloadURLFormat={userPhotoUrlFormat}
+                          downloadURLFormatKeyName={userKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.uid}
+                          downloadURLFormatFileName={userFilenameFormat}
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Header</Label>
-                        <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
+                        <Label>Email</Label>
+                        <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Caption</Label>
-                        <Input placeholder="Caption" name="caption" value={newsFeed.caption} onChange={handleChange} type="text" />
+                        <Label>Display Name</Label>
+                        <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup className="user-roles">
+                        <Label>Roles</Label><br />
+                        {
+                          Object.keys(Roles).map(role => {
+                            if (role === 'undefinedRole') return null;
+                            return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
+                          })
+                        }
                       </FormGroup>
                       <FormGroup>
-                        <Label>Content</Label>
-                        <Input placeholder="Content" name="content" value={newsFeed.content} onChange={handleChange} type="textarea" rows="3" />
-                      </FormGroup>
-                      <FormGroup>
-                        <CustomInput label="Is Featured?" bsSize="lg" name="isFeatured" checked={newsFeed.isFeatured} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
-                      </FormGroup>
-                      <FormGroup>
-                        <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
+                        <Label>Active</Label><br />
+                        <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 mr-3" disabled={isSubmitting}>Save</Button>
@@ -297,4 +318,4 @@ const AuthNewsFeedView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthNewsFeedView);
+export default withAuthorization(condition)(AuthUserView);

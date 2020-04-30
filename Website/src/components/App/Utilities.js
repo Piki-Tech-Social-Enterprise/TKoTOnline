@@ -74,11 +74,6 @@ const formatBytes = (bytes, dp = 2) => {
 const formatInteger = (integer) => (
   integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 );
-const fromCamelcaseToTitlecase = camelCase => (
-  camelCase
-    .replace(/([A-Z])/g, match => ` ${match}`)
-    .replace(/^./, match => match.toUpperCase())
-);
 export default shallowCompare;
 export {
   useWindowEvent,
@@ -86,6 +81,5 @@ export {
   isEmptyObject,
   handleLoadBlob,
   formatBytes,
-  formatInteger,
-  fromCamelcaseToTitlecase
+  formatInteger
 };

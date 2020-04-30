@@ -14,30 +14,29 @@ import {
   TableHeaderColumn,
   InsertButton
 } from 'react-bootstrap-table';
-import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 
-const AuthNewsFeedsView = props => {
+const AuthCommunityLinksView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [newsFeedsAsArray, setNewsFeedsAsArray] = useState([]);
+  const [CommunityLinksAsArray, setCommunityLinksAsArray] = useState([]);
   useEffect(() => {
-    const retrieveNewsFeeds = async () => {
-      const dbNewsFeedsAsArray = await props.firebase.getDbNewsFeedsAsArray(true);
-      setNewsFeedsAsArray(dbNewsFeedsAsArray);
+    const retrieveCommunityLinks = async () => {
+      const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
+      setCommunityLinksAsArray(dbCommunityLinksAsArray);
     };
     if (isLoading) {
-      retrieveNewsFeeds();
+      retrieveCommunityLinks();
     }
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setNewsFeedsAsArray]);
+  }, [props, isLoading, setIsLoading, setCommunityLinksAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    newsFeedsAsArray.sort((a, b) => {
+    CommunityLinksAsArray.sort((a, b) => {
       const aValue = a[sortName];
       const bValue = b[sortName];
       return (
@@ -54,22 +53,22 @@ const AuthNewsFeedsView = props => {
     });
   };
   const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddNewsFeedClick(onClick)} />
+    <InsertButton btnText="Add New" onClick={() => handleAddCommunityLinksClick(onClick)} />
   );
-  const handleAddNewsFeedClick = async onClick => {
-    props.history.push(`/auth/NewsFeeds/New`);
+  const handleAddCommunityLinksClick = async onClick => {
+    props.history.push(`/auth/CommunityLinks/New`);
     onClick();
   };
-  const handleNewsFeedRowClick = async row => {
-    props.history.push(`/auth/NewsFeeds/${row.nfid}`);
+  const handleCommunityLinksRowClick = async row => {
+    props.history.push(`/auth/CommunityLinks/${row.clid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbNewsFeed = newsFeedsAsArray.findIndex(dbNewsFeed => dbNewsFeed.nfid === updatedChildState.dbId);
-    if (indexOfDbNewsFeed > -1) {
+    const indexOfDbCommunityLinks = CommunityLinksAsArray.findIndex(dbCommunityLinks => dbCommunityLinks.clid === updatedChildState.dbId);
+    if (indexOfDbCommunityLinks > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        newsFeedsAsArray[indexOfDbNewsFeed].active = updatedChildState.dbActive;
+        CommunityLinksAsArray[indexOfDbCommunityLinks].active = updatedChildState.dbActive;
       }
-      setNewsFeedsAsArray(newsFeedsAsArray);
+      setCommunityLinksAsArray(CommunityLinksAsArray);
     }
   }
   return (
@@ -83,34 +82,28 @@ const AuthNewsFeedsView = props => {
                 {
                   isLoading
                     ? <LoadingOverlayModal />
-                    : <BootstrapTable data={newsFeedsAsArray} version="4" bordered={false} condensed hover
+                    : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No News Feeds found.',
+                        noDataText: 'No Community links found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
-                        onRowClick: handleNewsFeedRowClick
+                        onRowClick: handleCommunityLinksRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
-                      )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="caption" dataSort>Caption</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
-                        maxWidth: '250px'
-                      }}>Content</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="linkName" dataSort>Link Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="link" dataSort>Link</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
-                          dbObjectName="News Feed"
-                          dbId={row.nfid}
-                          dbIdName="nfid"
+                          dbObjectName="Community Link"
+                          dbId={row.clid}
+                          dbIdName="clid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbNewsFeed}
+                          onSaveDbObject={props.firebase.saveDbCommunityLink}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>
@@ -127,4 +120,4 @@ const AuthNewsFeedsView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthNewsFeedsView);
+export default withAuthorization(condition)(AuthCommunityLinksView);
