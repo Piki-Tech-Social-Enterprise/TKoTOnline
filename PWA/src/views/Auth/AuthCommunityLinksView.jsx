@@ -60,10 +60,10 @@ const AuthCommunityLinksView = props => {
     onClick();
   };
   const handleCommunityLinksRowClick = async row => {
-    props.history.push(`/auth/CommunityLinks/${row.nfid}`);
+    props.history.push(`/auth/CommunityLinks/${row.clid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbCommunityLinks = CommunityLinksAsArray.findIndex(dbCommunityLinks => dbCommunityLinks.nfid === updatedChildState.dbId);
+    const indexOfDbCommunityLinks = CommunityLinksAsArray.findIndex(dbCommunityLinks => dbCommunityLinks.clid === updatedChildState.dbId);
     if (indexOfDbCommunityLinks > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
         CommunityLinksAsArray[indexOfDbCommunityLinks].active = updatedChildState.dbActive;
@@ -89,7 +89,7 @@ const AuthCommunityLinksView = props => {
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No News Feeds found.',
+                        noDataText: 'No Community links found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleCommunityLinksRowClick
@@ -98,12 +98,12 @@ const AuthCommunityLinksView = props => {
                       <TableHeaderColumn dataField="link" dataSort>Link</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
-                          dbObjectName="News Feed"
-                          dbId={row.nfid}
-                          dbIdName="nfid"
+                          dbObjectName="Community Link"
+                          dbId={row.clid}
+                          dbIdName="clid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbCommunityLinks}
+                          onSaveDbObject={props.firebase.saveDbCommunityLink}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>

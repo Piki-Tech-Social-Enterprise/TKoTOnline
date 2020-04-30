@@ -36,7 +36,7 @@ class CommunityLinksRepository extends BaseRepository {
   }
 
   getDbCommunityLinkValue = async clid => {
-    const existingDbCommunityLinks = await this.nityLinks(clid);
+    const existingDbCommunityLinks = await this.getDbCommunityLinks(clid);
     const dbCommunityLinksRef = await existingDbCommunityLinks.once('value');
     const dbCommunityLinks = await dbCommunityLinksRef.val();
     return dbCommunityLinks;
@@ -55,7 +55,7 @@ class CommunityLinksRepository extends BaseRepository {
     } = communityLink;
     const now = new Date();
     let errorMessage = null;
-    let existingDbCommunityLinks = await this.nityLinks(clid || '')
+    let existingDbCommunityLinks = await this.getDbCommunityLink(clid || '')
     let dbCommunityLinksRef = null;
     let dbCommunityLinks = null;
     if (!clid) {
@@ -98,7 +98,7 @@ class CommunityLinksRepository extends BaseRepository {
   }
 
   deleteDbCommunityLink = async clid => {
-    const existingDbCommunityLinks = await this.nityLinks(clid);
+    const existingDbCommunityLinks = await this.getDbCommunityLink(clid);
     let errorMessage = null;
     if (existingDbCommunityLinks) {
       await existingDbCommunityLinks.remove();

@@ -189,9 +189,10 @@ const AuthNewsFeedView = props => {
   const handleImageUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
+      const imageUrlFile = e.target.files[0];
       setNewsFeed(nf => ({
         ...nf,
-        imageUrlFile: e.target.files[0]
+        imageUrlFile: imageUrlFile
       }));
     }
   };
@@ -250,12 +251,9 @@ const AuthNewsFeedView = props => {
                             id: 'imageUrl',
                             name: 'imageUrl',
                             placeholder: 'Image',
-                            type: 'text',
-                            disabled: isNew
+                            type: 'text'
                           }}
-                          downloadURLInputGroupAddonProps={{
-                            disabled: isNew
-                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
                           downloadURLFileInputOnChange={handleImageUrlFileChange}
                           downloadURLFormat={newsFeedImageUrlFormat}
                           downloadURLFormatKeyName={newsFeedKeyFormat}

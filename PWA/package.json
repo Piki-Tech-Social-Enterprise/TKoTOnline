@@ -8,10 +8,10 @@
     "axios": "^0.19.2",
     "bootstrap": "4.4.1",
     "chart.js": "2.9.3",
-    "firebase": "^7.14.0",
-    "googleapis": "^39.2.0",
+    "firebase": "^7.14.2",
+    "googleapis": "^49.0.0",
     "history": "4.10.1",
-    "node-sass": "4.13.1",
+    "node-sass": "4.14.0",
     "perfect-scrollbar": "1.5.0",
     "react": "16.13.1",
     "react-bootstrap-table": "^4.3.1",
@@ -23,6 +23,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
+    "sweetalert2": "^9.10.12",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {

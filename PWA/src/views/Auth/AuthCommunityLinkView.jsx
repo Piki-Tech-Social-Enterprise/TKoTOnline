@@ -18,12 +18,6 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import {
-  formatBytes,
-  formatInteger
-} from 'components/App/Utilities';
-
-const communityLinkKeyFormat = '{clid}';
 const INITIAL_STATE = {
   active: true,
   link: '',
@@ -37,9 +31,9 @@ const AuthCommunityLinkView = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
-      name,
-      value,
-      checked
+      link,
+      linkName,
+      active
     } = e.target;
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
@@ -53,7 +47,6 @@ const AuthCommunityLinkView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
-    const maxImageFileSize = 2097152;
     const now = new Date();
     const {
       authUser,
@@ -130,7 +123,7 @@ const AuthCommunityLinkView = props => {
         const {
           clid
         } = match.params;
-        await firebase.deleteDbcommunityLink(clid);
+        await firebase.deleteDbCommunityLink(clid);
         swal.fire({
           type: 'success',
           title: 'Delete Community link Successful',
@@ -155,7 +148,7 @@ const AuthCommunityLinkView = props => {
   };
   useEffect(() => {
     const retrievecommunityLink = async () => {
-      const dbcommunityLink = await props.firebase.getDbcommunityLinkValue(props.match.params.clid);
+      const dbcommunityLink = await props.firebase.getDbCommunityLinkValue(props.match.params.clid);
       const {
         active,
         link,
