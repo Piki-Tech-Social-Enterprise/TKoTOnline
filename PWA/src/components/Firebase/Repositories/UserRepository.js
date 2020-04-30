@@ -14,6 +14,26 @@ class UserRepository extends BaseRepository {
     return await this.db.ref('users');
   }
 
+  getDbUsersAsArray = async includeInactive => {
+    const existingDbUsers = await this.getDbUsers();
+    const dbUsersRef = !includeInactive
+      ? await existingDbUsers
+        .orderByChild('active')
+        .equalTo(true)
+        .once('value')
+      : await existingDbUsers
+        .orderByChild('active')
+        .once('value');
+    const dbUsers = await dbUsersRef.val();
+    const dbUsersAsArray = [];
+    if (dbUsers) {
+      Object.keys(dbUsers).map(key =>
+        dbUsersAsArray.push(dbUsers[key])
+      );
+    }
+    return dbUsersAsArray;
+  }
+
   getDbUser = async uid => {
     return await this.db.ref(`users/${uid}`);
   }
