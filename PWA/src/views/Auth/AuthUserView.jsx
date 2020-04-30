@@ -250,12 +250,12 @@ const AuthUserView = props => {
   return (
     <>
       <div className="panel-header panel-header-xs" />
-      <Container className="content mt-5">
         <Row>
           <Col>
             <Card>
               {/* <h3>User</h3> */}
               <CardBody>
+      <Container className="content">
                 {
                   isLoading
                     ? <LoadingOverlayModal />

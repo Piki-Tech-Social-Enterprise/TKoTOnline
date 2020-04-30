@@ -232,7 +232,7 @@ const AuthNewsFeedView = props => {
   return (
     <>
       <div className="panel-header panel-header-xs" />
-      <Container className="content mt-5">
+      <Container className="content">
         <Row>
           <Col>
             <Card>
