@@ -82,6 +82,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/CommunityLinks',
+    name: 'Community Links',
+    component: lazy(() => import('views/Auth/AuthCommunityLinksView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'objects_support-17',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/CommunityLinks/:clid',
+    name: 'Community Links',
+    component: lazy(() => import('views/Auth/AuthCommunityLinkView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {
