@@ -36,7 +36,7 @@ class CommunityLinksRepository extends BaseRepository {
   }
 
   getDbCommunityLinkValue = async clid => {
-    const existingDbCommunityLinks = await this.getDbCommunityLinks(clid);
+    const existingDbCommunityLinks = await this.getDbCommunityLink(clid);
     const dbCommunityLinksRef = await existingDbCommunityLinks.once('value');
     const dbCommunityLinks = await dbCommunityLinksRef.val();
     return dbCommunityLinks;
@@ -80,7 +80,7 @@ class CommunityLinksRepository extends BaseRepository {
           created: created || dbCommunityLinks.created,
           createdBy: createdBy || dbCommunityLinks.createdBy,
           link: link || dbCommunityLinks.link || '',
-          linkName: linkName || dbCommunityLinks.title || '',
+          linkName: linkName || dbCommunityLinks.linkName || '',
           clid: clid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbCommunityLinks.updatedBy

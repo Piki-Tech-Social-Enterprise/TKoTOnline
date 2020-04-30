@@ -31,9 +31,9 @@ const AuthCommunityLinkView = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
-      link,
-      linkName,
-      active
+      name,
+      value,
+      checked
     } = e.target;
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
@@ -66,8 +66,14 @@ const AuthCommunityLinkView = props => {
     let displayMessage = 'Changes saved';
     try {
       if (!linkName || !link) {
+        displayTitle = 'Failed';
+        displayType = 'error';
         displayMessage = 'The Link Name and link fields are required.';
-      } else {
+      } else if (!link.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
+        displayTitle = 'Failed';
+        displayType = 'error';
+        displayMessage = 'Must be a valid link';
+      }else {
           if (isNew) {
             clid = await firebase.saveDbCommunityLink({});
           }
