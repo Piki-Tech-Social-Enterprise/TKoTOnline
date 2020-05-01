@@ -8,7 +8,8 @@ import {
   Input,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Button
 } from 'reactstrap';
 import {
   withFirebase
@@ -17,6 +18,17 @@ import {
 const CommunityLinksSection = (props) => {
 
   const [communityLinks, setLinks] = useState([]);
+
+  const searchLinks =  async e => {
+    const link = e.target;
+
+    const filterList = communityLinks.filter((searchLink) =>{
+      return searchLink.linkName.toString().toLowerCase().indexOf(link.value.toString().toLowerCase()) > -1;
+    });
+
+    this.setLinks(filterList);
+    
+  }
 
   useEffect(() => {
 
@@ -29,8 +41,7 @@ const CommunityLinksSection = (props) => {
     };
 
     const getCommunityLinks = async () => {
-      const getCommunityLinks = await getLinks(); 
-      console.log('ssssssssssssssssssssssssssssss', getCommunityLinks);  
+      const getCommunityLinks = await getLinks();  
       setLinks(getCommunityLinks);
     }
 
@@ -40,7 +51,7 @@ const CommunityLinksSection = (props) => {
   }, [props]);
 
   return (
-    <Container className="tkot-section" id="Community-links">
+    <Container className="tkot-section" id="community-links">
       <Row>
         <Col>
           <div className="mx-auto text-center bg-warning">
@@ -50,7 +61,7 @@ const CommunityLinksSection = (props) => {
         <Col>
         <Form className="community-links-form col-md-6">
             <FormGroup>
-              <Input placeholder="Search" type="text" />
+              <Input placeholder="Search" name="serachLink" type="text" onChange={searchLinks} />
             </FormGroup>
           </Form>
         </Col>
@@ -68,7 +79,7 @@ const CommunityLinksSection = (props) => {
               {
                 communityLinks.map((item) => {
                     return (
-                      <NavItem key={item.clid}>
+                      <NavItem key={item.clid} className="links">
                         <NavLink href={item.link}>{item.linkName}</NavLink>
                       </NavItem>
                     );
