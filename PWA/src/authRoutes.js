@@ -130,6 +130,18 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/Settings',
+    name: 'Settings',
+    component: lazy(() => import('views/Auth/AuthSettingView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'objects_support-17',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
   }
 ];
 const getAuthRouteByName = name => {

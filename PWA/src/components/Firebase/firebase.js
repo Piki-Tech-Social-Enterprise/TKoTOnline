@@ -4,7 +4,8 @@ import {
   UserRepository,
   StorageRepository,
   NewsFeedRepository,
-  CommunityLinksRepository
+  CommunityLinksRepository,
+  SettingRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -19,6 +20,7 @@ class Firebase {
     this.storageRepository = new StorageRepository(firebaseApp);
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
+    this.settingsRepository = new SettingRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -59,6 +61,12 @@ class Firebase {
   getDbCommunityLinkValue = async clid => await this.communityLinkRepository.getDbCommunityLinkValue(clid);
   saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinkRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
   deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
+
+  getDbSettings = async () => await this.settingsRepository.getDbSettings();
+  getDbSettingsAsArray = async includeInactive => await this.settingsRepository.getDbSettingsAsArray(includeInactive);
+  getDbCommunityLinkValue = async sid => await this.settingsRepository.getDbCommunityLinkValue(sid);
+  saveDbSetting = async (setting, saveDbSetting_completed) => await this.settingsRepository.saveDbSetting(setting, saveDbSetting_completed);
+  deleteDbSetting = async sid => await this.settingsRepository.deleteDbSetting(sid);
 }
 
 export default Firebase;
