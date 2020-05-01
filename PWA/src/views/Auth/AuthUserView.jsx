@@ -301,9 +301,9 @@ const AuthUserView = props => {
                         <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
                       </FormGroup>
                       <FormGroup>
-                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 mr-3" disabled={isSubmitting}>Save</Button>
-                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
-                        <Button type="button" color="danger" size="lg" className="btn-round w-25" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                        <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
                       </FormGroup>
                     </Form>
                 }
