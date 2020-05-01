@@ -250,67 +250,74 @@ const AuthUserView = props => {
   return (
     <>
       <div className="panel-header panel-header-xs" />
-      <Container className="content mt-5">
-        <Row>
-          <Col>
-            <Card>
-              {/* <h3>User</h3> */}
-              <CardBody>
-                {
-                  isLoading
-                    ? <LoadingOverlayModal />
-                    : <Form noValidate onSubmit={handleSubmit}>
-                      <FormGroup>
-                        <Label>Photo</Label>
-                        <FirebaseInput
-                          value={user.photoURL}
-                          onChange={handleChange}
-                          downloadURLInputProps={{
-                            id: 'photoURL',
-                            name: 'photoURL',
-                            placeholder: 'Photo',
-                            type: 'text'
-                          }}
-                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                          downloadURLFileInputOnChange={handlePhotoUrlFileChange}
-                          downloadURLFormat={userPhotoUrlFormat}
-                          downloadURLFormatKeyName={userKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.uid}
-                          downloadURLFormatFileName={userFilenameFormat}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Email</Label>
-                        <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Display Name</Label>
-                        <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
-                      </FormGroup>
-                      <FormGroup className="user-roles">
-                        <Label>Roles</Label><br />
-                        {
-                          Object.keys(Roles).map(role => {
-                            if (role === 'undefinedRole') return null;
-                            return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
-                          })
-                        }
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Active</Label><br />
-                        <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 mr-3" disabled={isSubmitting}>Save</Button>
-                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
-                        <Button type="button" color="danger" size="lg" className="btn-round w-25" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
-                      </FormGroup>
-                    </Form>
-                }
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+      <Container className="content">
+        {
+          isLoading
+            ? <LoadingOverlayModal />
+            : <>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Row>
+                  <Col md={8}>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <Label>Email</Label>
+                          <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Display Name</Label>
+                          <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
+                        </FormGroup>
+                        <FormGroup className="user-roles">
+                          <Label>Roles</Label><br />
+                          {
+                            Object.keys(Roles).map(role => {
+                              if (role === 'undefinedRole') return null;
+                              return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
+                            })
+                          }
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Active</Label><br />
+                          <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                          <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col md={4}>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <Label>Photo</Label>
+                          <FirebaseInput
+                            value={user.photoURL}
+                            onChange={handleChange}
+                            downloadURLInputProps={{
+                              id: 'photoURL',
+                              name: 'photoURL',
+                              placeholder: 'Photo',
+                              type: 'text'
+                            }}
+                            downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                            downloadURLFileInputOnChange={handlePhotoUrlFileChange}
+                            downloadURLFormat={userPhotoUrlFormat}
+                            downloadURLFormatKeyName={userKeyFormat}
+                            downloadURLFormatKeyValue={props.match.params.uid}
+                            downloadURLFormatFileName={userFilenameFormat}
+                          />
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Form>
+            </>
+        }
       </Container>
     </>
   )

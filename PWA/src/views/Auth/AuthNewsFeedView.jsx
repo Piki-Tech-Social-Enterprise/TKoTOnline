@@ -232,35 +232,15 @@ const AuthNewsFeedView = props => {
   return (
     <>
       <div className="panel-header panel-header-xs" />
-      <Container className="content mt-5">
-        <Row>
-          <Col>
-            <Card>
-              {/* <h3>News Feed</h3> */}
-              <CardBody>
-                {
-                  isLoading
-                    ? <LoadingOverlayModal />
-                    : <Form noValidate onSubmit={handleSubmit}>
-                      <FormGroup>
-                        <Label>Image</Label>
-                        <FirebaseInput
-                          value={newsFeed.imageUrl}
-                          onChange={handleChange}
-                          downloadURLInputProps={{
-                            id: 'imageUrl',
-                            name: 'imageUrl',
-                            placeholder: 'Image',
-                            type: 'text'
-                          }}
-                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                          downloadURLFileInputOnChange={handleImageUrlFileChange}
-                          downloadURLFormat={newsFeedImageUrlFormat}
-                          downloadURLFormatKeyName={newsFeedKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.nfid}
-                          downloadURLFormatFileName={newsFeedFilenameFormat}
-                        />
-                      </FormGroup>
+      <Container className="content">
+        {
+          isLoading
+            ? <LoadingOverlayModal />
+            : <Form noValidate onSubmit={handleSubmit}>
+              <Row>
+                <Col col={8}>
+                  <Card>
+                    <CardBody>
                       <FormGroup>
                         <Label>Header</Label>
                         <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
@@ -280,16 +260,41 @@ const AuthNewsFeedView = props => {
                         <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
                       </FormGroup>
                       <FormGroup>
-                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 mr-3" disabled={isSubmitting}>Save</Button>
-                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
-                        <Button type="button" color="danger" size="lg" className="btn-round w-25" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                        <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
                       </FormGroup>
-                    </Form>
-                }
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col md={4}>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <Label>Image</Label>
+                        <FirebaseInput
+                          value={newsFeed.imageUrl}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'imageUrl',
+                            name: 'imageUrl',
+                            placeholder: 'Image',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleImageUrlFileChange}
+                          downloadURLFormat={newsFeedImageUrlFormat}
+                          downloadURLFormatKeyName={newsFeedKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.nfid}
+                          downloadURLFormatFileName={newsFeedFilenameFormat}
+                        />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Form>
+        }
       </Container>
     </>
   )
