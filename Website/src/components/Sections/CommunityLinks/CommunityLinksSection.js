@@ -8,8 +8,7 @@ import {
   Input,
   Nav,
   NavItem,
-  NavLink,
-  Button
+  NavLink
 } from 'reactstrap';
 import {
   withFirebase
@@ -18,15 +17,16 @@ import {
 const CommunityLinksSection = (props) => {
 
   const [communityLinks, setLinks] = useState([]);
+  const [masterLinks, setMasterLinks] = useState([]);
 
   const searchLinks =  async e => {
     const link = e.target;
-
-    const filterList = communityLinks.filter((searchLink) =>{
+    
+    const filterList = masterLinks.filter((searchLink) =>{
       return searchLink.linkName.toString().toLowerCase().indexOf(link.value.toString().toLowerCase()) > -1;
     });
 
-    this.setLinks(filterList);
+    setLinks(filterList);
     
   }
 
@@ -43,6 +43,10 @@ const CommunityLinksSection = (props) => {
     const getCommunityLinks = async () => {
       const getCommunityLinks = await getLinks();  
       setLinks(getCommunityLinks);
+
+      if(masterLinks.length === 0){
+        setMasterLinks(getCommunityLinks);
+      }
     }
 
 
