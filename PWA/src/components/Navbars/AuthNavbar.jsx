@@ -4,9 +4,6 @@ import React, {
   useEffect
 } from 'react';
 import {
-  Link
-} from 'react-router-dom';
-import {
   withFirebase
 } from '../Firebase/Contexts/firebaseContext';
 import {
@@ -15,16 +12,11 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  Container
 } from 'reactstrap';
 import {
   useWindowEvent
@@ -64,7 +56,7 @@ const AuthNavbar = props => {
       if (fullRoutePath === pathName) {
         return true;
       }
-      const  {
+      const {
         params
       } = match;
       console.log(`params: ${JSON.stringify(params, null, 2)}`);
@@ -104,6 +96,10 @@ const AuthNavbar = props => {
     setColor(window.innerWidth < 993 && isOpen
       ? 'white'
       : 'transparent');
+  };
+  const handleViewProfileClick = async e => {
+    e.preventDefault();
+    history.push('/auth/Profile');
   };
   const handleLogoutClick = async e => {
     e.preventDefault();
@@ -160,46 +156,26 @@ const AuthNavbar = props => {
           <span className='navbar-toggler-bar navbar-kebab' />
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar className='justify-content-end'>
-          <form>
-            <InputGroup className='no-border'>
-              <Input placeholder='Search...' />
-              <InputGroupAddon addonType='append'>
-                <InputGroupText>
-                  <i className='now-ui-icons ui-1_zoom-bold' />
-                </InputGroupText>
-              </InputGroupAddon>
-            </InputGroup>
-          </form>
           <Nav navbar>
-            <NavItem>
-              <Link to='#pablo' className='nav-link'>
-                <i className='now-ui-icons media-2_sound-wave' />
-                <p>
-                  <span className='d-lg-none d-md-block'>Stats</span>
-                </p>
-              </Link>
-            </NavItem>
-            <Dropdown nav isOpen={dropdownOpen} toggle={e => dropdownToggle(e)}>
+            <Dropdown nav isOpen={dropdownOpen} toggle={dropdownToggle}>
               <DropdownToggle caret nav>
                 <i className='now-ui-icons location_world' />
                 <p>
-                  <span className='d-lg-none d-md-block'>Some Actions</span>
+                  <span className='d-lg-none d-md-block'>Account</span>
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag='a' >Action</DropdownItem>
-                <DropdownItem tag='a'>Another Action</DropdownItem>
-                <DropdownItem tag='a'>Something else here</DropdownItem>
+                <DropdownItem tag="a" href="#tkot" onClick={handleViewProfileClick}>
+                  <i className='now-ui-icons users_circle-08' />
+                  <p>Edit Profile</p>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem tag="a" href="#tkot" onClick={handleLogoutClick}>
+                  <i className='now-ui-icons sport_user-run' />
+                  <p>Logout</p>
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <NavItem>
-              <Link to='#pablo' className='nav-link' onClick={handleLogoutClick}>
-                <i className='now-ui-icons sport_user-run' />
-                <p>
-                  <span className='d-lg-none d-md-block'>Logout</span>
-                </p>
-              </Link>
-            </NavItem>
           </Nav>
         </Collapse>
       </Container>
