@@ -34,10 +34,19 @@ const userPhotoUrlFormat = `${userPhotoFolderUrlFormat}${userFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
   displayName: '',
-  roles: {},
   email: '',
   photoURL: '',
   photoURLFile: null,
+  providerData: [
+    {
+      email: '',
+      providerId: 'password',
+      uid: null,
+    }
+  ],
+  roles: {
+    basicRole: Roles.basicRole
+  },
   uid: null
 };
 const AuthUserView = props => {
@@ -96,9 +105,10 @@ const AuthUserView = props => {
     const {
       active,
       displayName,
-      roles,
       email,
-      photoURLFile
+      photoURLFile,
+      providerData,
+      roles
     } = user;
     let uid = user.uid;
     let photoURL = user.photoURL;
@@ -122,15 +132,20 @@ const AuthUserView = props => {
                 .replace(userKeyFormat, uid)
                 .replace(userFilenameFormat, photoURLFile.name);
             }
+            if (providerData && providerData.length) {
+              providerData[0].email = email;
+              providerData[0].uid = uid;
+            }
           }
           await firebase.saveDbUser({
             active: active,
             created: now.toString(),
             createdBy: authUserId,
             displayName,
-            roles,
             email,
             photoURL,
+            providerData,
+            roles,
             uid: uid,
             updated: now.toString(),
             updatedBy: authUserId
@@ -225,6 +240,7 @@ const AuthUserView = props => {
         roles,
         email,
         photoURL,
+        providerData,
         uid
       } = dbUser;
       setUser({
@@ -233,6 +249,7 @@ const AuthUserView = props => {
         roles,
         email,
         photoURL,
+        providerData,
         uid
       });
     };
