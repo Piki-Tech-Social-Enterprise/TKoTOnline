@@ -10,52 +10,52 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
+import {
+  withFirebase
+} from 'components/Firebase';
 
-const CommunityLinksSection = () => {
+const CommunityLinksSection = (props) => {
 
   const [communityLinks, setLinks] = useState([]);
+  const [masterLinks, setMasterLinks] = useState([]);
 
-  const createCommunityLinkItems = communityLinks.map((item) => {
-    return (
-      <NavItem key={item.key}>
-        <NavLink href={item.href}>{item.title}</NavLink>
-      </NavItem>
-    );
-  });
+  const searchLinks =  async e => {
+    const link = e.target;
+    
+    const filterList = masterLinks.filter((searchLink) =>{
+      return searchLink.linkName.toString().toLowerCase().indexOf(link.value.toString().toLowerCase()) > -1;
+    });
+
+    setLinks(filterList);
+    
+  }
 
   useEffect(() => {
 
-    const createLinks = (href, text, index) => {
-      return {
-        href: href,
-        title: text,
-        key: index
-      }
-    };
+    const getLinks = async () => {
 
-    const getLinks = (count) => {
-
-      const communityLinks = [];
-
-      for(let i = 0; i < count; i++){
-        communityLinks.push(createLinks('#NewsFeed', 'Link title ' + (i +1) , i));
-      }
-      return communityLinks;
+     const communityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray();
+     
+     return communityLinksAsArray;
       
     };
 
     const getCommunityLinks = async () => {
-      const getCommunityLinks = getLinks(12);   
+      const getCommunityLinks = await getLinks();  
       setLinks(getCommunityLinks);
+
+      if(masterLinks.length === 0){
+        setMasterLinks(getCommunityLinks);
+      }
     }
 
 
     getCommunityLinks();
 
-  }, []);
+  }, [props]);
 
   return (
-    <Container className="tkot-section" id="Community-links">
+    <Container className="tkot-section" id="community-links">
       <Row>
         <Col>
           <div className="mx-auto text-center bg-warning">
@@ -65,7 +65,7 @@ const CommunityLinksSection = () => {
         <Col>
         <Form className="community-links-form col-md-6">
             <FormGroup>
-              <Input placeholder="Search" type="text" />
+              <Input placeholder="Search" name="serachLink" type="text" onChange={searchLinks} />
             </FormGroup>
           </Form>
         </Col>
@@ -80,7 +80,15 @@ const CommunityLinksSection = () => {
       <Row>
         <Col className="community-links">
           <Nav vertical>
-              {createCommunityLinkItems}
+              {
+                communityLinks.map((item) => {
+                    return (
+                      <NavItem key={item.clid} className="links">
+                        <NavLink href={item.link}>{item.linkName}</NavLink>
+                      </NavItem>
+                    );
+                  })
+              }
             </Nav>
         </Col>
       </Row>
@@ -88,4 +96,4 @@ const CommunityLinksSection = () => {
   );
 };
 
-export default CommunityLinksSection;
+export default withFirebase(CommunityLinksSection);
