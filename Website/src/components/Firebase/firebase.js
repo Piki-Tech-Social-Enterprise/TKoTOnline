@@ -1,7 +1,8 @@
 import * as firebaseApp from 'firebase/app';
 import {
   StorageRepository,
-  NewsFeedRepository
+  NewsFeedRepository,
+  CommunityLinksRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -13,6 +14,7 @@ class Firebase {
       : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);
     this.storageRepository = new StorageRepository(firebaseApp);
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
+    this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -26,6 +28,12 @@ class Firebase {
   getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
+  getDbCommunityLinks = async () => await this.communityLinkRepository.getDbCommunityLinks();
+  getDbCommunityLinksAsArray = async includeInactive => await this.communityLinkRepository.getDbCommunityLinksAsArray(includeInactive);
+  getDbCommunityLink = async clid => await this.communityLinkRepository.getDbCommunityLinks(clid);
+  getDbCommunityLinkValue = async clid => await this.communityLinkRepository.getDbCommunityLinkValue(clid);
+  saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinkRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
+  deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
 }
 
 export default Firebase;

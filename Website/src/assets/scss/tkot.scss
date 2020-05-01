@@ -144,12 +144,38 @@
   }
 }
 
-.community-links {
-  column-count: 4;
-  a {
-    color: black;
+@media only screen and(min-width: 768px){
+
+  #community-links {
+    padding: 10px;
+    
+      .community-links {
+        column-count: 3;
+        column-fill: balance;
+        a {
+          color: black;
+          column-fill: balance;
+        }
+      }
   }
 }
+
+@media only screen and(max-width: 768px){
+
+  #community-links {
+    padding: 10px;
+    
+      .community-links {
+        column-count: 2;
+        column-fill: balance;
+        a {
+          color: black;
+          column-fill: balance;
+        }
+      }
+  }
+}
+
 
 @mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
   overflow: hidden;
