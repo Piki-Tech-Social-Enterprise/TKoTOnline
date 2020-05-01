@@ -138,7 +138,7 @@ const authRoutes = [
     component: lazy(() => import('views/Auth/AuthSettingView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
-    icon: 'objects_support-17',
+    icon: 'ui-1_settings-gear-63',
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false

@@ -23,9 +23,8 @@ import React, {
     sid: null
   };
   const AuthSettingView = props => {
-    const isNew = props.match.params.sid === 'New';
     const [isLoading, setIsLoading] = useState(true);
-    const [Setting, setSetting] = useState(INITIAL_STATE);
+    const [setting, setSetting] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const handleChange = async e => {
       const {
@@ -56,8 +55,8 @@ import React, {
       const {
         settingName,
         settingText,
-      } = Setting;
-      let sid = Setting.sid;
+      } = setting;
+      let sid = setting.sid;
       let displayType = 'success';
       let displayTitle = 'Update setting Successful';
       let displayMessage = 'Changes saved';
@@ -67,9 +66,6 @@ import React, {
           displayType = 'error';
           displayMessage = 'The Setting Name and text are required.';
         } else {
-            if (isNew) {
-              sid = await firebase.saveDbSetting({});
-            }
             await firebase.saveDbSetting({
               created: now.toString(),
               createdBy: uid,
@@ -79,9 +75,6 @@ import React, {
               updated: now.toString(),
               updatedBy: uid
             });
-            if (isNew) {
-              handleGotoParentList();
-            }
           }
       } catch (error) {
         displayType = 'error';
@@ -127,7 +120,6 @@ import React, {
             title: 'Delete Setting Successful',
             text: 'Your Settings has been deleted.'
           });
-          handleGotoParentList();
         }
       } catch (error) {
         displayMessage = error.message;
@@ -141,16 +133,13 @@ import React, {
         console.log(`Delete Setting Error: ${displayMessage}`);
       }
     };
-    const handleGotoParentList = () => {
-      props.history.push('/auth/Settings');
-    };
     useEffect(() => {
-      const retrieveSetting = async () => {
-        const dbSetting = ['test', 'text'];
+      const retrieveSetting = async sid => {
+        const dbSetting = await props.firebase.getDbSettingValue(sid);
+        console.log('dddddddddddddddddddd', dbSetting);
         const {
           settingText,
-          settingName,
-          sid
+          settingName
         } = dbSetting;
         setSetting({
           settingText,
@@ -159,16 +148,14 @@ import React, {
         });
       };
       if (isLoading) {
-        if (!isNew) {
-          retrieveSetting();
-        }
+        retrieveSetting('"Xx--xX"');
       }
       return () => {
         if (isLoading) {
           setIsLoading(false);
         }
       };
-    }, [props, isNew, isLoading, setIsLoading]);
+    }, [props, isLoading, setIsLoading]);
     return (
       <>
         <div className="panel-header panel-header-xs" />
@@ -184,16 +171,16 @@ import React, {
                       : <Form noValidate onSubmit={handleSubmit}>
                         <FormGroup>
                           <Label>Setting Name</Label>
-                          <Input placeholder="setting name" name="settingName" value={Setting.settingName} onChange={handleChange} type="text" />
+                          <Input placeholder="setting name" name="settingName" value={setting.settingName} onChange={handleChange} type="text" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Text</Label>
-                          <Input placeholder="setting" name="setting" value={Setting.settingText} onChange={handleChange} type="text" />
+                          <Input placeholder="setting" name="settingText" value={setting.settingText} onChange={handleChange} type="text" />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
-                          <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Cancel</Button>
+                          <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isSubmitting}>Delete</Button>
                         </FormGroup>
                       </Form>
                   }

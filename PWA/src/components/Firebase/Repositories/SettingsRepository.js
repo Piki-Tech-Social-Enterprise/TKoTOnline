@@ -8,7 +8,7 @@ class SettingsRepository extends BaseRepository {
   }
 
   getDbSettings = async () => {
-    return await this.db.ref('Settings');
+    return await this.db.ref('settings');
   }
 
   getDbSettingsAsArray = async includeInactive => {
@@ -31,6 +31,18 @@ class SettingsRepository extends BaseRepository {
     return dbSettingAsArray;
   }
 
+  getDbSetting = async sid => {
+    return await this.db.ref(`settings/${sid}`);
+  }
+
+  getDbSettingValue = async sid => {
+    const existingDbSetting = await this.getDbSetting(sid);
+    console.log(existingDbSetting);
+    const dbSettingRef = await existingDbSetting.once('value');
+    const dbSetting = await dbSettingRef.val();
+    return dbSetting;
+  }
+
   saveDbSetting = async (settings, saveDbSetting_completed) => {
     const {
       active,
@@ -44,7 +56,7 @@ class SettingsRepository extends BaseRepository {
     } = settings;
     const now = new Date();
     let errorMessage = null;
-    let existingDbSettings = await this.getDbSetting(sid || '')
+    let existingDbSettings = await this.getDbSettings(sid || '')
     let dbSettingsRef = null;
     let dbSettings = null;
     if (!sid) {
