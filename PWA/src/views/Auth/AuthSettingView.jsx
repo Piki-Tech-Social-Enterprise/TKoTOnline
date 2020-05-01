@@ -18,8 +18,7 @@ import React, {
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
   import swal from 'sweetalert2';
   const INITIAL_STATE = {
-    settingText: '',
-    settingName: '',
+    communityLinkDescritpion: '',
     sid: null
   };
   const AuthSettingView = props => {
@@ -53,24 +52,22 @@ import React, {
         uid
       } = authUser;
       const {
-        settingName,
-        settingText,
+        communityLinkDescritpion
       } = setting;
       let sid = setting.sid;
       let displayType = 'success';
       let displayTitle = 'Update setting Successful';
       let displayMessage = 'Changes saved';
       try {
-        if (!settingName || !settingText) {
+        if (!communityLinkDescritpion) {
           displayTitle = 'Failed';
           displayType = 'error';
-          displayMessage = 'The Setting Name and text are required.';
+          displayMessage = 'You need to have a description for the community links section.';
         } else {
             await firebase.saveDbSetting({
               created: now.toString(),
               createdBy: uid,
-              settingName,
-              settingText,
+              communityLinkDescritpion: communityLinkDescritpion,
               sid: sid,
               updated: now.toString(),
               updatedBy: uid
@@ -91,64 +88,20 @@ import React, {
         });
       }
     };
-    const handleDeleteClick = async e => {
-      e.preventDefault();
-      let result = null;
-      let displayMessage = null;
-      try {
-        result = await swal.fire({
-          type: 'warning',
-          title: 'Are you sure?',
-          text: "You won't be able to undo this!",
-          showCancelButton: true,
-          customClass: {
-            confirmButton: 'btn btn-outline-danger',
-            cancelButton: 'btn btn-outline-setting',
-          }
-        });
-        if (!!result.value) {
-          const {
-            firebase,
-            match
-          } = props;
-          const {
-            sid
-          } = match.params;
-          await firebase.deleteDbSetting(sid);
-          swal.fire({
-            type: 'success',
-            title: 'Delete Setting Successful',
-            text: 'Your Settings has been deleted.'
-          });
-        }
-      } catch (error) {
-        displayMessage = error.message;
-      }
-      if (displayMessage) {
-        swal.fire({
-          type: 'error',
-          title: 'Delete Setting Error',
-          html: displayMessage
-        });
-        console.log(`Delete Setting Error: ${displayMessage}`);
-      }
-    };
     useEffect(() => {
-      const retrieveSetting = async sid => {
-        const dbSetting = await props.firebase.getDbSettingValue(sid);
-        console.log('dddddddddddddddddddd', dbSetting);
+      const retrieveSetting = async () => {
+        const dbSetting = await props.firebase.getDbSettingsValues(true);
         const {
-          settingText,
-          settingName
+          communityLinkDescritpion,
+          sid
         } = dbSetting;
         setSetting({
-          settingText,
-          settingName,
+          communityLinkDescritpion,
           sid
         });
       };
       if (isLoading) {
-        retrieveSetting('"Xx--xX"');
+        retrieveSetting();
       }
       return () => {
         if (isLoading) {
@@ -170,17 +123,11 @@ import React, {
                       ? <LoadingOverlayModal />
                       : <Form noValidate onSubmit={handleSubmit}>
                         <FormGroup>
-                          <Label>Setting Name</Label>
-                          <Input placeholder="setting name" name="settingName" value={setting.settingName} onChange={handleChange} type="text" />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Text</Label>
-                          <Input placeholder="setting" name="settingText" value={setting.settingText} onChange={handleChange} type="text" />
+                          <Label>Community Links Describtion</Label>
+                          <Input placeholder="community links description" name="communityLinkDescritpion" value={setting.communityLinkDescritpion} onChange={handleChange} type="textarea" />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Cancel</Button>
-                          <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isSubmitting}>Delete</Button>
                         </FormGroup>
                       </Form>
                   }
