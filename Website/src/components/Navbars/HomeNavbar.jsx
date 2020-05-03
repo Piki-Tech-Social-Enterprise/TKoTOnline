@@ -22,6 +22,9 @@ function HomeNavbar() {
   const {
     pathname
   } = window.location;
+  const {
+    REACT_APP_PWA_BASE_URL
+  } = process.env;
   
   return (
     <>
@@ -74,7 +77,7 @@ function HomeNavbar() {
                    <NavLink href={volunteer}>Volunteer</NavLink>
               </NavItem>
               <NavItem>
-                <Button outline color="white">
+                <Button outline color="white" href={`${REACT_APP_PWA_BASE_URL}/public/Login`}>
                       Login
                 </Button>
               </NavItem>
