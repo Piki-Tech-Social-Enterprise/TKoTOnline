@@ -18,6 +18,7 @@ const CommunityLinksSection = (props) => {
 
   const [communityLinks, setLinks] = useState([]);
   const [masterLinks, setMasterLinks] = useState([]);
+  const [communityLinksDescription, setDescription] = useState([]);
 
   const searchLinks =  async e => {
     const link = e.target;
@@ -40,6 +41,11 @@ const CommunityLinksSection = (props) => {
       
     };
 
+    const getSettings = async () =>{
+      const communityLinksDescription = await props.firebase.getDbSettingsValues(true);
+      return communityLinksDescription;
+    }
+
     const getCommunityLinks = async () => {
       const getCommunityLinks = await getLinks();  
       setLinks(getCommunityLinks);
@@ -49,10 +55,16 @@ const CommunityLinksSection = (props) => {
       }
     }
 
+    const getDescription = async () => {
+      const getDescription = await getSettings();
+      setDescription(getDescription.communityLinkDescritpion);
+    }
 
+
+    getDescription();
     getCommunityLinks();
 
-  }, [props]);
+  }, [props, masterLinks]);
 
   return (
     <Container className="tkot-section" id="community-links">
@@ -73,7 +85,7 @@ const CommunityLinksSection = (props) => {
       <Row>
         <Col>
             <div className="mx-auto text-left">
-                <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+            <p>{communityLinksDescription}</p>
             </div>
         </Col>
       </Row>
