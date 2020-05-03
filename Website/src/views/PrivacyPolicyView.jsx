@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
           <p>Providing some information is optional. If you choose not to enter your full name & email address, we cannot send you emails.</p>
           <p>We keep your information safe by using a secure connection and transmission of data and only allowing certain staff to access it.</p>
           <p>We keep your information for five years at which point we securely destroy it by securely erasing all digital copies.</p>
-          <p>You have the right to ask for a copy of any personal information we hold about you, and to ask for it to be corrected if you think it is wrong. If you’d like to ask for a copy of your information, or to have it corrected, please contact us at <a href={`mailto:${REACT_APP_WEB_EMAIL}?subject=Privacy`} Policy>{REACT_APP_WEB_EMAIL}</a></p>
+          <p>You have the right to ask for a copy of any personal information we hold about you, and to ask for it to be corrected if you think it is wrong. If you’d like to ask for a copy of your information, or to have it corrected, please contact us at <a href={`mailto:${REACT_APP_WEB_EMAIL}?subject=Privacy policy`}>{REACT_APP_WEB_EMAIL}</a></p>
         </Col>
       </Row>
     </Container>

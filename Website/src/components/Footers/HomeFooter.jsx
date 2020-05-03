@@ -95,7 +95,7 @@ const HomeFooter = props => {
         </Row>
         <Row>
           <Col xs="12">
-            <Container fluid={isFluid} className="float-left">
+            <Container fluid={!!isFluid} className="float-left">
               <div className="copyright">
                 {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />
               </div>
