@@ -154,6 +154,18 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Volunteers',
+    name: 'Volunteers',
+    component: lazy(() => import('views/Auth/AuthVolunteersView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'users_circle-08',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
   }
 ];
 const getAuthRouteByName = name => {
