@@ -20,7 +20,7 @@ class SettingsRepository extends BaseRepository {
       : await existingDbSettings
         .once('value');
     const dbSettings = await dbSettingRef.val();
-    return dbSettings;
+    return dbSettings && Object.entries(dbSettings)[0][1];
   }
 }
 
