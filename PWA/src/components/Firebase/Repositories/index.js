@@ -4,7 +4,7 @@ import UserRepository from './UserRepository';
 import StorageRepository from './StorageRepository';
 import NewsFeedRepository from './NewsFeedRepository';
 import CommunityLinksRepository from './CommunityLinksRepository';
-import SettingRepository from './SettingsRepository';
+import SettingsRepository from './SettingsRepository';
 
 export default BaseRepository;
 export {
@@ -13,5 +13,5 @@ export {
   StorageRepository,
   NewsFeedRepository,
   CommunityLinksRepository,
-  SettingRepository
+  SettingsRepository
 };
