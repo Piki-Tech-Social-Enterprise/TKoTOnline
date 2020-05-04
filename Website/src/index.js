@@ -35,30 +35,38 @@ import HomeView from 'views/HomeView';
 import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
+import PrivacyPolicy from 'views/PrivacyPolicyView';
+import TermsOfService from 'views/TermsOfServiceView';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <BrowserRouter>
       <Switch>
-        <Switch>
-          <Route path="/" render={props => (
-            <HomeView {...props} />
-          )} exact />
-          <Route path="/index" render={props => <Index {...props} />} exact />
-          <Route
-            path="/nucleo-icons"
-            render={props => <NucleoIcons {...props} />}
-          />
-          <Route
-            path="/landing-page"
-            render={props => <LandingPage {...props} />}
-          />
-          <Route
-            path="/profile-page"
-            render={props => <ProfilePage {...props} />}
-          />
-          <Route path="/login-page" render={props => <LoginPage {...props} />} />
-        </Switch>
+        <Route path="/" render={props => (
+          <HomeView {...props} />
+        )} exact />
+        <Route path="/index" render={props => <Index {...props} />} exact />
+        <Route
+          path="/nucleo-icons"
+          render={props => <NucleoIcons {...props} />}
+        />
+        <Route
+          path="/landing-page"
+          render={props => <LandingPage {...props} />}
+        />
+        <Route
+          path="/profile-page"
+          render={props => <ProfilePage {...props} />}
+        />
+        <Route
+          path="/PrivacyPolicy"
+          render={props => <PrivacyPolicy {...props} />}
+        />
+        <Route
+          path="/TermsOfUse"
+          render={props => <TermsOfService {...props} />}
+        />
+        <Route path="/login-page" render={props => <LoginPage {...props} />} />
       </Switch>
     </BrowserRouter>
   </FirebaseContext.Provider>,
