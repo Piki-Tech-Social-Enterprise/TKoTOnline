@@ -131,7 +131,7 @@ const AuthLayout = props => {
         isLoading
           ? <LoadingOverlayModal />
           : <div className="wrapper">
-            <AuthSidebar {...props} routes={authenticatedRoutes} backgroundColor={'blue'} />
+            <AuthSidebar {...props} routes={authenticatedRoutes} backgroundColor={'tkot'} />
             <div className="main-panel" ref={mainPanel}>
               <AuthNavbar {...props} routes={authenticatedRoutes} />
               <Switch>
