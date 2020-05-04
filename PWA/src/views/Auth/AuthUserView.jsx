@@ -28,6 +28,7 @@ import {
   fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
 import * as Roles from 'components/Domains/Roles';
+import FunctionsHelper from 'components/App/FunctionsHelper';
 
 const usersRef = '/images/users';
 const userKeyFormat = '{uid}';
@@ -36,8 +37,11 @@ const userPhotoFolderUrlFormat = `${usersRef}/${userKeyFormat}/`;
 const userPhotoUrlFormat = `${userPhotoFolderUrlFormat}${userFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
+  confirmEmail: '',
+  confirmPassword: '',
   displayName: '',
   email: '',
+  password: '',
   photoURL: '',
   photoURLFile: null,
   providerData: [
@@ -103,6 +107,7 @@ const AuthUserView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
+    const defaultDisplayMesssage = 'Changes saved';
     const maxImageFileSize = 2097152;
     const now = new Date();
     const {
@@ -114,8 +119,11 @@ const AuthUserView = props => {
     } = authUser;
     const {
       active,
+      confirmEmail,
+      confirmPassword,
       displayName,
       email,
+      password,
       photoURLFile,
       providerData,
       roles
@@ -124,57 +132,96 @@ const AuthUserView = props => {
     let photoURL = user.photoURL;
     let displayType = 'success';
     let displayTitle = `Update ${userOrProfileText} Successful`;
-    let displayMessage = 'Changes saved';
+    let displayMessage = defaultDisplayMesssage;
     try {
-      if (!photoURL || !email || !displayName || !roles) {
-        displayMessage = 'The Photo, Email, Display Name, and Roles fields are required.';
-      } else
-        if (photoURLFile && photoURLFile.size > maxImageFileSize) {
-          const {
-            size
-          } = photoURLFile;
-          throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
-        } else {
-          if (isNew) {
-            uid = await firebase.saveDbUser({});
-            if (photoURLFile && photoURLFile.name) {
-              photoURL = userPhotoUrlFormat
-                .replace(userKeyFormat, uid)
-                .replace(userFilenameFormat, photoURLFile.name);
-            }
-            if (providerData && providerData.length) {
-              providerData[0].email = email;
-              providerData[0].uid = uid;
-            }
+      if (isNew) {
+        if (!email || !confirmEmail || !password || !confirmPassword || !displayName || !roles) {
+          displayMessage = 'Email, Confirmed Email, Password, Confirmed Password, Display Name, and Roles are required fields.';
+        } else if (email !== confirmEmail) {
+          displayMessage = 'Email and Confirmed Email fields do not match.';
+        } else if (password !== confirmPassword) {
+          displayMessage = 'Password and Confirmed Password fields do not match.';
+        } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+          displayMessage = 'Email is invalid.';
+        } else if (!password.match(/(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,15}/)) {
+          displayMessage = 'Password is too weak. Needs to be 6 characters or more. It can be any combination of letters, numbers, and symbols (ASCII characters).';
+        }
+      } else if (!photoURL || !email || !displayName || !roles) {
+        displayMessage = 'The Photo, Email, Display Name, and Roles are required fields.';
+      } else if (photoURLFile && photoURLFile.size > maxImageFileSize) {
+        const {
+          size
+        } = photoURLFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      }
+      if (displayMessage === defaultDisplayMesssage) {
+        if (isNew) {
+          uid = await firebase.saveDbUser({});
+          if (photoURLFile && photoURLFile.name) {
+            photoURL = userPhotoUrlFormat
+              .replace(userKeyFormat, uid)
+              .replace(userFilenameFormat, photoURLFile.name);
           }
-          if (isProfile) {
-            await firebase.updateProfile({
-              displayName,
-              photoURL
-            });
-          } else {
-            // TODO: Update User via Admin SDK
-          }
-          await firebase.saveDbUser({
-            active: active,
-            created: now.toString(),
-            createdBy: authUserId,
-            displayName,
-            email,
-            photoURL,
-            providerData,
-            roles,
-            uid: uid,
-            updated: now.toString(),
-            updatedBy: authUserId
-          });
-          if (photoURLFile) {
-            await firebase.saveStorageFile(photoURL, photoURLFile);
-          }
-          if (isNew) {
-            handleGotoParentList();
+          if (providerData && providerData.length) {
+            providerData[0].email = email;
+            providerData[0].uid = uid;
           }
         }
+        if (isProfile) {
+          await firebase.updateProfile({
+            displayName,
+            photoURL
+          });
+        } else {
+          const dbUser = {
+            disabled: active,
+            displayName,
+            email,
+            // emailVerified: false,
+            password,
+            // phoneNumber,
+            photoURL,
+            uid
+          };
+          const {
+            REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
+          } = process.env;
+          const functionsHelperOptions = {
+            baseUrl: GCF_URL,
+            functionName: isNew
+              ? 'setProfile'
+              : 'updateProfile',
+            bodyData: {
+              uid: authUserId,
+              dbUser: dbUser
+            }
+          };
+          const functionsHelper = new FunctionsHelper(functionsHelperOptions);
+          const result = isNew
+            ? await functionsHelper.postAsync()
+            : await functionsHelper.putAsync();
+          console.log(`${functionsHelperOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+        }
+        await firebase.saveDbUser({
+          active: active,
+          created: now.toString(),
+          createdBy: authUserId,
+          displayName,
+          email,
+          photoURL,
+          providerData,
+          roles,
+          uid: uid,
+          updated: now.toString(),
+          updatedBy: authUserId
+        });
+        if (photoURLFile) {
+          await firebase.saveStorageFile(photoURL, photoURLFile);
+        }
+        if (isNew) {
+          handleGotoParentList();
+        }
+      }
     } catch (error) {
       displayType = 'error';
       displayTitle = `Update ${userOrProfileText} Failed`;
@@ -216,7 +263,11 @@ const AuthUserView = props => {
         const userPhotoFolderUrl = userPhotoFolderUrlFormat.replace(userKeyFormat, uid);
         const storageFiles = await firebase.getStorageFiles(userPhotoFolderUrl);
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
-        await firebase.deleteDbUser(uid);
+        if (isProfile) {
+          await firebase.deleteDbUser(uid);
+        } else {
+          // TODO: Delete User via Admin SDK
+        }
         swal.fire({
           type: 'success',
           title: `Delete ${userOrProfileText} Successful`,
@@ -237,7 +288,11 @@ const AuthUserView = props => {
     }
   };
   const handleGotoParentList = () => {
-    props.history.push('/auth/Users');
+    if (isProfile) {
+      window.location.href = '/auth';
+    } else {
+      props.history.push('/auth/Users');
+    }
   };
   const handlePhotoUrlFileChange = async e => {
     e.preventDefault();
@@ -300,7 +355,7 @@ const AuthUserView = props => {
                         <FormGroup>
                           <Label>Email</Label>
                           <InputGroup>
-                            <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" disabled={isProfile} />
+                            <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="email" disabled={isProfile} />
                             {
                               !isProfile
                                 ? null
@@ -315,19 +370,39 @@ const AuthUserView = props => {
                           </InputGroup>
                         </FormGroup>
                         {
-                          !isProfile
+                          !isNew
                             ? null
                             : <>
                               <FormGroup>
-                                <Label>Password</Label>
-                                <InputGroup>
-                                  <Input placeholder="Password" name="password" defaultValue="**********" type="text" disabled />
+                                <Label>Confirm Email</Label>
+                                <Input placeholder="Confirm Email" name="confirmEmail" value={user.confirmEmail} onChange={handleChange} type="email" />
+                              </FormGroup>
+                            </>
+                        }
+                        <FormGroup>
+                          <Label>Password</Label>
+                          <InputGroup>
+                            <Input placeholder="Password (Leave blank to keep existing)" name="password" value={user.password} onChange={handleChange} type="password" disabled={isProfile} />
+                            {
+                              !isProfile
+                                ? null
+                                : <>
                                   <InputGroupAddon className="clickable" addonType="append" onClick={props.firebase.changePassword} >
                                     <InputGroupText className="pl-3">
                                       <i className="now-ui-icons objects_key-25" />
                                     </InputGroupText>
                                   </InputGroupAddon>
-                                </InputGroup>
+                                </>
+                            }
+                          </InputGroup>
+                        </FormGroup>
+                        {
+                          (!isNew && isProfile)
+                            ? null
+                            : <>
+                              <FormGroup>
+                                <Label>Confirm Password</Label>
+                                <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} type="password" />
                               </FormGroup>
                             </>
                         }

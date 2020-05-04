@@ -24,6 +24,7 @@ storage.rules
 cors.dev.json
 cors.test.json
 cors.json
+tkot-online-*.json
 
 npm-debug.log*
 yarn-debug.log*

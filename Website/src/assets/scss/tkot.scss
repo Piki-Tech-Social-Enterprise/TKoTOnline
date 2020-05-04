@@ -1,3 +1,8 @@
+@import 'now-ui-kit/variables';
+@import 'now-ui-kit/mixins';
+
+$tkot-bg-color: #171b5d;
+
 .tkot-section {
   padding: 5rem 0;
 }
@@ -82,12 +87,12 @@
 }
 
 .fixed-top {
-  background-color: #171b5d;
+  background-color: $tkot-bg-color;
 }
 
 .navbar-nav {
   color: #ffffff;
-  background: #171b5d;
+  background: $tkot-bg-color;
   margin-top: 0px;
 }
 
@@ -101,7 +106,7 @@
 }
 
 .sidebar-collapse .navbar-collapse:before {
-  background: #171b5d;
+  background: $tkot-bg-color;
   opacity: 1;
 }
 
@@ -120,7 +125,7 @@
   padding-top: 150px;
   padding-bottom: 100px;
   color: white;
-  background: #171b5d;
+  background: $tkot-bg-color;
 }
 
 @media screen and (max-width: 768px) {

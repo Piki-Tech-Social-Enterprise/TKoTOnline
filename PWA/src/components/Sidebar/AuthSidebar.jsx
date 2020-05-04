@@ -43,6 +43,7 @@ const AuthSidebar = props => {
   }, [props, sidebarRef]);
   return (
     <div className="sidebar" data-color={props.backgroundColor}>
+      <div className="bg-image" />
       <div className="logo text-white">
           <div className="logo-img" style={{
             display: 'inline-block',
