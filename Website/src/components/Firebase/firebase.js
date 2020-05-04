@@ -2,7 +2,8 @@ import * as firebaseApp from 'firebase/app';
 import {
   StorageRepository,
   NewsFeedRepository,
-  CommunityLinksRepository
+  CommunityLinksRepository,
+  SettingsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -15,6 +16,7 @@ class Firebase {
     this.storageRepository = new StorageRepository(firebaseApp);
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
+    this.settingsRepository = new SettingsRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -34,6 +36,11 @@ class Firebase {
   getDbCommunityLinkValue = async clid => await this.communityLinkRepository.getDbCommunityLinkValue(clid);
   saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinkRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
   deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
+  getDbSettings = async () => await this.settingsRepository.getDbSettings();
+  getDbSettingValue = async sid => await this.settingsRepository.getDbSettingValue(sid);
+  getDbSettingsAsArray = async includeInactive => await this.settingsRepository.getDbSettingsAsArray(includeInactive);
+  getDbCommunityLinkValue = async sid => await this.settingsRepository.getDbCommunityLinkValue(sid);
+  getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
 }
 
 export default Firebase;
