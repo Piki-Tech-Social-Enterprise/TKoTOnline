@@ -18,12 +18,12 @@ import React, {
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
   import swal from 'sweetalert2';
   const INITIAL_STATE = {
-    communityLinkDescritpion: '',
+    communityLinksDescritpion: '',
     sid: null
   };
-  const AuthSettingView = props => {
+  const AuthSettingsView = props => {
     const [isLoading, setIsLoading] = useState(true);
-    const [setting, setSetting] = useState(INITIAL_STATE);
+    const [settings, setSetting] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const handleChange = async e => {
       const {
@@ -52,22 +52,22 @@ import React, {
         uid
       } = authUser;
       const {
-        communityLinkDescritpion
-      } = setting;
-      let sid = setting.sid;
+        communityLinksDescritpion
+      } = settings;
+      let sid = settings.sid;
       let displayType = 'success';
       let displayTitle = 'Update setting Successful';
       let displayMessage = 'Changes saved';
       try {
-        if (!communityLinkDescritpion) {
+        if (!communityLinksDescritpion) {
           displayTitle = 'Failed';
           displayType = 'error';
           displayMessage = 'You need to have a description for the community links section.';
         } else {
-            await firebase.saveDbSetting({
+            await firebase.saveDbSettings({
               created: now.toString(),
               createdBy: uid,
-              communityLinkDescritpion: communityLinkDescritpion,
+              communityLinksDescritpion: communityLinksDescritpion,
               sid: sid,
               updated: now.toString(),
               updatedBy: uid
@@ -89,19 +89,19 @@ import React, {
       }
     };
     useEffect(() => {
-      const retrieveSetting = async () => {
-        const dbSetting = await props.firebase.getDbSettingsValues(true);
+      const retrieveSettings = async () => {
+        const dbSettings = await props.firebase.getDbSettingsValues(true);
         const {
-          communityLinkDescritpion,
+          communityLinksDescritpion,
           sid
-        } = dbSetting;
+        } = dbSettings;
         setSetting({
-          communityLinkDescritpion,
+          communityLinksDescritpion,
           sid
         });
       };
       if (isLoading) {
-        retrieveSetting();
+        retrieveSettings();
       }
       return () => {
         if (isLoading) {
@@ -124,7 +124,7 @@ import React, {
                       : <Form noValidate onSubmit={handleSubmit}>
                         <FormGroup>
                           <Label>Community Links Describtion</Label>
-                          <Input placeholder="community links description" name="communityLinkDescritpion" value={setting.communityLinkDescritpion} onChange={handleChange} type="textarea" />
+                          <Input placeholder="Community Links Description" name="communityLinksDescritpion" value={settings.communityLinksDescritpion} onChange={handleChange} type="textarea" />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
@@ -142,5 +142,5 @@ import React, {
   
   const condition = authUser => !!authUser && !!authUser.active;
   
-  export default withAuthorization(condition)(AuthSettingView);
+  export default withAuthorization(condition)(AuthSettingsView);
   

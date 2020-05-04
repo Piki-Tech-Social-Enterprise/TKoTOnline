@@ -64,7 +64,7 @@ class Firebase {
 
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
   getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
-  saveDbSetting = async (setting, saveDbSetting_completed) => await this.settingsRepository.saveDbSetting(setting, saveDbSetting_completed);
+  saveDbSettings = async (settings, saveDbSetting_completed) => await this.settingsRepository.saveDbSettings(settings, saveDbSetting_completed);
 }
 
 export default Firebase;

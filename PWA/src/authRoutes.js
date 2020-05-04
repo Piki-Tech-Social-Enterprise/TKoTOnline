@@ -135,7 +135,7 @@ const authRoutes = [
     layout: '/auth',
     path: '/Settings',
     name: 'Settings',
-    component: lazy(() => import('views/Auth/AuthSettingView')),
+    component: lazy(() => import('views/Auth/AuthSettingsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
     icon: 'ui-1_settings-gear-63',

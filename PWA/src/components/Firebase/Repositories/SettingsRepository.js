@@ -19,17 +19,16 @@ class SettingsRepository extends BaseRepository {
         .once('value')
       : await existingDbSettings
         .once('value');
-    const dbSetting = await dbSettingRef.val();
-    
-    return dbSetting;
+    const dbSettings = await dbSettingRef.val();
+    return Object.entries(dbSettings)[0][1];
   }
 
-  saveDbSetting = async (settings, saveDbSetting_completed) => {
+  saveDbSettings = async (settings, saveDbSetting_completed) => {
     const {
       active,
       created,
       createdBy,
-      communityLinkDescritpion,
+      communityLinksDescritpion,
       sid,
       updated,
       updatedBy
@@ -45,7 +44,7 @@ class SettingsRepository extends BaseRepository {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
-        communityLinkDescritpion: communityLinkDescritpion || '',
+        communityLinksDescritpion: communityLinksDescritpion || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         sid: await dbSettingsRef.getKey()
@@ -59,7 +58,7 @@ class SettingsRepository extends BaseRepository {
           active: active || (typeof active === 'boolean' && active) || false,
           created: created || dbSettings.created,
           createdBy: createdBy || dbSettings.createdBy,
-          communityLinkDescritpion: communityLinkDescritpion || dbSettings.communityLinkDescritpion || '',
+          communityLinksDescritpion: communityLinksDescritpion || dbSettings.communityLinksDescritpion || '',
           sid: sid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbSettings.updatedBy
