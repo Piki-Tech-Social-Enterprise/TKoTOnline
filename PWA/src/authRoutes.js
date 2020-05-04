@@ -37,12 +37,24 @@ const authRoutes = [
   },
   {
     layout: '/auth',
+    path: '/Profile',
+    name: 'Profile',
+    component: lazy(() => import('views/Auth/AuthUserView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: basicRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
     path: '/Users',
     name: 'Users',
     component: lazy(() => import('views/Auth/AuthUsersView')),
     exact: true,
-    iconLibrary: 'fas fa-users',
-    icon: '',
+    iconLibrary: 'fas',
+    icon: 'fa-users',
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
@@ -130,6 +142,18 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/Settings',
+    name: 'Settings',
+    component: lazy(() => import('views/Auth/AuthSettingsView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'ui-1_settings-gear-63',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
   }
 ];
 const getAuthRouteByName = name => {

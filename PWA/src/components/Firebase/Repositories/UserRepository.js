@@ -58,18 +58,41 @@ class UserRepository extends BaseRepository {
       uid,
       updated,
       updatedBy
-    } = user,
-      existingDbUser = await this.getDbUser(uid),
-      now = new Date();
-    let errorMessage = null,
-      dbUserRef = null,
-      dbUser = null;
-    if (existingDbUser) {
+    } = user;
+    const now = new Date();
+    let errorMessage = null;
+    let existingDbUser = await this.getDbUser(uid || '')
+    let dbUserRef = null;
+    let dbUser = null;
+    if (!uid) {
+      dbUserRef = await existingDbUser.push();
+      const newUid = await dbUserRef.getKey();
+      user = {
+        active: active || false,
+        created: created || now.toString(),
+        createdBy: createdBy || '',
+        displayName: displayName || '',
+        email: email || '',
+        photoURL: photoURL || '',
+        providerData: providerData || (email && {
+          email: email,
+          providerId: 'password',
+          uid: newUid
+        }) || {},
+        roles: roles || {
+          undefinedRole
+        },
+        uid: newUid,
+        updated: updated || now.toString(),
+        updatedBy: updatedBy || ''
+      };
+      dbUserRef.set(user, saveDbUser_completed);
+    } else {
       dbUserRef = await existingDbUser.once('value');
-      dbUser = dbUserRef.val();
+      dbUser = await dbUserRef.val();
       if (dbUser) {
         user = {
-          active: (typeof active === 'boolean' && active) || (typeof active !== 'boolean' && !!dbUser.active),
+          active: active || (typeof active === 'boolean' && active) || false,
           created: created || dbUser.created,
           createdBy: createdBy || dbUser.createdBy,
           displayName: displayName || dbUser.displayName || '',
@@ -82,16 +105,17 @@ class UserRepository extends BaseRepository {
           uid: uid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || uid
-        }
+        };
+        existingDbUser.set(user, saveDbUser_completed);
+      } else {
+        errorMessage = 'Save Db User Error: uid (' + uid + ') not found.';
       }
-      existingDbUser.set(user, saveDbUser_completed);
-    } else {
-      errorMessage = 'Save Db User Error: uid (' + uid + ') not found.';
     }
     if (errorMessage) {
       console.log('Save Db User Error: ' + errorMessage);
       throw new Error(errorMessage);
     }
+    return user.uid;
   }
 
   deleteDbUser = async uid => {

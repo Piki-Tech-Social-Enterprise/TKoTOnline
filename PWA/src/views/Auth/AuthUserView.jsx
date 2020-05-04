@@ -12,6 +12,9 @@ import {
   FormGroup,
   Label,
   Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   CustomInput,
   Button
 } from 'reactstrap';
@@ -34,14 +37,30 @@ const userPhotoUrlFormat = `${userPhotoFolderUrlFormat}${userFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
   displayName: '',
-  roles: {},
   email: '',
   photoURL: '',
   photoURLFile: null,
+  providerData: [
+    {
+      email: '',
+      providerId: 'password',
+      uid: null,
+    }
+  ],
+  roles: {
+    basicRole: Roles.basicRole
+  },
   uid: null
 };
 const AuthUserView = props => {
-  const isNew = props.match.params.uid === 'New';
+  const {
+    uid: paramsUid
+  } = props.match.params;
+  const isProfile = paramsUid == null;
+  const userOrProfileText = isProfile
+    ? 'Profile'
+    : 'User';
+  const isNew = paramsUid === 'New';
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,14 +115,15 @@ const AuthUserView = props => {
     const {
       active,
       displayName,
-      roles,
       email,
-      photoURLFile
+      photoURLFile,
+      providerData,
+      roles
     } = user;
     let uid = user.uid;
     let photoURL = user.photoURL;
     let displayType = 'success';
-    let displayTitle = 'Update User Successful';
+    let displayTitle = `Update ${userOrProfileText} Successful`;
     let displayMessage = 'Changes saved';
     try {
       if (!photoURL || !email || !displayName || !roles) {
@@ -122,15 +142,28 @@ const AuthUserView = props => {
                 .replace(userKeyFormat, uid)
                 .replace(userFilenameFormat, photoURLFile.name);
             }
+            if (providerData && providerData.length) {
+              providerData[0].email = email;
+              providerData[0].uid = uid;
+            }
+          }
+          if (isProfile) {
+            await firebase.updateProfile({
+              displayName,
+              photoURL
+            });
+          } else {
+            // TODO: Update User via Admin SDK
           }
           await firebase.saveDbUser({
             active: active,
             created: now.toString(),
             createdBy: authUserId,
             displayName,
-            roles,
             email,
             photoURL,
+            providerData,
+            roles,
             uid: uid,
             updated: now.toString(),
             updatedBy: authUserId
@@ -144,7 +177,7 @@ const AuthUserView = props => {
         }
     } catch (error) {
       displayType = 'error';
-      displayTitle = 'Update User Failed';
+      displayTitle = `Update ${userOrProfileText} Failed`;
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
@@ -186,8 +219,8 @@ const AuthUserView = props => {
         await firebase.deleteDbUser(uid);
         swal.fire({
           type: 'success',
-          title: 'Delete User Successful',
-          text: 'Your User has been deleted.'
+          title: `Delete ${userOrProfileText} Successful`,
+          text: `Your ${userOrProfileText} has been deleted.`
         });
         handleGotoParentList();
       }
@@ -197,10 +230,10 @@ const AuthUserView = props => {
     if (displayMessage) {
       swal.fire({
         type: 'error',
-        title: 'Delete User Error',
+        title: `Delete ${userOrProfileText} Error`,
         html: displayMessage
       });
-      console.log(`Delete User Error: ${displayMessage}`);
+      console.log(`Delete ${userOrProfileText} Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
@@ -218,13 +251,16 @@ const AuthUserView = props => {
   };
   useEffect(() => {
     const retrieveUser = async () => {
-      const dbUser = await props.firebase.getDbUserValue(props.match.params.uid);
+      const dbUser = paramsUid
+        ? await props.firebase.getDbUserValue(paramsUid)
+        : props.authUser;
       const {
         active,
         displayName,
         roles,
         email,
         photoURL,
+        providerData,
         uid
       } = dbUser;
       setUser({
@@ -233,6 +269,7 @@ const AuthUserView = props => {
         roles,
         email,
         photoURL,
+        providerData,
         uid
       });
     };
@@ -246,7 +283,7 @@ const AuthUserView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isNew, isLoading, setIsLoading]);
+  }, [props, isNew, isLoading, setIsLoading, paramsUid]);
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -262,8 +299,38 @@ const AuthUserView = props => {
                       <CardBody>
                         <FormGroup>
                           <Label>Email</Label>
-                          <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" />
+                          <InputGroup>
+                            <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="text" disabled={isProfile} />
+                            {
+                              !isProfile
+                                ? null
+                                : <>
+                                  <InputGroupAddon className="clickable" addonType="append" onClick={props.firebase.changeEmail} >
+                                    <InputGroupText className="pl-3">
+                                      <i className="now-ui-icons objects_key-25" />
+                                    </InputGroupText>
+                                  </InputGroupAddon>
+                                </>
+                            }
+                          </InputGroup>
                         </FormGroup>
+                        {
+                          !isProfile
+                            ? null
+                            : <>
+                              <FormGroup>
+                                <Label>Password</Label>
+                                <InputGroup>
+                                  <Input placeholder="Password" name="password" defaultValue="**********" type="text" disabled />
+                                  <InputGroupAddon className="clickable" addonType="append" onClick={props.firebase.changePassword} >
+                                    <InputGroupText className="pl-3">
+                                      <i className="now-ui-icons objects_key-25" />
+                                    </InputGroupText>
+                                  </InputGroupAddon>
+                                </InputGroup>
+                              </FormGroup>
+                            </>
+                        }
                         <FormGroup>
                           <Label>Display Name</Label>
                           <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
