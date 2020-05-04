@@ -57,7 +57,7 @@ const CommunityLinksSection = (props) => {
 
     const getDescription = async () => {
       const getDescription = await getSettings();
-      setDescription(getDescription.communityLinkDescritpion);
+      setDescription(getDescription.communityLinksDescritpion);
     }
 
 
@@ -71,7 +71,7 @@ const CommunityLinksSection = (props) => {
       <Row>
         <Col>
           <div className="mx-auto text-center bg-warning">
-            <h3>Community links section</h3>
+            <h3>Community Links Section</h3>
           </div>
         </Col>
         <Col>
