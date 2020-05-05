@@ -172,7 +172,7 @@ import React, {
           const {
             vid
           } = match.params;
-          await firebase.deleteDbVoluteer(vid);
+          await firebase.deleteDbVolunteer(vid);
            
           swal.fire({
             type: 'success',

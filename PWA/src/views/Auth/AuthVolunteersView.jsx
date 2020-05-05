@@ -17,7 +17,7 @@ import React, {
   import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
   import * as Roles from 'components/Domains/VolunteerRoles';
-  import RoleBadges from 'components/App/RoleBadges';
+  import VolunteerRoleBadges from 'components/App/VolunteerRoleBadges';
   import StatusBadge from 'components/App/StatusBadge';
   
   const getAvailableRoles = () => {
@@ -116,11 +116,11 @@ import React, {
                         <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
                         <TableHeaderColumn dataField="firstName" dataSort>First Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
-                         
-                            <RoleBadges
+                         console.log('here', row.vid, cell),
+                            <VolunteerRoleBadges
                               availableRoles={availableRoles}
                               roles={cell}
-                              uid={row.vid}
+                              vid={row.vid}
                               onChildUpdate={handleChildUpdate}
                             />
                           )} >Roles</TableHeaderColumn>
