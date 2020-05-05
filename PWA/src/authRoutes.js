@@ -166,6 +166,18 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Volunteers/:vlid',
+    name: 'Volunteer',
+    component: lazy(() => import('views/Auth/AuthVolunteerView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {

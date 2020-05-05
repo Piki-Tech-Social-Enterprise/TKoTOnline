@@ -136,7 +136,7 @@ import React, {
         } 
         if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
-            vid = await firebase.saveDbUser({});
+            vid = await firebase.saveDbVolunteer({});
             if (providerData && providerData.length) {
               providerData[0].email = email;
               providerData[0].vid = vid;
@@ -166,7 +166,7 @@ import React, {
                 : 'updateProfile',
               bodyData: {
                 vid: authVolunteerId,
-                dbUser: dbUser
+                dbVolunteer: dbVolunteer
               }
             };
             const functionsHelper = new FunctionsHelper(functionsHelperOptions);
@@ -175,7 +175,7 @@ import React, {
               : await functionsHelper.putAsync();
             console.log(`${functionsHelperOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
           }
-          await firebase.saveDbUser({
+          await firebase.saveDbVolunteer({
             active: active,
             created: now.toString(),
             createdBy: authVolunteerId,
@@ -230,7 +230,7 @@ import React, {
             vid
           } = match.params;
           if (isProfile) {
-            await firebase.deleteDbUser(vid);
+            await firebase.deleteDbVoluteer(vid);
           } 
           swal.fire({
             type: 'success',
@@ -259,10 +259,10 @@ import React, {
       }
     };
     useEffect(() => {
-      const retrieveUser = async () => {
+      const retrieveVolunteer = async () => {
         const dbVolunteer = paramsVid
-          ? await props.firebase.getDbUserValue(paramsVid)
-          : props.authUser;
+          ? await props.firebase.getDbVolunteerValue(paramsVid)
+          : props.authVolunteer;
         const {
           active,
           displayName,
@@ -271,7 +271,7 @@ import React, {
           providerData,
           vid
         } = dbVolunteer;
-        setUser({
+        setVolunteer({
           active,
           displayName,
           roles,
@@ -282,7 +282,7 @@ import React, {
       };
       if (isLoading) {
         if (!isNew) {
-          retrieveUser();
+            retrieveVolunteer();
         }
       }
       return () => {
@@ -307,7 +307,7 @@ import React, {
                           <FormGroup>
                             <Label>Email</Label>
                             <InputGroup>
-                              <Input placeholder="Email" name="email" value={user.email} onChange={handleChange} type="email" disabled={isProfile} />
+                              <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email" disabled={isProfile} />
                               {
                                 !isProfile
                                   ? null
@@ -327,14 +327,14 @@ import React, {
                               : <>
                                 <FormGroup>
                                   <Label>Confirm Email</Label>
-                                  <Input placeholder="Confirm Email" name="confirmEmail" value={user.confirmEmail} onChange={handleChange} type="email" />
+                                  <Input placeholder="Confirm Email" name="confirmEmail" value={volunteer.confirmEmail} onChange={handleChange} type="email" />
                                 </FormGroup>
                               </>
                           }
                           <FormGroup>
                             <Label>Password</Label>
                             <InputGroup>
-                              <Input placeholder="Password (Leave blank to keep existing)" name="password" value={user.password} onChange={handleChange} type="password" disabled={isProfile} />
+                              <Input placeholder="Password (Leave blank to keep existing)" name="password" value={volunteer.password} onChange={handleChange} type="password" disabled={isProfile} />
                               {
                                 !isProfile
                                   ? null
@@ -354,26 +354,26 @@ import React, {
                               : <>
                                 <FormGroup>
                                   <Label>Confirm Password</Label>
-                                  <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} type="password" />
+                                  <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={volunteer.confirmPassword} onChange={handleChange} type="password" />
                                 </FormGroup>
                               </>
                           }
                           <FormGroup>
                             <Label>Display Name</Label>
-                            <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
+                            <Input placeholder="Display Name" name="displayName" value={volunteer.displayName} onChange={handleChange} type="text" />
                           </FormGroup>
-                          <FormGroup className="user-roles">
+                          <FormGroup className="volunteer-roles">
                             <Label>Roles</Label><br />
                             {
                               Object.keys(Roles).map(role => {
                                 if (role === 'undefinedRole') return null;
-                                return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
+                                return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!volunteer.roles[role]} onChange={handleChange} key={role} type="switch" />
                               })
                             }
                           </FormGroup>
                           <FormGroup>
                             <Label>Active</Label><br />
-                            <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
+                            <CustomInput label="" name="active" checked={volunteer.active} onChange={handleChange} type="switch" id="VolunteerActive" />
                           </FormGroup>
                           <FormGroup>
                             <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>

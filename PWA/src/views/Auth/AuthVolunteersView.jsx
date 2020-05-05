@@ -69,11 +69,11 @@ import React, {
       <InsertButton btnText="Add New" onClick={() => handleAddUserClick(onClick)} />
     );
     const handleAddUserClick = async onClick => {
-      props.history.push(`/auth/Users/New`);
+      props.history.push(`/auth/Volunteers/New`);
       onClick();
     };
     const handleUserRowClick = async row => {
-      props.history.push(`/auth/Users/${row.uid}`);
+      props.history.push(`/auth/Volunteers/${row.uid}`);
     };
     const handleChildUpdate = updatedChildState => {
       const indexOfDbUser = volunteersAsArray.findIndex(dbUser => dbUser.uid === updatedChildState.dbId);

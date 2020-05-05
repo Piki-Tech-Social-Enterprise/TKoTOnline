@@ -5,7 +5,8 @@ import {
   StorageRepository,
   NewsFeedRepository,
   CommunityLinksRepository,
-  SettingsRepository
+  SettingsRepository,
+  VolunteersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -21,6 +22,7 @@ class Firebase {
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
+    this.volunteersRepository = new VolunteersRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
