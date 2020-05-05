@@ -19,7 +19,7 @@ import {
   systemAdminRole,
   adminRole,
   basicRole,
-  undefinedRole
+  undefinedRole,
 } from 'components/Domains/Roles';
 import {
   withAuthorization
