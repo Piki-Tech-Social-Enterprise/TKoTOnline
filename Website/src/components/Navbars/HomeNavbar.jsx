@@ -25,7 +25,7 @@ function HomeNavbar() {
   const {
     REACT_APP_PWA_BASE_URL
   } = process.env;
-  
+
   return (
     <>
       {collapseOpen ? (
@@ -40,13 +40,14 @@ function HomeNavbar() {
       <Navbar className={"fixed-top"} expand="lg">
         <Container>
           <div className="navbar-translate">
-          <img
-              alt="..."
-              className="n-logo"
-              src={require("assets/img/tkot/tkot-logo-512x512.png")}
-              width="75"
-            ></img>
-        
+            <a href="/">
+              <img
+                alt="..."
+                className="n-logo"
+                src={require("assets/img/tkot/tkot-logo-512x512.png")}
+                width="75"
+              />
+            </a>
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {
@@ -68,20 +69,20 @@ function HomeNavbar() {
           >
             <Nav navbar>
               <NavItem active={pathname.endsWith(newsFeed)}>
-                   <NavLink href={newsFeed}>News Feed</NavLink>
+                <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(interactiveMap)}>
-                   <NavLink href={interactiveMap}>Interactive Map</NavLink>
+                <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(volunteer)}>
-                   <NavLink href={volunteer}>Volunteer</NavLink>
+                <NavLink href={volunteer}>Volunteer</NavLink>
               </NavItem>
               <NavItem>
                 <Button outline color="white" href={`${REACT_APP_PWA_BASE_URL}/public/Login`}>
-                      Login
+                  Login
                 </Button>
               </NavItem>
-              </Nav>
+            </Nav>
           </Collapse>
         </Container>
       </Navbar>
