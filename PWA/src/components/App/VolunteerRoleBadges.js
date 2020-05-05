@@ -139,12 +139,10 @@ import React, {
       vid,
       roles
     } = props;
-    console.log('propsssssssssssssssssss', props);
     const {
       activeRoles
     } = state;
     const activeRolesId = `activeRoles_${vid}`;
-    console.log('active role', activeRolesId);
     return (
       state.isLoading
         ? <LoadingIcon size="sm" />
@@ -163,9 +161,9 @@ import React, {
                 <Col md="12">
                   <Form noValidate onSubmit={handleSubmit}>
                     {
-                      Object.keys(props.availableRoles).map(availableRole => {
+                      Object.keys(props.availableRoles).map((availableRole, key) => {
                         return (
-                          <FormGroup check className="text-left">
+                          <FormGroup check className="text-left" key={key}>
                             <Label check>
                               <Input id={`${activeRolesId}_activeRoles[${availableRole}]`} name={`${activeRolesId}_activeRoles[${availableRole}]`} type="checkbox" checked={!!activeRoles[availableRole]} onChange={handleRoleChange} />{' '}
                                 {fromCamelcaseToTitlecase(availableRole.replace('Role', ''))}

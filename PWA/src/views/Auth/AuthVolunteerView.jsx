@@ -98,7 +98,6 @@ import React, {
         roles
       } = volunteer;
       let vid = volunteer.vid;
-      console.log('here is the vid', vid);
       let displayType = 'success';
       let displayTitle = `Update Volunteer Successful`;
       let displayMessage = defaultDisplayMesssage;

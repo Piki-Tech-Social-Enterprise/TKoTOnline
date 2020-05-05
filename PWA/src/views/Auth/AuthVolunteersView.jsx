@@ -21,7 +21,6 @@ import React, {
   import StatusBadge from 'components/App/StatusBadge';
   
   const getAvailableRoles = () => {
-    console.log(Roles);
     const availableRoles = {};
     Object.keys(Roles).map(role => {
       if (role !== Roles.undefinedRole) {
@@ -29,7 +28,6 @@ import React, {
       }
       return null;
     });
-    console.log(availableRoles);
     return availableRoles;
   };
   const AuthVolunteersView = props => {
@@ -39,7 +37,6 @@ import React, {
     useEffect(() => {
       const retrieveVolunteers = async () => {
         const dbVolunteersAsArray = await props.firebase.getDbVolunteersAsArray(true);
-        console.log('db vdddddddddddddd', dbVolunteersAsArray);
         setVolunteersAsArray(dbVolunteersAsArray);
       };
       if (isLoading) {
@@ -104,7 +101,7 @@ import React, {
                       : <BootstrapTable data={volunteersAsArray} version="4" bordered={false} condensed hover
                         trClassName="clickable"
                         tableHeaderClass="text-primary"
-                        insertRow exportCSV csvFileName="users-table-export"
+                        insertRow exportCSV csvFileName="volunteers-table-export"
                         search pagination options={{
                           defaultSortName: 'email',
                           hideSizePerPage: true,
@@ -116,7 +113,6 @@ import React, {
                         <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
                         <TableHeaderColumn dataField="firstName" dataSort>First Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
-                         console.log('here', row.vid, cell),
                             <VolunteerRoleBadges
                               availableRoles={availableRoles}
                               roles={cell}
