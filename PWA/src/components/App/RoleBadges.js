@@ -22,6 +22,11 @@ import {
   undefinedRole
 } from 'components/Domains/Roles';
 import {
+  volunteerRole,
+  volunteerCooridantorRole
+
+} from 'components/Domains/VolunteerRoles';
+import {
   withAuthorization
 } from 'components/Firebase';
 import swal from 'sweetalert2';
@@ -88,6 +93,18 @@ const RoleBadges = props => {
         activeRoles[undefinedRole] = undefinedRole;
       } else if (!!activeRoles.undefinedRole) {
         delete activeRoles.undefinedRole;
+      }
+    }else if (name === `${activeRolesId}_activeRoles[volunteerCooridantorRole]`) {
+      if (checked) {
+        activeRoles[volunteerCooridantorRole] = volunteerCooridantorRole;
+      } else if (!!activeRoles.volunteerCooridantorRole) {
+        delete activeRoles.volunteerCooridantorRole;
+      }
+    }else if (name === `${activeRolesId}_activeRoles[volunteerRole]`) {
+      if (checked) {
+        activeRoles[volunteerRole] = volunteerRole;
+      } else if (!!activeRoles.volunteerRole) {
+        delete activeRoles.volunteerRole;
       }
     }
     setState(s => ({

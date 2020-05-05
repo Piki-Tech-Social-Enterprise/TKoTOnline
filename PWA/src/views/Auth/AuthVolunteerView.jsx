@@ -13,8 +13,6 @@ import React, {
     Label,
     Input,
     InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     CustomInput,
     Button
   } from 'reactstrap';
@@ -24,37 +22,21 @@ import React, {
   import {
     fromCamelcaseToTitlecase
   } from 'components/App/Utilities';
-  import * as Roles from 'components/Domains/Roles';
-  import FunctionsHelper from 'components/App/FunctionsHelper';
+  import * as Roles from 'components/Domains/VolunteerRoles';
   
   const INITIAL_STATE = {
     active: true,
-    confirmEmail: '',
-    confirmPassword: '',
-    displayName: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
-    providerData: [
-      {
-        email: '',
-        providerId: 'password',
-        vid: null,
-      }
-    ],
+    phoneNumber: '',
     roles: {
-      basicRole: Roles.basicRole
+      volunteerRole: Roles.volunteerRole
     },
     vid: null
   };
   const AuthVolunteerView = props => {
-    const {
-      vid: paramsVid
-    } = props.match.params;
-    const isProfile = paramsVid == null;
-    const volunteerOrProfileText = isProfile
-      ? 'Profile'
-      : 'Volunteer';
-    const isNew = paramsVid === 'New';
+    const isNew = props.match.params.vid === 'New';
     const [isLoading, setIsLoading] = useState(true);
     const [volunteer, setVolunteer] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -100,92 +82,53 @@ import React, {
       const defaultDisplayMesssage = 'Changes saved';
       const now = new Date();
       const {
-        authVolunteer,
+        authUser,
         firebase
       } = props;
       const {
-        vid: authVolunteerId
-      } = authVolunteer;
+        uid
+      } = authUser;
       const {
         active,
-        confirmEmail,
-        confirmPassword,
-        displayName,
+        firstName,
+        lastName,
         email,
-        password,
+        phoneNumber,
         providerData,
         roles
       } = volunteer;
       let vid = volunteer.vid;
+      console.log('here is the vid', vid);
       let displayType = 'success';
-      let displayTitle = `Update ${volunteerOrProfileText} Successful`;
+      let displayTitle = `Update Volunteer Successful`;
       let displayMessage = defaultDisplayMesssage;
       try {
         if (isNew) {
-          if (!email || !confirmEmail || !password || !confirmPassword || !displayName || !roles) {
-            displayMessage = 'Email, Confirmed Email, Password, Confirmed Password, Display Name, and Roles are required fields.';
-          } else if (email !== confirmEmail) {
-            displayMessage = 'Email and Confirmed Email fields do not match.';
-          } else if (password !== confirmPassword) {
-            displayMessage = 'Password and Confirmed Password fields do not match.';
+          if (!email || !firstName || !lastName || !phoneNumber || !roles) {
+            displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
           } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
             displayMessage = 'Email is invalid.';
-          } else if (!password.match(/(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,15}/)) {
-            displayMessage = 'Password is too weak. Needs to be 6 characters or more. It can be any combination of letters, numbers, and symbols (ASCII characters).';
+          } else if ( phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
+            displayMessage = 'Phone number is invalid.';
           }
         } 
         if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
             vid = await firebase.saveDbVolunteer({});
-            if (providerData && providerData.length) {
-              providerData[0].email = email;
-              providerData[0].vid = vid;
-            }
-          }
-          if (isProfile) {
-            await firebase.updateProfile({
-              displayName
-            });
-          } else {
-            const dbVolunteer = {
-              disabled: active,
-              displayName,
-              email,
-              // emailVerified: false,
-              password,
-              // phoneNumber,
-              vid
-            };
-            const {
-              REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
-            } = process.env;
-            const functionsHelperOptions = {
-              baseUrl: GCF_URL,
-              functionName: isNew
-                ? 'setProfile'
-                : 'updateProfile',
-              bodyData: {
-                vid: authVolunteerId,
-                dbVolunteer: dbVolunteer
-              }
-            };
-            const functionsHelper = new FunctionsHelper(functionsHelperOptions);
-            const result = isNew
-              ? await functionsHelper.postAsync()
-              : await functionsHelper.putAsync();
-            console.log(`${functionsHelperOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
           }
           await firebase.saveDbVolunteer({
             active: active,
             created: now.toString(),
-            createdBy: authVolunteerId,
-            displayName,
+            createdBy: uid,
+            firstName,
+            lastName,
+            phoneNumber,
             email,
             providerData,
             roles,
             vid: vid,
             updated: now.toString(),
-            updatedBy: authVolunteerId
+            updatedBy: uid
           });
           if (isNew) {
             handleGotoParentList();
@@ -193,7 +136,7 @@ import React, {
         }
       } catch (error) {
         displayType = 'error';
-        displayTitle = `Update ${volunteerOrProfileText} Failed`;
+        displayTitle = `Update Volunteer Failed`;
         displayMessage = `${error.message}`;
       } finally {
         setIsSubmitting(false);
@@ -229,13 +172,12 @@ import React, {
           const {
             vid
           } = match.params;
-          if (isProfile) {
-            await firebase.deleteDbVoluteer(vid);
-          } 
+          await firebase.deleteDbVoluteer(vid);
+           
           swal.fire({
             type: 'success',
-            title: `Delete ${volunteerOrProfileText} Successful`,
-            text: `Your ${volunteerOrProfileText} has been deleted.`
+            title: `Delete Volunteer Successful`,
+            text: `Your Volunteer has been deleted.`
           });
           handleGotoParentList();
         }
@@ -245,27 +187,23 @@ import React, {
       if (displayMessage) {
         swal.fire({
           type: 'error',
-          title: `Delete ${volunteerOrProfileText} Error`,
+          title: `Delete Volunteer Error`,
           html: displayMessage
         });
-        console.log(`Delete ${volunteerOrProfileText} Error: ${displayMessage}`);
+        console.log(`Delete Volunteer Error: ${displayMessage}`);
       }
     };
     const handleGotoParentList = () => {
-      if (isProfile) {
-        window.location.href = '/auth';
-      } else {
-        props.history.push('/auth/Users');
-      }
+        props.history.push('/auth/Volunteers');
     };
     useEffect(() => {
       const retrieveVolunteer = async () => {
-        const dbVolunteer = paramsVid
-          ? await props.firebase.getDbVolunteerValue(paramsVid)
-          : props.authVolunteer;
+        const dbVolunteer = await props.firebase.getDbVolunteerValue(props.match.params.vid);
         const {
           active,
-          displayName,
+          firstName,
+          lastName,
+          phoneNumber,
           roles,
           email,
           providerData,
@@ -273,7 +211,9 @@ import React, {
         } = dbVolunteer;
         setVolunteer({
           active,
-          displayName,
+          firstName,
+          lastName,
+          phoneNumber,
           roles,
           email,
           providerData,
@@ -290,7 +230,7 @@ import React, {
           setIsLoading(false);
         }
       };
-    }, [props, isNew, isLoading, setIsLoading, paramsVid]);
+    }, [props, isNew, isLoading, setIsLoading]);
     return (
       <>
         <div className="panel-header panel-header-xs" />
@@ -305,62 +245,28 @@ import React, {
                       <Card>
                         <CardBody>
                           <FormGroup>
+                            <Label>First Name</Label>
+                            <InputGroup>
+                              <Input placeholder="First name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
+                            </InputGroup>
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Last Name</Label>
+                            <InputGroup>
+                              <Input placeholder="Last name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
+                            </InputGroup>
+                          </FormGroup>
+                          <FormGroup>
                             <Label>Email</Label>
                             <InputGroup>
-                              <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email" disabled={isProfile} />
-                              {
-                                !isProfile
-                                  ? null
-                                  : <>
-                                    <InputGroupAddon className="clickable" addonType="append" onClick={props.firebase.changeEmail} >
-                                      <InputGroupText className="pl-3">
-                                        <i className="now-ui-icons objects_key-25" />
-                                      </InputGroupText>
-                                    </InputGroupAddon>
-                                  </>
-                              }
+                              <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email"/>
                             </InputGroup>
                           </FormGroup>
-                          {
-                            !isNew
-                              ? null
-                              : <>
-                                <FormGroup>
-                                  <Label>Confirm Email</Label>
-                                  <Input placeholder="Confirm Email" name="confirmEmail" value={volunteer.confirmEmail} onChange={handleChange} type="email" />
-                                </FormGroup>
-                              </>
-                          }
                           <FormGroup>
-                            <Label>Password</Label>
+                            <Label>Phone Number</Label>
                             <InputGroup>
-                              <Input placeholder="Password (Leave blank to keep existing)" name="password" value={volunteer.password} onChange={handleChange} type="password" disabled={isProfile} />
-                              {
-                                !isProfile
-                                  ? null
-                                  : <>
-                                    <InputGroupAddon className="clickable" addonType="append" onClick={props.firebase.changePassword} >
-                                      <InputGroupText className="pl-3">
-                                        <i className="now-ui-icons objects_key-25" />
-                                      </InputGroupText>
-                                    </InputGroupAddon>
-                                  </>
-                              }
+                              <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
                             </InputGroup>
-                          </FormGroup>
-                          {
-                            (!isNew && isProfile)
-                              ? null
-                              : <>
-                                <FormGroup>
-                                  <Label>Confirm Password</Label>
-                                  <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={volunteer.confirmPassword} onChange={handleChange} type="password" />
-                                </FormGroup>
-                              </>
-                          }
-                          <FormGroup>
-                            <Label>Display Name</Label>
-                            <Input placeholder="Display Name" name="displayName" value={volunteer.displayName} onChange={handleChange} type="text" />
                           </FormGroup>
                           <FormGroup className="volunteer-roles">
                             <Label>Roles</Label><br />

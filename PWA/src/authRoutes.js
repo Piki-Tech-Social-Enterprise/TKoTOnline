@@ -169,7 +169,7 @@ const authRoutes = [
   },
   {
     layout: '/auth',
-    path: '/Volunteers/:vlid',
+    path: '/Volunteers/:vid',
     name: 'Volunteer',
     component: lazy(() => import('views/Auth/AuthVolunteerView')),
     exact: true,

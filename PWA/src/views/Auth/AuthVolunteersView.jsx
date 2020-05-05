@@ -16,11 +16,12 @@ import React, {
   } from 'react-bootstrap-table';
   import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
-  import * as Roles from 'components/Domains/Roles';
+  import * as Roles from 'components/Domains/VolunteerRoles';
   import RoleBadges from 'components/App/RoleBadges';
   import StatusBadge from 'components/App/StatusBadge';
   
   const getAvailableRoles = () => {
+    console.log(Roles);
     const availableRoles = {};
     Object.keys(Roles).map(role => {
       if (role !== Roles.undefinedRole) {
@@ -28,6 +29,7 @@ import React, {
       }
       return null;
     });
+    console.log(availableRoles);
     return availableRoles;
   };
   const AuthVolunteersView = props => {
@@ -36,7 +38,8 @@ import React, {
     const availableRoles = getAvailableRoles();
     useEffect(() => {
       const retrieveVolunteers = async () => {
-        const dbVolunteersAsArray = await props.firebase.getDbUsersAsArray(true);
+        const dbVolunteersAsArray = await props.firebase.getDbVolunteersAsArray(true);
+        console.log('db vdddddddddddddd', dbVolunteersAsArray);
         setVolunteersAsArray(dbVolunteersAsArray);
       };
       if (isLoading) {
@@ -73,16 +76,16 @@ import React, {
       onClick();
     };
     const handleUserRowClick = async row => {
-      props.history.push(`/auth/Volunteers/${row.uid}`);
+      props.history.push(`/auth/Volunteers/${row.vid}`);
     };
     const handleChildUpdate = updatedChildState => {
-      const indexOfDbUser = volunteersAsArray.findIndex(dbUser => dbUser.uid === updatedChildState.dbId);
-      if (indexOfDbUser > -1) {
-        if (updatedChildState.userRoles) {
-            volunteersAsArray[indexOfDbUser].roles = updatedChildState.userRoles;
+      const indexOfDbVolunteer = volunteersAsArray.findIndex(dbVolunteers => dbVolunteers.vid === updatedChildState.dbId);
+      if (indexOfDbVolunteer > -1) {
+        if (updatedChildState.volunteerRoles) {
+            volunteersAsArray[indexOfDbVolunteer].roles = updatedChildState.volunteerRoles;
         }
         if (typeof updatedChildState.dbActive === 'boolean') {
-            volunteersAsArray[indexOfDbUser].active = updatedChildState.dbActive;
+            volunteersAsArray[indexOfDbVolunteer].active = updatedChildState.dbActive;
         }
         setVolunteersAsArray(volunteersAsArray);
       }
@@ -105,26 +108,27 @@ import React, {
                         search pagination options={{
                           defaultSortName: 'email',
                           hideSizePerPage: true,
-                          noDataText: 'No Users found.',
+                          noDataText: 'No Volunteers found.',
                           onSortChange: handleSortChange,
                           insertBtn: createCustomInsertButton,
                           onRowClick: handleUserRowClick
                         }}>
                         <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
-                        <TableHeaderColumn dataField="displayName" dataSort>Display Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="firstName" dataSort>First Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
+                         
                             <RoleBadges
                               availableRoles={availableRoles}
                               roles={cell}
-                              uid={row.uid}
+                              uid={row.vid}
                               onChildUpdate={handleChildUpdate}
                             />
                           )} >Roles</TableHeaderColumn>
                         <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                           <StatusBadge
-                            dbObjectName="User"
-                            dbId={row.uid}
-                            dbIdName="uid"
+                            dbObjectName="Volunteer"
+                            dbId={row.vid}
+                            dbIdName="vid"
                             dbActive={cell}
                             authUserUid={props.authUser.uid}
                             onSaveDbObject={props.firebase.saveDbUser}
