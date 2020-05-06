@@ -19,7 +19,6 @@ class VolunteersRepository extends BaseRepository {
   }
 
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => {
-      console.log('vvvvvvvvvvvvvvvvvvvvvvvvvv', volunteer);
     const {
       active,
       created,

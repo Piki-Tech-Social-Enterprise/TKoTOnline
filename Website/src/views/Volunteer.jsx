@@ -54,7 +54,6 @@ const Volunteer = props => {
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     const roles = Object.keys(Roles);
     const isRole = roles.findIndex(role => role === name) > -1;
-    console.log(`name: ${name}, value: ${value}, checked: ${checked}, isRole: ${isRole}`);
     if (isRole) {
       const {
         roles: activeRoles
@@ -84,11 +83,13 @@ const Volunteer = props => {
   const handleCanel = async () => {
 
     swal.fire({
-      title: 'Are you Sure',
+      title: 'Cancel',
+      icon: 'warning',
+      text: 'Are you sure you want to cancel? this will return you to the home page',
+      confirmButtonText: 'Yes',
       showCancelButton: true,
       cancelButtonText: 'No'
     }).then((result)=> {
-console.log('result ', result);
       if(result.dismiss !== 'cancel'){
         props.history.push('/');
       }
@@ -123,16 +124,15 @@ console.log('result ', result);
           displayType = 'error';
           displayTitle = `Update Volunteer Failed`;
           displayMessage = 'Email is invalid.';
-        } else if (phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
+        } else if (!phoneNumber.match(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/i)) {
           displayType = 'error';
           displayTitle = `Update Volunteer Failed`;
           displayMessage = 'Phone number is invalid.';
         }
       } 
       if (displayMessage === defaultDisplayMesssage) {
-        console.log('here now', active, firstName, phoneNumber);
         await props.firebase.saveDbVolunteer({
-          active: active,
+          active: true,
           created: now.toString(),
           createdBy: firstName,
           firstName,
@@ -176,7 +176,7 @@ console.log('result ', result);
     <HomeNavbar />
     <Container>
     <Row>
-      <h1 className="volunteer-title">Volunteer</h1>
+      <h2 className="volunteer-title">Volunteer Registration</h2>
     </Row>
     <Row>
     <Container className="volunteer-form">
@@ -219,11 +219,7 @@ console.log('result ', result);
                           }
                         </FormGroup>
                         <FormGroup>
-                          <Label>Active</Label><br />
-                          <CustomInput label="" name="active" checked={volunteer.active} onChange={handleChange} type="switch" id="VolunteerActive" />
-                        </FormGroup>
-                        <FormGroup>
-                          <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                          <Button type="submit" color="warning" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Regitster</Button>
                           <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting} onClick={handleCanel}>Cancel</Button>
                         </FormGroup>
                       </CardBody>
