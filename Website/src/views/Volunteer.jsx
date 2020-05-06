@@ -102,7 +102,6 @@ const Volunteer = props => {
     const defaultDisplayMesssage = 'Changes saved';
     const now = new Date();
     const {
-      active,
       firstName,
       lastName,
       email,
