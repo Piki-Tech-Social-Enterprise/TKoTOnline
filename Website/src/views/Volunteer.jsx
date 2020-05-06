@@ -23,10 +23,14 @@ import {
   fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
 import * as Roles from '../components/Domains/VolunteerRoles';
+import {
+  withFirebase
+} from 'components/Firebase';
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 
 const Volunteer = props => {
+
   const INITIAL_STATE = {
     active: true,
     firstName: '',
@@ -39,10 +43,8 @@ const Volunteer = props => {
     vid: null
   };
 
-  console.log('props', props.match.params);
   const isNew = true;
-  console.log(isNew);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
@@ -87,13 +89,6 @@ const Volunteer = props => {
     const defaultDisplayMesssage = 'Changes saved';
     const now = new Date();
     const {
-      authUser,
-      firebase
-    } = props;
-    const {
-      uid
-    } = authUser;
-    const {
       active,
       firstName,
       lastName,
@@ -102,7 +97,8 @@ const Volunteer = props => {
       providerData,
       roles
     } = volunteer;
-    let vid = volunteer.vid;
+    console.log('mmmmmmmmmmmmmmmmmmmmmmmm', volunteer, isNew);
+    let vid = null;
     let displayType = 'success';
     let displayTitle = `Update Volunteer Successful`;
     let displayMessage = defaultDisplayMesssage;
@@ -117,13 +113,11 @@ const Volunteer = props => {
         }
       } 
       if (displayMessage === defaultDisplayMesssage) {
-        if (isNew) {
-          vid = await firebase.saveDbVolunteer({});
-        }
-        await firebase.saveDbVolunteer({
+        console.log('here now', active, firstName, phoneNumber);
+        await props.firebase.saveDbVolunteer({
           active: active,
           created: now.toString(),
-          createdBy: uid,
+          createdBy: firstName,
           firstName,
           lastName,
           phoneNumber,
@@ -132,11 +126,8 @@ const Volunteer = props => {
           roles,
           vid: vid,
           updated: now.toString(),
-          updatedBy: uid
+          updatedBy: firstName
         });
-        if (isNew) {
-          handleGotoParentList();
-        }
       }
     } catch (error) {
       displayType = 'error';
@@ -150,29 +141,31 @@ const Volunteer = props => {
         type: displayType,
         title: displayTitle,
         html: displayMessage
+      }).then((result) => {
+        if(result){
+          props.history.push('/');
+        }
+
       });
     }
   };
-  const handleGotoParentList = () => {
-      props.history.push('/auth/Volunteers');
-  };
   useEffect(() => {
-    if (isLoading) {
-      if (!isNew) {
-          
-      }
-    }
+    const test = '';
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isNew, isLoading, setIsLoading]);
+  });
   return (
     <>
     <HomeNavbar />
-      <div className="panel-header panel-header-xs" />
-      <Container className="content">
+    <Container>
+    <Row>
+      <h1 className="volunteer-title">Volunteer</h1>
+    </Row>
+    <Row>
+    <Container className="volunteer-form">
         {
           isLoading
             ? <LoadingOverlayModal />
@@ -221,7 +214,7 @@ const Volunteer = props => {
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Cancel</Button>
                         </FormGroup>
                       </CardBody>
                     </Card>
@@ -230,11 +223,12 @@ const Volunteer = props => {
               </Form>
             </>
         }
-      </Container>
-    
+    </Container>
+    </Row>
+    </Container>
     <HomeFooter />
     </>
   )
 };
 
-export default Volunteer;
+export default withFirebase(Volunteer);

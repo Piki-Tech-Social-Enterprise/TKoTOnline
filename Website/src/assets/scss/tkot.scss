@@ -210,3 +210,12 @@ $tkot-bg-color: #171b5d;
 .block-with-text {
   @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);  
 }
+
+.volunteer-title {
+  margin-top: 100px;
+  color: black;
+}
+
+.volunteer-form {
+  
+}
