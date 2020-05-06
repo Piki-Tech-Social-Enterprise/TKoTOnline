@@ -1,7 +1,6 @@
 
 import React, {
-  useState,
-  useEffect
+  useState
 } from 'react';
 import {
   Container,
@@ -17,7 +16,6 @@ import {
   CustomInput,
   Button
 } from 'reactstrap';
-import LoadingOverlayModal from '../components/App/LoadingOverModal';
 import swal from 'sweetalert2';
 import {
   fromCamelcaseToTitlecase
@@ -44,7 +42,6 @@ const Volunteer = props => {
   };
 
   const isNew = true;
-  const [isLoading, setIsLoading] = useState(false);
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
@@ -83,6 +80,21 @@ const Volunteer = props => {
       }));
     }
   };
+
+  const handleCanel = async () => {
+
+    swal.fire({
+      title: 'Are you Sure',
+      showCancelButton: true,
+      cancelButtonText: 'No'
+    }).then((result)=> {
+console.log('result ', result);
+      if(result.dismiss !== 'cancel'){
+        props.history.push('/');
+      }
+    })
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -97,7 +109,6 @@ const Volunteer = props => {
       providerData,
       roles
     } = volunteer;
-    console.log('mmmmmmmmmmmmmmmmmmmmmmmm', volunteer, isNew);
     let vid = null;
     let displayType = 'success';
     let displayTitle = `Update Volunteer Successful`;
@@ -105,10 +116,16 @@ const Volunteer = props => {
     try {
       if (isNew) {
         if (!email || !firstName || !lastName || !phoneNumber || !roles) {
+          displayType = 'error';
+          displayTitle = `Update Volunteer Failed`;
           displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
         } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+          displayType = 'error';
+          displayTitle = `Update Volunteer Failed`;
           displayMessage = 'Email is invalid.';
-        } else if ( phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
+        } else if (phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
+          displayType = 'error';
+          displayTitle = `Update Volunteer Failed`;
           displayMessage = 'Phone number is invalid.';
         }
       } 
@@ -136,27 +153,24 @@ const Volunteer = props => {
     } finally {
       setIsSubmitting(false);
     }
-    if (displayMessage) {
+    if (displayType !== 'error') {
       swal.fire({
-        type: displayType,
+        icon: displayType,
         title: displayTitle,
         html: displayMessage
       }).then((result) => {
         if(result){
           props.history.push('/');
         }
-
       });
+    }else {
+      swal.fire({
+        icon: displayType,
+        title: displayTitle,
+        html: displayMessage
+      })
     }
   };
-  useEffect(() => {
-    const test = '';
-    return () => {
-      if (isLoading) {
-        setIsLoading(false);
-      }
-    };
-  });
   return (
     <>
     <HomeNavbar />
@@ -166,10 +180,6 @@ const Volunteer = props => {
     </Row>
     <Row>
     <Container className="volunteer-form">
-        {
-          isLoading
-            ? <LoadingOverlayModal />
-            : <>
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
                   <Col md={8}>
@@ -196,7 +206,7 @@ const Volunteer = props => {
                         <FormGroup>
                           <Label>Phone Number</Label>
                           <InputGroup>
-                            <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
+                            <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text"/>
                           </InputGroup>
                         </FormGroup>
                         <FormGroup className="volunteer-roles">
@@ -214,15 +224,13 @@ const Volunteer = props => {
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Cancel</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting} onClick={handleCanel}>Cancel</Button>
                         </FormGroup>
                       </CardBody>
                     </Card>
                   </Col>
                 </Row>
               </Form>
-            </>
-        }
     </Container>
     </Row>
     </Container>
