@@ -3,6 +3,7 @@ const Routes = {
     newsFeed: '#NewsFeed',
     interactiveMap: '#InteractiveMap',
     volunteer: '#Volunteer',
+    volunteerRegistration: '/Volunteer',
     privacyPolicy: '/PrivacyPolicy',
     termsOfUse: '/TermsOfUse'
   };
