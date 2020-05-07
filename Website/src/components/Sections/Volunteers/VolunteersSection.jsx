@@ -1,12 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Container,
   Row,
   Col,
   Button
 } from 'reactstrap';
+import {
+  withFirebase
+} from 'components/Firebase';
 
-const VolunteersSection = () => {
+const VolunteersSection = (props) => {
+
+  const [volunteersDescription, setDescription] = useState([]);
+
+  useEffect(() => {
+
+    const getSettings = async () =>{
+      const settings = await props.firebase.getDbSettingsValues(true);
+      return settings;
+    }
+
+    const getDescription = async () => {
+      const getDescription = await getSettings();
+      setDescription(getDescription.volunteersDescritpion);
+    }
+
+    getDescription();
+  }, [props])
 
   return (
     <Container className="tkot-section">
@@ -20,16 +40,7 @@ const VolunteersSection = () => {
       <Row>
         <Col>
           <div className="mx-auto text-left">
-              <p>
-              s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
-              </p>
-          </div>
-        </Col>
-        <Col>
-          <div className="mx-auto text-left">
-            <p>
-            s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-            </p>
+              <p>{volunteersDescription}</p>
           </div>
         </Col>
       </Row>
@@ -46,4 +57,4 @@ const VolunteersSection = () => {
   );
 };
 
-export default VolunteersSection;
+export default withFirebase(VolunteersSection);
