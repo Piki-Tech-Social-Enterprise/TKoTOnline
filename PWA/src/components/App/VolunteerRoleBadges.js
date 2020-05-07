@@ -17,7 +17,7 @@ import React, {
   } from 'reactstrap';
   import {
     volunteerRole,
-    volunteerCooridantorRole,
+    volunteerCoordinatorRole,
     undefinedRole
   } from 'components/Domains/VolunteerRoles';
   import {
@@ -71,11 +71,11 @@ import React, {
         } else if (!!activeRoles.volunteerRole) {
           delete activeRoles.volunteerRole;
         }
-      } else if (name === `${activeRolesId}_activeRoles[volunteerCooridantorRole]`) {
+      } else if (name === `${activeRolesId}_activeRoles[volunteerCoordinatorRole]`) {
         if (checked) {
-          activeRoles[volunteerCooridantorRole] = volunteerCooridantorRole;
-        } else if (!!activeRoles.volunteerCooridantorRole) {
-          delete activeRoles.volunteerCooridantorRole;
+          activeRoles[volunteerCoordinatorRole] = volunteerCoordinatorRole;
+        } else if (!!activeRoles.volunteerCoordinatorRole) {
+          delete activeRoles.volunteerCoordinatorRole;
         }
       } else if (name === `${activeRolesId}_activeRoles[undefinedRole]`) {
         if (checked) {
@@ -197,9 +197,9 @@ import React, {
         color = 'warning';
         roleDisplayName = 'Volunteer';
         break;
-      case volunteerCooridantorRole:
+      case volunteerCoordinatorRole:
         color = 'secondary';
-        roleDisplayName = 'Volunteer Cooridinator';
+        roleDisplayName = 'Coordinator';
         break;
       case undefinedRole:
       default:
