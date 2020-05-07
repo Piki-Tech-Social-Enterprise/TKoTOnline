@@ -11,6 +11,10 @@ class SettingsRepository extends BaseRepository {
     return await this.db.ref('settings');
   }
 
+  getDbSetting = async sid => {
+    return await this.db.ref(`settings/${sid}`);
+  }
+
   getDbSettingsValues = async includeInactive => {
     const existingDbSettings = await this.getDbSettings();
     const dbSettingRef = !includeInactive
@@ -29,13 +33,14 @@ class SettingsRepository extends BaseRepository {
       created,
       createdBy,
       communityLinksDescritpion,
+      volunteersDescritpion,
       sid,
       updated,
       updatedBy
     } = settings;
     const now = new Date();
     let errorMessage = null;
-    let existingDbSettings = await this.getDbSettings(sid || '')
+    let existingDbSettings = await this.getDbSetting(sid || '');
     let dbSettingsRef = null;
     let dbSettings = null;
     if (!sid) {
@@ -45,6 +50,7 @@ class SettingsRepository extends BaseRepository {
         created: created || now.toString(),
         createdBy: createdBy || '',
         communityLinksDescritpion: communityLinksDescritpion || '',
+        volunteersDescritpion: volunteersDescritpion || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         sid: await dbSettingsRef.getKey()
@@ -59,6 +65,7 @@ class SettingsRepository extends BaseRepository {
           created: created || dbSettings.created,
           createdBy: createdBy || dbSettings.createdBy,
           communityLinksDescritpion: communityLinksDescritpion || dbSettings.communityLinksDescritpion || '',
+          volunteersDescritpion: volunteersDescritpion || dbSettings.volunteersDescritpion,
           sid: sid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbSettings.updatedBy
