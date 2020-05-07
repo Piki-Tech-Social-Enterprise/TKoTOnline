@@ -51,6 +51,7 @@ const INITIAL_STATE = {
       uid: null,
     }
   ],
+  isVolunteer: false,
   roles: {
     basicRole: Roles.basicRole
   },
@@ -313,6 +314,7 @@ const AuthUserView = props => {
         active,
         displayName,
         roles,
+        isVolunteer,
         email,
         photoURL,
         providerData,
@@ -321,6 +323,7 @@ const AuthUserView = props => {
       setUser({
         active,
         displayName,
+        isVolunteer,
         roles,
         email,
         photoURL,
@@ -418,6 +421,10 @@ const AuthUserView = props => {
                               return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
                             })
                           }
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>isVolunteer</Label><br />
+                          <CustomInput label="" name="isVolunteer" checked={user.isVolunteer} type="switch" id="IsVolunteer" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Active</Label><br />

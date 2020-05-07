@@ -82,6 +82,7 @@ class UserRepository extends BaseRepository {
         roles: roles || {
           undefinedRole
         },
+        isVolunteer: false,
         uid: newUid,
         updated: updated || now.toString(),
         updatedBy: updatedBy || ''
@@ -102,6 +103,7 @@ class UserRepository extends BaseRepository {
           roles: roles || dbUser.roles || {
             undefinedRole
           },
+          isVolunteer: true,
           uid: uid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || uid

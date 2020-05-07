@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Line,
   Bar
@@ -32,6 +32,20 @@ import {
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 
 const AuthDashboardView = props => {
+  const [hasOnboarding, setOnboarding] = useState([]);
+  console.log('ssssssssssssss', props);
+
+useEffect(() => {
+  
+  const hasOnBoarded = async () => {
+    if(props.authUser.isVolunteer === true) {
+
+    }
+  }
+
+  hasOnBoarded();
+
+}, [props])
   return (
     <>
       <AuthPanelHeader
