@@ -35,6 +35,7 @@ import HomeView from 'views/HomeView';
 import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
+import Volunteer from 'views/Volunteer';
 import PrivacyPolicy from 'views/PrivacyPolicyView';
 import TermsOfService from 'views/TermsOfServiceView';
 
@@ -57,6 +58,10 @@ ReactDOM.render(
         <Route
           path="/profile-page"
           render={props => <ProfilePage {...props} />}
+        />
+        <Route
+          path="/Volunteer"
+          render={props => <Volunteer {...props} />}
         />
         <Route
           path="/PrivacyPolicy"
