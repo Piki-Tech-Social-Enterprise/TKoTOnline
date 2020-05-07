@@ -246,13 +246,13 @@ import React, {
                           <FormGroup>
                             <Label>First Name</Label>
                             <InputGroup>
-                              <Input placeholder="First name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
+                              <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup>
                             <Label>Last Name</Label>
                             <InputGroup>
-                              <Input placeholder="Last name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
+                              <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup>
@@ -264,7 +264,7 @@ import React, {
                           <FormGroup>
                             <Label>Phone Number</Label>
                             <InputGroup>
-                              <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
+                              <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup className="volunteer-roles">
