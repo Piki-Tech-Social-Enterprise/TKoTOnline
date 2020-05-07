@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Line,
   Bar
@@ -34,10 +34,14 @@ import Swal from 'sweetalert2';
 
 const AuthDashboardView = props => {
 
+  const [volunteer, setVolunteer] = useState([]);
+
 useEffect(() => {
   
-  const hasOnBoarded = () => {
-    if( props.authUser.isVolunteer === true) {
+  const isVoluteer = () => {
+    if( props.authUser.vid) {
+
+      retrieveVolunteer(props.authUser.vid);
       Swal.fire({
         icon: 'info',
         title: 'To help us organise work for Volunteers',
@@ -55,15 +59,15 @@ useEffect(() => {
           }).queue([
             {
               title: 'Question 1',
-              
-            input: 'text',
+              input: 'text',
               text: 'What region are you from?',
               inputPlaceholder: 'Region'
             },
             {
               title: 'Question 2',
-              text: 'How far are you willing to travel?',
+              text: 'How far are you willing to travel?(kms)',
               input: 'range',
+              inputValue: '25',
               inputAttributes: {
                 min: 0,
                 max: 120,
@@ -73,35 +77,23 @@ useEffect(() => {
             {
               title: 'Question 3',
               text: 'Tell us what type of work you like ',
+              input: 'text',
               inputPlaceholder: 'Type here...',
               inputAttributes: {
                 'aria-label': 'Type your message here'
               }
-            },
-            {
-              title: 'Question 4',
-              text: 'What region are you from?',
-              input: "checkbox",
-              html: `
-            <div class="onboard-check">
-            <FormGroup check>
-        <Label check>
-          <Input type="checkbox" /> Check me out
-        </Label>
-      </FormGroup>
-            </div>
-    `}
+            }
           ]).then((result) => {
             console.log(result);
             if (result.value) {
-              const answers = JSON.stringify(result.value)
+              const answers = JSON.stringify(result.value);
+              console.log(result.value);
               Swal.fire({
                 title: 'All done!',
                 icon:'success',
                 confirmButtonText: 'Thanks'
               }).then((result) => {
-                  console.log('answers', answers);
-                  console.log(result);
+                  console.log(volunteer);
               })
             }
           })
@@ -113,7 +105,50 @@ useEffect(() => {
     }
   }
 
-  hasOnBoarded();
+  const retrieveVolunteer = async () => {
+    console.log('vid', props);
+    const dbVolunteer = await props.firebase.getDbVolunteerValue(props.authUser.vid);
+    const {
+      active,
+      firstName,
+      lastName,
+      phoneNumber,
+      roles,
+      email,
+      providerData,
+      vid,
+    } = dbVolunteer;
+    console.log(dbVolunteer);
+    setVolunteer({
+      active,
+      firstName,
+      lastName,
+      phoneNumber,
+      roles,
+      email,
+      providerData,
+      vid
+    });
+  };
+
+  const addVolunteerDetails = async() => {
+    // await props.firebase.saveDbVolunteer({
+    //   active: active,
+    //   created: now.toString(),
+    //   createdBy: uid,
+    //   firstName,
+    //   lastName,
+    //   phoneNumber,
+    //   email,
+    //   providerData,
+    //   roles,
+    //   vid: vid,
+    //   updated: now.toString(),
+    //   updatedBy: uid
+    // });
+  }
+
+  isVoluteer();
 
 }, [props])
   return (
