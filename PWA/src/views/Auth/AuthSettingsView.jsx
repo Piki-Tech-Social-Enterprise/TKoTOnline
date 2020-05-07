@@ -52,7 +52,8 @@ const AuthSettingsView = props => {
       uid
     } = authUser;
     const {
-      communityLinksDescritpion
+      communityLinksDescritpion,
+      volunteersDescritpion
     } = settings;
     let sid = settings.sid;
     let displayType = 'success';
@@ -63,11 +64,16 @@ const AuthSettingsView = props => {
         displayTitle = 'Failed';
         displayType = 'error';
         displayMessage = 'You need to have a description for the community links section.';
+      }else if (!volunteersDescritpion) {
+        displayTitle = 'Failed';
+        displayType = 'error';
+        displayMessage = 'You need to have a description for the volunteers section.';
       } else {
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
           communityLinksDescritpion: communityLinksDescritpion,
+          volunteersDescritpion: volunteersDescritpion,
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
@@ -82,7 +88,7 @@ const AuthSettingsView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayType,
         title: displayTitle,
         html: displayMessage
       });
@@ -94,10 +100,12 @@ const AuthSettingsView = props => {
       if (dbSettings) {
         const {
           communityLinksDescritpion,
+          volunteersDescritpion,
           sid
         } = dbSettings;
         setSetting({
           communityLinksDescritpion,
+          volunteersDescritpion,
           sid
         });
       }
@@ -127,6 +135,10 @@ const AuthSettingsView = props => {
                       <FormGroup>
                         <Label>Community Links Describtion</Label>
                         <Input placeholder="Community Links Description" name="communityLinksDescritpion" value={settings.communityLinksDescritpion} onChange={handleChange} type="textarea" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Volunteers Description</Label>
+                        <Input placeholder="Volunteers Description" name="volunteersDescritpion" value={settings.volunteersDescritpion} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
