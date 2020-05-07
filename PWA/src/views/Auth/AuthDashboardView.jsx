@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Line,
   Bar
@@ -30,15 +30,85 @@ import {
   dashboard24HoursPerformanceChart
 } from 'variables/charts.jsx';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
+import Swal from 'sweetalert2';
 
 const AuthDashboardView = props => {
-  const [hasOnboarding, setOnboarding] = useState([]);
-  console.log('ssssssssssssss', props);
 
 useEffect(() => {
   
-  const hasOnBoarded = async () => {
-    if(props.authUser.isVolunteer === true) {
+  const hasOnBoarded = () => {
+    if( props.authUser.isVolunteer === true) {
+      Swal.fire({
+        icon: 'info',
+        title: 'To help us organise work for Volunteers',
+        text: 'We need more information',
+        showCancelButton: true,
+        cancelButtonText: 'Skip'  
+      }).then((result) => {
+        console.log('result here', result);
+        if(result.value === true){
+          Swal.mixin({
+            icon: 'info',
+            confirmButtonText: 'Next &rarr;',
+            showCancelButton: true,
+            progressSteps: ['1', '2', '3', '4']
+          }).queue([
+            {
+              title: 'Question 1',
+              
+            input: 'text',
+              text: 'What region are you from?',
+              inputPlaceholder: 'Region'
+            },
+            {
+              title: 'Question 2',
+              text: 'How far are you willing to travel?',
+              input: 'range',
+              inputAttributes: {
+                min: 0,
+                max: 120,
+                step: 1
+              },
+            },
+            {
+              title: 'Question 3',
+              text: 'Tell us what type of work you like ',
+              inputPlaceholder: 'Type here...',
+              inputAttributes: {
+                'aria-label': 'Type your message here'
+              }
+            },
+            {
+              title: 'Question 4',
+              text: 'What region are you from?',
+              input: "checkbox",
+              html: `
+            <div class="onboard-check">
+            <FormGroup check>
+        <Label check>
+          <Input type="checkbox" /> Check me out
+        </Label>
+      </FormGroup>
+            </div>
+    `}
+          ]).then((result) => {
+            console.log(result);
+            if (result.value) {
+              const answers = JSON.stringify(result.value)
+              Swal.fire({
+                title: 'All done!',
+                icon:'success',
+                confirmButtonText: 'Thanks'
+              }).then((result) => {
+                  console.log('answers', answers);
+                  console.log(result);
+              })
+            }
+          })
+        }
+       
+      })
+     
 
     }
   }
