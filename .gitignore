@@ -120,5 +120,6 @@ cors.dev.json
 cors.test.json
 cors.json
 tkot-online-*.json
+devSupportFiles.json
 
 # package-lock.json
