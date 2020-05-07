@@ -1,11 +1,11 @@
 const Routes = {
-    home: '/',
-    newsFeed: '#NewsFeed',
-    interactiveMap: '#InteractiveMap',
-    volunteer: '#Volunteer',
-    volunteerRegistration: '/Volunteer',
-    privacyPolicy: '/PrivacyPolicy',
-    termsOfUse: '/TermsOfUse'
-  };
+  home: '/',
+  newsFeed: '#NewsFeed',
+  interactiveMap: '#InteractiveMap',
+  volunteer: '#Volunteer',
+  volunteerRegistration: '/Volunteer',
+  privacyPolicy: '/PrivacyPolicy',
+  termsOfUse: '/TermsOfUse'
+};
 
-  export default Routes;
+export default Routes;
