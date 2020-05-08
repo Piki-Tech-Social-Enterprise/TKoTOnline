@@ -31,17 +31,36 @@ import {
 } from 'variables/charts.jsx';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import Swal from 'sweetalert2';
+import * as Roles from '../../components/Domains/VolunteerRoles';
 
 const AuthDashboardView = props => {
+  const INITIAL_STATE = {
+    active: true,
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    roles: {
+      volunteerRole: Roles.volunteerRole
+    },
+    vid: null
+  };
+  const INITIAL_ANSWERS = {
+      region: '',
+      travelDistance: '',
+      type: ''
+  };
 
-  const [volunteer, setVolunteer] = useState([]);
+  const [volunteer, setVolunteer] = useState(INITIAL_STATE);
+  const [answers, setAnswers] = useState(INITIAL_ANSWERS);
+
 
 useEffect(() => {
   
   const isVoluteer = () => {
     if( props.authUser.vid) {
 
-      retrieveVolunteer(props.authUser.vid);
+      retrieveVolunteer();
       Swal.fire({
         icon: 'info',
         title: 'To help us organise work for Volunteers',
@@ -86,14 +105,22 @@ useEffect(() => {
           ]).then((result) => {
             console.log(result);
             if (result.value) {
-              const answers = JSON.stringify(result.value);
-              console.log(result.value);
+              const onboardingAnswers = result.value;
+              console.log('onboarding answers', onboardingAnswers[0]);
+              setAnswers(ans => ({
+                ...ans,
+                region: onboardingAnswers[0],
+                travelDistance: onboardingAnswers[2],
+                type: onboardingAnswers.type
+              }));
+              console.log('seeting answers', answers);
               Swal.fire({
                 title: 'All done!',
                 icon:'success',
                 confirmButtonText: 'Thanks'
               }).then((result) => {
-                  console.log(volunteer);
+                  console.log(volunteer.active);
+                  addVolunteerDetails();
               })
             }
           })
@@ -106,7 +133,6 @@ useEffect(() => {
   }
 
   const retrieveVolunteer = async () => {
-    console.log('vid', props);
     const dbVolunteer = await props.firebase.getDbVolunteerValue(props.authUser.vid);
     const {
       active,
@@ -132,20 +158,29 @@ useEffect(() => {
   };
 
   const addVolunteerDetails = async() => {
-    // await props.firebase.saveDbVolunteer({
-    //   active: active,
-    //   created: now.toString(),
-    //   createdBy: uid,
-    //   firstName,
-    //   lastName,
-    //   phoneNumber,
-    //   email,
-    //   providerData,
-    //   roles,
-    //   vid: vid,
-    //   updated: now.toString(),
-    //   updatedBy: uid
-    // });
+    console.log('heeeeeeeeeeeeeeeeeeeeeee', answers);
+    const now = new Date();
+    const firstName = volunteer.firstName;
+    const lastName = volunteer.lastName;
+    const phoneNumber = volunteer.phoneNumber;
+    const email = volunteer.email;
+    const providerData = volunteer.providerData;
+    const roles = volunteer.roles;
+    await props.firebase.saveDbVolunteer({
+      active: volunteer.active,
+      created: now.toString(),
+      createdBy: props.authUser.uid,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      providerData,
+      details: answers,
+      roles,
+      vid: props.authUser.vid,
+      updated: now.toString(),
+      updatedBy: props.authUser.uid
+    });
   }
 
   isVoluteer();

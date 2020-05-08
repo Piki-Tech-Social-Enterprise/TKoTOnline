@@ -52,6 +52,7 @@ class VolunteersRepository extends BaseRepository {
       createdBy,
       firstName,
       lastName,
+      details,
       phoneNumber,
       email,
       providerData,
@@ -74,6 +75,7 @@ class VolunteersRepository extends BaseRepository {
         createdBy: createdBy || '',
         firstName: firstName || '',
         lastName: lastName || '',
+        details: details || '',
         phoneNumber: phoneNumber || '',
         email: email || '',
         providerData: providerData || (email && {
@@ -99,6 +101,7 @@ class VolunteersRepository extends BaseRepository {
           createdBy: createdBy || dbVolunteer.createdBy,
           firstName: firstName || dbVolunteer.firstName || '',
           lastName: lastName || dbVolunteer.lastName || '',
+          details: details || dbVolunteer.details || '',
           phoneNumber: phoneNumber || dbVolunteer.phoneNumber || '',
           email: email || dbVolunteer.email,
           providerData: providerData || dbVolunteer.providerData || {},
