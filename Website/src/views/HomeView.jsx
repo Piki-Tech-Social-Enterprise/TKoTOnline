@@ -5,7 +5,7 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeed';
-import InteractiveMapSection from 'components/Sections/InteractiveMap';
+// import InteractiveMapSection from 'components/Sections/InteractiveMap';
 import VolunteersSection from 'components/Sections/Volunteers';
 import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
@@ -32,21 +32,21 @@ const HomeView = () => {
   });
   return (
     <>
-    <HomeNavbar />
-    <div className="wrapper">
-      <HomeHeader />
-      <div className="main">
-        {/* Community Links Section) */}
-        <CommuintyLinksSection />
-        {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-        <NewsFeedSection />
-        {/* Interactive Map of Iwi Links */}
-        <InteractiveMapSection />
-        {/* Volunteers via Mutual Aid */}
-        <VolunteersSection />
+      <HomeNavbar />
+      <div className="wrapper">
+        <HomeHeader />
+        <div className="main bg-primary1">
+          {/* Community Links Section) */}
+          <CommuintyLinksSection />
+          {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+          <NewsFeedSection />
+          {/* Interactive Map of Iwi Links */}
+          {/* <InteractiveMapSection /> */}
+          {/* Volunteers via Mutual Aid */}
+          <VolunteersSection />
+        </div>
+        <HomeFooter />
       </div>
-      <HomeFooter />
-    </div>
     </>
   );
 };

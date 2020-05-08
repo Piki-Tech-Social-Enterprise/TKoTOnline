@@ -31,7 +31,9 @@ import {
 const INITIAL_STATE = {
   isLoading: true,
   carouselItems: [],
+  masterCarouselItems: [],
   cardItems: [],
+  masterCardItems: [],
   activeIndex: 0,
   isAnimating: false
 };
@@ -47,7 +49,9 @@ const newsFeedReducer = (state, action) => {
   const {
     isLoading,
     carouselItems,
+    masterCarouselItems,
     cardItems,
+    masterCardItems,
     activeIndex,
     isAnimating
   } = state;
@@ -120,7 +124,13 @@ const newsFeedReducer = (state, action) => {
       ? newLoading
       : isLoading,
     carouselItems: newCarouselItems || carouselItems,
+    masterCarouselItems: masterCarouselItems.length
+      ? masterCarouselItems
+      : carouselItems,
     cardItems: newCardItems || cardItems,
+    masterCardItems: masterCardItems.length
+      ? masterCardItems
+      : cardItems,
     isAnimating: newAnimating != null
       ? newAnimating
       : isAnimating,
@@ -191,6 +201,21 @@ const NewsFeedCarousel = props => {
       </CarouselItem>
     );
   });
+  const handleSearchNewsFeeds = async e => {
+    e.preventDefault();
+    const {
+      value: newsFeed
+    } = e.target;
+    const {
+      masterCarouselItems,
+      masterCardItems
+    } = state;
+    const filteredCarouselItems = masterCarouselItems.filter(masterCarouselItem =>
+      masterCarouselItem.header.toString().toLowerCase().indexOf(newsFeed.toString().toLowerCase()) > -1);
+    const filteredCardItems = masterCardItems.filter(masterCardItem =>
+      masterCardItem.header.toString().toLowerCase().indexOf(newsFeed.toString().toLowerCase()) > -1);
+    handleItems([].concat(filteredCarouselItems.concat(filteredCardItems)));
+  };
   useEffect(() => {
     const getDbNewsFeeds = async () => {
       const dbNewsFeeds = await props.firebase.getDbNewsFeedsAsArray();
@@ -210,7 +235,7 @@ const NewsFeedCarousel = props => {
             <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleGoto} />
             {createCarouselItems}
           </Carousel>
-          <div className="news-feed-sidebar col-sm-4 px-0 bg-primary">
+          <div className="news-feed-sidebar col-sm-4 px-0 bg-primary1">
             <ul>
               {
                 carouselItems.map((carouselItem, index) => {
@@ -227,7 +252,7 @@ const NewsFeedCarousel = props => {
             </ul>
             <Form className="news-feed-form bg-light px-0 pt-3">
               <FormGroup>
-                <Input placeholder="Search" type="text" />
+                <Input placeholder="Search" type="text" onChange={handleSearchNewsFeeds} />
               </FormGroup>
             </Form>
           </div>

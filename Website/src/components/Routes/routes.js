@@ -1,8 +1,9 @@
 const Routes = {
   home: '/',
+  communityLinks: '#CommunityLinks',
   newsFeed: '#NewsFeed',
   interactiveMap: '#InteractiveMap',
-  volunteer: '#Volunteer',
+  volunteers: '#Volunteers',
   volunteerRegistration: '/Volunteer',
   privacyPolicy: '/PrivacyPolicy',
   termsOfUse: '/TermsOfUse'

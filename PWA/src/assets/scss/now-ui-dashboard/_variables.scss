@@ -48,7 +48,7 @@ $default-color:              #888 !default;
 $default-states-color:       lighten($default-color, 6%) !default;
 $default-color-opacity:      rgba(182, 182, 182, .6) !default;
 
-$primary-color:              #f96332 !default;
+$primary-color:              #d91a3d !default;
 $primary-states-color:       lighten($primary-color, 6%) !default;
 $primary-color-opacity:      rgba(249, 99, 50, .3) !default;
 $primary-color-alert:        rgba(249, 99, 50, .8) !default;
@@ -73,7 +73,7 @@ $danger-states-color:        lighten($danger-color, 6%) !default;
 $danger-color-opacity:       rgba(255, 54, 54, .3) !default;
 $danger-color-alert:         rgba(255, 54, 54, .8) !default;
 
-$orange-color:               #f96332 !default;
+$orange-color:               #d91a3d !default;
 
 /*     brand Colors              */
 $brand-primary:              $primary-color !default;

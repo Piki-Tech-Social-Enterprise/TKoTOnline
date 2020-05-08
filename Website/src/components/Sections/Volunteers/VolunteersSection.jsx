@@ -1,4 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import {
   Container,
   Row,
@@ -9,48 +12,34 @@ import {
   withFirebase
 } from 'components/Firebase';
 
-const VolunteersSection = (props) => {
-
-  const [volunteersDescription, setDescription] = useState([]);
-
+const VolunteersSection = props => {
+  const [volunteersDescription, setVolunteersDescription] = useState([]);
   useEffect(() => {
-
-    const getSettings = async () =>{
+    const getSettings = async () => {
       const settings = await props.firebase.getDbSettingsValues(true);
       return settings;
-    }
-
+    };
     const getDescription = async () => {
       const getDescription = await getSettings();
-      setDescription(getDescription.volunteersDescritpion);
-    }
-
+      setVolunteersDescription(getDescription.volunteersDescritpion);
+    };
     getDescription();
   }, [props])
-
   return (
-    <Container className="tkot-section">
+    <Container id="Volunteers" className="tkot-section bg-secondary1">
       <Row>
         <Col>
-          <div className="mx-auto text-center bg-warning" id="Volunteer">
-            <h3>Volunteers</h3>
-          </div>
+          <h3>Volunteers</h3>
         </Col>
       </Row>
       <Row>
         <Col>
-          <div className="mx-auto text-left">
-              <p>{volunteersDescription}</p>
-          </div>
+          <p>{volunteersDescription}</p>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Button
-          className="btn-round"
-          color="default"
-          href="/Volunteer"
-          size="lg">Join Now</Button>
+          <Button className="btn-round" color="primary" href="/Volunteer" size="lg">Join Now</Button>
         </Col>
       </Row>
     </Container>
