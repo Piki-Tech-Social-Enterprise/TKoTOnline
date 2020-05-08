@@ -74,12 +74,19 @@ const formatBytes = (bytes, dp = 2) => {
 const formatInteger = (integer) => (
   integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 );
-
 const fromCamelcaseToTitlecase = camelCase => (
   camelCase
     .replace(/([A-Z])/g, match => ` ${match}`)
     .replace(/^./, match => match.toUpperCase())
 );
+const intoChunks = (array, size) => {
+  let chunks = [];
+  const arrayClone = [].concat(array);
+  while (arrayClone.length) {
+    chunks.push(arrayClone.splice(0, size));
+  }
+  return chunks;
+};
 
 export default shallowCompare;
 export {
@@ -89,5 +96,6 @@ export {
   handleLoadBlob,
   formatBytes,
   formatInteger,
-  fromCamelcaseToTitlecase
+  fromCamelcaseToTitlecase,
+  intoChunks
 };
