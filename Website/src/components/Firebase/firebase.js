@@ -45,6 +45,7 @@ class Firebase {
   getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
   getDbVolunteers = async () => await this.volunteersRepository.getDbVolunteers();
   getDbVolunteer = async (vid) => await this.volunteersRepository.getDbVolunteer(vid);
+  getDbVolunteersAsArray = async includeInactive => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive);
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => await this.volunteersRepository.saveDbVolunteer(volunteer, saveDbVolunteer_completed);
 }
 
