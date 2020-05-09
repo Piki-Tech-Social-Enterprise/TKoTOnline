@@ -7,11 +7,11 @@
   "dependencies": {
     "@google-cloud/storage": "^4.7.0",
     "cors": "^2.8.5",
-    "firebase-admin": "^8.11.0",
+    "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.1",
     "fs-extra": "^8.1.0",
-    "googleapis": "^49.0.0",
-    "moment": "^2.25.1",
+    "googleapis": "^50.0.0",
+    "moment": "^2.25.3",
     "sharp": "^0.25.2"
   },
   "scripts": {
@@ -42,21 +42,28 @@
     "shellDev": "run-s -sn firebaseUseDev \"envCmdLocal shell\"",
     "shellTest": "run-s -sn firebaseUseTest \"envCmdLocal shell\"",
     "shellProd": "run-s -sn firebaseUseProd \"envCmdLocal shell\"",
-    "deployDev": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC deploy\"",
-    "deployTest": "run-s -sn firebaseUseTest \"envCmdLocal applyGAC deploy\"",
-    "deployProd": "run-s -sn firebaseUseProd \"envCmdLocal applyGAC deploy\"",
+    "deployDev": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
+    "deployTest": "run-s -sn firebaseUseTest \"envCmdLocal applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
+    "deployProd": "run-s -sn firebaseUseProd \"envCmdLocal applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
     "removeNodeModules": "if [[ -d node_modules ]]; then rm -rf node_modules/&&echo \"'node_modules' successfully removed\"; else echo 'node_modules' folder not found; fi",
     "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
     "npmSetProgressOff": "npm set progress=false",
     "npmCacheClean": "npm cache clean --force",
     "npmInstall": "npm install",
-    "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmCacheClean npmInstall"
+    "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmCacheClean npmInstall",
+    "unsetFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js unset",
+    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"
   },
   "engines": {
     "node": "8"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "chalk": "^4.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-promise": "^4.2.1",

@@ -66,20 +66,56 @@ const generateResponse = (expectedHttpResponseCode, expectedTextToSend) => {
   // console.log(`generateResponse: ${JSON.stringify(response)}`);
   return response;
 };
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+const jsonObjectPropertiesToUppercase = jsonObject => {
+  const revisedJsonObject = {};
+  Object.keys(jsonObject).map(key => (
+    revisedJsonObject[key.toUpperCase()] = jsonObject[key]
+  ));
+  return revisedJsonObject;
 };
-const googleApplicationCredentials = process.env.REACT_APP_GAC;
-const {
-  handleIsUserValid
-} = require('./handleIsUserValid');
+const functions = require('firebase-functions');
+const config = process.env.NODE_ENV !== 'production'
+  ? process.env
+  : jsonObjectPropertiesToUppercase(functions.config().envcmd);
+console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
+console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
+const firebaseConfig = {
+  apiKey: config.REACT_APP_FIREBASE_API_KEY,
+  authDomain: config.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: config.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: config.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: config.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: config.REACT_APP_FIREBASE_APP_ID,
+  measurementId: config.REACT_APP_FIREBASE_MEASUREMENT_ID
+};
+const googleApplicationCredentials = config.REACT_APP_GAC;
+const getDbUserValue = async uid => {
+  // console.log(`BEFORE admin.initializeApp() - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
+  if (admin.apps.length === 0) {
+    admin.initializeApp({
+      credential: admin.credential.cert(config.REACT_APP_GAC),
+      databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL
+    });
+  }
+  // console.log(`getDbUserValue - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
+  const snapshot = await admin.database().ref(`users/${uid}`).once('value');
+  const dbUser = await snapshot.val();
+  return dbUser;
+};
+const systemAdminRole = 'systemAdminRole';
+const adminRole = 'adminRole';
+const basicRole = 'basicRole';
+const handleIsUserValid = async uid => {
+  const dbUser = await getDbUserValue(uid);
+  const isUserValid = dbUser &&
+    dbUser.active &&
+    (Boolean(dbUser.roles[systemAdminRole]) ||
+      Boolean(dbUser.roles[adminRole]) ||
+      Boolean(dbUser.roles[basicRole]));
+  console.log(`dbUser: ${JSON.stringify(dbUser, null, 2)},\nisUserValid: ${isUserValid}`);
+  return isUserValid;
+};
 const FORBIDDEN_TEXT = 'Forbidden!';
 const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
 const TIME_MOMENT_FORMAT = 'HH:mm:ss';
@@ -109,3 +145,4 @@ exports.isEmptyObject = isEmptyObject;
 exports.objectToArray = objectToArray;
 exports.arrayToObject = arrayToObject;
 exports.StorageBucketHelper = StorageBucketHelper;
+exports.jsonObjectPropertiesToUppercase = jsonObjectPropertiesToUppercase;
