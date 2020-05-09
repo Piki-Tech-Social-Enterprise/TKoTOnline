@@ -44,7 +44,7 @@ class StatusBadge extends Component {
     });
   }
   shouldComponentUpdate = (nextProps, nextState) => {
-    const shallowCompared = shallowCompare(this, nextProps, nextState, true);
+    const shallowCompared = shallowCompare(this, nextProps, nextState, false);
     console.log(`StatusBadge.shouldComponentUpdate: ${shallowCompared}`)
     return shallowCompared;
   }

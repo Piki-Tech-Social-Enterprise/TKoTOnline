@@ -123,7 +123,7 @@ const CommunityLinksSection = props => {
       } = props;
       const dbCommunityLinks = await firebase.getDbCommunityLinksAsArray();
       const dbSettingsValues = await firebase.getDbSettingsValues(true);
-      debugger;
+      // debugger;
       setState(s => ({
         ...s,
         isLoading: false,

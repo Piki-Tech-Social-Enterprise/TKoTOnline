@@ -140,7 +140,7 @@ const newsFeedReducer = (state, action) => {
 };
 const withLogger = dispatch => {
   return action => {
-    console.groupCollapsed('Action: ', JSON.stringify(action));
+    // console.groupCollapsed('Action: ', JSON.stringify(action));
     return dispatch(action);
   };
 };
