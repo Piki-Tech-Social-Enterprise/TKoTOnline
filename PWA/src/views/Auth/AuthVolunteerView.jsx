@@ -80,7 +80,6 @@ import React, {
       }
     };
     const handleSubmit = async e => {
-      console.log('original email here', originalEmail);
       e.preventDefault();
       setIsSubmitting(true);
       const defaultDisplayMesssage = 'Changes saved';
