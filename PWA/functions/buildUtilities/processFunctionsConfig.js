@@ -33,6 +33,7 @@ if (actionParameter === action.undefined) {
 if (!fs.existsSync(envCmdFileName)) {
   console.error(chalk.red.bold(`'.env-cmdrc' for '${envName}' missing at '${chalk.gray.italic(envCmdFileName)}'`));
 } else {
+  console.log(`${actionParameter.toUpperCase()} env. variables for '${envName}'`);
   console.log(`Processing file: ${envCmdFileName}`);
 
   fs.readFile(envCmdFileName, (error, content) => {
@@ -44,7 +45,9 @@ if (!fs.existsSync(envCmdFileName)) {
     const keyValuePairs = [];
 
     Object.keys(currentEnv).map(key => (
-      keyValuePairs.push(`envcmd.${key.toLowerCase()}="${currentEnv[key]}"`)
+      key && key.startsWith('REACT')
+        ? keyValuePairs.push(`envcmd.${key.toLowerCase()}="${currentEnv[key]}"`)
+        : null
     ));
 
     const command = `firebase functions:config:${actionParameter} ${keyValuePairs.join(' ')}`;
