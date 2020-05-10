@@ -1,6 +1,6 @@
 
 import React, {
-  useState
+  useState, useEffect
 } from 'react';
 import {
   Container,
@@ -44,6 +44,7 @@ const Volunteer = props => {
   const isNew = true;
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const existingEmails = [];
   const handleChange = async e => {
     const {
       name,
@@ -117,16 +118,25 @@ const Volunteer = props => {
       if (isNew) {
         if (!email || !firstName || !lastName || !phoneNumber || !roles) {
           displayType = 'error';
-          displayTitle = `Update Volunteer Failed`;
+          displayTitle = `New Volunteer Failed`;
           displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
         } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
           displayType = 'error';
-          displayTitle = `Update Volunteer Failed`;
+          displayTitle = `New Volunteer Failed`;
           displayMessage = 'Email is invalid.';
         } else if (!phoneNumber.match(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/i)) {
           displayType = 'error';
-          displayTitle = `Update Volunteer Failed`;
+          displayTitle = `New Volunteer Failed`;
           displayMessage = 'Phone number is invalid.';
+        } else if(email){
+          existingEmails.map((e) => {
+            if(e === email) {
+              displayType = 'error';
+              displayTitle = `New Volunteer Failed`;
+              displayMessage = 'Looks like this email is already in use';   
+            }
+            return null;
+          })
         }
       } 
       if (displayMessage === defaultDisplayMesssage) {
@@ -170,10 +180,24 @@ const Volunteer = props => {
       })
     }
   };
+
+  useEffect(() => {
+    const existingVolunteers = async () => {
+      const existingDbVolunteers = await props.firebase.getDbVolunteersAsArray(true);
+      existingDbVolunteers.map((volunteer) => {
+        existingEmails.push(volunteer.email);
+        return existingEmails;
+      });
+      
+    }
+
+    existingVolunteers();
+
+  }, [props, existingEmails])
   return (
     <>
     <HomeNavbar />
-    <Container>
+    <Container className="my-5">
     <Row>
       <h2 className="volunteer-title">Volunteer Registration</h2>
     </Row>
@@ -187,13 +211,13 @@ const Volunteer = props => {
                         <FormGroup>
                           <Label>First Name</Label>
                           <InputGroup>
-                            <Input placeholder="First name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
+                            <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
                           <Label>Last Name</Label>
                           <InputGroup>
-                            <Input placeholder="Last name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
+                            <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -205,7 +229,7 @@ const Volunteer = props => {
                         <FormGroup>
                           <Label>Phone Number</Label>
                           <InputGroup>
-                            <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text"/>
+                            <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text"/>
                           </InputGroup>
                         </FormGroup>
                         <FormGroup className="volunteer-roles">

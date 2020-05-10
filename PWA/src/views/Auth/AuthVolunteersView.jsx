@@ -110,8 +110,9 @@ import React, {
                           insertBtn: createCustomInsertButton,
                           onRowClick: handleUserRowClick
                         }}>
-                        <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField="email" width="35%" dataSort>Email</TableHeaderColumn>
                         <TableHeaderColumn dataField="firstName" dataSort>First Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="lastName" dataSort>Last Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
                             <VolunteerRoleBadges
                               availableRoles={availableRoles}

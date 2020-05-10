@@ -1,3 +1,3 @@
 export const volunteerRole = 'volunteerRole';
-export const volunteerCooridantorRole = 'volunteerCooridantorRole';
+export const volunteerCoordinatorRole = 'volunteerCoordinatorRole';
 export const undefinedRole = 'undefinedRole';

@@ -40,6 +40,9 @@ import React, {
     const [isLoading, setIsLoading] = useState(true);
     const [volunteer, setVolunteer] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [existingEmails, setEmails] = useState([]);
+    const [originalEmail, setOriginalEmail] = useState([]);
+
     const handleChange = async e => {
       const {
         name,
@@ -109,12 +112,32 @@ import React, {
             displayMessage = 'Email is invalid.';
           } else if ( phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
             displayMessage = 'Phone number is invalid.';
+          } else if (email) {
+            existingEmails.filter((e) => {
+              if(e === email) {
+                displayType = 'error';
+                displayTitle = `New Volunteer Failed`;
+                displayMessage = 'Looks like this email is already in use';   
+              }
+              return null;
+            })
           }
         } 
+        if(!isNew){
+            existingEmails.map((e) => {
+              if(e === email && originalEmail !== email) {
+                displayType = 'error';
+                displayTitle = `New Volunteer Failed`;
+                displayMessage = 'Looks like this email is already in use';   
+              }
+              return null;
+            })
+        }
         if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
             vid = await firebase.saveDbVolunteer({});
           }
+
           await firebase.saveDbVolunteer({
             active: active,
             created: now.toString(),
@@ -196,6 +219,16 @@ import React, {
         props.history.push('/auth/Volunteers');
     };
     useEffect(() => {
+      const existingVolunteers = async () => {
+        const emails = [];
+        const existingDbVolunteers = await props.firebase.getDbVolunteersAsArray(true);
+        existingDbVolunteers.map((volunteer) => {
+         emails.push(volunteer.email);
+         return null;
+        });
+        setEmails(emails);    
+      }  
+
       const retrieveVolunteer = async () => {
         const dbVolunteer = await props.firebase.getDbVolunteerValue(props.match.params.vid);
         const {
@@ -208,6 +241,8 @@ import React, {
           providerData,
           vid
         } = dbVolunteer;
+
+        setOriginalEmail(email);
         setVolunteer({
           active,
           firstName,
@@ -220,8 +255,10 @@ import React, {
         });
       };
       if (isLoading) {
+        
+      existingVolunteers();
         if (!isNew) {
-            retrieveVolunteer();
+            retrieveVolunteer();          
         }
       }
       return () => {
@@ -229,7 +266,7 @@ import React, {
           setIsLoading(false);
         }
       };
-    }, [props, isNew, isLoading, setIsLoading]);
+    }, [props, isNew, isLoading,existingEmails, setIsLoading]);
     return (
       <>
         <div className="panel-header panel-header-xs" />
@@ -246,13 +283,13 @@ import React, {
                           <FormGroup>
                             <Label>First Name</Label>
                             <InputGroup>
-                              <Input placeholder="First name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
+                              <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup>
                             <Label>Last Name</Label>
                             <InputGroup>
-                              <Input placeholder="Last name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
+                              <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup>
@@ -264,7 +301,7 @@ import React, {
                           <FormGroup>
                             <Label>Phone Number</Label>
                             <InputGroup>
-                              <Input placeholder="Phone number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
+                              <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number"/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup className="volunteer-roles">
