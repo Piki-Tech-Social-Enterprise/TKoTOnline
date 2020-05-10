@@ -58,7 +58,8 @@ const AuthDashboardView = props => {
 useEffect(() => {
   
   const isVoluteer = () => {
-    if( props.authUser.vid) {
+    console.log('props',props);
+    if( props.authUser.vid && props.authUser.onBoardingCompleted === false) {
 
       retrieveVolunteer();
       Swal.fire({
@@ -74,7 +75,7 @@ useEffect(() => {
             icon: 'info',
             confirmButtonText: 'Next &rarr;',
             showCancelButton: true,
-            progressSteps: ['1', '2', '3', '4']
+            progressSteps: ['1', '2', '3']
           }).queue([
             {
               title: 'Question 1',
@@ -105,24 +106,22 @@ useEffect(() => {
           ]).then((result) => {
             console.log(result);
             if (result.value) {
-              const onboardingAnswers = result.value;
-              console.log('onboarding answers', onboardingAnswers[0]);
+              console.log(result);
+              const ans1 = result.value[0];
+              const ans2 = result.value[1];
+              const ans3 = result.value[2];
               setAnswers(ans => ({
                 ...ans,
-                region: onboardingAnswers[0],
-                travelDistance: onboardingAnswers[2],
-                type: onboardingAnswers.type
+                region: 'region',
+                travelDistance: ans2,
+                type: ans3
               }));
-              console.log('seeting answers', answers);
-              Swal.fire({
-                title: 'All done!',
-                icon:'success',
-                confirmButtonText: 'Thanks'
-              }).then((result) => {
-                  console.log(volunteer.active);
-                  addVolunteerDetails();
-              })
+
+              console.log(answers);
             }
+          }).finally(()=> {
+           console.log('finalllllly', answers);
+           thanksMessage();
           })
         }
        
@@ -130,6 +129,19 @@ useEffect(() => {
      
 
     }
+  }
+
+  const thanksMessage = async () => {
+    Swal.fire({
+      title: 'All done!',
+      icon:'success',
+      confirmButtonText: 'Thanks'
+    }).then((result) => {
+      console.log(result);
+        console.log(volunteer);
+        console.log(answers);
+        addVolunteerDetails();
+    })
   }
 
   const retrieveVolunteer = async () => {
@@ -159,6 +171,7 @@ useEffect(() => {
 
   const addVolunteerDetails = async() => {
     console.log('heeeeeeeeeeeeeeeeeeeeeee', answers);
+    console.log('heeeeeeeeeeeeeeeeeeeeeee', volunteer);
     const now = new Date();
     const firstName = volunteer.firstName;
     const lastName = volunteer.lastName;
