@@ -41,6 +41,8 @@ import React, {
     const [volunteer, setVolunteer] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [existingEmails, setEmails] = useState([]);
+    const [originalEmail, setOriginalEmail] = useState([]);
+
     const handleChange = async e => {
       const {
         name,
@@ -78,6 +80,7 @@ import React, {
       }
     };
     const handleSubmit = async e => {
+      console.log('original email here', originalEmail);
       e.preventDefault();
       setIsSubmitting(true);
       const defaultDisplayMesssage = 'Changes saved';
@@ -123,7 +126,7 @@ import React, {
         } 
         if(!isNew){
             existingEmails.map((e) => {
-              if(e === email) {
+              if(e === email && originalEmail !== email) {
                 displayType = 'error';
                 displayTitle = `New Volunteer Failed`;
                 displayMessage = 'Looks like this email is already in use';   
@@ -239,6 +242,8 @@ import React, {
           providerData,
           vid
         } = dbVolunteer;
+
+        setOriginalEmail(email);
         setVolunteer({
           active,
           firstName,
