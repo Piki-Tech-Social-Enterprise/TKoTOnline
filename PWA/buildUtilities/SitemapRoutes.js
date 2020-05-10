@@ -34,7 +34,7 @@ export default (
           layout,
           path
         } = publicRoutes[key];
-        if (path.startsWith('#')) return null;
+        if (path.startsWith('/#')) return null;
         return <Route path={`${layout}/${path}`} key={key} exact />
       })
     }

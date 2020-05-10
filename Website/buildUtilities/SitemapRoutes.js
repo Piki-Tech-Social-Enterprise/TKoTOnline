@@ -9,7 +9,7 @@ export default (
     {
       Object.keys(Routes).map(key => {
         const path = Routes[key];
-        if (path.startsWith('#')) return null;
+        if (path.startsWith('/#')) return null;
         return <Route path={path} key={key} exact />
       })
     }
