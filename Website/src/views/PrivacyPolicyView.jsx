@@ -7,7 +7,7 @@ import {
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicyView = () => {
   const {
     REACT_APP_WEB_EMAIL
   } = process.env;
@@ -40,4 +40,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default PrivacyPolicyView;

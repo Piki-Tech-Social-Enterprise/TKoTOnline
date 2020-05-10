@@ -16,14 +16,18 @@ const {
   communityLinks,
   newsFeed,
   // interactiveMap,
-  volunteers
+  volunteers,
+  aboutUs,
+  contactUs
 } = Routes;
 
 const HomeNavbar = () => {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const {
-    pathname
+    pathname,
+    hash
   } = window.location;
+  console.log(`pathname: ${pathname}`)
   const {
     REACT_APP_PWA_BASE_URL
   } = process.env;
@@ -52,20 +56,26 @@ const HomeNavbar = () => {
           </div>
           <Collapse className="justify-content-end" isOpen={collapseOpen} navbar>
             <Nav navbar>
-              <NavItem active={pathname.endsWith(communityLinks)}>
+              <NavItem active={hash && communityLinks.endsWith(hash)}>
                 <NavLink href={communityLinks}>Community Links</NavLink>
               </NavItem>
-              <NavItem active={pathname.endsWith(newsFeed)}>
+              <NavItem active={hash && newsFeed.endsWith(hash)}>
                 <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
-              {/* <NavItem active={pathname.endsWith(interactiveMap)}>
+              {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem> */}
-              <NavItem active={pathname.endsWith(volunteers)}>
+              <NavItem active={hash && volunteers.endsWith(hash)}>
                 <NavLink href={volunteers}>Volunteers</NavLink>
               </NavItem>
+              <NavItem active={pathname.endsWith(aboutUs)}>
+                <NavLink href={aboutUs}>About Us</NavLink>
+              </NavItem>
+              <NavItem active={pathname.endsWith(contactUs)}>
+                <NavLink href={contactUs}>Contact Us</NavLink>
+              </NavItem>
               <NavItem>
-                <Button outline color="white" href={`${REACT_APP_PWA_BASE_URL}/public/Login`}>
+                <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline>
                   Login
                 </Button>
               </NavItem>

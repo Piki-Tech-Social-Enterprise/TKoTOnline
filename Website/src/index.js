@@ -36,8 +36,10 @@ import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
 import Volunteer from 'views/Volunteer';
-import PrivacyPolicy from 'views/PrivacyPolicyView';
-import TermsOfService from 'views/TermsOfServiceView';
+import PrivacyPolicyView from 'views/PrivacyPolicyView';
+import TermsOfServiceView from 'views/TermsOfServiceView';
+import AboutUsView from 'views/AboutUsView';
+import ContactUsView from 'views/ContactUsView';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -64,14 +66,25 @@ ReactDOM.render(
           render={props => <Volunteer {...props} />}
         />
         <Route
-          path="/PrivacyPolicy"
-          render={props => <PrivacyPolicy {...props} />}
+          path="/PrivacyPolicyView"
+          render={props => <PrivacyPolicyView {...props} />}
         />
         <Route
           path="/TermsOfUse"
-          render={props => <TermsOfService {...props} />}
+          render={props => <TermsOfServiceView {...props} />}
         />
-        <Route path="/login-page" render={props => <LoginPage {...props} />} />
+        <Route
+          path="/login-page"
+          render={props => <LoginPage {...props} />}
+        />
+        <Route
+          path="/AboutUs"
+          render={props => <AboutUsView {...props} />}
+        />
+        <Route
+          path="/ContactUs"
+          render={props => <ContactUsView {...props} />}
+        />
       </Switch>
     </BrowserRouter>
   </FirebaseContext.Provider>,
