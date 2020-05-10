@@ -131,7 +131,7 @@ const CommunityLinksSection = props => {
         masterLinks: masterLinks.length
           ? masterLinks
           : dbCommunityLinks,
-        communityLinksDescription: dbSettingsValues.communityLinksDescritpion
+        communityLinksDescription: ((dbSettingsValues && dbSettingsValues.communityLinksDescritpion) || '')
       }));
     };
     if (isLoading) {

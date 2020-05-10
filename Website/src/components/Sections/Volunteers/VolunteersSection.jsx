@@ -21,7 +21,7 @@ const VolunteersSection = props => {
     };
     const getDescription = async () => {
       const getDescription = await getSettings();
-      setVolunteersDescription(getDescription.volunteersDescritpion);
+      setVolunteersDescription(((getDescription && getDescription.volunteersDescritpion) || ''));
     };
     getDescription();
   }, [props])
