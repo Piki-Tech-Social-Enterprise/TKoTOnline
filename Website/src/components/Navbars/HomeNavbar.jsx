@@ -56,16 +56,16 @@ const HomeNavbar = () => {
           </div>
           <Collapse className="justify-content-end" isOpen={collapseOpen} navbar>
             <Nav navbar>
-              <NavItem active={hash && communityLinks.endsWith(hash)}>
+              <NavItem active={hash !== '' && communityLinks.endsWith(hash)}>
                 <NavLink href={communityLinks}>Community Links</NavLink>
               </NavItem>
-              <NavItem active={hash && newsFeed.endsWith(hash)}>
+              <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
                 <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
               {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem> */}
-              <NavItem active={hash && volunteers.endsWith(hash)}>
+              <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
                 <NavLink href={volunteers}>Volunteers</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(aboutUs)}>
