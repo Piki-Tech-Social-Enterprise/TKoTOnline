@@ -410,15 +410,21 @@ const AuthUserView = props => {
                           <Label>Display Name</Label>
                           <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
                         </FormGroup>
-                        <FormGroup className="user-roles">
-                          <Label>Roles</Label><br />
-                          {
-                            Object.keys(Roles).map(role => {
-                              if (role === 'undefinedRole') return null;
-                              return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
-                            })
-                          }
-                        </FormGroup>
+                        {
+                          !!user.roles['systemAdminRole'] || !!user.roles['adminRole']
+                            ? <>
+                              <FormGroup className="user-roles">
+                                <Label>Roles</Label><br />
+                                {
+                                  Object.keys(Roles).map(role => {
+                                    if (role === 'undefinedRole') return null;
+                                    return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!user.roles[role]} onChange={handleChange} key={role} type="switch" />
+                                  })
+                                }
+                              </FormGroup>
+                            </>
+                            : null
+                        }
                         <FormGroup>
                           <Label>Active</Label><br />
                           <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
@@ -449,7 +455,7 @@ const AuthUserView = props => {
                             downloadURLFileInputOnChange={handlePhotoUrlFileChange}
                             downloadURLFormat={userPhotoUrlFormat}
                             downloadURLFormatKeyName={userKeyFormat}
-                            downloadURLFormatKeyValue={props.match.params.uid}
+                            downloadURLFormatKeyValue={props.match.params.uid || props.authUser.uid}
                             downloadURLFormatFileName={userFilenameFormat}
                           />
                         </FormGroup>
