@@ -8,9 +8,6 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 
 const ContactUsView = () => {
-  const {
-    REACT_APP_WEB_EMAIL
-  } = process.env;
   return (
     <>
       <HomeNavbar />
