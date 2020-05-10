@@ -17,8 +17,8 @@ import CopyrightInfomation from '../../App/CopyrightInfomation';
 
 const ConfirmationSection = props => (
   <>
-    <h3>{props.title}</h3><br />
-    <h5>Check your emails (Spam/Junk folder included) for a confirmation email. {props.details}</h5>
+    <h3>{props.title}</h3>
+    <h5><b className="text-success">Check your emails</b> <i className="text-warning">(Spam/Junk folder included)</i> for a confirmation email. {props.details}</h5>
   </>
 );
 const EmailVerificationView = props => {
@@ -35,24 +35,23 @@ const EmailVerificationView = props => {
       });
   };
   return (
-    <div
-      className="page-header"
-      style={{
-        marginTop: '0',
-        paddingTop: "100px"
-      }}
-    >
-      <Container>
+    <>
+      <img
+        src={require('assets/img/tkot/Te-Takarangi-hero-2-80pct.jpg')}
+        alt="Fullscreen Background"
+        className="fullscreen-background-image"
+      />
+      <Container className="mt-3 pt-5 text-light">
         <Row>
           <Col className="mx-auto" md="8">
-            <Card className="no-transition">
+            <Card className="no-transition bg-panel px-5 py-3">
               <CardHeader>
                 <h2>{process.env.REACT_APP_PWA_NAME} Email Verification</h2>
               </CardHeader>
               <CardBody>
                 <ConfirmationSection title={title} details={details} />
-                <Button type="button" block className="mt-4" color="link" onClick={handleSendConfirmationEmailClick} disabled={isSent}>
-                  Send confirmation Email
+                <Button onClick={handleSendConfirmationEmailClick} disabled={isSent} type="button" className="mt-3" color="link">
+                  Re-send Confirmation Email
                 </Button>
                 <CopyrightInfomation />
               </CardBody>
@@ -60,7 +59,7 @@ const EmailVerificationView = props => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </>
   );
 }
 
