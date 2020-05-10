@@ -38,7 +38,7 @@ const EmailVerificationView = props => {
     <>
       <img
         src={require('assets/img/tkot/Te-Takarangi-hero-2-80pct.jpg')}
-        alt="Fullscreen Background Image"
+        alt="Fullscreen Background"
         className="fullscreen-background-image"
       />
       <Container className="mt-3 pt-5 text-light">
