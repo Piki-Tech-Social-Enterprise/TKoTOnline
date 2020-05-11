@@ -273,7 +273,7 @@ import React, {
         <Container className="content">
           {
             isLoading
-              ? <LoadingOverlayModal />
+              ? <LoadingOverlayModal color="text-aqua" />
               : <>
                 <Form noValidate onSubmit={handleSubmit}>
                   <Row>

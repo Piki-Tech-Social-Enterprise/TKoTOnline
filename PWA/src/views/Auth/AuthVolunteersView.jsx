@@ -97,7 +97,7 @@ import React, {
                 <CardBody className="table-responsive">
                   {
                     isLoading
-                      ? <LoadingOverlayModal />
+                      ? <LoadingOverlayModal color="text-gray" />
                       : <BootstrapTable data={volunteersAsArray} version="4" bordered={false} condensed hover
                         trClassName="clickable"
                         tableHeaderClass="text-primary"

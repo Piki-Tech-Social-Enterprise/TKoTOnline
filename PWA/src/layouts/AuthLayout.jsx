@@ -129,13 +129,13 @@ const AuthLayout = props => {
     <>
       {
         isLoading
-          ? <LoadingOverlayModal />
+          ? <LoadingOverlayModal color="text-success" />
           : <div className="wrapper">
             <AuthSidebar {...props} routes={authenticatedRoutes} backgroundColor={'tkot'} />
             <div className="main-panel" ref={mainPanel}>
               <AuthNavbar {...props} routes={authenticatedRoutes} />
               <Switch>
-                <Suspense fallback={<LoadingOverlayModal />}>
+                <Suspense fallback={<LoadingOverlayModal color="text-danger" />}>
                   {applyRedirect(props)}
                   {authenticatedRoutes.map((prop, key) => {
                     const {

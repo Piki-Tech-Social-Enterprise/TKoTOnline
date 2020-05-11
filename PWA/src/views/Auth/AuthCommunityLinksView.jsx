@@ -81,7 +81,7 @@ const AuthCommunityLinksView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal />
+                    ? <LoadingOverlayModal color="text-info" />
                     : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
