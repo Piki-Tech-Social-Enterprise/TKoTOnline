@@ -80,8 +80,8 @@ class FirebaseImage extends Component {
     });
   }
   shouldComponentUpdate = (nextProps, nextState) => {
-    const shallowCompared = shallowCompare(this, nextProps, nextState, true);
-    console.log(`FirebaseImage.shouldComponentUpdate: ${shallowCompared}`)
+    const shallowCompared = shallowCompare(this, nextProps, nextState, false);
+    // console.log(`FirebaseImage.shouldComponentUpdate: ${shallowCompared}`);
     return shallowCompared;
   }
   componentDidUpdate = async prevProps => {

@@ -7,7 +7,7 @@ import {
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 
-const TermsOfService = () => {
+const TermsOfServiceView = () => {
   const {
     REACT_APP_WEB_EMAIL
   } = process.env;
@@ -42,4 +42,4 @@ const TermsOfService = () => {
   );
 };
 
-export default TermsOfService;
+export default TermsOfServiceView;

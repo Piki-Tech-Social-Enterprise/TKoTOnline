@@ -2,9 +2,13 @@
 @import 'now-ui-kit/mixins';
 
 $tkot-bg-color: #171b5d;
+$tkot-padding-top: 6rem;
 
 .tkot-section {
-  padding: 5rem 0;
+  padding: $tkot-padding-top 0 0;
+}
+.tkot-section:last-child {
+  padding-bottom: $tkot-padding-top;
 }
 
 /* --- News Feed Carousel --- */
@@ -149,44 +153,11 @@ $tkot-bg-color: #171b5d;
   }
 }
 
-@media only screen and(min-width: 768px){
-
-  #community-links {
-    padding: 10px;
-    
-      .community-links {
-        column-count: 3;
-        column-fill: balance;
-        a {
-          color: black;
-          column-fill: balance;
-        }
-      }
-  }
-}
-
-@media only screen and(max-width: 768px){
-
-  #community-links {
-    padding: 10px;
-    
-      .community-links {
-        column-count: 2;
-        column-fill: balance;
-        a {
-          color: black;
-          column-fill: balance;
-        }
-      }
-  }
-}
-
-
-@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white) {
   overflow: hidden;
   position: relative;
   line-height: $lineHeight;
-  max-height: $lineHeight * $lineCount; 
+  max-height: $lineHeight * $lineCount;
   text-align: justify;
   margin-right: -1em;
   padding-right: 1em;
@@ -208,5 +179,9 @@ $tkot-bg-color: #171b5d;
 }
 
 .block-with-text {
-  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);  
+  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);
+}
+
+.volunteer-title {
+  margin-top: 100px;
 }

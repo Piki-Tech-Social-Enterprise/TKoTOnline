@@ -3,7 +3,8 @@ import {
   StorageRepository,
   NewsFeedRepository,
   CommunityLinksRepository,
-  SettingsRepository
+  SettingsRepository,
+  VolunteersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -17,6 +18,7 @@ class Firebase {
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
+    this.volunteersRepository = new VolunteersRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -41,6 +43,10 @@ class Firebase {
   getDbSettingsAsArray = async includeInactive => await this.settingsRepository.getDbSettingsAsArray(includeInactive);
   getDbCommunityLinkValue = async sid => await this.settingsRepository.getDbCommunityLinkValue(sid);
   getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
+  getDbVolunteers = async () => await this.volunteersRepository.getDbVolunteers();
+  getDbVolunteer = async (vid) => await this.volunteersRepository.getDbVolunteer(vid);
+  getDbVolunteersAsArray = async includeInactive => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive);
+  saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => await this.volunteersRepository.saveDbVolunteer(volunteer, saveDbVolunteer_completed);
 }
 
 export default Firebase;

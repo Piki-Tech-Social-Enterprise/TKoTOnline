@@ -52,6 +52,7 @@ class UserRepository extends BaseRepository {
       createdBy,
       displayName,
       email,
+      isNew,
       photoURL,
       providerData,
       roles,
@@ -60,6 +61,25 @@ class UserRepository extends BaseRepository {
       updatedBy
     } = user;
     const now = new Date();
+    const preparedUser = {
+      active: active || false,
+      created: created || now.toString(),
+      createdBy: createdBy || '',
+      displayName: displayName || '',
+      email: email || '',
+      photoURL: photoURL || '',
+      providerData: providerData || (email && [{
+        email: email,
+        providerId: 'password',
+        uid: uid
+      }]) || {},
+      roles: roles || {
+        undefinedRole
+      },
+      uid: uid,
+      updated: updated || now.toString(),
+      updatedBy: updatedBy || ''
+    };
     let errorMessage = null;
     let existingDbUser = await this.getDbUser(uid || '')
     let dbUserRef = null;
@@ -67,48 +87,28 @@ class UserRepository extends BaseRepository {
     if (!uid) {
       dbUserRef = await existingDbUser.push();
       const newUid = await dbUserRef.getKey();
-      user = {
-        active: active || false,
-        created: created || now.toString(),
-        createdBy: createdBy || '',
-        displayName: displayName || '',
-        email: email || '',
-        photoURL: photoURL || '',
-        providerData: providerData || (email && {
-          email: email,
-          providerId: 'password',
-          uid: newUid
-        }) || {},
-        roles: roles || {
-          undefinedRole
-        },
-        isVolunteer: false,
-        uid: newUid,
-        updated: updated || now.toString(),
-        updatedBy: updatedBy || ''
-      };
-      dbUserRef.set(user, saveDbUser_completed);
+      preparedUser.uid = newUid;
+      preparedUser.providerData[0].uid = newUid;
+      dbUserRef.set(preparedUser, saveDbUser_completed);
     } else {
       dbUserRef = await existingDbUser.once('value');
-      dbUser = await dbUserRef.val();
-      if (dbUser) {
-        user = {
-          active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbUser.created,
-          createdBy: createdBy || dbUser.createdBy,
-          displayName: displayName || dbUser.displayName || '',
-          email: email || dbUser.email,
-          photoURL: photoURL || dbUser.photoURL || '',
-          providerData: providerData || dbUser.providerData || {},
-          roles: roles || dbUser.roles || {
+      dbUser = await dbUserRef.val() || {};
+      if (dbUser || isNew) {
+        existingDbUser.set({
+          active: preparedUser.active || dbUser.active || false,
+          created: preparedUser.created || dbUser.created,
+          createdBy: preparedUser.createdBy || dbUser.createdBy,
+          displayName: preparedUser.displayName || dbUser.displayName || '',
+          email: preparedUser.email || dbUser.email,
+          photoURL: preparedUser.photoURL || dbUser.photoURL || '',
+          providerData: preparedUser.providerData || dbUser.providerData || [],
+          roles: preparedUser.roles || dbUser.roles || {
             undefinedRole
           },
-          isVolunteer: true,
-          uid: uid,
-          updated: updated || now.toString(),
-          updatedBy: updatedBy || uid
-        };
-        existingDbUser.set(user, saveDbUser_completed);
+          uid: preparedUser.uid || dbUser.uid,
+          updated: preparedUser.updated || now.toString(),
+          updatedBy: preparedUser.updatedBy || ''
+        }, saveDbUser_completed);
       } else {
         errorMessage = 'Save Db User Error: uid (' + uid + ') not found.';
       }

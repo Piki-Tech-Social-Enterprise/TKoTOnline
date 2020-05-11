@@ -66,6 +66,7 @@ class Firebase {
   deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
 
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
+  getDbSetting= async sid => await this.settings.getDbSetting(sid);
   getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
   saveDbSettings = async (settings, saveDbSetting_completed) => await this.settingsRepository.saveDbSettings(settings, saveDbSetting_completed);
 

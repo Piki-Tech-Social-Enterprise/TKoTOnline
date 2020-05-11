@@ -25,6 +25,7 @@ const AuthCommunityLinksView = props => {
     const retrieveCommunityLinks = async () => {
       const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
       setCommunityLinksAsArray(dbCommunityLinksAsArray);
+      setIsLoading(false);
     };
     if (isLoading) {
       retrieveCommunityLinks();
@@ -81,7 +82,7 @@ const AuthCommunityLinksView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal />
+                    ? <LoadingOverlayModal color="text-info" />
                     : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

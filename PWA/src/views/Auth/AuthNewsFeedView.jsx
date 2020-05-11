@@ -217,6 +217,7 @@ const AuthNewsFeedView = props => {
         isFeatured,
         nfid
       });
+      setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {
@@ -235,7 +236,7 @@ const AuthNewsFeedView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal />
+            ? <LoadingOverlayModal color="text-body" />
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col col={8}>

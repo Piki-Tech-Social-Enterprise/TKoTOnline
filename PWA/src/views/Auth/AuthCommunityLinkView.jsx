@@ -73,24 +73,24 @@ const AuthCommunityLinkView = props => {
         displayTitle = 'Failed';
         displayType = 'error';
         displayMessage = 'Must be a valid link';
-      }else {
-          if (isNew) {
-            clid = await firebase.saveDbCommunityLink({});
-          }
-          await firebase.saveDbCommunityLink({
-            active: active,
-            created: now.toString(),
-            createdBy: uid,
-            link,
-            linkName,
-            clid: clid,
-            updated: now.toString(),
-            updatedBy: uid
-          });
-          if (isNew) {
-            handleGotoParentList();
-          }
+      } else {
+        if (isNew) {
+          clid = await firebase.saveDbCommunityLink({});
         }
+        await firebase.saveDbCommunityLink({
+          active: active,
+          created: now.toString(),
+          createdBy: uid,
+          link,
+          linkName,
+          clid: clid,
+          updated: now.toString(),
+          updatedBy: uid
+        });
+        if (isNew) {
+          handleGotoParentList();
+        }
+      }
     } catch (error) {
       displayType = 'error';
       displayTitle = 'Update Community link Failed';
@@ -167,6 +167,7 @@ const AuthCommunityLinkView = props => {
         linkName,
         clid
       });
+      setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {
@@ -190,7 +191,7 @@ const AuthCommunityLinkView = props => {
               <CardBody>
                 {
                   isLoading
-                    ? <LoadingOverlayModal />
+                    ? <LoadingOverlayModal color="text-light" />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
                         <Label>Link Name</Label>

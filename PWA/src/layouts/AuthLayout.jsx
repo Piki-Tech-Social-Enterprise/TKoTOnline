@@ -87,7 +87,7 @@ const AuthLayout = props => {
       platform
     } = navigator;
     const platformWin = 'Win';
-   // let perfectScrollbar; to fix
+    // let perfectScrollbar; to fix
     const {
       classList: bodyCssClasses
     } = document.body;
@@ -99,7 +99,7 @@ const AuthLayout = props => {
     } = props;
     if (isLoading) {
       if (platform.indexOf(platformWin) > -1) {
-       // perfectScrollbar = new PerfectScrollbar(mainPanel.current); to fix
+        // perfectScrollbar = new PerfectScrollbar(mainPanel.current); to fix
         bodyCssClasses.toggle(perfectScrollbarOn);
       }
       if (history.action === pushAction) {
@@ -114,10 +114,11 @@ const AuthLayout = props => {
         const authenticatedRoutes = getAuthenticatedRoutes(authUser.roles);
         setAuthenticatedRoutes(authenticatedRoutes);
       }
+      setIsLoading(false);
     }
     return () => {
       if (platform.indexOf(platformWin) > -1) {
-       // perfectScrollbar.destroy(); to fix
+        // perfectScrollbar.destroy(); to fix
         bodyCssClasses.toggle(perfectScrollbarOn);
       }
       if (isLoading) {
@@ -129,13 +130,13 @@ const AuthLayout = props => {
     <>
       {
         isLoading
-          ? <LoadingOverlayModal />
+          ? <LoadingOverlayModal color="text-success" />
           : <div className="wrapper">
             <AuthSidebar {...props} routes={authenticatedRoutes} backgroundColor={'tkot'} />
             <div className="main-panel" ref={mainPanel}>
               <AuthNavbar {...props} routes={authenticatedRoutes} />
               <Switch>
-                <Suspense fallback={<LoadingOverlayModal />}>
+                <Suspense fallback={<LoadingOverlayModal color="text-danger" />}>
                   {applyRedirect(props)}
                   {authenticatedRoutes.map((prop, key) => {
                     const {

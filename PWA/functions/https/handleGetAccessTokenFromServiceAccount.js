@@ -35,8 +35,15 @@ const handleGetAccessTokenFromServiceAccount = async (req, res) => {
   }
   return cors(req, res, async () => {
     try {
-      console.log(`process.env.GOOGLE_APPLICATION_CREDENTIALS: ${process.env.GOOGLE_APPLICATION_CREDENTIALS}`);
-      console.log(`process.env.FIREBASE_CONFIG: ${process.env.FIREBASE_CONFIG}`);
+      const functions = require('firebase-functions');
+      const {
+        jsonObjectPropertiesToUppercase
+      } = require('../utilities');
+      const config = process.env.NODE_ENV !== 'production'
+        ? process.env
+        : jsonObjectPropertiesToUppercase(functions.config().envcmd);
+      console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
+      console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
       const {
         google
       } = require('googleapis');

@@ -1,4 +1,6 @@
-import React from "react";
+import React, {
+  useState
+} from 'react';
 import {
   Collapse,
   Navbar,
@@ -7,78 +9,73 @@ import {
   Container,
   Button,
   NavLink
-} from "reactstrap";
-
+} from 'reactstrap';
 import Routes from '../Routes/routes';
 
 const {
+  communityLinks,
   newsFeed,
-  interactiveMap,
-  volunteer
+  // interactiveMap,
+  volunteers,
+  aboutUs,
+  contactUs
 } = Routes;
 
-function HomeNavbar() {
-  const [collapseOpen, setCollapseOpen] = React.useState(false);
+const HomeNavbar = () => {
+  const [collapseOpen, setCollapseOpen] = useState(false);
   const {
-    pathname
+    pathname,
+    hash
   } = window.location;
+  console.log(`pathname: ${pathname}`)
   const {
     REACT_APP_PWA_BASE_URL
   } = process.env;
-
   return (
     <>
       {collapseOpen ? (
-        <div
-          id="bodyClick"
-          onClick={() => {
-            document.documentElement.classList.toggle("nav-open");
-            setCollapseOpen(false);
-          }}
-        />
+        <div id="bodyClick" onClick={() => {
+          document.documentElement.classList.toggle("nav-open");
+          setCollapseOpen(false);
+        }} />
       ) : null}
       <Navbar className={"fixed-top"} expand="lg">
         <Container>
           <div className="navbar-translate">
             <a href="/">
-              <img
-                alt="..."
-                className="n-logo"
-                src={require("assets/img/tkot/tkot-logo-512x512.png")}
-                width="75"
-              />
+              <img alt="..." className="n-logo" src={require("assets/img/tkot/tkot-logo-512x512.png")} width="75" />
             </a>
-            <button
-              className="navbar-toggler navbar-toggler"
-              onClick={() => {
-                document.documentElement.classList.toggle("nav-open");
-                setCollapseOpen(!collapseOpen);
-              }}
-              aria-expanded={collapseOpen}
-              type="button"
-            >
+            <button className="navbar-toggler navbar-toggler" aria-expanded={collapseOpen} type="button" onClick={() => {
+              document.documentElement.classList.toggle("nav-open");
+              setCollapseOpen(!collapseOpen);
+            }}>
               <span className="navbar-toggler-bar top-bar"></span>
               <span className="navbar-toggler-bar middle-bar"></span>
               <span className="navbar-toggler-bar bottom-bar"></span>
             </button>
           </div>
-          <Collapse
-            className="justify-content-end"
-            isOpen={collapseOpen}
-            navbar
-          >
+          <Collapse className="justify-content-end" isOpen={collapseOpen} navbar>
             <Nav navbar>
-              <NavItem active={pathname.endsWith(newsFeed)}>
+              <NavItem active={hash !== '' && communityLinks.endsWith(hash)}>
+                <NavLink href={communityLinks}>Community Links</NavLink>
+              </NavItem>
+              <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
                 <NavLink href={newsFeed}>News Feed</NavLink>
               </NavItem>
-              <NavItem active={pathname.endsWith(interactiveMap)}>
+              {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>
+              </NavItem> */}
+              <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
+                <NavLink href={volunteers}>Volunteers</NavLink>
               </NavItem>
-              <NavItem active={pathname.endsWith(volunteer)}>
-                <NavLink href={volunteer}>Volunteer</NavLink>
+              <NavItem active={pathname.endsWith(aboutUs)}>
+                <NavLink href={aboutUs}>About Us</NavLink>
+              </NavItem>
+              <NavItem active={pathname.endsWith(contactUs)}>
+                <NavLink href={contactUs}>Contact Us</NavLink>
               </NavItem>
               <NavItem>
-                <Button outline color="white" href={`${REACT_APP_PWA_BASE_URL}/public/Login`}>
+                <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline>
                   Login
                 </Button>
               </NavItem>
@@ -88,6 +85,6 @@ function HomeNavbar() {
       </Navbar>
     </>
   );
-}
+};
 
 export default HomeNavbar;

@@ -197,30 +197,29 @@ import React, {
           });
           handleGotoParentList();
         }
-      } catch (error) {
-        displayMessage = error.message;
       }
-      if (displayMessage) {
-        swal.fire({
-          type: 'error',
-          title: `Delete Volunteer Error`,
-          html: displayMessage
-        });
-        console.log(`Delete Volunteer Error: ${displayMessage}`);
+      if (!isNew) {
+        existingEmails.map((e) => {
+          if (e === email && originalEmail !== email) {
+            displayType = 'error';
+            displayTitle = `New Volunteer Failed`;
+            displayMessage = 'Looks like this email is already in use';
+          }
+          return null;
+        })
       }
-    };
-    const handleGotoParentList = () => {
-        props.history.push('/auth/Volunteers');
-    };
-    useEffect(() => {
-      const retrieveVolunteer = async () => {
-        const dbVolunteer = await props.firebase.getDbVolunteerValue(props.match.params.vid);
-        const {
-          active,
+      if (displayMessage === defaultDisplayMesssage) {
+        if (isNew) {
+          vid = await firebase.saveDbVolunteer({});
+        }
+
+        await firebase.saveDbVolunteer({
+          active: active,
+          created: now.toString(),
+          createdBy: uid,
           firstName,
           lastName,
           phoneNumber,
-          roles,
           email,
           providerData,
           vid,
@@ -237,15 +236,38 @@ import React, {
           vid,
           details
         });
-      };
-      if (isLoading) {
-        if (!isNew) {
-            retrieveVolunteer();
+        if (isNew) {
+          handleGotoParentList();
         }
       }
-      return () => {
-        if (isLoading) {
-          setIsLoading(false);
+    } catch (error) {
+      displayType = 'error';
+      displayTitle = `Update Volunteer Failed`;
+      displayMessage = `${error.message}`;
+    } finally {
+      setIsSubmitting(false);
+    }
+    if (displayMessage) {
+      swal.fire({
+        type: displayType,
+        title: displayTitle,
+        html: displayMessage
+      });
+    }
+  };
+  const handleDeleteClick = async e => {
+    e.preventDefault();
+    let result = null;
+    let displayMessage = null;
+    try {
+      result = await swal.fire({
+        type: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to undo this!",
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn btn-outline-danger',
+          cancelButton: 'btn btn-outline-link',
         }
       };
     }, [props, isNew, isLoading,volunteer, setIsLoading]);
@@ -340,8 +362,122 @@ import React, {
       </>
     )
   };
-  
-  const condition = authUser => !!authUser && !!authUser.active;
-  
-  export default withAuthorization(condition)(AuthVolunteerView);
-  
+  useEffect(() => {
+    const existingVolunteers = async () => {
+      const emails = [];
+      const existingDbVolunteers = await props.firebase.getDbVolunteersAsArray(true);
+      existingDbVolunteers.map((volunteer) => {
+        emails.push(volunteer.email);
+        return null;
+      });
+      setEmails(emails);
+    }
+
+    const retrieveVolunteer = async () => {
+      const dbVolunteer = await props.firebase.getDbVolunteerValue(props.match.params.vid);
+      const {
+        active,
+        firstName,
+        lastName,
+        phoneNumber,
+        roles,
+        email,
+        providerData,
+        vid
+      } = dbVolunteer;
+
+      setOriginalEmail(email);
+      setVolunteer({
+        active,
+        firstName,
+        lastName,
+        phoneNumber,
+        roles,
+        email,
+        providerData,
+        vid
+      });
+      setIsLoading(false);
+    };
+    if (isLoading) {
+      existingVolunteers();
+      if (!isNew) {
+        retrieveVolunteer();
+      }
+    }
+    return () => {
+      if (isLoading) {
+        setIsLoading(false);
+      }
+    };
+  }, [props, isNew, isLoading, existingEmails, setIsLoading]);
+  return (
+    <>
+      <div className="panel-header panel-header-xs" />
+      <Container className="content">
+        {
+          isLoading
+            ? <LoadingOverlayModal color="text-aqua" />
+            : <>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Row>
+                  <Col md={8}>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <Label>First Name</Label>
+                          <InputGroup>
+                            <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text" />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Last Name</Label>
+                          <InputGroup>
+                            <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text" />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Email</Label>
+                          <InputGroup>
+                            <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email" />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Phone Number</Label>
+                          <InputGroup>
+                            <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number" />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup className="volunteer-roles">
+                          <Label>Roles</Label><br />
+                          {
+                            Object.keys(Roles).map(role => {
+                              if (role === 'undefinedRole') return null;
+                              return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!volunteer.roles[role]} onChange={handleChange} key={role} type="switch" />
+                            })
+                          }
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Active</Label><br />
+                          <CustomInput label="" name="active" checked={volunteer.active} onChange={handleChange} type="switch" id="VolunteerActive" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                          <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Form>
+            </>
+        }
+      </Container>
+    </>
+  )
+};
+
+const condition = authUser => !!authUser && !!authUser.active;
+
+export default withAuthorization(condition)(AuthVolunteerView);

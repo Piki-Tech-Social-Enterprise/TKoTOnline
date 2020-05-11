@@ -128,3 +128,18 @@ $tkot-bg-color: #171b5d;
     position: relative;
   }
 }
+.fullscreen-background-image {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: none;
+  z-index: -99999;
+}
+.text-aqua {
+  color: aqua;
+}

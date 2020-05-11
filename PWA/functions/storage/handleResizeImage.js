@@ -22,10 +22,19 @@ const handleResizeImage = async objectMetadata => {
   const downloadOptions = {
     destination: tmpFilePath
   };
+  const functions = require('firebase-functions');
+  const {
+    jsonObjectPropertiesToUppercase
+  } = require('../utilities');
+  const config = process.env.NODE_ENV !== 'production'
+    ? process.env
+    : jsonObjectPropertiesToUppercase(functions.config().envcmd);
+  console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
+  console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
   if (admin.apps.length === 0) {
     admin.initializeApp({
-      credential: admin.credential.cert(process.env.REACT_APP_GAC),
-      storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET
+      credential: admin.credential.cert(config.REACT_APP_GAC),
+      storageBucket: config.REACT_APP_FIREBASE_STORAGE_BUCKET
     });
   }
   const storage = admin.storage();

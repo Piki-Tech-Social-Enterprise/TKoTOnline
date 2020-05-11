@@ -1,6 +1,19 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "tkot-online-functions",
+  "description": "Te Kahu o Taonui (TKoT) Online - Functions",
+  "repository": "https://github.com/Piki-Tech-Social-Enterprise/TKoTOnline",
+  "license": "MIT",
+  "version": "1.0.0",
+  "dependencies": {
+    "@google-cloud/storage": "^4.7.0",
+    "cors": "^2.8.5",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1",
+    "fs-extra": "^8.1.0",
+    "googleapis": "^50.0.0",
+    "moment": "^2.25.3",
+    "sharp": "^0.25.2"
+  },
   "scripts": {
     "lint": "eslint .",
     "test": "mocha --timeout 999999 --colors --reporter spec index.test.js --exit",
@@ -22,32 +35,35 @@
     "testTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC test\"",
     "testProd": "run-s -sn firebaseUseProd \"envCmdProd applyGAC test\"",
     "serveLocal": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC serve\"",
-    "serveDev": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC serve\"",
-    "serveTest": "run-s -sn firebaseUseTest \"envCmdLocal applyGAC serve\"",
-    "serveProd": "run-s -sn firebaseUseProd \"envCmdLocal applyGAC serve\"",
+    "serveDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC serve\"",
+    "serveTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC serve\"",
+    "serveProd": "run-s -sn firebaseUseProd \"envCmdProd applyGAC serve\"",
     "shellLocal": "run-s -sn firebaseUseDev \"envCmdLocal shell\"",
-    "shellDev": "run-s -sn firebaseUseDev \"envCmdLocal shell\"",
-    "shellTest": "run-s -sn firebaseUseTest \"envCmdLocal shell\"",
-    "shellProd": "run-s -sn firebaseUseProd \"envCmdLocal shell\"",
-    "deployDev": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC deploy\"",
-    "deployTest": "run-s -sn firebaseUseTest \"envCmdLocal applyGAC deploy\"",
-    "deployProd": "run-s -sn firebaseUseProd \"envCmdLocal applyGAC deploy\""
+    "shellDev": "run-s -sn firebaseUseDev \"envCmdDev shell\"",
+    "shellTest": "run-s -sn firebaseUseTest \"envCmdTest shell\"",
+    "shellProd": "run-s -sn firebaseUseProd \"envCmdProd shell\"",
+    "deployDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
+    "deployTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
+    "deployProd": "run-s -sn firebaseUseProd \"envCmdProd applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
+    "removeNodeModules": "if [[ -d node_modules ]]; then rm -rf node_modules/&&echo \"'node_modules' successfully removed\"; else echo 'node_modules' folder not found; fi",
+    "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
+    "npmSetProgressOff": "npm set progress=false",
+    "npmCacheClean": "npm cache clean --force",
+    "npmInstall": "npm install",
+    "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmCacheClean npmInstall",
+    "unsetFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js unset",
+    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"
   },
   "engines": {
     "node": "8"
   },
-  "dependencies": {
-    "@google-cloud/storage": "^4.7.0",
-    "cors": "^2.8.5",
-    "firebase-admin": "^8.11.0",
-    "firebase-functions": "^3.6.1",
-    "fs-extra": "^9.0.0",
-    "googleapis": "^49.0.0",
-    "moment": "^2.25.1",
-    "sharp": "^0.25.2"
-  },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "chalk": "^4.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -56,6 +72,5 @@
     "npm-run-all": "^4.1.5",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0"
-  },
-  "private": true
+  }
 }

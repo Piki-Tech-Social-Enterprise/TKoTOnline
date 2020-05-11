@@ -41,12 +41,19 @@ const handleSetProfile = async (req, res) => {
   }
   return cors(req, res, async () => {
     try {
-      console.log(`process.env.GOOGLE_APPLICATION_CREDENTIALS: ${process.env.GOOGLE_APPLICATION_CREDENTIALS}`);
-      console.log(`process.env.FIREBASE_CONFIG: ${process.env.FIREBASE_CONFIG}`);
+      const functions = require('firebase-functions');
+      const {
+        jsonObjectPropertiesToUppercase
+      } = require('../utilities');
+      const config = process.env.NODE_ENV !== 'production'
+        ? process.env
+        : jsonObjectPropertiesToUppercase(functions.config().envcmd);
+      console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
+      console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
       if (admin.apps.length === 0) {
         admin.initializeApp({
-          credential: admin.credential.cert(process.env.REACT_APP_GAC),
-          databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL
+          credential: admin.credential.cert(config.REACT_APP_GAC),
+          databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL
         });
       }
       const {

@@ -50,7 +50,8 @@ class FunctionsHelper {
       return response;
     }
   }
-  putAsync = async () => {debugger;
+  putAsync = async () => {
+    // debugger;
     const url = this._buildUrl();
     let response = {
       data: {

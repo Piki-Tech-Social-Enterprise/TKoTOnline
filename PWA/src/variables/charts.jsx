@@ -277,9 +277,9 @@ const dashboardShippedProductsChart = {
       datasets: [
         {
           label: "Active Users",
-          borderColor: "#f96332",
+          borderColor: "#d91a3d",
           pointBorderColor: "#FFF",
-          pointBackgroundColor: "#f96332",
+          pointBackgroundColor: "#d91a3d",
           pointBorderWidth: 2,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 1,

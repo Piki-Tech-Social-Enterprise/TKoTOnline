@@ -38,10 +38,11 @@ class AuthenticationRepository extends BaseRepository {
       createdBy: uid,
       displayName: displayName || '',
       email: email,
+      isNew: true,
       photoURL: '',
       providerData: providerData,
       roles: {
-        role
+        [role]: role
       },
       uid: uid,
       updated: now.toString(),
