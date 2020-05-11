@@ -25,6 +25,7 @@ const AuthCommunityLinksView = props => {
     const retrieveCommunityLinks = async () => {
       const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
       setCommunityLinksAsArray(dbCommunityLinksAsArray);
+      setIsLoading(false);
     };
     if (isLoading) {
       retrieveCommunityLinks();

@@ -26,6 +26,7 @@ const AuthNewsFeedsView = props => {
     const retrieveNewsFeeds = async () => {
       const dbNewsFeedsAsArray = await props.firebase.getDbNewsFeedsAsArray(true);
       setNewsFeedsAsArray(dbNewsFeedsAsArray);
+      setIsLoading(false);
     };
     if (isLoading) {
       retrieveNewsFeeds();

@@ -217,6 +217,7 @@ const AuthNewsFeedView = props => {
         isFeatured,
         nfid
       });
+      setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {

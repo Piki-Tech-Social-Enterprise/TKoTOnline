@@ -327,6 +327,7 @@ const AuthUserView = props => {
         providerData,
         uid
       });
+      setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {

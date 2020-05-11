@@ -39,6 +39,7 @@ const AuthUsersView = props => {
     const retrieveUsers = async () => {
       const dbUsersAsArray = await props.firebase.getDbUsersAsArray(true);
       setUsersAsArray(dbUsersAsArray);
+      setIsLoading(false);
     };
     if (isLoading) {
       retrieveUsers();
@@ -117,13 +118,13 @@ const AuthUsersView = props => {
                       <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
                       <TableHeaderColumn dataField="displayName" dataSort>Display Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
-                          <RoleBadges
-                            availableRoles={availableRoles}
-                            roles={cell}
-                            uid={row.uid}
-                            onChildUpdate={handleChildUpdate}
-                          />
-                        )} >Roles</TableHeaderColumn>
+                        <RoleBadges
+                          availableRoles={availableRoles}
+                          roles={cell}
+                          uid={row.uid}
+                          onChildUpdate={handleChildUpdate}
+                        />
+                      )} >Roles</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="User"

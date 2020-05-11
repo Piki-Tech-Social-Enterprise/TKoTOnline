@@ -64,7 +64,7 @@ const AuthSettingsView = props => {
         displayTitle = 'Failed';
         displayType = 'error';
         displayMessage = 'You need to have a description for the community links section.';
-      }else if (!volunteersDescritpion) {
+      } else if (!volunteersDescritpion) {
         displayTitle = 'Failed';
         displayType = 'error';
         displayMessage = 'You need to have a description for the volunteers section.';
@@ -108,6 +108,7 @@ const AuthSettingsView = props => {
           volunteersDescritpion,
           sid
         });
+        setIsLoading(false);
       }
     };
     if (isLoading) {
