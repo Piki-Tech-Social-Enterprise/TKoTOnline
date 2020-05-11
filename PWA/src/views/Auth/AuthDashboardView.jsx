@@ -53,7 +53,6 @@ const AuthDashboardView = props => {
 useEffect(() => {
   
   const isVoluteer = () => {
-    console.log('onboarding',props.authUser.onBoardingCompleted);
     if( props.authUser.vid && props.authUser.onBoardingCompleted === false) {
 
       retrieveVolunteer();
@@ -102,26 +101,19 @@ useEffect(() => {
               }
             }
           ]).then((result) => {
-            console.log(result);
             if (result.value) {
-              console.log(result);
              const onboardingAnswers = result.value;
              onboardingAnswers.map((i) => {
                answers.push(i);
              });
-
-              console.log(answers);
             }
           }).finally(()=> {
            Swal.fire({
             title: 'All done!',
             icon:'success',
             confirmButtonText: 'Thanks'
-          }).then((result) => {
-            console.log(result);
-              console.log(volunteer);
-              console.log(answers);
-              addVolunteerDetails();
+          }).then(() => {
+            addVolunteerDetails();
           })
           })
         }
@@ -142,7 +134,6 @@ useEffect(() => {
       onBoardingCompleted,
       vid,
     } = dbVolunteer;
-    console.log(dbVolunteer);
     setVolunteer({
       active,
       firstName,

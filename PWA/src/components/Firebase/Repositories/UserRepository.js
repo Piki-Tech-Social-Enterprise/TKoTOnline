@@ -122,7 +122,6 @@ class UserRepository extends BaseRepository {
 
   updateUserOnboarding = async uid => {
     const existingDbUser = await this.getDbUser(uid);
-    console.log('here', existingDbUser);
     existingDbUser.update({onBoardingCompleted: true});
   }
 
