@@ -143,7 +143,7 @@ const AuthSettingsView = props => {
                     ? <LoadingOverlayModal color="text-white" />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
-                        <Label>Community Links Describtion</Label>
+                        <Label>Community Links Description</Label>
                         <Input placeholder="Community Links Description" name="communityLinksDescritpion" value={settings.communityLinksDescritpion} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Container,
   Row,
@@ -6,8 +6,26 @@ import {
 } from 'reactstrap';
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
+import {
+  withFirebase
+} from 'components/Firebase';
 
-const AboutUsView = () => {
+const AboutUsView = props => {
+
+  const [aboutPageDescription, setAboutState] = useState ([]);
+
+useEffect(() => {
+
+  const retrieveSettingValues = async () => {
+    const {
+      firebase
+    } = props;
+    const dbSettings = await firebase.getDbSettingsValues(true);
+    setAboutState(((dbSettings && dbSettings.aboutPageDescription) || ''));
+  }
+
+  retrieveSettingValues();
+}, [props])
   return (
     <>
       <HomeNavbar />
@@ -15,7 +33,7 @@ const AboutUsView = () => {
         <Row>
           <Col className="px-0 mt-5">
             <h3>ABOUT US</h3>
-            <p>TODO: About Us Content</p>
+            <p>{aboutPageDescription}</p>
           </Col>
         </Row>
       </Container>
@@ -24,4 +42,4 @@ const AboutUsView = () => {
   );
 };
 
-export default AboutUsView;
+export default withFirebase(AboutUsView);
