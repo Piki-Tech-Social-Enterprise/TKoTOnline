@@ -53,7 +53,8 @@ const AuthSettingsView = props => {
     } = authUser;
     const {
       communityLinksDescritpion,
-      volunteersDescritpion
+      volunteersDescritpion,
+      aboutPageDescription
     } = settings;
     let sid = settings.sid;
     let displayType = 'success';
@@ -68,12 +69,17 @@ const AuthSettingsView = props => {
         displayTitle = 'Failed';
         displayType = 'error';
         displayMessage = 'You need to have a description for the volunteers section.';
+      }else if (!aboutPageDescription) {
+        displayTitle = 'Failed';
+        displayType = 'error';
+        displayMessage = 'You need to have a description for the About Page.';
       } else {
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
           communityLinksDescritpion: communityLinksDescritpion,
           volunteersDescritpion: volunteersDescritpion,
+          aboutPageDescription: aboutPageDescription,
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
@@ -101,11 +107,14 @@ const AuthSettingsView = props => {
         const {
           communityLinksDescritpion,
           volunteersDescritpion,
+          aboutPageDescription,
           sid
         } = dbSettings;
+        console.log(dbSettings);
         setSetting({
           communityLinksDescritpion,
           volunteersDescritpion,
+          aboutPageDescription,
           sid
         });
         setIsLoading(false);
@@ -140,6 +149,10 @@ const AuthSettingsView = props => {
                       <FormGroup>
                         <Label>Volunteers Description</Label>
                         <Input placeholder="Volunteers Description" name="volunteersDescritpion" value={settings.volunteersDescritpion} onChange={handleChange} type="textarea" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>About Page Description</Label>
+                        <Input placeholder="About Page Description" name="aboutPageDescription" value={settings.aboutPageDescription} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
