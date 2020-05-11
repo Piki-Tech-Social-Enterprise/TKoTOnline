@@ -33,6 +33,11 @@ import React, {
     roles: {
       volunteerRole: Roles.volunteerRole
     },
+    details: {
+      region: '',
+      travelDistance: '',
+      type: ''
+    },
     vid: null
   };
   const AuthVolunteerView = props => {
@@ -67,7 +72,17 @@ import React, {
           ...u,
           roles: newActiveRoles
         }));
-      } else {
+      } else if (name.startsWith('details.')) {
+        const strReplace = name.replace('details.','');
+        setVolunteer(u => ({
+          ...u,
+          details: {
+            ...u.details,
+            [strReplace]: value
+          }
+        }));
+
+      }else {
         setVolunteer(u => ({
           ...u,
           [name]: useChecked
@@ -95,7 +110,8 @@ import React, {
         email,
         phoneNumber,
         providerData,
-        roles
+        roles,
+        details
       } = volunteer;
       let vid = volunteer.vid;
       let displayType = 'success';
@@ -125,6 +141,7 @@ import React, {
             email,
             providerData,
             roles,
+            details,
             vid: vid,
             updated: now.toString(),
             updatedBy: uid
@@ -206,8 +223,10 @@ import React, {
           roles,
           email,
           providerData,
-          vid
+          vid,
+          details
         } = dbVolunteer;
+        console.log(dbVolunteer);
         setVolunteer({
           active,
           firstName,
@@ -216,8 +235,10 @@ import React, {
           roles,
           email,
           providerData,
-          vid
+          vid,
+          details
         });
+        console.log(volunteer);
       };
       if (isLoading) {
         if (!isNew) {
@@ -287,6 +308,31 @@ import React, {
                           </FormGroup>
                         </CardBody>
                       </Card>
+                    </Col>
+                    <Col>
+
+                    <Card>
+                      <CardBody>
+                      <FormGroup>
+                      <Label>Region</Label>
+                      <InputGroup>
+                        <Input placeholder="Region" name="details.region" value={volunteer.details.region} onChange={handleChange} type="text"/>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Distance Willing to Travel</Label>
+                      <InputGroup>
+                        <Input placeholder="Travel Distance" name="details.travelDistance" value={volunteer.details.travelDistance} onChange={handleChange} type="text"/>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Type of Work</Label>
+                      <InputGroup>
+                        <Input placeholder="Type of Work" name="details.type" value={volunteer.details.type} onChange={handleChange} type="text"/>
+                      </InputGroup>
+                    </FormGroup>
+                      </CardBody>
+                    </Card>
                     </Col>
                   </Row>
                 </Form>

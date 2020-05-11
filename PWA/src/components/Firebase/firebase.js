@@ -41,6 +41,7 @@ class Firebase {
   getDbUsers = async () => await this.userRepository.getDbUsers();
   getDbUsersAsArray = async includeInactive => await this.userRepository.getDbUsersAsArray(includeInactive);
   getDbUser = async uid => await this.userRepository.getDbUser(uid);
+  updateUserOnboarding = async uid => await this.userRepository.updateUserOnboarding(uid);
   getDbUserValue = async uid => await this.userRepository.getDbUserValue(uid);
   saveDbUser = async (user, saveDbUser_completed) => await this.userRepository.saveDbUser(user, saveDbUser_completed);
   deleteDbUser = async uid => await this.userRepository.deleteDbUser(uid);

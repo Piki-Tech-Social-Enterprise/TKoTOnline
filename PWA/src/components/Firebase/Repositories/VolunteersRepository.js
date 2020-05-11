@@ -78,6 +78,7 @@ class VolunteersRepository extends BaseRepository {
         details: details || '',
         phoneNumber: phoneNumber || '',
         email: email || '',
+        details: details || {},
         providerData: providerData || (email && {
           email: email,
           providerId: 'password',
@@ -105,6 +106,7 @@ class VolunteersRepository extends BaseRepository {
           phoneNumber: phoneNumber || dbVolunteer.phoneNumber || '',
           email: email || dbVolunteer.email,
           providerData: providerData || dbVolunteer.providerData || {},
+          details: details || dbVolunteer.details || {},
           roles: roles || dbVolunteer.roles || {
             undefinedRole
           },

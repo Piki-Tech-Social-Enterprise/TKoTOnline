@@ -45,20 +45,15 @@ const AuthDashboardView = props => {
     },
     vid: null
   };
-  const INITIAL_ANSWERS = {
-      region: '',
-      travelDistance: '',
-      type: ''
-  };
 
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
-  const [answers, setAnswers] = useState(INITIAL_ANSWERS);
+  const answers = [];
 
 
 useEffect(() => {
   
   const isVoluteer = () => {
-    console.log('props',props);
+    console.log('onboarding',props.authUser.onBoardingCompleted);
     if( props.authUser.vid && props.authUser.onBoardingCompleted === false) {
 
       retrieveVolunteer();
@@ -69,7 +64,10 @@ useEffect(() => {
         showCancelButton: true,
         cancelButtonText: 'Skip'  
       }).then((result) => {
-        console.log('result here', result);
+
+        if(result.dismiss){
+          addVolunteerDetails();
+        }
         if(result.value === true){
           Swal.mixin({
             icon: 'info',
@@ -96,7 +94,7 @@ useEffect(() => {
             },
             {
               title: 'Question 3',
-              text: 'Tell us what type of work you like ',
+              text: 'Tell us what type of work do you like ',
               input: 'text',
               inputPlaceholder: 'Type here...',
               inputAttributes: {
@@ -107,41 +105,28 @@ useEffect(() => {
             console.log(result);
             if (result.value) {
               console.log(result);
-              const ans1 = result.value[0];
-              const ans2 = result.value[1];
-              const ans3 = result.value[2];
-              setAnswers(ans => ({
-                ...ans,
-                region: 'region',
-                travelDistance: ans2,
-                type: ans3
-              }));
+             const onboardingAnswers = result.value;
+             onboardingAnswers.map((i) => {
+               answers.push(i);
+             });
 
               console.log(answers);
             }
           }).finally(()=> {
-           console.log('finalllllly', answers);
-           thanksMessage();
+           Swal.fire({
+            title: 'All done!',
+            icon:'success',
+            confirmButtonText: 'Thanks'
+          }).then((result) => {
+            console.log(result);
+              console.log(volunteer);
+              console.log(answers);
+              addVolunteerDetails();
+          })
           })
         }
-       
       })
-     
-
     }
-  }
-
-  const thanksMessage = async () => {
-    Swal.fire({
-      title: 'All done!',
-      icon:'success',
-      confirmButtonText: 'Thanks'
-    }).then((result) => {
-      console.log(result);
-        console.log(volunteer);
-        console.log(answers);
-        addVolunteerDetails();
-    })
   }
 
   const retrieveVolunteer = async () => {
@@ -154,6 +139,7 @@ useEffect(() => {
       roles,
       email,
       providerData,
+      onBoardingCompleted,
       vid,
     } = dbVolunteer;
     console.log(dbVolunteer);
@@ -165,13 +151,12 @@ useEffect(() => {
       roles,
       email,
       providerData,
+      onBoardingCompleted,
       vid
     });
   };
 
   const addVolunteerDetails = async() => {
-    console.log('heeeeeeeeeeeeeeeeeeeeeee', answers);
-    console.log('heeeeeeeeeeeeeeeeeeeeeee', volunteer);
     const now = new Date();
     const firstName = volunteer.firstName;
     const lastName = volunteer.lastName;
@@ -188,12 +173,19 @@ useEffect(() => {
       phoneNumber,
       email,
       providerData,
-      details: answers,
+      details: {
+        region: answers[0] || '',
+        travelDistance: answers[1] || '',
+        type: answers[2] || ''
+      },
       roles,
       vid: props.authUser.vid,
       updated: now.toString(),
-      updatedBy: props.authUser.uid
+      updatedBy: props.authUser.uid,
+      onBoardingCompleted: true
     });
+
+    await props.firebase.updateUserOnboarding(props.authUser.uid);
   }
 
   isVoluteer();
