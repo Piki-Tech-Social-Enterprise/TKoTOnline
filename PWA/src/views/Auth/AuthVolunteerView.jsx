@@ -159,7 +159,7 @@ import React, {
       }
       if (displayMessage) {
         swal.fire({
-          type: displayType,
+          icon: displayType,
           title: displayTitle,
           html: displayMessage
         });
@@ -226,7 +226,6 @@ import React, {
           vid,
           details
         } = dbVolunteer;
-        console.log(dbVolunteer);
         setVolunteer({
           active,
           firstName,
@@ -238,7 +237,6 @@ import React, {
           vid,
           details
         });
-        console.log(volunteer);
       };
       if (isLoading) {
         if (!isNew) {
@@ -250,7 +248,7 @@ import React, {
           setIsLoading(false);
         }
       };
-    }, [props, isNew, isLoading, setIsLoading]);
+    }, [props, isNew, isLoading,volunteer, setIsLoading]);
     return (
       <>
         <div className="panel-header panel-header-xs" />
@@ -322,7 +320,7 @@ import React, {
                     <FormGroup>
                       <Label>Distance Willing to Travel</Label>
                       <InputGroup>
-                        <Input placeholder="Travel Distance" name="details.travelDistance" value={volunteer.details.travelDistance} onChange={handleChange} type="text"/>
+                        <Input placeholder="Travel Distance" name="details.travelDistance" value={volunteer.details.travelDistance} onChange={handleChange} type="number"/>
                       </InputGroup>
                     </FormGroup>
                     <FormGroup>

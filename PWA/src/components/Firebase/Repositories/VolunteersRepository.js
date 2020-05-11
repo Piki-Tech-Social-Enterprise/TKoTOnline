@@ -45,6 +45,11 @@ class VolunteersRepository extends BaseRepository {
     return dbVolunteer;
   }
 
+  addDbVolunteerDetails = async (vid, details) => {
+    const existingDbVolunteer = await this.getDbVolunteer(vid);
+    existingDbVolunteer.update({details});
+  }
+
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => {
     const {
       active,
@@ -75,10 +80,9 @@ class VolunteersRepository extends BaseRepository {
         createdBy: createdBy || '',
         firstName: firstName || '',
         lastName: lastName || '',
-        details: details || '',
+        details: details || {},
         phoneNumber: phoneNumber || '',
         email: email || '',
-        details: details || {},
         providerData: providerData || (email && {
           email: email,
           providerId: 'password',
@@ -102,7 +106,6 @@ class VolunteersRepository extends BaseRepository {
           createdBy: createdBy || dbVolunteer.createdBy,
           firstName: firstName || dbVolunteer.firstName || '',
           lastName: lastName || dbVolunteer.lastName || '',
-          details: details || dbVolunteer.details || '',
           phoneNumber: phoneNumber || dbVolunteer.phoneNumber || '',
           email: email || dbVolunteer.email,
           providerData: providerData || dbVolunteer.providerData || {},

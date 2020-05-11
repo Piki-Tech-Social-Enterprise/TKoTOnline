@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Line,
   Bar
@@ -31,31 +31,16 @@ import {
 } from 'variables/charts.jsx';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import Swal from 'sweetalert2';
-import * as Roles from '../../components/Domains/VolunteerRoles';
 
 const AuthDashboardView = props => {
-  const INITIAL_STATE = {
-    active: true,
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    roles: {
-      volunteerRole: Roles.volunteerRole
-    },
-    vid: null
-  };
-
-  const [volunteer, setVolunteer] = useState(INITIAL_STATE);
+  
   const answers = [];
-
 
 useEffect(() => {
   
   const isVoluteer = () => {
     if( props.authUser.vid && props.authUser.onBoardingCompleted === false) {
 
-      retrieveVolunteer();
       Swal.fire({
         icon: 'info',
         title: 'To help us organise work for Volunteers',
@@ -93,7 +78,7 @@ useEffect(() => {
             },
             {
               title: 'Question 3',
-              text: 'Tell us what type of work do you like ',
+              text: 'Tell us what type of work you like ',
               input: 'text',
               inputPlaceholder: 'Type here...',
               inputAttributes: {
@@ -105,6 +90,7 @@ useEffect(() => {
              const onboardingAnswers = result.value;
              onboardingAnswers.map((i) => {
                answers.push(i);
+               return null;
              });
             }
           }).finally(()=> {
@@ -121,67 +107,20 @@ useEffect(() => {
     }
   }
 
-  const retrieveVolunteer = async () => {
-    const dbVolunteer = await props.firebase.getDbVolunteerValue(props.authUser.vid);
-    const {
-      active,
-      firstName,
-      lastName,
-      phoneNumber,
-      roles,
-      email,
-      providerData,
-      onBoardingCompleted,
-      vid,
-    } = dbVolunteer;
-    setVolunteer({
-      active,
-      firstName,
-      lastName,
-      phoneNumber,
-      roles,
-      email,
-      providerData,
-      onBoardingCompleted,
-      vid
-    });
-  };
-
   const addVolunteerDetails = async() => {
-    const now = new Date();
-    const firstName = volunteer.firstName;
-    const lastName = volunteer.lastName;
-    const phoneNumber = volunteer.phoneNumber;
-    const email = volunteer.email;
-    const providerData = volunteer.providerData;
-    const roles = volunteer.roles;
-    await props.firebase.saveDbVolunteer({
-      active: volunteer.active,
-      created: now.toString(),
-      createdBy: props.authUser.uid,
-      firstName,
-      lastName,
-      phoneNumber,
-      email,
-      providerData,
-      details: {
-        region: answers[0] || '',
-        travelDistance: answers[1] || '',
-        type: answers[2] || ''
-      },
-      roles,
-      vid: props.authUser.vid,
-      updated: now.toString(),
-      updatedBy: props.authUser.uid,
-      onBoardingCompleted: true
-    });
 
+    await props.firebase.addDbVolunteerDetails(props.authUser.vid,{
+      region: answers[0] || '',
+      travelDistance: answers[1] || '',
+      type: answers[2] || ''
+    });
+     
     await props.firebase.updateUserOnboarding(props.authUser.uid);
   }
 
   isVoluteer();
 
-}, [props])
+}, [props, answers])
   return (
     <>
       <AuthPanelHeader
