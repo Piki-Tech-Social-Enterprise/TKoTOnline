@@ -82,7 +82,7 @@ const AuthNewsFeedsView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal />
+                    ? <LoadingOverlayModal color="text-dark" />
                     : <BootstrapTable data={newsFeedsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

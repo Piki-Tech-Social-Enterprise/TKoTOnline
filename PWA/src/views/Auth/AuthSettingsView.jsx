@@ -130,7 +130,7 @@ const AuthSettingsView = props => {
               <CardBody>
                 {
                   isLoading
-                    ? <LoadingOverlayModal />
+                    ? <LoadingOverlayModal color="text-white" />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
                         <Label>Community Links Describtion</Label>
