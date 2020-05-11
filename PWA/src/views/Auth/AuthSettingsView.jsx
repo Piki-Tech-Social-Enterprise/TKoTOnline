@@ -108,8 +108,8 @@ const AuthSettingsView = props => {
           volunteersDescritpion,
           sid
         });
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
     if (isLoading) {
       retrieveSettings();
