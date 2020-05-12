@@ -195,7 +195,7 @@ const authRoutes = [
     layout: '/auth',
     path: '/Contacts/:cid',
     name: 'Contact Details',
-    component: lazy(() => import('views/Auth/AuthVolunteerView')),
+    component: lazy(() => import('views/Auth/AuthContactView')),
     exact: true,
     iconLibrary: null,
     icon: null,
