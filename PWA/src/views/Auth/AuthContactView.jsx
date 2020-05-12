@@ -29,7 +29,6 @@ import React, {
   };
   const AuthContactView = props => {
     const isNew = props.match.params.cid === 'New';
-    console.log('props', props);
     const [isLoading, setIsLoading] = useState(true);
     const [contact, setContact] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);

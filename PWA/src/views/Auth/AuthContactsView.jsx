@@ -97,9 +97,10 @@ import React, {
                           insertBtn: createCustomInsertButton,
                           onRowClick: handleContactsRowClick
                         }}>
-                        <TableHeaderColumn isKey dataField="firstName" dataSort>First Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="lastName" dataSort>Last Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="email" dataSort>email</TableHeaderColumn>
+                        
+                        <TableHeaderColumn isKey dataField="email" width="35%" dataSort>email</TableHeaderColumn>
+                        <TableHeaderColumn dataField="firstName" width="25%" dataSort>First Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="lastName" width="25%" dataSort>Last Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <ContactStatusBadge
                           dbObjectName="Contact"
