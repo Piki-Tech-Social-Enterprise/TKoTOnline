@@ -16,7 +16,7 @@ import React, {
   } from 'react-bootstrap-table';
   import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
-  import StatusBadge from 'components/App/StatusBadge';
+  import ContactStatusBadge from 'components/App/ContactStatusBadge';
   
   const AuthContactsView = props => {
     const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +25,7 @@ import React, {
     useEffect(() => {
       const retrieveContacts = async () => {
         const dbContactsAsArray = await props.firebase.getDbContactsAsArray(true);
+        console.log('heere', dbContactsAsArray);
         setContactsAsArray(dbContactsAsArray);
         setIsLoading(false);
       };
@@ -96,11 +97,11 @@ import React, {
                           insertBtn: createCustomInsertButton,
                           onRowClick: handleContactsRowClick
                         }}>
-                        <TableHeaderColumn isKey dataField="linkName" dataSort>First Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="link" dataSort>Last Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="link" dataSort>email</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField="firstName" dataSort>First Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="lastName" dataSort>Last Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="email" dataSort>email</TableHeaderColumn>
                         <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
-                        <StatusBadge
+                        <ContactStatusBadge
                           dbObjectName="Contact"
                           dbId={row.cid}
                           dbIdName="cid"

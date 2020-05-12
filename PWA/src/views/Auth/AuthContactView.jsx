@@ -70,6 +70,7 @@ import React, {
       console.log(contact);
       let cid = contact.cid;
       console.log('id', cid);
+      console.log('isNew', isNew);
       let displayType = 'success';
       let displayTitle = 'Update Contact Successful';
       let displayMessage = 'Changes saved';
@@ -77,6 +78,7 @@ import React, {
         if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
             cid = await firebase.saveDbContact({});
+            console.log('cid now', cid);
           }
           await firebase.saveDbContact({
             active: active,
@@ -216,10 +218,10 @@ import React, {
                         </FormGroup>
                         <FormGroup>
                           <Label>Message</Label>
-                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="text" />
+                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" />
                         </FormGroup>
                         <FormGroup>
-                          <CustomInput label="Active" name="active" checked={contact.active} onChange={handleChange} type="switch" id="communityLinkActive" />
+                          <CustomInput label="Un-Seen" name="active" checked={contact.active} onChange={handleChange} type="switch" id="contactActive" />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
