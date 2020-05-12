@@ -6,7 +6,8 @@ import {
   NewsFeedRepository,
   CommunityLinksRepository,
   SettingsRepository,
-  VolunteersRepository
+  VolunteersRepository,
+  ContactRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -23,6 +24,7 @@ class Firebase {
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
+    this.contactRepository = new ContactRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -75,6 +77,13 @@ class Firebase {
   getDbVolunteerValue = async vid => await this.volunteersRepository.getDbVolunteerValue(vid);
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => await this.volunteersRepository.saveDbVolunteer(volunteer, saveDbVolunteer_completed);
   deleteDbVolunteer = async vid => await this.volunteersRepository.deleteDbVolunteer(vid);
+
+  getDbContacts = async () => await this.contactRepository.getDbContacts();
+  getDbContactsAsArray = async includeInactive => await this.contactRepository.getDbContactsAsArray(includeInactive);
+  getDbContact = async cid => await this.contactRepository.getDbContact(cid);
+  getDbContactValue = async cid => await this.contactRepository.getDbContactValue(cid);
+  saveDbContact = async (contact, saveDbContact_completed) => await this.contactRepository.saveDbContact(contact, saveDbContact_completed);
+  deleteDbContact = async cid => await this.contactRepository.deleteDbContact(cid);
 }
 
 export default Firebase;

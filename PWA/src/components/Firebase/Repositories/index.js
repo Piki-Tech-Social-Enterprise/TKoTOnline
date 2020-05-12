@@ -6,6 +6,7 @@ import NewsFeedRepository from './NewsFeedRepository';
 import CommunityLinksRepository from './CommunityLinksRepository';
 import SettingsRepository from './SettingsRepository';
 import VolunteersRepository from './VolunteersRepository';
+import ContactRepository from './ContactRepository';
 
 export default BaseRepository;
 export {
@@ -15,5 +16,6 @@ export {
   NewsFeedRepository,
   CommunityLinksRepository,
   SettingsRepository,
-  VolunteersRepository
+  VolunteersRepository,
+  ContactRepository
 };

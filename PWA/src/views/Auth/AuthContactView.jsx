@@ -18,9 +18,10 @@ import React, {
   import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
   import swal from 'sweetalert2';
+  const defaultDisplayMesssage = 'Changes saved';
   const INITIAL_STATE = {
     active: true,
-    fistName: '',
+    firstName: '',
     lastName: '',
     email: '',
     message: '',
@@ -28,6 +29,7 @@ import React, {
   };
   const AuthContactView = props => {
     const isNew = props.match.params.cid === 'New';
+    console.log('props', props);
     const [isLoading, setIsLoading] = useState(true);
     const [contact, setContact] = useState(INITIAL_STATE);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +41,7 @@ import React, {
       } = e.target;
       const checkedNames = ['active'];
       const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
+      console.log(`name: ${name}, value: ${value}`);
       setContact(c => ({
         ...c,
         [name]: useChecked
@@ -59,16 +62,19 @@ import React, {
       } = authUser;
       const {
         active,
-        fistName,
+        firstName,
         lastName,
         email,
         message
       } = contact;
+      console.log(contact);
       let cid = contact.cid;
+      console.log('id', cid);
       let displayType = 'success';
       let displayTitle = 'Update Contact Successful';
       let displayMessage = 'Changes saved';
       try {
+        if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
             cid = await firebase.saveDbContact({});
           }
@@ -76,7 +82,7 @@ import React, {
             active: active,
             created: now.toString(),
             createdBy: uid,
-            fistName,
+            firstName,
             lastName,
             email,
             message,
@@ -87,7 +93,9 @@ import React, {
           if (isNew) {
             handleGotoParentList();
           }
-        
+
+        }
+          
       } catch (error) {
         displayType = 'error';
         displayTitle = 'Update Contact Failed';
