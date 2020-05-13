@@ -36,7 +36,6 @@ class ContactRepository extends BaseRepository {
   }
 
   saveDbContact = async (contact, saveDbContact_completed) => {
-      console.log('in repo', contact);
     const {
       active,
       created,
@@ -49,13 +48,13 @@ class ContactRepository extends BaseRepository {
       updated,
       updatedBy
     } = contact;
-    console.log('cid', contact);
+
     const now = new Date();
     let errorMessage = null;
     let existingDbContacts = await this.getDbContact(cid || '')
     let dbContactsRef = null;
     let dbContacts = null;
-    console.log(cid);
+    
     if (!cid) {
       dbContactsRef = await existingDbContacts.push();
       contact = {
