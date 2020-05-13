@@ -4,7 +4,8 @@ import {
   NewsFeedRepository,
   CommunityLinksRepository,
   SettingsRepository,
-  VolunteersRepository
+  VolunteersRepository,
+  ContactRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -19,6 +20,7 @@ class Firebase {
     this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
+    this.contactRepository = new ContactRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -47,6 +49,8 @@ class Firebase {
   getDbVolunteer = async (vid) => await this.volunteersRepository.getDbVolunteer(vid);
   getDbVolunteersAsArray = async includeInactive => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive);
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => await this.volunteersRepository.saveDbVolunteer(volunteer, saveDbVolunteer_completed);
+  saveDbContact = async (contact, saveDbContact_completed) => await this.contactRepository.saveDbContact(contact, saveDbContact_completed);
+
 }
 
 export default Firebase;

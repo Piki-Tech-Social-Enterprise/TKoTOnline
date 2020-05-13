@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Container,
   Row,
@@ -14,8 +14,12 @@ import {
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 import swal from 'sweetalert2';
+import {
+  withFirebase
+} from 'components/Firebase';
+
 const ContactUsView = props => {
-  const defaultDisplayMesssage = 'Changes saved';
+  const defaultDisplayMesssage = 'Contact Form Saved';
   const INITIAL_STATE = {
     active: true,
     firstName: '',
@@ -46,7 +50,7 @@ const ContactUsView = props => {
   };
 
   const handleGotoParentList = () => {
-    props.history.push('/auth/Contacts');
+    props.history.push('/');
   };
 
   const handleSubmit = async e => {
@@ -57,21 +61,23 @@ const ContactUsView = props => {
       firebase
     } = props;
     const {
-      active,
       firstName,
       lastName,
       email,
       message
     } = contact;
-    console.log(contact);
     let cid = contact.cid;
     let displayType = 'success';
-    let displayTitle = 'Update Contact Successful';
-    let displayMessage = 'Changes saved';
+    let displayTitle = 'Contact Form recieved';
+    let displayMessage = 'Contact Form Saved';
     try {
       if (!email || !firstName || !lastName || !message) {
-        displayMessage = 'Email, First name, Last name, Email';
+        displayType = 'error';
+        displayTitle = 'Error'
+        displayMessage = 'First Name, Last Name, Email and Message are all required ';
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        displayType = 'error';
+        displayTitle = 'Error'
         displayMessage = 'Email is invalid.';
       } 
       if (displayMessage === defaultDisplayMesssage) {
@@ -90,8 +96,9 @@ const ContactUsView = props => {
           updated: now.toString(),
           updatedBy: firstName
         });
+        
         if (isNew) {
-          handleGotoParentList();
+         // handleGotoParentList();
         }
 
       }
@@ -105,16 +112,12 @@ const ContactUsView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayType,
         title: displayTitle,
         html: displayMessage
       });
     }
   };
-
-  useEffect(() => {
-
-  })
   return (
     <>
       <HomeNavbar />
@@ -165,4 +168,4 @@ const ContactUsView = props => {
   );
 };
 
-export default ContactUsView;
+export default withFirebase(ContactUsView);

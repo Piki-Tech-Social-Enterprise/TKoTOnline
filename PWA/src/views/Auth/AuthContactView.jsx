@@ -77,7 +77,6 @@ import React, {
         if (displayMessage === defaultDisplayMesssage) {
           if (isNew) {
             cid = await firebase.saveDbContact({});
-            console.log('cid now', cid);
           }
           await firebase.saveDbContact({
             active: active,
@@ -205,26 +204,26 @@ import React, {
                       : <Form noValidate onSubmit={handleSubmit}>
                         <FormGroup>
                           <Label>First Name</Label>
-                          <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                          <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" disabled/>
                         </FormGroup>
                         <FormGroup>
                           <Label>Last Name</Label>
-                          <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                          <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" disabled/>
                         </FormGroup>
                         <FormGroup>
                           <Label>email</Label>
-                          <Input placeholder="Last Name" name="email" value={contact.email} onChange={handleChange} type="email" />
+                          <Input placeholder="Last Name" name="email" value={contact.email} onChange={handleChange} type="email" disabled/>
                         </FormGroup>
                         <FormGroup>
                           <Label>Message</Label>
-                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" />
+                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" disabled />
                         </FormGroup>
                         <FormGroup>
                           <CustomInput label="Un-Seen" name="active" checked={contact.active} onChange={handleChange} type="switch" id="contactActive" />
                         </FormGroup>
                         <FormGroup>
-                          <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
+                        <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Back</Button>
                           <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
                         </FormGroup>
                       </Form>

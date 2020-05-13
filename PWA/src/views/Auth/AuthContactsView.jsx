@@ -56,7 +56,7 @@ import React, {
       });
     };
     const createCustomInsertButton = onClick => (
-      <InsertButton btnText="Add New" onClick={() => handleAddContactsClick(onClick)} />
+      <InsertButton btnText="Add New" onClick={() => handleAddContactsClick(onClick)} disabled />
     );
     const handleAddContactsClick = async onClick => {
       props.history.push(`/auth/Contacts/New`);
