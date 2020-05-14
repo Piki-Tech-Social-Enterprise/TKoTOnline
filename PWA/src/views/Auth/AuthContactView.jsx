@@ -40,7 +40,6 @@ import React, {
       } = e.target;
       const checkedNames = ['active'];
       const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-      console.log(`name: ${name}, value: ${value}`);
       setContact(c => ({
         ...c,
         [name]: useChecked
@@ -66,10 +65,7 @@ import React, {
         email,
         message
       } = contact;
-      console.log(contact);
       let cid = contact.cid;
-      console.log('id', cid);
-      console.log('isNew', isNew);
       let displayType = 'success';
       let displayTitle = 'Update Contact Successful';
       let displayMessage = 'Changes saved';

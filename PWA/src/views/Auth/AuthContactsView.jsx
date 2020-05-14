@@ -25,7 +25,6 @@ import React, {
     useEffect(() => {
       const retrieveContacts = async () => {
         const dbContactsAsArray = await props.firebase.getDbContactsAsArray(true);
-        console.log('heere', dbContactsAsArray);
         setContactsAsArray(dbContactsAsArray);
         setIsLoading(false);
       };
