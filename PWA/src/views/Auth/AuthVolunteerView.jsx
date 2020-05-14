@@ -136,6 +136,7 @@ const AuthVolunteerView = props => {
       if (displayMessage === defaultDisplayMesssage) {
         if (isNew) {
           vid = await firebase.saveDbVolunteer({});
+          console.log('vid',vid);
         }
 
         await firebase.saveDbVolunteer({
