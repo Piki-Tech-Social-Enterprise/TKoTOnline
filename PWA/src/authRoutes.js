@@ -178,6 +178,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/Contacts',
+    name: 'Contact Messages',
+    component: lazy(() => import('views/Auth/AuthContactsView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'ui-1_email-85',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Contacts/:cid',
+    name: 'Contact Details',
+    component: lazy(() => import('views/Auth/AuthContactView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {

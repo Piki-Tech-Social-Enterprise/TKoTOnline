@@ -34,6 +34,7 @@ class SettingsRepository extends BaseRepository {
       createdBy,
       communityLinksDescritpion,
       volunteersDescritpion,
+      aboutPageDescription,
       sid,
       updated,
       updatedBy
@@ -51,6 +52,7 @@ class SettingsRepository extends BaseRepository {
         createdBy: createdBy || '',
         communityLinksDescritpion: communityLinksDescritpion || '',
         volunteersDescritpion: volunteersDescritpion || '',
+        aboutPageDescription: aboutPageDescription || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         sid: await dbSettingsRef.getKey()
@@ -66,6 +68,7 @@ class SettingsRepository extends BaseRepository {
           createdBy: createdBy || dbSettings.createdBy,
           communityLinksDescritpion: communityLinksDescritpion || dbSettings.communityLinksDescritpion || '',
           volunteersDescritpion: volunteersDescritpion || dbSettings.volunteersDescritpion,
+          aboutPageDescription: aboutPageDescription || dbSettings.aboutPageDescription,
           sid: sid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbSettings.updatedBy
