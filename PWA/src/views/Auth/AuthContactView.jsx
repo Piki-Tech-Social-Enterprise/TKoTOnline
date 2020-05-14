@@ -205,8 +205,8 @@ const AuthContactView = props => {
                         <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" disabled />
                       </FormGroup>
                       <FormGroup>
-                        <Label>email</Label>
-                        <Input placeholder="Last Name" name="email" value={contact.email} onChange={handleChange} type="email" disabled />
+                        <Label>Email</Label>
+                        <Input placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" disabled />
                       </FormGroup>
                       <FormGroup>
                         <Label>Message</Label>
