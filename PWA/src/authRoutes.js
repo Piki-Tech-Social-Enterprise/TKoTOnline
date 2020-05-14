@@ -182,7 +182,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/Contacts',
-    name: 'Contact',
+    name: 'Contact Messages',
     component: lazy(() => import('views/Auth/AuthContactsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',

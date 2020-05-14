@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {
+  useState
+} from 'react';
 import {
   Container,
   Row,
@@ -30,7 +32,6 @@ const ContactUsView = props => {
   };
   const [contact, setContact] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const isNew = true;
   const handleChange = async e => {
     const {
@@ -48,11 +49,9 @@ const ContactUsView = props => {
         : value
     }));
   };
-
   const handleGotoParent = () => {
     props.history.push('/');
   };
-
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -79,7 +78,7 @@ const ContactUsView = props => {
         displayType = 'error';
         displayTitle = 'Error'
         displayMessage = 'Email is invalid.';
-      } 
+      }
       if (displayMessage === defaultDisplayMesssage) {
         if (isNew) {
           cid = await firebase.saveDbContact({});
@@ -98,7 +97,6 @@ const ContactUsView = props => {
         });
 
       }
-        
     } catch (error) {
       displayType = 'error';
       displayTitle = 'Update Contact Failed';
@@ -111,7 +109,7 @@ const ContactUsView = props => {
         icon: displayType,
         title: displayTitle
       }).then((result) => {
-        if(result.value) {
+        if (result.value) {
           handleGotoParent()
         }
       });
@@ -130,31 +128,29 @@ const ContactUsView = props => {
               <Row>
                 <Col>
                   <Card>
-                    {/* <h3>Contact</h3> */}
                     <CardBody>
-                          <Form noValidate onSubmit={handleSubmit}>
-                            <FormGroup>
-                              <Label>First Name</Label>
-                              <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
-                            </FormGroup>
-                            <FormGroup>
-                              <Label>Last Name</Label>
-                              <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
-                            </FormGroup>
-                            <FormGroup>
-                              <Label>email</Label>
-                              <Input placeholder="Last Name" name="email" value={contact.email} onChange={handleChange} type="email" />
-                            </FormGroup>
-                            <FormGroup>
-                              <Label>Message</Label>
-                              <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" />
-                            </FormGroup>
-                            <FormGroup>
-                              <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
-                              <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParent} disabled={isSubmitting}>Cancel</Button>
-                            </FormGroup>
-                          </Form>
-                      
+                      <Form noValidate onSubmit={handleSubmit}>
+                        <FormGroup>
+                          <Label>First Name</Label>
+                          <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Last Name</Label>
+                          <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Email</Label>
+                          <Input placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Message</Label>
+                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Send</Button>
+                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParent} disabled={isSubmitting}>Cancel</Button>
+                        </FormGroup>
+                      </Form>
                     </CardBody>
                   </Card>
                 </Col>
