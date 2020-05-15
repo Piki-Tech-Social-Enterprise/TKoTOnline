@@ -2,7 +2,7 @@ import BaseRepository from './BaseRepository';
 import 'firebase/database';
 import {
   undefinedRole
-} from '../../Domains/Roles';
+} from '../../Domains/VolunteerRoles';
 
 class VolunteersRepository extends BaseRepository {
   constructor(firebaseApp) {
