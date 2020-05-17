@@ -116,10 +116,14 @@ const Volunteer = props => {
     let displayMessage = defaultDisplayMesssage;
     try {
       if (isNew) {
-        if (!email || !firstName || !lastName || !phoneNumber || !roles) {
+        if (!email || !firstName || !lastName || !phoneNumber) {
           displayType = 'error';
           displayTitle = `New Volunteer Failed`;
           displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
+        } else if (Object.entries(roles).length === 0) {
+          displayType = 'error';
+          displayTitle = `New Volunteer Failed`;
+          displayMessage = 'You need to select a role';
         } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
           displayType = 'error';
           displayTitle = `New Volunteer Failed`;
