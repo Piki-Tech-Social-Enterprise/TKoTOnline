@@ -129,7 +129,7 @@ const AuthVolunteersView = props => {
                           dbIdName="vid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbUser}
+                          onSaveDbObject={props.firebase.saveDbVolunteer}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>
