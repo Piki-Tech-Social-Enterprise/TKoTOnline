@@ -64,6 +64,7 @@ const AuthVolunteerView = props => {
         if ((role === name && checked) || (role !== name && isActveRole)) {
           newActiveRoles[role] = role;
         }
+        
         return null;
       });
       setVolunteer(u => ({
@@ -106,9 +107,13 @@ const AuthVolunteerView = props => {
     let displayMessage = defaultDisplayMesssage;
     try {
       if (isNew) {
-        if (!email || !firstName || !lastName || !phoneNumber || !roles) {
+        if (!email || !firstName || !lastName || !phoneNumber) {
           displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
-        } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        } else if (Object.entries(roles).length === 0) {
+          displayType = 'error';
+          displayTitle = `New Volunteer Failed`;
+          displayMessage = 'You need to select a role';
+        }else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
           displayMessage = 'Email is invalid.';
         } else if (phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
           displayMessage = 'Phone number is invalid.';
@@ -132,11 +137,16 @@ const AuthVolunteerView = props => {
           }
           return null;
         })
+
+        if (Object.entries(roles).length === 0) {
+          displayType = 'error';
+          displayTitle = `New Volunteer Failed`;
+          displayMessage = 'You need to select a role';
+        }
       }
       if (displayMessage === defaultDisplayMesssage) {
         if (isNew) {
           vid = await firebase.saveDbVolunteer({});
-          console.log('vid',vid);
         }
 
         await firebase.saveDbVolunteer({
@@ -166,7 +176,7 @@ const AuthVolunteerView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayType,
         title: displayTitle,
         html: displayMessage
       });
