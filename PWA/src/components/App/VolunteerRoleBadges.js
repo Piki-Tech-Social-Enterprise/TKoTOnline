@@ -110,7 +110,7 @@ import React, {
         activeRoles
       } = state,
         activeRolesDiv = document.getElementById(`activeRoles_${vid}`),
-        type = 'error',
+        icon = 'error',
         title = 'Save Volunteer';
       let text = null;
       if (error) {
@@ -119,7 +119,7 @@ import React, {
           : error;
         console.log(`${title} Error: ${text}`);
         swal.fire({
-          type: type,
+          icon: icon,
           title: title,
           text: text
         });

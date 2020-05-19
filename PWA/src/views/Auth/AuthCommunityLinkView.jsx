@@ -61,17 +61,17 @@ const AuthCommunityLinkView = props => {
       linkName,
     } = communityLink;
     let clid = communityLink.clid;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = 'Update Community link Successful';
     let displayMessage = 'Changes saved';
     try {
       if (!linkName || !link) {
         displayTitle = 'Failed';
-        displayType = 'error';
+        displayIcon = 'error';
         displayMessage = 'The Link Name and link fields are required.';
       } else if (!link.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
         displayTitle = 'Failed';
-        displayType = 'error';
+        displayIcon = 'error';
         displayMessage = 'Must be a valid link';
       } else {
         if (isNew) {
@@ -92,7 +92,7 @@ const AuthCommunityLinkView = props => {
         }
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = 'Update Community link Failed';
       displayMessage = `${error.message}`;
     } finally {
@@ -100,7 +100,7 @@ const AuthCommunityLinkView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });
@@ -112,7 +112,7 @@ const AuthCommunityLinkView = props => {
     let displayMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: "You won't be able to undo this!",
         showCancelButton: true,
@@ -131,7 +131,7 @@ const AuthCommunityLinkView = props => {
         } = match.params;
         await firebase.deleteDbCommunityLink(clid);
         swal.fire({
-          type: 'success',
+          icon: 'success',
           title: 'Delete Community link Successful',
           text: 'Your Community link has been deleted.'
         });
@@ -142,7 +142,7 @@ const AuthCommunityLinkView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Delete Community link Error',
         html: displayMessage
       });

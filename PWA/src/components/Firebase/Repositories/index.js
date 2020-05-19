@@ -7,6 +7,7 @@ import CommunityLinksRepository from './CommunityLinksRepository';
 import SettingsRepository from './SettingsRepository';
 import VolunteersRepository from './VolunteersRepository';
 import ContactRepository from './ContactRepository';
+import FunctionsRepository from './FunctionsRepository';
 
 export default BaseRepository;
 export {
@@ -17,5 +18,6 @@ export {
   CommunityLinksRepository,
   SettingsRepository,
   VolunteersRepository,
-  ContactRepository
+  ContactRepository,
+  FunctionsRepository
 };

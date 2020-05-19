@@ -66,6 +66,8 @@ const generateResponse = (expectedHttpResponseCode, expectedTextToSend) => {
   // console.log(`generateResponse: ${JSON.stringify(response)}`);
   return response;
 };
+const admin = require('firebase-admin');
+const functions = require('firebase-functions');
 const jsonObjectPropertiesToUppercase = jsonObject => {
   const revisedJsonObject = {};
   Object.keys(jsonObject).map(key => (
@@ -73,12 +75,11 @@ const jsonObjectPropertiesToUppercase = jsonObject => {
   ));
   return revisedJsonObject;
 };
-const functions = require('firebase-functions');
-const config = process.env.NODE_ENV !== 'production'
-  ? process.env
-  : jsonObjectPropertiesToUppercase(functions.config().envcmd);
-console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
-console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
+const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
+  ? functions.config().envcmd
+  : {});
+const config = Object.assign(process.env, envcmd);
+console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
 const firebaseConfig = {
   apiKey: config.REACT_APP_FIREBASE_API_KEY,
   authDomain: config.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -127,6 +128,9 @@ const arrayToObject = (array, keyField) => Object.assign({}, ...array.map(item =
 const {
   StorageBucketHelper
 } = require('./StorageBucketHelper');
+const {
+  UserHelper
+} = require('./UserHelper');
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -146,3 +150,4 @@ exports.objectToArray = objectToArray;
 exports.arrayToObject = arrayToObject;
 exports.StorageBucketHelper = StorageBucketHelper;
 exports.jsonObjectPropertiesToUppercase = jsonObjectPropertiesToUppercase;
+exports.UserHelper = UserHelper;

@@ -71,7 +71,13 @@
     "downloadDevSupportFiles": "babel-node ./buildUtilities/downloadDevSupportFiles.js",
     "incrementBuildVer": "babel-node ./buildUtilities/IncrementBuildVersion.js",
     "generateSitemap": "babel-node ./buildUtilities/SitemapGenerator.js",
-    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap"
+    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap",
+    "uploadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev uploadDevSupportFiles\"",
+    "uploadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest uploadTestSupportFiles\"",
+    "uploadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd uploadProdSupportFiles\"",
+    "downloadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev downloadDevSupportFiles\"",
+    "downloadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest downloadTestSupportFiles\"",
+    "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "eslintConfig": {
     "extends": "react-app"

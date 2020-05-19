@@ -17,6 +17,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha --timeout 999999 --colors --reporter spec index.test.js --exit",
+    "serveAll": "firebase emulators:start",
     "serve": "firebase emulators:start --only functions",
     "shell": "export GOOGLE_APPLICATION_CREDENTIALS=\"$REACT_APP_GAC\"&&firebase functions:shell --port 5001",
     "start": "npm run shell",
@@ -34,6 +35,7 @@
     "testDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC test\"",
     "testTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC test\"",
     "testProd": "run-s -sn firebaseUseProd \"envCmdProd applyGAC test\"",
+    "serveLocalAll": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC serveAll\"",
     "serveLocal": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC serve\"",
     "serveDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC serve\"",
     "serveTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC serve\"",

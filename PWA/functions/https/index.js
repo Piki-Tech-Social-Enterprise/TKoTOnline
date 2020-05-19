@@ -17,6 +17,10 @@ const {
 const {
   handleSetProfile
 } = require('./handleSetProfile');
+const {
+  handleIsUnique,
+  handleIsUniqueAlt
+} = require('./handleIsUnique');
 
 exports.handleGetServerDateTime = functions
   .https
@@ -36,3 +40,9 @@ exports.handleUpdateProfile = functions
 exports.handleSetProfile = functions
   .https
   .onRequest(handleSetProfile);
+exports.handleIsUnique = functions
+  .https
+  .onCall(handleIsUnique);
+exports.handleIsUniqueAlt = functions
+  .https
+  .onRequest(handleIsUniqueAlt);

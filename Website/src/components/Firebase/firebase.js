@@ -5,7 +5,8 @@ import {
   CommunityLinksRepository,
   SettingsRepository,
   VolunteersRepository,
-  ContactRepository
+  ContactRepository,
+  FunctionsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -21,6 +22,7 @@ class Firebase {
     this.settingsRepository = new SettingsRepository(firebaseApp);
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
     this.contactRepository = new ContactRepository(firebaseApp);
+    this.functionsRepository = new FunctionsRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -50,7 +52,10 @@ class Firebase {
   getDbVolunteersAsArray = async includeInactive => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive);
   saveDbVolunteer = async (volunteer, saveDbVolunteer_completed) => await this.volunteersRepository.saveDbVolunteer(volunteer, saveDbVolunteer_completed);
   saveDbContact = async (contact, saveDbContact_completed) => await this.contactRepository.saveDbContact(contact, saveDbContact_completed);
-
+  getAsync = async (options, config) => await this.functionsRepository.getAsync(options, config);
+  postAsync = async options => await this.functionsRepository.postAsync(options);
+  putAsync = async options => await this.functionsRepository.putAsync(options);
+  call = async options => await this.functionsRepository.call(options);
 }
 
 export default Firebase;

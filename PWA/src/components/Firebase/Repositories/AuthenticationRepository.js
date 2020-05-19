@@ -145,7 +145,7 @@ class AuthenticationRepository extends BaseRepository {
               });
               await this.signOut();
               await swal.fire({
-                type: 'success',
+                icon: 'success',
                 title: 'Change Email Successful',
                 text: 'Please verify your email to login.'
               });
@@ -167,7 +167,7 @@ class AuthenticationRepository extends BaseRepository {
     }
     if (errorMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Change Email Error',
         html: errorMessage
       });
@@ -210,7 +210,7 @@ class AuthenticationRepository extends BaseRepository {
             await this.updatePassword(newPassword);
             await this.signOut();
             await swal.fire({
-              type: 'success',
+              icon: 'success',
               title: 'Change Password Successful',
               text: 'Please login again to confirm your new password.'
             });
@@ -233,7 +233,7 @@ class AuthenticationRepository extends BaseRepository {
     }
     if (errorMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Change Password Error',
         html: errorMessage
       });
@@ -274,7 +274,7 @@ class AuthenticationRepository extends BaseRepository {
       errorMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: 'You won\'t be able to undo this!',
         showCancelButton: true,
@@ -365,7 +365,7 @@ class AuthenticationRepository extends BaseRepository {
           await userCredentials.user.delete();
           await this.signOut();
           swal.fire({
-            type: 'success',
+            icon: 'success',
             title: 'Delete Account Successful',
             text: 'Your account has been deleted.'
           });
@@ -379,7 +379,7 @@ class AuthenticationRepository extends BaseRepository {
     }
     if (errorMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Delete Account Error',
         html: errorMessage
       });

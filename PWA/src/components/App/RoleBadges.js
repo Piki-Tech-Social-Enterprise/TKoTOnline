@@ -116,7 +116,7 @@ const RoleBadges = props => {
       activeRoles
     } = state,
       activeRolesDiv = document.getElementById(`activeRoles_${uid}`),
-      type = 'error',
+      icon = 'error',
       title = 'Save User';
     let text = null;
     if (error) {
@@ -125,7 +125,7 @@ const RoleBadges = props => {
         : error;
       console.log(`${title} Error: ${text}`);
       swal.fire({
-        type: type,
+        icon: icon,
         title: title,
         text: text
       });

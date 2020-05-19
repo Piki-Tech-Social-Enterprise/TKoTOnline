@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Line,
   Bar
@@ -30,8 +30,97 @@ import {
   dashboard24HoursPerformanceChart
 } from 'variables/charts.jsx';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
+import Swal from 'sweetalert2';
 
 const AuthDashboardView = props => {
+  
+  const answers = [];
+
+useEffect(() => {
+  
+  const isVoluteer = () => {
+    if( props.authUser.vid && props.authUser.onBoardingCompleted === false) {
+
+      Swal.fire({
+        icon: 'info',
+        title: 'To help us organise work for Volunteers',
+        text: 'We need more information',
+        showCancelButton: true,
+        cancelButtonText: 'Skip'  
+      }).then((result) => {
+
+        if(result.dismiss){
+          addVolunteerDetails();
+        }
+        if(result.value === true){
+          Swal.mixin({
+            icon: 'info',
+            confirmButtonText: 'Next &rarr;',
+            showCancelButton: true,
+            progressSteps: ['1', '2', '3']
+          }).queue([
+            {
+              title: 'Question 1',
+              input: 'text',
+              text: 'What region are you from?',
+              inputPlaceholder: 'Region'
+            },
+            {
+              title: 'Question 2',
+              text: 'How far are you willing to travel?(kms)',
+              input: 'range',
+              inputValue: '25',
+              inputAttributes: {
+                min: 0,
+                max: 120,
+                step: 1
+              },
+            },
+            {
+              title: 'Question 3',
+              text: 'Tell us what type of work you like ',
+              input: 'text',
+              inputPlaceholder: 'Type here...',
+              inputAttributes: {
+                'aria-label': 'Type your message here'
+              }
+            }
+          ]).then((result) => {
+            if (result.value) {
+             const onboardingAnswers = result.value;
+             onboardingAnswers.map((i) => {
+               answers.push(i);
+               return null;
+             });
+            }
+          }).finally(()=> {
+           Swal.fire({
+            title: 'All done!',
+            icon:'success',
+            confirmButtonText: 'Thanks'
+          }).then(() => {
+            addVolunteerDetails();
+          })
+          })
+        }
+      })
+    }
+  }
+
+  const addVolunteerDetails = async() => {
+
+    await props.firebase.addDbVolunteerDetails(props.authUser.vid,{
+      region: answers[0] || '',
+      travelDistance: answers[1] || '',
+      type: answers[2] || ''
+    });
+     
+    await props.firebase.updateUserOnboarding(props.authUser.uid);
+  }
+
+  isVoluteer();
+
+}, [props, answers])
   return (
     <>
       <AuthPanelHeader
