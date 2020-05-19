@@ -23,7 +23,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
-    "sweetalert2": "^9.10.13",
+    "sweetalert2": "^9.11.0",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
@@ -97,7 +97,7 @@
     "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.5",
+    "@types/googlemaps": "3.39.6",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.9.35",
     "jquery": "3.5.1",
