@@ -57,21 +57,21 @@ const AuthSettingsView = props => {
       aboutPageDescription
     } = settings;
     let sid = settings.sid;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = 'Update setting Successful';
     let displayMessage = 'Changes saved';
     try {
       if (!communityLinksDescritpion) {
         displayTitle = 'Failed';
-        displayType = 'error';
+        displayIcon = 'error';
         displayMessage = 'You need to have a description for the community links section.';
       } else if (!volunteersDescritpion) {
         displayTitle = 'Failed';
-        displayType = 'error';
+        displayIcon = 'error';
         displayMessage = 'You need to have a description for the volunteers section.';
       }else if (!aboutPageDescription) {
         displayTitle = 'Failed';
-        displayType = 'error';
+        displayIcon = 'error';
         displayMessage = 'You need to have a description for the About Page.';
       } else {
         await firebase.saveDbSettings({
@@ -86,7 +86,7 @@ const AuthSettingsView = props => {
         });
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = 'Updating your Settings has Failed';
       displayMessage = `${error.message}`;
     } finally {
@@ -94,7 +94,7 @@ const AuthSettingsView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        icon: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });

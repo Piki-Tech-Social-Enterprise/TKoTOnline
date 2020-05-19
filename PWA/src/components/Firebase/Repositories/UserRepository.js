@@ -120,6 +120,11 @@ class UserRepository extends BaseRepository {
     return user.uid;
   }
 
+  updateUserOnboarding = async uid => {
+    const existingDbUser = await this.getDbUser(uid);
+    existingDbUser.update({onBoardingCompleted: true});
+  }
+
   deleteDbUser = async uid => {
     const existingDbUser = await this.getDbUser(uid);
     let errorMessage = null;

@@ -1,4 +1,3 @@
-const admin = require('firebase-admin');
 const cors = require('cors')({
   origin: true,
 });
@@ -6,22 +5,23 @@ const {
   httpResponseCodes,
   httpRequestMethods,
   isUserValid,
-  FORBIDDEN_TEXT
+  FORBIDDEN_TEXT,
+  UserHelper
 } = require('../utilities');
 const validateRequest = async req => {
   const {
-    uid,
-    dbUser
+    uid: authUserId,
+    authUser
   } = req.body;
   let errorMessages = [];
-  if (!uid) {
-    errorMessages.push(`'uid' is a required parameter.`);
-  } else if (!dbUser) {
-    errorMessages.push(`'dbUser' is a required parameter.`);
-  } else if (!(await isUserValid(uid))) {
-    errorMessages.push(`'uid' is not a valid user.`);
-  } else if (!dbUser.uid || !(await isUserValid(dbUser.uid))) {
-    errorMessages.push(`'dbUser.uid' is not a valid user.`);
+  if (!authUserId) {
+    errorMessages.push(`'authUserId' is a required parameter.`);
+  } else if (!authUser) {
+    errorMessages.push(`'authUser' is a required parameter.`);
+  } else if (!(await isUserValid(authUserId))) {
+    errorMessages.push(`'authUserId' is not a valid user.`);
+  } else if (!authUser.uid || !(await isUserValid(authUser.uid))) {
+    errorMessages.push(`'authUser.uid' is not a valid user.`);
   }
   return errorMessages.join('\n');
 };
@@ -41,51 +41,15 @@ const handleSetProfile = async (req, res) => {
   }
   return cors(req, res, async () => {
     try {
-      const functions = require('firebase-functions');
-      const {
-        jsonObjectPropertiesToUppercase
-      } = require('../utilities');
-      const config = process.env.NODE_ENV !== 'production'
-        ? process.env
-        : jsonObjectPropertiesToUppercase(functions.config().envcmd);
-      console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
-      console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
-      if (admin.apps.length === 0) {
-        admin.initializeApp({
-          credential: admin.credential.cert(config.REACT_APP_GAC),
-          databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL
-        });
-      }
+      const userHelper = new UserHelper();
       const {
         uid: authUserId,
-        dbUser
+        authUser
       } = req.body;
-      const {
-        disabled,
-        displayName,
-        email,
-        emailVerified,
-        password,
-        phoneNumber,
-        photoURL,
-        uid
-      } = dbUser;
-      const createRequest = {
-        disabled: disabled,
-        displayName: displayName,
-        email: email,
-        emailVerified: emailVerified,
-        password: password,
-        phoneNumber: phoneNumber,
-        photoURL: photoURL,
-        uid: uid
-      };
-      console.log(`createRequest: ${JSON.stringify(createRequest, null, 2)}`);
-      const userRecord = await admin.auth().createUser(createRequest);
-      console.log(`handleSetProfile.userRecord: ${JSON.stringify(userRecord, null, 2)}`);
+      const user = await userHelper.createUser(authUser);
       return res.status(httpResponseCodes.OK).send({
         success: true,
-        message: `'${userRecord.uid}' was successfully updated by '${authUserId}'`
+        message: `'${user.uid}' was successfully updated by '${authUserId}'`
       });
     } catch (error) {
       console.log(`handleSetProfile.userRecord Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);

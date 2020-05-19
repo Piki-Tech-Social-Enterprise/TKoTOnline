@@ -28,7 +28,6 @@ import {
   fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
 import * as Roles from 'components/Domains/Roles';
-import FunctionsHelper from 'components/App/FunctionsHelper';
 
 const usersRef = '/images/users';
 const userKeyFormat = '{uid}';
@@ -51,6 +50,7 @@ const INITIAL_STATE = {
       uid: null,
     }
   ],
+  isVolunteer: false,
   roles: {
     basicRole: Roles.basicRole
   },
@@ -130,7 +130,7 @@ const AuthUserView = props => {
     } = user;
     let uid = user.uid;
     let photoURL = user.photoURL;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = `Update ${userOrProfileText} Successful`;
     let displayMessage = defaultDisplayMesssage;
     try {
@@ -186,7 +186,7 @@ const AuthUserView = props => {
           const {
             REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
           } = process.env;
-          const functionsHelperOptions = {
+          const functionsRepositoryOptions = {
             baseUrl: GCF_URL,
             functionName: isNew
               ? 'setProfile'
@@ -196,11 +196,10 @@ const AuthUserView = props => {
               dbUser: dbUser
             }
           };
-          const functionsHelper = new FunctionsHelper(functionsHelperOptions);
           const result = isNew
-            ? await functionsHelper.postAsync()
-            : await functionsHelper.putAsync();
-          console.log(`${functionsHelperOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+            ? await firebase.postAsync(functionsRepositoryOptions)
+            : await firebase.putAsync(functionsRepositoryOptions);
+          console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
         }
         await firebase.saveDbUser({
           active: active,
@@ -223,7 +222,7 @@ const AuthUserView = props => {
         }
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = `Update ${userOrProfileText} Failed`;
       displayMessage = `${error.message}`;
     } finally {
@@ -231,7 +230,7 @@ const AuthUserView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });
@@ -243,7 +242,7 @@ const AuthUserView = props => {
     let displayMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: "You won't be able to undo this!",
         showCancelButton: true,
@@ -269,7 +268,7 @@ const AuthUserView = props => {
           // TODO: Delete User via Admin SDK
         }
         swal.fire({
-          type: 'success',
+          icon: 'success',
           title: `Delete ${userOrProfileText} Successful`,
           text: `Your ${userOrProfileText} has been deleted.`
         });
@@ -280,7 +279,7 @@ const AuthUserView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: `Delete ${userOrProfileText} Error`,
         html: displayMessage
       });
@@ -313,6 +312,7 @@ const AuthUserView = props => {
         active,
         displayName,
         roles,
+        isVolunteer,
         email,
         photoURL,
         providerData,
@@ -321,6 +321,7 @@ const AuthUserView = props => {
       setUser({
         active,
         displayName,
+        isVolunteer,
         roles,
         email,
         photoURL,
@@ -426,6 +427,10 @@ const AuthUserView = props => {
                             </>
                             : null
                         }
+                        <FormGroup>
+                          <Label>isVolunteer</Label><br />
+                          <CustomInput label="" name="isVolunteer" checked={user.isVolunteer} type="switch" id="IsVolunteer" />
+                        </FormGroup>
                         <FormGroup>
                           <Label>Active</Label><br />
                           <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
