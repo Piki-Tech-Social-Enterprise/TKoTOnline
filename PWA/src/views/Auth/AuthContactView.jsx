@@ -67,7 +67,7 @@ const AuthContactView = props => {
       message
     } = contact;
     let cid = contact.cid;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = 'Update Contact Successful';
     let displayMessage = 'Changes saved';
     try {
@@ -92,7 +92,7 @@ const AuthContactView = props => {
         }
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = 'Update Contact Failed';
       displayMessage = `${error.message}`;
     } finally {
@@ -100,7 +100,7 @@ const AuthContactView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });
@@ -112,7 +112,7 @@ const AuthContactView = props => {
     let displayMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: "You won't be able to undo this!",
         showCancelButton: true,
@@ -131,7 +131,7 @@ const AuthContactView = props => {
         } = match.params;
         await firebase.deleteDbContact(cid);
         swal.fire({
-          type: 'success',
+          icon: 'success',
           title: 'Delete Contact Successful',
           text: 'Your Contact has been deleted.'
         });
@@ -142,7 +142,7 @@ const AuthContactView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Delete Contact Error',
         html: displayMessage
       });

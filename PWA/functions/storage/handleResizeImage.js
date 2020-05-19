@@ -26,16 +26,13 @@ const handleResizeImage = async objectMetadata => {
   const {
     jsonObjectPropertiesToUppercase
   } = require('../utilities');
-  const config = process.env.NODE_ENV !== 'production'
-    ? process.env
-    : jsonObjectPropertiesToUppercase(functions.config().envcmd);
-  console.log(`config.GOOGLE_APPLICATION_CREDENTIALS: ${config.GOOGLE_APPLICATION_CREDENTIALS}`);
-  console.log(`config.FIREBASE_CONFIG: ${config.FIREBASE_CONFIG}`);
+  const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
+    ? functions.config().envcmd
+    : {});
+  const config = Object.assign(process.env, envcmd);
+  console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
   if (admin.apps.length === 0) {
-    admin.initializeApp({
-      credential: admin.credential.cert(config.REACT_APP_GAC),
-      storageBucket: config.REACT_APP_FIREBASE_STORAGE_BUCKET
-    });
+    admin.initializeApp();
   }
   const storage = admin.storage();
   const bucket = storage

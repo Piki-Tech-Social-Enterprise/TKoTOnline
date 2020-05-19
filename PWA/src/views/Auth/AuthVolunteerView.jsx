@@ -45,16 +45,78 @@ const AuthVolunteerView = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [existingEmails, setEmails] = useState([]);
   const [originalEmail, setOriginalEmail] = useState([]);
   const {
     authUser
   } = props;
   const canUpdateRoles = authUser &&
     (!!authUser.roles['systemAdminRole'] ||
-     !!authUser.roles['adminRole'] ||
-     !!authUser.roles['volunteerCoordinatorRole']);
-
+      !!authUser.roles['adminRole'] ||
+      !!authUser.roles['volunteerCoordinatorRole']);
+  const revisePhoneNumber = phoneNumber => {
+    const startsWithPlusSignRegExp = /^\+/;
+    const endsWithAlphanumbericsRegExp = /[\da-zA-Z]+/;
+    const startsWithZeroRegExp = /^0/;
+    let revisedPhoneNumber = phoneNumber;
+    if (!startsWithPlusSignRegExp.test(phoneNumber) ||
+      !endsWithAlphanumbericsRegExp.test(phoneNumber)) {
+      if (startsWithZeroRegExp.test(revisedPhoneNumber)) {
+        revisedPhoneNumber = revisedPhoneNumber.replace(startsWithZeroRegExp, '');
+      }
+      if (!startsWithPlusSignRegExp.test(revisedPhoneNumber)) {
+        revisedPhoneNumber = `+64${revisedPhoneNumber}`;
+      }
+      if (!endsWithAlphanumbericsRegExp.test(revisedPhoneNumber)) {
+        revisedPhoneNumber = `${revisedPhoneNumber}0`;
+      }
+    }
+    return revisedPhoneNumber;
+  };
+  const isEmailUnique = async email => {
+    const {
+      firebase
+    } = props;
+    const functionsRepositoryOptions = {
+      functionName: 'isUnique',
+      data: {
+        dbObjectName: 'volunteers',
+        dbObjectFieldName: 'email',
+        dbObjectFieldValue: email
+      }
+    };
+    const result = await firebase.call(functionsRepositoryOptions);
+    console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+    return result.data;
+  };
+  // const isEmailUniqueAlt = async email => {
+  //   debugger;
+  //   const {
+  //     firebase,
+  //     authUser
+  //   } = props;
+  //   const {
+  //     REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL
+  //   } = process.env;
+  //   const functionsRepositoryOptions = {
+  //     baseUrl: REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL,
+  //     functionName: 'isUniqueAlt',
+  //     bodyData: {
+  //       data: {
+  //         dbObjectName: 'volunteers',
+  //         dbObjectFieldName: 'email',
+  //         dbObjectFieldValue: email
+  //       },
+  //       context: {
+  //         auth: {
+  //           uid: authUser.uid
+  //         }
+  //       }
+  //     }
+  //   };
+  //   const result = await firebase.postAsync(functionsRepositoryOptions);
+  //   console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+  //   return result;
+  // };
   const handleChange = async e => {
     const {
       name,
@@ -76,7 +138,6 @@ const AuthVolunteerView = props => {
         if ((role === name && checked) || (role !== name && isActveRole)) {
           newActiveRoles[role] = role;
         }
-        
         return null;
       });
       setVolunteer(u => ({
@@ -125,7 +186,7 @@ const AuthVolunteerView = props => {
       details
     } = volunteer;
     let vid = volunteer.vid;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = `Update Volunteer Successful`;
     let displayMessage = defaultDisplayMesssage;
     try {
@@ -133,65 +194,66 @@ const AuthVolunteerView = props => {
         if (!email || !firstName || !lastName || !phoneNumber) {
           displayMessage = 'First name, Last name, Email, and Phone Number are required fields.';
         } else if (Object.entries(roles).length === 0 && canUpdateRoles) {
-          displayType = 'error';
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
           displayMessage = 'You need to select a role';
-        }else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
           displayMessage = 'Email is invalid.';
         } else if (phoneNumber.match(/^[1-9]\d*(?:\.\d+)?(?:[kmbt])$/i)) {
           displayMessage = 'Phone number is invalid.';
-        } else if (email) {
-          existingEmails.filter((e) => {
-            if (e === email) {
-              displayType = 'error';
-              displayTitle = `New Volunteer Failed`;
-              displayMessage = 'Looks like this email is already in use';
-            }
-            return null;
-          })
-        }
-      }
-      if (!isNew) {
-        existingEmails.map((e) => {
-          if (e === email && originalEmail !== email) {
-            displayType = 'error';
-            displayTitle = `New Volunteer Failed`;
-            displayMessage = 'Looks like this email is already in use';
-          }
-          return null;
-        })
-
-        if (Object.entries(roles).length === 0) {
-          displayType = 'error';
+        } else if (!(await isEmailUnique(email))) {
+          // } else if (!(await isEmailUniqueAlt(email))) {
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
-          displayMessage = 'You need to select a role';
+          displayMessage = `'${email}' is already in use.`;
         }
+      } else if (originalEmail !== email && !(await isEmailUnique(email))) {
+        // } else if (originalEmail !== email && !(await isEmailUniqueAlt(email))) {
+        displayIcon = 'error';
+        displayTitle = `Existing Volunteer Failed`;
+        displayMessage = `'${email}' is already in use.`;
+      } else if (Object.entries(roles).length === 0 && canUpdateRoles) {
+        displayIcon = 'error';
+        displayTitle = `New Volunteer Failed`;
+        displayMessage = 'You need to select a role';
       }
       if (displayMessage === defaultDisplayMesssage) {
+        debugger;
+        const revisedPhoneNumber = revisePhoneNumber(phoneNumber);
         if (isNew) {
-          vid = await firebase.saveDbVolunteer({});
-        }
-        await firebase.saveDbVolunteer({
-          active: active,
-          created: now.toString(),
-          createdBy: uid,
-          firstName,
-          lastName,
-          phoneNumber,
-          email,
-          providerData,
-          roles,
-          details,
-          vid: vid,
-          updated: now.toString(),
-          updatedBy: uid
-        });
-        if (isNew) {
+          vid = await firebase.saveDbVolunteer({
+            active,
+            created: now.toString(),
+            createdBy: uid,
+            firstName,
+            lastName,
+            details,
+            phoneNumber: revisedPhoneNumber,
+            email,
+            providerData,
+            roles,
+            updated: now.toString(),
+            updatedBy: uid
+          });
           handleGotoParentList();
+        } else {
+          await firebase.saveDbVolunteer({
+            active,
+            firstName,
+            lastName,
+            phoneNumber: revisedPhoneNumber,
+            email,
+            providerData,
+            roles,
+            details,
+            updated: now.toString(),
+            updatedBy: uid,
+            vid: vid
+          });
         }
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = `Update Volunteer Failed`;
       displayMessage = `${error.message}`;
     } finally {
@@ -199,7 +261,7 @@ const AuthVolunteerView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        icon: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });
@@ -211,7 +273,7 @@ const AuthVolunteerView = props => {
     let displayMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: "You won't be able to undo this!",
         showCancelButton: true,
@@ -230,7 +292,7 @@ const AuthVolunteerView = props => {
         } = match.params;
         await firebase.deleteDbVolunteer(vid);
         swal.fire({
-          type: 'success',
+          icon: 'success',
           title: `Delete Volunteer Successful`,
           text: `Your Volunteer has been deleted.`
         });
@@ -243,7 +305,7 @@ const AuthVolunteerView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: `Delete Volunteer Error`,
         html: displayMessage
       });
@@ -257,14 +319,7 @@ const AuthVolunteerView = props => {
       firebase,
       match
     } = props;
-    const existingVolunteers = async () => {
-      const emails = [];
-      const existingDbVolunteers = await firebase.getDbVolunteersAsArray(true);
-      existingDbVolunteers.map(volunteer => emails.push(volunteer.email));
-      setEmails(emails);
-    };
     const retrieveVolunteer = async () => {
-      // debugger;
       const dbVolunteer = await firebase.getDbVolunteerValue(match.params.vid);
       const {
         active,
@@ -292,7 +347,6 @@ const AuthVolunteerView = props => {
       setIsLoading(false);
     };
     if (isLoading) {
-      existingVolunteers();
       if (!isNew) {
         retrieveVolunteer();
       } else {
@@ -304,7 +358,7 @@ const AuthVolunteerView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isNew, isLoading, existingEmails, setIsLoading]);
+  }, [props, isNew, isLoading, setIsLoading]);
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -339,7 +393,7 @@ const AuthVolunteerView = props => {
                         <FormGroup>
                           <Label>Phone Number</Label>
                           <InputGroup>
-                            <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="number" />
+                            <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text" />
                           </InputGroup>
                         </FormGroup>
                         {

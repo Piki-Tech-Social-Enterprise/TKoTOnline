@@ -8,20 +8,20 @@
   "dependencies": {
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "firebase": "^7.14.2",
-    "moment": "2.24.0",
-    "node-sass": "4.14.0",
-    "nouislider": "14.2.0",
+    "firebase": "^7.14.4",
+    "moment": "2.25.3",
+    "node-sass": "4.14.1",
+    "nouislider": "14.5.0",
     "react": "16.13.1",
     "react-bootstrap-switch": "15.5.3",
     "react-chartjs-2": "^2.9.0",
     "react-datetime": "2.16.3",
     "react-dom": "16.13.1",
-    "react-router": "5.1.2",
-    "react-router-dom": "5.1.2",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
-    "sweetalert2": "^9.10.12"
+    "sweetalert2": "^9.10.13"
   },
   "scripts": {
     "start": "npm run startLocal",
@@ -71,7 +71,13 @@
     "downloadDevSupportFiles": "babel-node ./buildUtilities/downloadDevSupportFiles.js",
     "incrementBuildVer": "babel-node ./buildUtilities/IncrementBuildVersion.js",
     "generateSitemap": "babel-node ./buildUtilities/SitemapGenerator.js",
-    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap"
+    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap",
+    "uploadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev uploadDevSupportFiles\"",
+    "uploadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest uploadTestSupportFiles\"",
+    "uploadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd uploadProdSupportFiles\"",
+    "downloadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev downloadDevSupportFiles\"",
+    "downloadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest downloadTestSupportFiles\"",
+    "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -89,7 +95,7 @@
     ]
   },
   "optionalDependencies": {
-    "typescript": "3.8.3"
+    "typescript": "3.9.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

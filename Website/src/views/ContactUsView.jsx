@@ -66,16 +66,16 @@ const ContactUsView = props => {
       message
     } = contact;
     let cid = contact.cid;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = 'Contact Form recieved';
     let displayMessage = 'Contact Form Saved';
     try {
       if (!email || !firstName || !lastName || !message) {
-        displayType = 'error';
+        displayIcon = 'error';
         displayTitle = 'Error'
         displayMessage = 'First Name, Last Name, Email and Message are all required ';
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-        displayType = 'error';
+        displayIcon = 'error';
         displayTitle = 'Error'
         displayMessage = 'Email is invalid.';
       }
@@ -98,7 +98,7 @@ const ContactUsView = props => {
 
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = 'Update Contact Failed';
       displayMessage = `${error.message}`;
     } finally {
@@ -106,7 +106,7 @@ const ContactUsView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        icon: displayType,
+        icon: displayIcon,
         title: displayTitle
       }).then((result) => {
         if (result.value) {

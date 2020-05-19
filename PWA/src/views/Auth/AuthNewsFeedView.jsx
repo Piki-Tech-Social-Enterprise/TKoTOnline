@@ -81,7 +81,7 @@ const AuthNewsFeedView = props => {
     } = newsFeed;
     let nfid = newsFeed.nfid;
     let imageUrl = newsFeed.imageUrl;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = 'Update News Feed Successful';
     let displayMessage = 'Changes saved';
     try {
@@ -123,7 +123,7 @@ const AuthNewsFeedView = props => {
           }
         }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = 'Update News Feed Failed';
       displayMessage = `${error.message}`;
     } finally {
@@ -131,7 +131,7 @@ const AuthNewsFeedView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       });
@@ -143,7 +143,7 @@ const AuthNewsFeedView = props => {
     let displayMessage = null;
     try {
       result = await swal.fire({
-        type: 'warning',
+        icon: 'warning',
         title: 'Are you sure?',
         text: "You won't be able to undo this!",
         showCancelButton: true,
@@ -165,7 +165,7 @@ const AuthNewsFeedView = props => {
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
         await firebase.deleteDbNewsFeed(nfid);
         swal.fire({
-          type: 'success',
+          icon: 'success',
           title: 'Delete News Feed Successful',
           text: 'Your News Feed has been deleted.'
         });
@@ -176,7 +176,7 @@ const AuthNewsFeedView = props => {
     }
     if (displayMessage) {
       swal.fire({
-        type: 'error',
+        icon: 'error',
         title: 'Delete News Feed Error',
         html: displayMessage
       });
