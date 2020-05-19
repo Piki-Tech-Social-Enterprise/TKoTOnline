@@ -1,4 +1,3 @@
-
 import React, {
   useState, useEffect
 } from 'react';
@@ -28,7 +27,6 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
 
 const Volunteer = props => {
-
   const INITIAL_STATE = {
     active: true,
     firstName: '',
@@ -40,7 +38,6 @@ const Volunteer = props => {
     },
     vid: null
   };
-
   const isNew = true;
   const [volunteer, setVolunteer] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,9 +77,7 @@ const Volunteer = props => {
       }));
     }
   };
-
-  const handleCanel = async () => {
-
+  const handleCancel = async () => {
     swal.fire({
       title: 'Cancel',
       icon: 'warning',
@@ -90,13 +85,29 @@ const Volunteer = props => {
       confirmButtonText: 'Yes',
       showCancelButton: true,
       cancelButtonText: 'No'
-    }).then((result)=> {
-      if(result.dismiss !== 'cancel'){
+    }).then((result) => {
+      if (result.dismiss !== 'cancel') {
         props.history.push('/');
       }
     })
   };
-
+  const isEmailUnique = async email => {
+    const {
+      firebase
+    } = props;
+    const functionsRepositoryOptions = {
+      functionName: 'isUnique',
+      data: {
+        dbObjectName: 'volunteers',
+        dbObjectFieldName: 'email',
+        dbObjectFieldValue: email,
+        ignoreAuth: true
+      }
+    };
+    const result = await firebase.call(functionsRepositoryOptions);
+    console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+    return result.data;
+  };
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -111,38 +122,33 @@ const Volunteer = props => {
       roles
     } = volunteer;
     let vid = null;
-    let displayType = 'success';
+    let displayIcon = 'success';
     let displayTitle = `Update Volunteer Successful`;
     let displayMessage = defaultDisplayMesssage;
     try {
       if (isNew) {
         if (!email || !firstName || !lastName || !phoneNumber) {
-          displayType = 'error';
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
-          displayMessage = 'Email, First name, Last name, Phone number, and Roles are required fields.';
+          displayMessage = 'Email, First Name, Last Name, and Phone Number are required fields.';
         } else if (Object.entries(roles).length === 0) {
-          displayType = 'error';
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
           displayMessage = 'You need to select a role';
         } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-          displayType = 'error';
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
           displayMessage = 'Email is invalid.';
         } else if (!phoneNumber.match(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/i)) {
-          displayType = 'error';
+          displayIcon = 'error';
           displayTitle = `New Volunteer Failed`;
           displayMessage = 'Phone number is invalid.';
-        } else if(email){
-          existingEmails.map((e) => {
-            if(e === email) {
-              displayType = 'error';
-              displayTitle = `New Volunteer Failed`;
-              displayMessage = 'Looks like this email is already in use';   
-            }
-            return null;
-          })
+        } else if (!(await isEmailUnique(email))) {
+          displayIcon = 'error';
+          displayTitle = `New Volunteer Failed`;
+          displayMessage = `'${email}' is already in use.`;
         }
-      } 
+      }
       if (displayMessage === defaultDisplayMesssage) {
         await props.firebase.saveDbVolunteer({
           active: true,
@@ -160,31 +166,30 @@ const Volunteer = props => {
         });
       }
     } catch (error) {
-      displayType = 'error';
+      displayIcon = 'error';
       displayTitle = `Update Volunteer Failed`;
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
     }
-    if (displayType !== 'error') {
+    if (displayIcon !== 'error') {
       swal.fire({
-        icon: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       }).then((result) => {
-        if(result){
+        if (result) {
           props.history.push('/');
         }
       });
-    }else {
+    } else {
       swal.fire({
-        icon: displayType,
+        icon: displayIcon,
         title: displayTitle,
         html: displayMessage
       })
     }
   };
-
   useEffect(() => {
     const existingVolunteers = async () => {
       const existingDbVolunteers = await props.firebase.getDbVolunteersAsArray(true);
@@ -192,72 +197,69 @@ const Volunteer = props => {
         existingEmails.push(volunteer.email);
         return existingEmails;
       });
-      
     }
-
     existingVolunteers();
-
   }, [props, existingEmails])
   return (
     <>
-    <HomeNavbar />
-    <Container className="my-5">
-    <Row>
-      <h2 className="volunteer-title">Volunteer Registration</h2>
-    </Row>
-    <Row>
-    <Container className="volunteer-form">
-              <Form noValidate onSubmit={handleSubmit}>
-                <Row>
-                  <Col md={8}>
-                    <Card>
-                      <CardBody>
-                        <FormGroup>
-                          <Label>First Name</Label>
-                          <InputGroup>
-                            <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text"/>
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Last Name</Label>
-                          <InputGroup>
-                            <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text"/>
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Email</Label>
-                          <InputGroup>
-                            <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email"/>
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Phone Number</Label>
-                          <InputGroup>
-                            <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text"/>
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup className="volunteer-roles">
-                          <Label>Roles</Label><br />
-                          {
-                            Object.keys(Roles).map(role => {
-                              if (role === 'undefinedRole') return null;
-                              return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!volunteer.roles[role]} onChange={handleChange} key={role} type="switch" />
-                            })
-                          }
-                        </FormGroup>
-                        <FormGroup>
-                          <Button type="submit" color="warning" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Regitster</Button>
-                          <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting} onClick={handleCanel}>Cancel</Button>
-                        </FormGroup>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-              </Form>
-    </Container>
-    </Row>
-    </Container>
-    <HomeFooter />
+      <HomeNavbar />
+      <Container className="my-5">
+        <Row>
+          <h2 className="volunteer-title">Volunteer Registration</h2>
+        </Row>
+        <Row>
+          <Container className="volunteer-form">
+            <Form noValidate onSubmit={handleSubmit}>
+              <Row>
+                <Col md={8}>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <Label>First Name</Label>
+                        <InputGroup>
+                          <Input placeholder="First Name" name="firstName" value={volunteer.firstName} onChange={handleChange} type="text" />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Last Name</Label>
+                        <InputGroup>
+                          <Input placeholder="Last Name" name="lastName" value={volunteer.lastName} onChange={handleChange} type="text" />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Email</Label>
+                        <InputGroup>
+                          <Input placeholder="Email" name="email" value={volunteer.email} onChange={handleChange} type="email" />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Phone Number</Label>
+                        <InputGroup>
+                          <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text" />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup className="volunteer-roles">
+                        <Label>Roles</Label><br />
+                        {
+                          Object.keys(Roles).map(role => {
+                            if (role === 'undefinedRole') return null;
+                            return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!volunteer.roles[role]} onChange={handleChange} key={role} type="switch" />
+                          })
+                        }
+                      </FormGroup>
+                      <FormGroup>
+                        <Button type="submit" color="warning" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Regitster</Button>
+                        <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting} onClick={handleCancel}>Cancel</Button>
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </Row>
+      </Container>
+      <HomeFooter />
     </>
   )
 };

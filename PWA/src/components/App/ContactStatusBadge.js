@@ -76,7 +76,7 @@ import React, {
       await this.props.onSaveDbObject(dbObject, this.handleOnClickComplete);
     }
     handleOnClickComplete = async error => {
-      let type = 'error',
+      let icon = 'error',
         title = `Save ${this.props.dbObjectName}`,
         text = null;
       if (error) {
@@ -85,7 +85,7 @@ import React, {
           : error;
         console.log(`${title} Error: ${text}`);
         swal.fire({
-          type: type,
+          icon: icon,
           title: title,
           text: text
         });

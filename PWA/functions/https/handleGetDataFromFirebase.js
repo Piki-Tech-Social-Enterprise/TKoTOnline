@@ -78,18 +78,17 @@ const handleGetDataFromFirebase = async (req, res) => {
     let resStatus = httpResponseCodes.OK;
     let resData = {};
     try {
+      const functions = require('firebase-functions');
+      const {
+        jsonObjectPropertiesToUppercase
+      } = require('../utilities');
+      const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
+        ? functions.config().envcmd
+        : {});
+      const config = Object.assign(process.env, envcmd);
+      console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
       if (admin.apps.length === 0) {
-        const functions = require('firebase-functions');
-        const {
-          jsonObjectPropertiesToUppercase
-        } = require('../utilities');
-        const config = process.env.NODE_ENV !== 'production'
-          ? process.env
-          : jsonObjectPropertiesToUppercase(functions.config().envcmd);
-        admin.initializeApp({
-          credential: admin.credential.cert(config.REACT_APP_GAC),
-          databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL
-        });
+        admin.initializeApp();
       }
       const firebaseDb = admin.database();
       const dbObjectRef = firebaseDb.ref(`${dbObject}`);

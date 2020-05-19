@@ -6,10 +6,10 @@
   "version": "1.0.0",
   "dependencies": {
     "axios": "^0.19.2",
-    "bootstrap": "4.4.1",
+    "bootstrap": "4.5.0",
     "chart.js": "2.9.3",
-    "firebase": "^7.14.2",
-    "googleapis": "^50.0.0",
+    "firebase": "^7.14.4",
+    "googleapis": "^51.0.0",
     "history": "4.10.1",
     "node-sass": "4.14.1",
     "perfect-scrollbar": "1.5.0",
@@ -19,11 +19,11 @@
     "react-dom": "16.13.1",
     "react-google-maps": "9.4.5",
     "react-notification-alert": "0.0.12",
-    "react-router": "5.1.2",
-    "react-router-dom": "5.1.2",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
-    "sweetalert2": "^9.10.12",
+    "sweetalert2": "^9.11.0",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
@@ -74,14 +74,34 @@
     "downloadDevSupportFiles": "babel-node ./buildUtilities/downloadDevSupportFiles.js",
     "incrementBuildVer": "babel-node ./buildUtilities/IncrementBuildVersion.js",
     "generateSitemap": "babel-node ./buildUtilities/SitemapGenerator.js",
-    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap"
+    "prepareBuild": "run-s -sn incrementBuildVer generateSitemap",
+    "firebaseEmulators": "firebase emulators:start --inspect-functions",
+    "firebaseEmulatorsLocal": "run-s -sn firebaseUseDev \"envCmdLocal firebaseEmulators\"",
+    "firebaseEmulatorsDev": "run-s -sn firebaseUseDev \"envCmdDev firebaseEmulators\"",
+    "firebaseEmulatorsTest": "run-s -sn firebaseUseTest \"envCmdTest firebaseEmulators\"",
+    "firebaseEmulatorsProd": "run-s -sn firebaseUseProd \"envCmdProd firebaseEmulators\"",
+    "firebaseEmulatorsLocal:clean": "run-s -sn firebaseUseDev \"envCmdLocal cleanBuild firebaseEmulators\"",
+    "firebaseEmulatorsDev:clean": "run-s -sn firebaseUseDev \"envCmdDev cleanBuild firebaseEmulators\"",
+    "firebaseEmulatorsTest:clean": "run-s -sn firebaseUseTest \"envCmdTest cleanBuild firebaseEmulators\"",
+    "firebaseEmulatorsProd:clean": "run-s -sn firebaseUseProd \"envCmdProd cleanBuild firebaseEmulators\"",
+    "firebaseEmulatorFunctions": "firebase emulators:start --only functions --inspect-functions",
+    "firebaseEmulatorFunctionsLocal": "run-s -sn firebaseUseDev \"envCmdLocal firebaseEmulatorFunctions\"",
+    "firebaseEmulatorFunctionsDev": "run-s -sn firebaseUseDev \"envCmdDev firebaseEmulatorFunctions\"",
+    "firebaseEmulatorFunctionsTest": "run-s -sn firebaseUseTest \"envCmdTest firebaseEmulatorFunctions\"",
+    "firebaseEmulatorFunctionsProd": "run-s -sn firebaseUseProd \"envCmdProd firebaseEmulatorFunctions\"",
+    "uploadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev uploadDevSupportFiles\"",
+    "uploadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest uploadTestSupportFiles\"",
+    "uploadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd uploadProdSupportFiles\"",
+    "downloadDevSupportFilesDev": "run-s -sn firebaseUseDev \"envCmdDev downloadDevSupportFiles\"",
+    "downloadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest downloadTestSupportFiles\"",
+    "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.4",
+    "@types/googlemaps": "3.39.6",
     "@types/markerclustererplus": "2.1.33",
-    "@types/react": "16.9.34",
+    "@types/react": "16.9.35",
     "jquery": "3.5.1",
-    "typescript": "3.8.3"
+    "typescript": "3.9.2"
   },
   "browserslist": {
     "production": [

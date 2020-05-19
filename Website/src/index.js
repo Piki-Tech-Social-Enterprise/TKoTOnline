@@ -66,7 +66,7 @@ ReactDOM.render(
           render={props => <Volunteer {...props} />}
         />
         <Route
-          path="/PrivacyPolicyView"
+          path="/PrivacyPolicy"
           render={props => <PrivacyPolicyView {...props} />}
         />
         <Route

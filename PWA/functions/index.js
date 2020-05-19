@@ -15,7 +15,9 @@ const {
   handleGetAccessTokenFromServiceAccount,
   handleGetDataFromFirebase,
   handleSetProfile,
-  handleUpdateProfile
+  handleUpdateProfile,
+  handleIsUnique,
+  handleIsUniqueAlt
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -102,3 +104,57 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/updateProfile
 */
 exports.updateProfile = handleUpdateProfile;
+/*
+--- Is Unique ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/isUnique
+{
+  data: {
+    dbObjectName: 'volunteers',
+    dbObjectFieldName: 'email',
+    dbObjectFieldValue: email
+  },
+  context: {
+    auth: {
+      uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1'
+    }
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/isUnique
+*/
+exports.isUnique = handleIsUnique;
+/*
+--- Is Unique Alt ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/isUniqueAlt
+{
+  data: {
+    dbObjectName: 'volunteers',
+    dbObjectFieldName: 'email',
+    dbObjectFieldValue: email
+  },
+  context: {
+    auth: {
+      uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1'
+    }
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/isUniqueAlt
+*/
+exports.isUniqueAlt = handleIsUniqueAlt;
+
+const {
+  handleCreateVolunteer
+} = require('./database');
+/*
+--- Create Volunteer ---
+Usage:
+createVolunteer(snap, context)
+*/
+exports.createVolunteer = handleCreateVolunteer;
