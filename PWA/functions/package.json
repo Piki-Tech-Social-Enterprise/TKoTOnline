@@ -5,13 +5,13 @@
   "license": "MIT",
   "version": "1.0.0",
   "dependencies": {
-    "@google-cloud/storage": "^5.0.0",
+    "@google-cloud/storage": "^5.0.1",
     "cors": "^2.8.5",
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.1",
     "fs-extra": "^8.1.0",
     "googleapis": "^51.0.0",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "sharp": "^0.25.3"
   },
   "scripts": {
