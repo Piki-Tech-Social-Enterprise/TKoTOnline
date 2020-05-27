@@ -79,7 +79,7 @@ const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.con
   ? functions.config().envcmd
   : {});
 const config = Object.assign(process.env, envcmd);
-console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+//console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
 const firebaseConfig = {
   apiKey: config.REACT_APP_FIREBASE_API_KEY,
   authDomain: config.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -92,14 +92,14 @@ const firebaseConfig = {
 };
 const googleApplicationCredentials = config.REACT_APP_GAC;
 const getDbUserValue = async uid => {
-  // console.log(`BEFORE admin.initializeApp() - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
+   console.log(`BEFORE admin.initializeApp() - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
   if (admin.apps.length === 0) {
     admin.initializeApp({
       credential: admin.credential.cert(config.REACT_APP_GAC),
       databaseURL: config.REACT_APP_FIREBASE_DATABASE_URL
     });
   }
-  // console.log(`getDbUserValue - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
+   console.log(`getDbUserValue - config.FIREBASE_CONFIG: ${JSON.stringify(JSON.parse(config.FIREBASE_CONFIG), null, 2)}`);
   const snapshot = await admin.database().ref(`users/${uid}`).once('value');
   const dbUser = await snapshot.val();
   return dbUser;

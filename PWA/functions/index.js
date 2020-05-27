@@ -17,7 +17,8 @@ const {
   handleSetProfile,
   handleUpdateProfile,
   handleIsUnique,
-  handleIsUniqueAlt
+  handleIsUniqueAlt,
+  getCampaigns
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -28,7 +29,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getServerDateTime
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getServerDateTime
 */
-exports.getServerDateTime = handleGetServerDateTime;
+//exports.getServerDateTime = handleGetServerDateTime;
 /*
 --- Get Analytics ---
 Usage:
@@ -38,7 +39,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getAnalytics?uid=xqHlH4QKJFeMi
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAnalytics?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1&viewId=215256322&startDate=2019-10-12&endDate=2019-10-18&alias=Users&expression=ga:users
 */
-exports.getAnalytics = handleGetAnalytics;
+//exports.getAnalytics = handleGetAnalytics;
 /*
 --- Get Access Token From Service Account ---
 Usage:
@@ -48,7 +49,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getAccessTokenFromServiceAccou
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAccessTokenFromServiceAccount?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
-exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
+//exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
 /*
 --- Get Data ---
 Usage:
@@ -58,7 +59,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getDataFromFirebase?uid=xqHlH4
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getDataFromFirebase?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
-exports.getDataFromFirebase = handleGetDataFromFirebase;
+//exports.getDataFromFirebase = handleGetDataFromFirebase;
 /*
 --- Set Profile ---
 Usage:
@@ -80,7 +81,7 @@ http://localhost:5001/tkot-online-dev/us-central1/setProfile
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/setProfile
 */
-exports.setProfile = handleSetProfile;
+//exports.setProfile = handleSetProfile;
 /*
 --- Update Profile ---
 Usage:
@@ -103,7 +104,7 @@ http://localhost:5001/tkot-online-dev/us-central1/updateProfile
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/updateProfile
 */
-exports.updateProfile = handleUpdateProfile;
+//exports.updateProfile = handleUpdateProfile;
 /*
 --- Is Unique ---
 Usage:
@@ -125,7 +126,7 @@ http://localhost:5001/tkot-online-dev/us-central1/isUnique
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/isUnique
 */
-exports.isUnique = handleIsUnique;
+//exports.isUnique = handleIsUnique;
 /*
 --- Is Unique Alt ---
 Usage:
@@ -147,7 +148,7 @@ http://localhost:5001/tkot-online-dev/us-central1/isUniqueAlt
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/isUniqueAlt
 */
-exports.isUniqueAlt = handleIsUniqueAlt;
+//exports.isUniqueAlt = handleIsUniqueAlt;
 
 const {
   handleCreateVolunteer
@@ -157,4 +158,6 @@ const {
 Usage:
 createVolunteer(snap, context)
 */
-exports.createVolunteer = handleCreateVolunteer;
+//exports.createVolunteer = handleCreateVolunteer;
+
+exports.getCampaigns = getCampaigns;

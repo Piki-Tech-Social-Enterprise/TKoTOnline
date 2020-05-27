@@ -14,7 +14,7 @@ const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.con
   ? functions.config().envcmd
   : {});
 const config = Object.assign(process.env, envcmd);
-console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+//console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
 if (admin.apps.length === 0) {
   admin.initializeApp();
 }
@@ -119,17 +119,17 @@ const handleIsUniqueAlt = async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'POST');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method !== httpRequestMethods.POST) {
-    console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
     return res.status(httpResponseCodes.Forbidden).send(FORBIDDEN_TEXT);
   }
-  console.log(`req: ${JSON.stringify(req, null, 2)}`);
+  //console.log(`req: ${JSON.stringify(req, null, 2)}`);
   const {
     data,
     context
   } = req;
   let errorMessage = await validateParameters(data, context);
   if (errorMessage) {
-    console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
     return res.status(httpResponseCodes.BadRequest).send(errorMessage);
   }
   return cors(req, res, async () => {
@@ -149,7 +149,7 @@ const handleIsUniqueAlt = async (req, res) => {
         message: `'${dbObjectName}.${dbObjectFieldName} '${dbObjectFieldValue}' is ${isUnique ? '' : 'not'} unqiue.`
       });
     } catch (error) {
-      console.log(`handleSetProfile.userRecord Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
+      //console.log(`handleSetProfile.userRecord Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       return res.status(httpResponseCodes.BadRequest).send(error.message);
     }
   });

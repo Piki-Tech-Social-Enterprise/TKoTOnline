@@ -30,13 +30,13 @@ const handleUpdateProfile = async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'PUT');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method !== httpRequestMethods.PUT) {
-    console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
     return res.status(httpResponseCodes.Forbidden).send(FORBIDDEN_TEXT);
   }
-  console.log(`req: ${JSON.stringify(req, null, 2)}`);
+  //console.log(`req: ${JSON.stringify(req, null, 2)}`);
   let errorMessage = await validateRequest(req);
   if (errorMessage) {
-    console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
     return res.status(httpResponseCodes.BadRequest).send(errorMessage);
   }
   return cors(req, res, async () => {
@@ -52,7 +52,7 @@ const handleUpdateProfile = async (req, res) => {
         message: `'${user.uid}' was successfully updated by '${authUserId}'`
       });
     } catch (error) {
-      console.log(`handleUpdateProfile.userRecord Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
+      //console.log(`handleUpdateProfile.userRecord Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       return res.status(httpResponseCodes.BadRequest).send(error.message);
     }
   });

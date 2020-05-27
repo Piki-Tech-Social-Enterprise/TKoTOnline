@@ -57,7 +57,7 @@ const handleGetDataFromFirebase = async (req, res) => {
   console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
   let errorMessage = await validateQuery(req.query);
   if (errorMessage) {
-    console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
     return res.status(httpResponseCodes.BadRequest).send(errorMessage);
   }
   const {
@@ -86,7 +86,7 @@ const handleGetDataFromFirebase = async (req, res) => {
         ? functions.config().envcmd
         : {});
       const config = Object.assign(process.env, envcmd);
-      console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+      //console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
       if (admin.apps.length === 0) {
         admin.initializeApp();
       }
@@ -117,10 +117,10 @@ const handleGetDataFromFirebase = async (req, res) => {
       const data = {
         results: results
       };
-      console.log(`handleGetDataFromFirebase.data: ${JSON.stringify(data, null, 2)}`);
+      //console.log(`handleGetDataFromFirebase.data: ${JSON.stringify(data, null, 2)}`);
       resData = data;
     } catch (error) {
-      console.log(`handleGetDataFromFirebase Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
+      //console.log(`handleGetDataFromFirebase Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       resStatus = httpResponseCodes.BadRequest;
       resData = error.message;
     }

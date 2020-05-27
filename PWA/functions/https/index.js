@@ -22,6 +22,10 @@ const {
   handleIsUniqueAlt
 } = require('./handleIsUnique');
 
+const {
+  getCampaigns
+}= require('./handleMailChimp');
+
 exports.handleGetServerDateTime = functions
   .https
   .onRequest(handleGetServerDateTime);
@@ -46,3 +50,8 @@ exports.handleIsUnique = functions
 exports.handleIsUniqueAlt = functions
   .https
   .onRequest(handleIsUniqueAlt);
+
+
+exports.getCampaigns = functions
+.https
+.onCall(getCampaigns);

@@ -14,8 +14,8 @@ const admin = require('firebase-admin');
 
 class UserHelper {
   constructor() {
-    console.log(`config: ${JSON.stringify(config, null, 2)}`);
-    console.log(`admin.apps.length: ${admin.apps.length}`);
+    //console.log(`config: ${JSON.stringify(config, null, 2)}`);
+    //console.log(`admin.apps.length: ${admin.apps.length}`);
     if (admin.apps.length === 0) {
       admin.initializeApp();
     } else {

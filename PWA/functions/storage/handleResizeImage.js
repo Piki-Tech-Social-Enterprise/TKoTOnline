@@ -30,7 +30,7 @@ const handleResizeImage = async objectMetadata => {
     ? functions.config().envcmd
     : {});
   const config = Object.assign(process.env, envcmd);
-  console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+  //console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
   if (admin.apps.length === 0) {
     admin.initializeApp();
   }
@@ -58,7 +58,7 @@ const handleResizeImage = async objectMetadata => {
     if (currentSize > 400) {
       sizes.push(400);
     }
-    console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName}...`);
+    //console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName}...`);
     const uploadPromises = sizes.map(async size => {
       const {
         imgPath,
@@ -72,14 +72,14 @@ const handleResizeImage = async objectMetadata => {
           width: size
         })
         .toFile(imgPath);
-      console.log(`resizeImage: Generated ${bucketImgName}`);
+      //console.log(`resizeImage: Generated ${bucketImgName}`);
       return await bucket
         .upload(imgPath, uploadOptions);
     });
     await Promise
       .all(uploadPromises);
   }
-  console.log('resizeImage: Completed.');
+ // console.log('resizeImage: Completed.');
   return await cleanUp();
 };
 

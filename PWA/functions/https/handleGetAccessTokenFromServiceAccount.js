@@ -24,10 +24,10 @@ const handleGetAccessTokenFromServiceAccount = async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method !== httpRequestMethods.GET) {
-    console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
     return res.status(httpResponseCodes.Forbidden).send(FORBIDDEN_TEXT);
   }
-  console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
+  //console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
   let errorMessage = await validateQuery(req.query);
   if (errorMessage) {
     console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
@@ -43,7 +43,7 @@ const handleGetAccessTokenFromServiceAccount = async (req, res) => {
         ? functions.config().envcmd
         : {});
       const config = Object.assign(process.env, envcmd);
-      console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+      //console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
       const {
         google
       } = require('googleapis');
@@ -54,10 +54,10 @@ const handleGetAccessTokenFromServiceAccount = async (req, res) => {
       const authClient = await auth.getClient();
       // console.log(`authClient: ${JSON.stringify(authClient, null, 2)}`);
       const accessToken = await authClient.getAccessToken();
-      console.log(`handleGetAccessTokenFromServiceAccount.accessToken: ${JSON.stringify(accessToken, null, 2)}`);
+      //console.log(`handleGetAccessTokenFromServiceAccount.accessToken: ${JSON.stringify(accessToken, null, 2)}`);
       return res.status(httpResponseCodes.OK).send(accessToken);
     } catch (error) {
-      console.log(`handleGetAccessTokenFromServiceAccount.accessToken Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
+      //console.log(`handleGetAccessTokenFromServiceAccount.accessToken Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       return res.status(httpResponseCodes.BadRequest).send(error.message);
     }
   });

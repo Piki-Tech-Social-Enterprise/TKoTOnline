@@ -19,7 +19,7 @@ const handleGetServerDateTime = async (req, res) => {
       format = req.body.format;
     }
     const formattedDate = moment().format(format);
-    console.log('Server Date Time:', formattedDate);
+    //console.log('Server Date Time:', formattedDate);
     res.status(200).send(formattedDate);
   });
 };

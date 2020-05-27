@@ -61,10 +61,10 @@ const handleGetAnalytics = async (req, res) => {
     console.log(`httpResponseCode: ${httpResponseCodes.Forbidden}, errorMessage: ${FORBIDDEN_TEXT}`);
     return res.status(httpResponseCodes.Forbidden).send(FORBIDDEN_TEXT);
   }
-  console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
+ // console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
   let errorMessage = await validateQuery(req.query);
   if (errorMessage) {
-    console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
+    //console.log(`httpResponseCode: ${httpResponseCodes.BadRequest}, errorMessage: ${errorMessage}`);
     return res.status(httpResponseCodes.BadRequest).send(errorMessage);
   }
   const {
@@ -86,7 +86,7 @@ const handleGetAnalytics = async (req, res) => {
         ? functions.config().envcmd
         : {});
       const config = Object.assign(process.env, envcmd);
-      console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+      //console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
       const {
         google
       } = require('googleapis');
@@ -176,10 +176,10 @@ const handleGetAnalytics = async (req, res) => {
       };
       // console.log(`typeof analyticsreporting.reports.batchGet: ${typeof analyticsreporting.reports.batchGet}`);
       const batchGetResponse = await analyticsreporting.reports.batchGet(batchGetParameters);
-      console.log(`handleGetAnalytics.batchGetResponse: ${JSON.stringify(batchGetResponse, null, 2)}`);
+      //console.log(`handleGetAnalytics.batchGetResponse: ${JSON.stringify(batchGetResponse, null, 2)}`);
       return res.status(httpResponseCodes.OK).send(batchGetResponse.data);
     } catch (error) {
-      console.log(`handleGetAnalytics.batchGetResponse Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
+      //console.log(`handleGetAnalytics.batchGetResponse Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       return res.status(httpResponseCodes.BadRequest).send(error.message);
     }
   });
