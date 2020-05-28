@@ -7,24 +7,33 @@ import React, {
     Row,
     Col,
     Card,
-    CardBody,
-    Button
+    CardBody
   } from 'reactstrap';
   import {
     BootstrapTable,
-    TableHeaderColumn,
-    InsertButton
+    TableHeaderColumn
   } from 'react-bootstrap-table';
   import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
   import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
-  import StatusBadge from 'components/App/StatusBadge';
   
   const AuthMailChimpsView = props => {
     const [isLoading, setIsLoading] = useState(true);
     const [MailChimpsAsArray, setMailChimpsAsArray] = useState([]);
     useEffect(() => {
-
+      const retrieveMailChimpData = async () => {
+        const dbCampaignsAsArray = await mailChimpData();
+        setMailChimpsAsArray(dbCampaignsAsArray);
         setIsLoading(false);
+      };
+
+      if (isLoading) {
+        retrieveMailChimpData();
+      }
+      return () => {
+        if (isLoading) {
+          setIsLoading(false);
+        }
+      };
     }, [props, isLoading, setIsLoading, setMailChimpsAsArray]);
     const handleSortChange = async (sortName, sortOrder) => {
       MailChimpsAsArray.sort((a, b) => {
@@ -57,19 +66,6 @@ import React, {
         console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
         return result.data;
   }
-    const createCustomInsertButton = onClick => (
-      <InsertButton btnText="Add New" onClick={() => handleAddCommunityLinksClick(onClick)} />
-    );
-    const handleAddCommunityLinksClick = async onClick => {
-      props.history.push(`/auth/CommunityLinks/New`);
-      onClick();
-    };
-    const handleCommunityLinksRowClick = async row => {
-      props.history.push(`/auth/CommunityLinks/${row.clid}`);
-    };
-    const handleChildUpdate = updatedChildState => {
-     
-    }
     return (
       <>
         <div className="panel-header panel-header-xs" />
@@ -77,25 +73,21 @@ import React, {
           <Row>
             <Col>
               <Card>
-              <Button onClick={() => mailChimpData()}>mailChimp</Button>
+              
                 <CardBody className="table-responsive">
                   {
                     isLoading
                       ? <LoadingOverlayModal color="text-info" />
                       : <BootstrapTable data={MailChimpsAsArray} version="4" bordered={false} condensed hover
-                        trClassName="clickable"
                         tableHeaderClass="text-primary"
-                        insertRow exportCSV csvFileName="mail-chimp-table-export"
                         search pagination options={{
                           defaultSortName: 'header',
                           hideSizePerPage: true,
                           noDataText: 'No Mail Chimp data',
-                          onSortChange: handleSortChange,
-                          insertBtn: createCustomInsertButton,
-                          onRowClick: handleCommunityLinksRowClick
+                          onSortChange: handleSortChange
                         }}>
-                        <TableHeaderColumn isKey dataField="linkName" dataSort>Link Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="link" dataSort>Link</TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField="title" width="25%" dataSort>Title</TableHeaderColumn>
+                        <TableHeaderColumn dataField="url" dataSort>Url</TableHeaderColumn>
                       </BootstrapTable>
                   }
                 </CardBody>

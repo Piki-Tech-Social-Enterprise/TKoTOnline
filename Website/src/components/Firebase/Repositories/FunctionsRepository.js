@@ -36,17 +36,13 @@ class FunctionsRepository extends BaseRepository {
   }
   getAsync = async (options, config) => {
 
-    console.log('in get', options);
     let response = {
       data: {
         results: {}
       }
     };
     try {
-      console.log('options', options);
       const url = this._buildUrl(options);
-
-      console.log('url', url);
       response = await axios.get(url, config);
       console.log(`FunctionsRepository.getAsync - response: ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
