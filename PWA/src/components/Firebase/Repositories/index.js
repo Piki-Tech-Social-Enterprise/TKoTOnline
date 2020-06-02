@@ -8,6 +8,7 @@ import SettingsRepository from './SettingsRepository';
 import VolunteersRepository from './VolunteersRepository';
 import ContactRepository from './ContactRepository';
 import FunctionsRepository from './FunctionsRepository';
+import EPanuiListRepository from './EPanuiListRepository';
 
 export default BaseRepository;
 export {
@@ -19,5 +20,6 @@ export {
   SettingsRepository,
   VolunteersRepository,
   ContactRepository,
-  FunctionsRepository
+  FunctionsRepository,
+  EPanuiListRepository,
 };

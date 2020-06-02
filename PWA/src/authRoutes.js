@@ -202,6 +202,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/EPanui',
+    name: 'E-Panui List',
+    component: lazy(() => import('views/Auth/AuthEPanuiListView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'ui-1_send',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/EPanui/:eid',
+    name: 'E-Panui',
+    component: lazy(() => import('views/Auth/AuthEPanuiView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {

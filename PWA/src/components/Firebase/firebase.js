@@ -8,13 +8,14 @@ import {
   SettingsRepository,
   VolunteersRepository,
   ContactRepository,
-  FunctionsRepository
+  FunctionsRepository,
+  EPanuiListRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
 class Firebase {
   constructor(firebaseConfigOverride) {
-    console.log(`MasterFirebaseConfig: ${JSON.stringify(MasterFirebaseConfig, null, 2)}`);
+    // console.log(`MasterFirebaseConfig: ${JSON.stringify(MasterFirebaseConfig, null, 2)}`);
     this.app = firebaseApp.apps.length
       ? firebaseApp.app()
       : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);
@@ -27,6 +28,7 @@ class Firebase {
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
     this.contactRepository = new ContactRepository(firebaseApp);
     this.functionsRepository = new FunctionsRepository(firebaseApp);
+    this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -93,6 +95,13 @@ class Firebase {
   postAsync = async options => await this.functionsRepository.postAsync(options);
   putAsync = async options => await this.functionsRepository.putAsync(options);
   call = async options => await this.functionsRepository.call(options);
+
+  getDbEPanuiList = async () => await this.ePanuiListRepository.getDbEPanuiList();
+  getDbEPanuiListAsArray = async includeInactive => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive);
+  getDbEPanui = async eid => await this.ePanuiListRepository.getDbEPanui(eid);
+  getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
+  saveDbEPanui = async (ePanui, saveDbEPanui_completed) => await this.ePanuiListRepository.saveDbEPanui(ePanui, saveDbEPanui_completed);
+  deleteDbEPanui = async eid => await this.ePanuiListRepository.deleteDbEPanui(eid);
 }
 
 export default Firebase;
