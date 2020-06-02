@@ -8,7 +8,7 @@
     "axios": "^0.19.2",
     "bootstrap": "4.5.0",
     "chart.js": "2.9.3",
-    "firebase": "^7.14.5",
+    "firebase": "^7.14.6",
     "googleapis": "^51.0.0",
     "history": "4.10.1",
     "node-sass": "4.14.1",
@@ -23,7 +23,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1",
-    "sweetalert2": "^9.13.1",
+    "sweetalert2": "^9.14.0",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
