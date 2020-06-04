@@ -226,6 +226,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/FacebookLinks',
+    name: 'Facebook Links',
+    component: lazy(() => import('views/Auth/AuthFacebookLinksView')),
+    exact: true,
+    iconLibrary: 'fab',
+    icon: 'fa-facebook-f',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/FacebookLinks/:fid',
+    name: 'Facebook Links',
+    component: lazy(() => import('views/Auth/AuthFacebookLinkView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {

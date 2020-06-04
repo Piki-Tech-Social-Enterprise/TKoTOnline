@@ -9,6 +9,7 @@ import VolunteersRepository from './VolunteersRepository';
 import ContactRepository from './ContactRepository';
 import FunctionsRepository from './FunctionsRepository';
 import EPanuiListRepository from './EPanuiListRepository';
+import FacebookLinksRepository from './FacebookLinksRepository';
 
 export default BaseRepository;
 export {
@@ -22,4 +23,5 @@ export {
   ContactRepository,
   FunctionsRepository,
   EPanuiListRepository,
+  FacebookLinksRepository
 };

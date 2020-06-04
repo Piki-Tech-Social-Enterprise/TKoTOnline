@@ -9,7 +9,8 @@ import {
   VolunteersRepository,
   ContactRepository,
   FunctionsRepository,
-  EPanuiListRepository
+  EPanuiListRepository,
+  FacebookLinksRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -29,6 +30,7 @@ class Firebase {
     this.contactRepository = new ContactRepository(firebaseApp);
     this.functionsRepository = new FunctionsRepository(firebaseApp);
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
+    this.facebookLinksRepository = new FacebookLinksRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -62,7 +64,6 @@ class Firebase {
   getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
-  
 
   getDbCommunityLinks = async () => await this.communityLinkRepository.getDbCommunityLinks();
   getDbCommunityLinksAsArray = async includeInactive => await this.communityLinkRepository.getDbCommunityLinksAsArray(includeInactive);
@@ -72,7 +73,7 @@ class Firebase {
   deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
 
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
-  getDbSetting= async sid => await this.settings.getDbSetting(sid);
+  getDbSetting = async sid => await this.settings.getDbSetting(sid);
   getDbSettingsValues = async includeInactive => await this.settingsRepository.getDbSettingsValues(includeInactive);
   saveDbSettings = async (settings, saveDbSetting_completed) => await this.settingsRepository.saveDbSettings(settings, saveDbSetting_completed);
 
@@ -90,7 +91,7 @@ class Firebase {
   getDbContactValue = async cid => await this.contactRepository.getDbContactValue(cid);
   saveDbContact = async (contact, saveDbContact_completed) => await this.contactRepository.saveDbContact(contact, saveDbContact_completed);
   deleteDbContact = async cid => await this.contactRepository.deleteDbContact(cid);
-  
+
   getAsync = async (options, config) => await this.functionsRepository.getAsync(options, config);
   postAsync = async options => await this.functionsRepository.postAsync(options);
   putAsync = async options => await this.functionsRepository.putAsync(options);
@@ -102,6 +103,13 @@ class Firebase {
   getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
   saveDbEPanui = async (ePanui, saveDbEPanui_completed) => await this.ePanuiListRepository.saveDbEPanui(ePanui, saveDbEPanui_completed);
   deleteDbEPanui = async eid => await this.ePanuiListRepository.deleteDbEPanui(eid);
+
+  getDbFacebookLinks = async () => await this.facebookLinksRepository.getDbFacebookLinks();
+  getDbFacebookLinksAsArray = async includeInactive => await this.facebookLinksRepository.getDbFacebookLinksAsArray(includeInactive);
+  getDbFacebookLink = async fid => await this.facebookLinksRepository.getDbFacebookLinks(fid);
+  getDbFacebookLinkValue = async fid => await this.facebookLinksRepository.getDbFacebookLinkValue(fid);
+  saveDbFacebookLink = async (facebookLink, saveDbFacebookLink_completed) => await this.facebookLinksRepository.saveDbFacebookLink(facebookLink, saveDbFacebookLink_completed);
+  deleteDbFacebookLink = async fid => await this.facebookLinksRepository.deleteDbFacebookLink(fid);
 }
 
 export default Firebase;
