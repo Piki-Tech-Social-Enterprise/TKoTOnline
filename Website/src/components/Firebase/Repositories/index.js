@@ -6,6 +6,7 @@ import SettingsRepository from './SettingsRepository';
 import VolunteersRepository from './VolunteersRepository';
 import ContactRepository from './ContactRepository';
 import FunctionsRepository from './FunctionsRepository';
+import FacebookLinksRepository from './FacebookLinksRepository';
 
 export default BaseRepository;
 export {
@@ -15,5 +16,6 @@ export {
   SettingsRepository,
   VolunteersRepository,
   ContactRepository,
-  FunctionsRepository
+  FunctionsRepository,
+  FacebookLinksRepository
 };

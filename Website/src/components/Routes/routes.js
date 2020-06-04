@@ -8,7 +8,9 @@ const Routes = {
   privacyPolicy: '/PrivacyPolicy',
   termsOfUse: '/TermsOfUse',
   aboutUs: '/AboutUs',
-  contactUs: '/ContactUs'
+  contactUs: '/ContactUs',
+  facebookLinks: '/FacebookLinks',
+  facebookLink: '/FacebookLinks/:fid'
 };
 
 export default Routes;

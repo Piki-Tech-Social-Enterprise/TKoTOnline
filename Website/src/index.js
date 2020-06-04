@@ -40,6 +40,8 @@ import PrivacyPolicyView from 'views/PrivacyPolicyView';
 import TermsOfServiceView from 'views/TermsOfServiceView';
 import AboutUsView from 'views/AboutUsView';
 import ContactUsView from 'views/ContactUsView';
+import FacebookLinksView from 'views/FacebookLinksView';
+import FacebookLinkView from 'views/FacebookLinkView';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -84,6 +86,16 @@ ReactDOM.render(
         <Route
           path="/ContactUs"
           render={props => <ContactUsView {...props} />}
+        />
+        <Route
+          path="/FacebookLinks"
+          render={props => <FacebookLinksView {...props} />}
+          exact
+        />
+        <Route
+          path="/FacebookLinks/:fid"
+          render={props => <FacebookLinkView {...props} />}
+          exact
         />
       </Switch>
     </BrowserRouter>

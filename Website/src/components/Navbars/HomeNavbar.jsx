@@ -16,7 +16,8 @@ const {
   communityLinks,
   newsFeed,
   // interactiveMap,
-  volunteers,
+  // volunteers,
+  facebookLinks,
   aboutUs,
   contactUs
 } = Routes;
@@ -65,8 +66,11 @@ const HomeNavbar = () => {
               {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>
               </NavItem> */}
-              <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
+              {/* <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
                 <NavLink href={volunteers}>Volunteers</NavLink>
+              </NavItem> */}
+              <NavItem active={hash !== '' && pathname.endsWith(facebookLinks)}>
+                <NavLink href={facebookLinks}>Facebook Links</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(aboutUs)}>
                 <NavLink href={aboutUs}>About Us</NavLink>

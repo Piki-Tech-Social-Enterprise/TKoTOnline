@@ -6,7 +6,8 @@ import {
   SettingsRepository,
   VolunteersRepository,
   ContactRepository,
-  FunctionsRepository
+  FunctionsRepository,
+  FacebookLinksRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -23,6 +24,7 @@ class Firebase {
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
     this.contactRepository = new ContactRepository(firebaseApp);
     this.functionsRepository = new FunctionsRepository(firebaseApp);
+    this.facebookLinkRepository = new FacebookLinksRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -56,6 +58,10 @@ class Firebase {
   postAsync = async options => await this.functionsRepository.postAsync(options);
   putAsync = async options => await this.functionsRepository.putAsync(options);
   call = async options => await this.functionsRepository.call(options);
+  getDbFacebookLinks = async () => await this.facebookLinkRepository.getDbFacebookLinks();
+  getDbFacebookLinksAsArray = async includeInactive => await this.facebookLinkRepository.getDbFacebookLinksAsArray(includeInactive);
+  getDbFacebookLink = async fid => await this.facebookLinkRepository.getDbFacebookLink(fid);
+  getDbFacebookLinkValue = async fid => await this.facebookLinkRepository.getDbFacebookLinkValue(fid);
 }
 
 export default Firebase;

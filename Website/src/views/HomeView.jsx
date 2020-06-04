@@ -6,7 +6,7 @@ import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import NewsFeedSection from 'components/Sections/NewsFeed';
 // import InteractiveMapSection from 'components/Sections/InteractiveMap';
-import VolunteersSection from 'components/Sections/Volunteers';
+// import VolunteersSection from 'components/Sections/Volunteers';
 import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
 const HomeView = () => {
@@ -43,7 +43,7 @@ const HomeView = () => {
           {/* Interactive Map of Iwi Links */}
           {/* <InteractiveMapSection /> */}
           {/* Volunteers via Mutual Aid */}
-          <VolunteersSection />
+          {/* <VolunteersSection /> */}
         </div>
         <HomeFooter />
       </div>

@@ -48,7 +48,8 @@ const HomeFooter = props => {
     communityLinks,
     newsFeed,
     // interactiveMap,
-    volunteers,
+    // volunteers,
+    facebookLinks,
     aboutUs,
     contactUs
   } = Routes;
@@ -74,8 +75,11 @@ const HomeFooter = props => {
             {/* <NavItem>
               <NavLink href={interactiveMap}>Interactive Map</NavLink>
             </NavItem> */}
-            <NavItem>
+            {/* <NavItem>
               <NavLink href={volunteers}>Volunteers</NavLink>
+            </NavItem> */}
+            <NavItem>
+              <NavLink href={facebookLinks}>Facebook Links</NavLink>
             </NavItem>
           </Nav>
         </Col>
