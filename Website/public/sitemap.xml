@@ -7,4 +7,6 @@
 <url> <loc>https://web-dev.tkot.org/TermsOfUse</loc> </url>
 <url> <loc>https://web-dev.tkot.org/AboutUs</loc> </url>
 <url> <loc>https://web-dev.tkot.org/ContactUs</loc> </url>
+<url> <loc>https://web-dev.tkot.org/FacebookLinks</loc> </url>
+<url> <loc>https://web-dev.tkot.org/FacebookLinks/:fid</loc> </url>
 </urlset>
