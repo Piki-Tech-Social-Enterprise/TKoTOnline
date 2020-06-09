@@ -224,7 +224,7 @@ const AuthEPanuiView = props => {
             : <>
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
-                  <Col md={12}>
+                  <Col xs={12} sm={6}>
                     <Card>
                       <CardBody>
                         <FormGroup>
@@ -253,6 +253,23 @@ const AuthEPanuiView = props => {
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
                           <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
                           <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <Label><a href={ePanui.url} target="_blank" rel="noopener noreferrer" className="text-muted">Preview (in another tab/window) <i className="fas fa-external-link-alt" /></a></Label>
+                          <iframe
+                            title={ePanui.name}
+                            src={ePanui.url}
+                            style={{
+                              height: '19.5rem',
+                              width: '100%'
+                            }}
+                          />
                         </FormGroup>
                       </CardBody>
                     </Card>

@@ -185,7 +185,7 @@ const AuthFacebookLinkView = props => {
       <div className="panel-header panel-header-xs" />
       <Container className="content">
         <Row>
-          <Col>
+          <Col xs={12} sm={6}>
             <Card>
               {/* <h3>Facebook Link</h3> */}
               <CardBody>
@@ -211,6 +211,27 @@ const AuthFacebookLinkView = props => {
                       </FormGroup>
                     </Form>
                 }
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Card>
+              <CardBody>
+                <FormGroup>
+                  <Label><a href={facebookLink.url} target="_blank" rel="noopener noreferrer" className="text-muted">Preview (in another tab/window) <i className="fas fa-external-link-alt" /></a></Label>
+                  <iframe
+                    allowTransparency="true"
+                    allow="encrypted-media"
+                    frameborder="0"
+                    src={`https://www.facebook.com/plugins/page.php?href=${facebookLink.url}&tabs=timeline%2Cevents%2Cmessages&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`}
+                    style={{
+                      border: 'none',
+                      height: '13.5rem',
+                      width: '100%'
+                    }}
+                    title={facebookLink.name}
+                  />
+                </FormGroup>
               </CardBody>
             </Card>
           </Col>

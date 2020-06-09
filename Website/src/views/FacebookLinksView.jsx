@@ -19,17 +19,20 @@ const FacebookLink = props => {
     dbFacebookLink
   } = props;
   const {
-    fid,
-    name
+    name,
+    url
   } = dbFacebookLink;
   return (
     <Col xs={12} sm={4}>
       <iframe
-        src={`FacebookLinks/${fid}`}
-        title={name}
+        allowTransparency="true"
+        allow="encrypted-media"
+        frameborder="0"
+        src={`https://www.facebook.com/plugins/page.php?href=${url}&tabs=timeline%2Cevents%2Cmessages&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`}
         style={{
           height: 400
         }}
+        title={name}
       />
     </Col>
   );
