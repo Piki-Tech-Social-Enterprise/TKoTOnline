@@ -64,8 +64,6 @@ const AuthEPanuiView = props => {
       date,
       name,
       url,
-      providerData,
-      roles,
       details
     } = ePanui;
     let eid = ePanui.eid;
@@ -76,7 +74,8 @@ const AuthEPanuiView = props => {
       if (isNew) {
         if (!url || !name || !date) {
           displayMessage = 'Date, Name, and URL are required fields.';
-        } else if (!url.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        // eslint-disable-next-line
+        } else if (!url.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
           displayMessage = 'URL is invalid.';
         }
       }
@@ -89,8 +88,6 @@ const AuthEPanuiView = props => {
             date,
             name,
             url,
-            providerData,
-            roles,
             updated: now.toString(),
             updatedBy: uid
           });
@@ -101,14 +98,15 @@ const AuthEPanuiView = props => {
             date,
             name,
             url,
-            providerData,
-            roles,
             details,
             updated: now.toString(),
             updatedBy: uid,
             eid: eid
           });
         }
+      } else {
+        displayIcon = 'error';
+        displayTitle = `Update E-Panui Failed`;
       }
     } catch (error) {
       displayIcon = 'error';
@@ -183,9 +181,7 @@ const AuthEPanuiView = props => {
         active,
         date,
         name,
-        roles,
         url,
-        providerData,
         eid,
         details
       } = dbEPanui;
@@ -193,9 +189,7 @@ const AuthEPanuiView = props => {
         active,
         date,
         name,
-        roles,
         url,
-        providerData,
         eid,
         details: details || INITIAL_STATE.details
       });

@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap-table';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
+import moment from 'moment';
 
 const AuthEPanuiListView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +36,35 @@ const AuthEPanuiListView = props => {
       }
     };
   }, [props, isLoading, setIsLoading, setEPanuiListAsArray]);
+  const tryToConvertValue = value => {
+    let convertedValue = undefined;
+    const valueType = typeof value;
+    switch (valueType) {
+      case 'number':
+        convertedValue = Number(value);
+        break;
+
+      case 'string':
+        convertedValue = String(value);
+        break;
+
+      case 'boolean':
+        convertedValue = Boolean(value);
+        break;
+
+      default:
+        if (moment.isDate(value)) {
+          convertedValue = moment(value, 'DD-MM-YYYY');
+        } else {
+          convertedValue = value;
+        }
+    }
+    return convertedValue;
+  };
   const handleSortChange = async (sortName, sortOrder) => {
     ePanuiListAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
+      const aValue = tryToConvertValue(a[sortName]);
+      const bValue = tryToConvertValue(b[sortName]);
       return (
         (aValue > bValue)
           ? (sortOrder === 'asc')
@@ -85,8 +111,8 @@ const AuthEPanuiListView = props => {
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEPanuiRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="date" dataSort>Date</TableHeaderColumn>
-                      <TableHeaderColumn dataField="name" dataSort>Name</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="date" dataSort width="20%">Date</TableHeaderColumn>
+                      <TableHeaderColumn dataField="name" dataSort width="40%">Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="url" dataSort>URL</TableHeaderColumn>
                     </BootstrapTable>
                 }

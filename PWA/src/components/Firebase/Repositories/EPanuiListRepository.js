@@ -52,39 +52,29 @@ class EPanuiListRepository extends BaseRepository {
       active,
       created,
       createdBy,
-      firstName,
-      lastName,
-      details,
-      phoneNumber,
-      email,
-      providerData,
-      vid,
+      eid,
+      date,
+      name,
+      url,
       updated,
       updatedBy
     } = ePanui;
     const now = new Date();
     let errorMessage = null;
-    let existingDbEPanui = await this.getDbEPanui(vid || '')
+    let existingDbEPanui = await this.getDbEPanui(eid || '')
     let dbEPanuiRef = null;
     let dbEPanui = null;
-    if (!vid) {
+    if (!eid) {
       dbEPanuiRef = await existingDbEPanui.push();
-      const newVid = await dbEPanuiRef.getKey();
+      const newEid = await dbEPanuiRef.getKey();
       ePanui = {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
-        firstName: firstName || '',
-        lastName: lastName || '',
-        details: details || {},
-        phoneNumber: phoneNumber || '',
-        email: email || '',
-        providerData: providerData || (email && {
-          email: email,
-          providerId: 'password',
-          vid: newVid
-        }) || {},
-        vid: newVid,
+        eid: newEid,
+        date,
+        name,
+        url,
         updated: updated || now.toString(),
         updatedBy: updatedBy || ''
       };
@@ -97,19 +87,16 @@ class EPanuiListRepository extends BaseRepository {
           active: active || (typeof active === 'boolean' && active) || false,
           created: created || dbEPanui.created,
           createdBy: createdBy || dbEPanui.createdBy,
-          firstName: firstName || dbEPanui.firstName || '',
-          lastName: lastName || dbEPanui.lastName || '',
-          phoneNumber: phoneNumber || dbEPanui.phoneNumber || '',
-          email: email || dbEPanui.email,
-          providerData: providerData || dbEPanui.providerData || {},
-          details: details || dbEPanui.details || {},
-          vid: vid,
+          eid: eid,
+          date: date || dbEPanui.date,
+          name: name || dbEPanui.name,
+          url: url || dbEPanui.url,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || vid
+          updatedBy: updatedBy || ''
         };
         existingDbEPanui.set(ePanui, saveDbEPanui_completed);
       } else {
-        errorMessage = 'Save Db EPanui Error: vid (' + vid + ') not found.';
+        errorMessage = 'Save Db EPanui Error: eid (' + eid + ') not found.';
       }
     }
     if (errorMessage) {
