@@ -44,8 +44,8 @@ const hasRoles = (roles, rolesToCheck) => {
 };
 const applyRedirect = props => {
   const fromRoute = getAuthRouteByName('Home');
-  const dashboardRoute = getAuthRouteByName('Dashboard');
-  const resourceDriveRoute = getAuthRouteByName('Resource Drive');
+  const adminDefaultRoute = getAuthRouteByName('Community Links');
+  const basicDefaultRoute = getAuthRouteByName('Resource Drive');
   const {
     authUser
   } = props;
@@ -53,9 +53,9 @@ const applyRedirect = props => {
     ? authUser.roles
     : [];
   const toRoute = hasRoles(authUserRoles, { systemAdminRole, adminRole })
-    ? dashboardRoute
+    ? adminDefaultRoute
     : hasRoles(authUserRoles, { basicRole })
-      ? resourceDriveRoute
+      ? basicDefaultRoute
       : null;
   console.log(`fromRoute: ${fromRoute && (fromRoute.layout + fromRoute.path)}, toRoute: ${toRoute && (toRoute.layout + toRoute.path)}`);
   return (
