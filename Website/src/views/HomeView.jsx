@@ -8,6 +8,7 @@ import NewsFeedSection from 'components/Sections/NewsFeed';
 // import InteractiveMapSection from 'components/Sections/InteractiveMap';
 // import VolunteersSection from 'components/Sections/Volunteers';
 import CommuintyLinksSection from 'components/Sections/CommunityLinks';
+import EventsSection from 'components/Sections/Events';
 
 const HomeView = () => {
   useEffect(() => {
@@ -44,6 +45,8 @@ const HomeView = () => {
           {/* <InteractiveMapSection /> */}
           {/* Volunteers via Mutual Aid */}
           {/* <VolunteersSection /> */}
+          {/* Events */}
+          <EventsSection />
         </div>
         <HomeFooter />
       </div>

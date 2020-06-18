@@ -47,6 +47,7 @@ const HomeFooter = props => {
   const {
     communityLinks,
     newsFeed,
+    events,
     // interactiveMap,
     // volunteers,
     facebookLinks,
@@ -67,10 +68,13 @@ const HomeFooter = props => {
         <Col xs={12} md={6} lg={3}>
           <Nav vertical className="footer-links">
             <NavItem>
-              <NavLink href={communityLinks}>Community Links</NavLink>
+              <NavLink href={communityLinks}>Community</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={newsFeed}>News Feed</NavLink>
+              <NavLink href={newsFeed}>News</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href={events}>Events</NavLink>
             </NavItem>
             {/* <NavItem>
               <NavLink href={interactiveMap}>Interactive Map</NavLink>
@@ -79,17 +83,17 @@ const HomeFooter = props => {
               <NavLink href={volunteers}>Volunteers</NavLink>
             </NavItem> */}
             <NavItem>
-              <NavLink href={facebookLinks}>Facebook Links</NavLink>
+              <NavLink href={facebookLinks}>Facebook</NavLink>
             </NavItem>
           </Nav>
         </Col>
         <Col xs={12} md={6} lg={3}>
           <Nav vertical className="footer-links">
             <NavItem>
-              <NavLink href={aboutUs}>About Us</NavLink>
+              <NavLink href={aboutUs}>About</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href={contactUs}>Contact Us</NavLink>
+              <NavLink href={contactUs}>Contact</NavLink>
             </NavItem>
               <NavItem>
                 <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline>

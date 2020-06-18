@@ -18,7 +18,7 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
 const INITIAL_STATE = {
-  communityLinksDescritpion: '',
+  communityLinksDescription: '',
   sid: null
 };
 const AuthSettingsView = props => {
@@ -52,8 +52,8 @@ const AuthSettingsView = props => {
       uid
     } = authUser;
     const {
-      communityLinksDescritpion,
-      volunteersDescritpion,
+      communityLinksDescription,
+      volunteersDescription,
       aboutPageDescription
     } = settings;
     let sid = settings.sid;
@@ -61,11 +61,11 @@ const AuthSettingsView = props => {
     let displayTitle = 'Update setting Successful';
     let displayMessage = 'Changes saved';
     try {
-      if (!communityLinksDescritpion) {
+      if (!communityLinksDescription) {
         displayTitle = 'Failed';
         displayIcon = 'error';
         displayMessage = 'You need to have a description for the community links section.';
-      } else if (!volunteersDescritpion) {
+      } else if (!volunteersDescription) {
         displayTitle = 'Failed';
         displayIcon = 'error';
         displayMessage = 'You need to have a description for the volunteers section.';
@@ -77,8 +77,8 @@ const AuthSettingsView = props => {
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
-          communityLinksDescritpion: communityLinksDescritpion,
-          volunteersDescritpion: volunteersDescritpion,
+          communityLinksDescription: communityLinksDescription,
+          volunteersDescription: volunteersDescription,
           aboutPageDescription: aboutPageDescription,
           sid: sid,
           updated: now.toString(),
@@ -105,15 +105,15 @@ const AuthSettingsView = props => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
       if (dbSettings) {
         const {
-          communityLinksDescritpion,
-          volunteersDescritpion,
+          communityLinksDescription,
+          volunteersDescription,
           aboutPageDescription,
           sid
         } = dbSettings;
         console.log(dbSettings);
         setSetting({
-          communityLinksDescritpion,
-          volunteersDescritpion,
+          communityLinksDescription,
+          volunteersDescription,
           aboutPageDescription,
           sid
         });
@@ -144,11 +144,11 @@ const AuthSettingsView = props => {
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
                         <Label>Community Links Description</Label>
-                        <Input placeholder="Community Links Description" name="communityLinksDescritpion" value={settings.communityLinksDescritpion} onChange={handleChange} type="textarea" />
+                        <Input placeholder="Community Links Description" name="communityLinksDescription" value={settings.communityLinksDescription} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>
                         <Label>Volunteers Description</Label>
-                        <Input placeholder="Volunteers Description" name="volunteersDescritpion" value={settings.volunteersDescritpion} onChange={handleChange} type="textarea" />
+                        <Input placeholder="Volunteers Description" name="volunteersDescription" value={settings.volunteersDescription} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>
                         <Label>About Page Description</Label>

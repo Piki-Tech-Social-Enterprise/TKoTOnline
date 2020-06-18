@@ -10,7 +10,8 @@ const Routes = {
   aboutUs: '/AboutUs',
   contactUs: '/ContactUs',
   facebookLinks: '/FacebookLinks',
-  facebookLink: '/FacebookLinks/:fid'
+  facebookLink: '/FacebookLinks/:fid',
+  events: '/#Events'
 };
 
 export default Routes;

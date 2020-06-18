@@ -18,6 +18,7 @@ const {
   // interactiveMap,
   // volunteers,
   facebookLinks,
+  events,
   aboutUs,
   contactUs
 } = Routes;
@@ -58,10 +59,13 @@ const HomeNavbar = () => {
           <Collapse className="justify-content-end" isOpen={collapseOpen} navbar>
             <Nav navbar>
               <NavItem active={hash !== '' && communityLinks.endsWith(hash)}>
-                <NavLink href={communityLinks}>Community Links</NavLink>
+                <NavLink href={communityLinks}>Community</NavLink>
               </NavItem>
               <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
-                <NavLink href={newsFeed}>News Feed</NavLink>
+                <NavLink href={newsFeed}>News</NavLink>
+              </NavItem>
+              <NavItem active={hash !== '' && events.endsWith(hash)}>
+                <NavLink href={events}>Events</NavLink>
               </NavItem>
               {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>
@@ -70,13 +74,13 @@ const HomeNavbar = () => {
                 <NavLink href={volunteers}>Volunteers</NavLink>
               </NavItem> */}
               <NavItem active={hash !== '' && pathname.endsWith(facebookLinks)}>
-                <NavLink href={facebookLinks}>Facebook Links</NavLink>
+                <NavLink href={facebookLinks}>Facebook</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(aboutUs)}>
-                <NavLink href={aboutUs}>About Us</NavLink>
+                <NavLink href={aboutUs}>About</NavLink>
               </NavItem>
               <NavItem active={pathname.endsWith(contactUs)}>
-                <NavLink href={contactUs}>Contact Us</NavLink>
+                <NavLink href={contactUs}>Contact</NavLink>
               </NavItem>
               <NavItem>
                 <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline>

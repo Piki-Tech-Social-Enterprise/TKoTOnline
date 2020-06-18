@@ -7,7 +7,8 @@ import {
   VolunteersRepository,
   ContactRepository,
   FunctionsRepository,
-  FacebookLinksRepository
+  FacebookLinksRepository,
+  EventsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -25,6 +26,7 @@ class Firebase {
     this.contactRepository = new ContactRepository(firebaseApp);
     this.functionsRepository = new FunctionsRepository(firebaseApp);
     this.facebookLinkRepository = new FacebookLinksRepository(firebaseApp);
+    this.eventsRepository = new EventsRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -40,10 +42,6 @@ class Firebase {
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
   getDbCommunityLinks = async () => await this.communityLinkRepository.getDbCommunityLinks();
   getDbCommunityLinksAsArray = async includeInactive => await this.communityLinkRepository.getDbCommunityLinksAsArray(includeInactive);
-  getDbCommunityLink = async clid => await this.communityLinkRepository.getDbCommunityLinks(clid);
-  getDbCommunityLinkValue = async clid => await this.communityLinkRepository.getDbCommunityLinkValue(clid);
-  saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinkRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
-  deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
   getDbSettingValue = async sid => await this.settingsRepository.getDbSettingValue(sid);
   getDbSettingsAsArray = async includeInactive => await this.settingsRepository.getDbSettingsAsArray(includeInactive);
@@ -62,6 +60,8 @@ class Firebase {
   getDbFacebookLinksAsArray = async includeInactive => await this.facebookLinkRepository.getDbFacebookLinksAsArray(includeInactive);
   getDbFacebookLink = async fid => await this.facebookLinkRepository.getDbFacebookLink(fid);
   getDbFacebookLinkValue = async fid => await this.facebookLinkRepository.getDbFacebookLinkValue(fid);
+  getDbEvents = async () => await this.eventsRepository.getDbEvents();
+  getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
 }
 
 export default Firebase;

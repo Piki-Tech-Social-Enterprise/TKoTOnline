@@ -38,16 +38,16 @@ const getChunkSize = (array, columnCount) => {
     : offset);
   return chunkSize;
 };
-const getCommunityLinksMegaMenuItems = (communityLinks, columnCount) => {
-  const communityLinksMegaMenuItems = {};
-  const chunks = intoChunks(communityLinks, getChunkSize(communityLinks, columnCount));
+const getEventsMegaMenuItems = (events, columnCount) => {
+  const eventsMegaMenuItems = {};
+  const chunks = intoChunks(events, getChunkSize(events, columnCount));
   chunks.map((chunk, index) => {
-    communityLinksMegaMenuItems[`column${index + 1}Items`] = chunk;
+    eventsMegaMenuItems[`column${index + 1}Items`] = chunk;
     return null;
   });
-  return communityLinksMegaMenuItems;
+  return eventsMegaMenuItems;
 };
-const CommunityLinksMegaMenuColumn = props => {
+const EventsMegaMenuColumn = props => {
   const {
     columnItems
   } = props;
@@ -57,13 +57,13 @@ const CommunityLinksMegaMenuColumn = props => {
         {
           columnItems.map(columnItem => {
             const {
-              clid,
-              link,
-              linkName
+              evid,
+              eventURL,
+              eventName
             } = columnItem;
             return (
-              <NavItem key={clid} className="links px-0 pb-0 bg-light1">
-                <NavLink href={link} className="px-0 text-dark bg-info1">{linkName}</NavLink>
+              <NavItem key={evid} className="events px-0 pb-0 bg-light1">
+                <NavLink href={eventURL} className="px-0 text-dark bg-info1">{eventName}</NavLink>
               </NavItem>
             );
           })
@@ -72,66 +72,66 @@ const CommunityLinksMegaMenuColumn = props => {
     </Col>
   );
 };
-const CommunityLinksMegaMenu = props => {
+const EventsMegaMenu = props => {
   const {
-    communityLinksMegaMenuItems
+    eventsMegaMenuItems
   } = props;
   return (
     <Row>
       {
-        Object.keys(communityLinksMegaMenuItems).map(key => {
-          const columnItems = communityLinksMegaMenuItems[key];
+        Object.keys(eventsMegaMenuItems).map(key => {
+          const columnItems = eventsMegaMenuItems[key];
           return columnItems.length
-            ? <CommunityLinksMegaMenuColumn columnItems={columnItems} key={key} />
+            ? <EventsMegaMenuColumn columnItems={columnItems} key={key} />
             : null
         })
       }
     </Row>
   );
 };
-const CommunityLinksSection = props => {
+const EventsSection = props => {
   const [state, setState] = useState({
     isLoading: true,
-    communityLinks: [],
+    events: [],
     columnCount: 4,
-    masterLinks: [],
-    communityLinksDescription: ''
+    masterEvents: [],
+    eventsDescription: ''
   });
-  const handleSearchLinks = async e => {
+  const handleSearchEvents = async e => {
     e.preventDefault();
     const {
-      target: link
+      target: eventURL
     } = e;
     const {
-      masterLinks
+      masterEvents
     } = state;
-    const filterList = masterLinks.filter(searchLink =>
-      searchLink.linkName.toString().toLowerCase().indexOf(link.value.toString().toLowerCase()) > -1);
+    const filterList = masterEvents.filter(searchEvent =>
+      searchEvent.eventName.toString().toLowerCase().indexOf(eventURL.value.toString().toLowerCase()) > -1);
     setState(s => ({
       ...s,
-      communityLinks: filterList
+      events: filterList
     }));
   };
   useEffect(() => {
     const {
       isLoading,
-      masterLinks
+      masterEvents
     } = state;
     const getData = async () => {
       const {
         firebase
       } = props;
-      const dbCommunityLinks = await firebase.getDbCommunityLinksAsArray();
+      const dbEvents = await firebase.getDbEventsAsArray();
       const dbSettingsValues = await firebase.getDbSettingsValues(true);
       // debugger;
       setState(s => ({
         ...s,
         isLoading: false,
-        communityLinks: dbCommunityLinks,
-        masterLinks: masterLinks.length
-          ? masterLinks
-          : dbCommunityLinks,
-        communityLinksDescription: ((dbSettingsValues && dbSettingsValues.communityLinksDescription) || '')
+        events: dbEvents,
+        masterEvents: masterEvents.length
+          ? masterEvents
+          : dbEvents,
+        eventsDescription: ((dbSettingsValues && dbSettingsValues.eventsDescription) || '')
       }));
     };
     if (isLoading) {
@@ -139,22 +139,22 @@ const CommunityLinksSection = props => {
     }
   }, [props, state]);
   return (
-    <Container id="CommunityLinks" className="tkot-section bg-secondary1">
+    <Container id="Events" className="tkot-section bg-secondary1">
       <Row>
         <Col xs={12} sm={8}>
-          <h3>Community Links</h3>
+          <h3>Events</h3>
         </Col>
         <Col xs={12} sm={4}>
-          <Form className="community-links-form">
+          <Form className="events-form">
             <FormGroup>
-              <Input placeholder="Search" type="text" onChange={handleSearchLinks} />
+              <Input placeholder="Search" type="text" onChange={handleSearchEvents} />
             </FormGroup>
           </Form>
         </Col>
       </Row>
       <Row>
         <Col>
-          <p>{state.communityLinksDescription}</p>
+          <p>{state.eventsDescription}</p>
         </Col>
       </Row>
       <Row>
@@ -162,7 +162,7 @@ const CommunityLinksSection = props => {
           {
             state.isLoading
               ? <LoadingSpinner />
-              : <CommunityLinksMegaMenu communityLinksMegaMenuItems={getCommunityLinksMegaMenuItems(state.communityLinks, state.columnCount)} />
+              : <EventsMegaMenu eventsMegaMenuItems={getEventsMegaMenuItems(state.events, state.columnCount)} />
           }
         </Col>
       </Row>
@@ -170,4 +170,4 @@ const CommunityLinksSection = props => {
   );
 };
 
-export default withFirebase(CommunityLinksSection);
+export default withFirebase(EventsSection);
