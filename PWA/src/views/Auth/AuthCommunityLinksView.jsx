@@ -86,7 +86,7 @@ const AuthCommunityLinksView = props => {
                     : <BootstrapTable data={CommunityLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      insertRow exportCSV csvFileName="community-links-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
