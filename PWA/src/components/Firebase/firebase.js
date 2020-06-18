@@ -10,7 +10,8 @@ import {
   ContactRepository,
   FunctionsRepository,
   EPanuiListRepository,
-  FacebookLinksRepository
+  FacebookLinksRepository,
+  EventsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -24,13 +25,14 @@ class Firebase {
     this.userRepository = new UserRepository(firebaseApp);
     this.storageRepository = new StorageRepository(firebaseApp);
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
-    this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
+    this.communityLinksRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
     this.contactRepository = new ContactRepository(firebaseApp);
     this.functionsRepository = new FunctionsRepository(firebaseApp);
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
     this.facebookLinksRepository = new FacebookLinksRepository(firebaseApp);
+    this.eventsRepository = new EventsRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -65,12 +67,12 @@ class Firebase {
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
 
-  getDbCommunityLinks = async () => await this.communityLinkRepository.getDbCommunityLinks();
-  getDbCommunityLinksAsArray = async includeInactive => await this.communityLinkRepository.getDbCommunityLinksAsArray(includeInactive);
-  getDbCommunityLink = async clid => await this.communityLinkRepository.getDbCommunityLinks(clid);
-  getDbCommunityLinkValue = async clid => await this.communityLinkRepository.getDbCommunityLinkValue(clid);
-  saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinkRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
-  deleteDbCommunityLink = async clid => await this.communityLinkRepository.deleteDbCommunityLink(clid);
+  getDbCommunityLinks = async () => await this.communityLinksRepository.getDbCommunityLinks();
+  getDbCommunityLinksAsArray = async includeInactive => await this.communityLinksRepository.getDbCommunityLinksAsArray(includeInactive);
+  getDbCommunityLink = async clid => await this.communityLinksRepository.getDbCommunityLinks(clid);
+  getDbCommunityLinkValue = async clid => await this.communityLinksRepository.getDbCommunityLinkValue(clid);
+  saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinksRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
+  deleteDbCommunityLink = async clid => await this.communityLinksRepository.deleteDbCommunityLink(clid);
 
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
   getDbSetting = async sid => await this.settings.getDbSetting(sid);
@@ -110,6 +112,13 @@ class Firebase {
   getDbFacebookLinkValue = async fid => await this.facebookLinksRepository.getDbFacebookLinkValue(fid);
   saveDbFacebookLink = async (facebookLink, saveDbFacebookLink_completed) => await this.facebookLinksRepository.saveDbFacebookLink(facebookLink, saveDbFacebookLink_completed);
   deleteDbFacebookLink = async fid => await this.facebookLinksRepository.deleteDbFacebookLink(fid);
+
+  getDbEvents = async () => await this.eventsRepository.getDbEvents();
+  getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
+  getDbEvent = async evid => await this.eventsRepository.getDbEvents(evid);
+  getDbEventValue = async evid => await this.eventsRepository.getDbEventValue(evid);
+  saveDbEvent = async (event, saveDbEvent_completed) => await this.eventsRepository.saveDbEvent(event, saveDbEvent_completed);
+  deleteDbEvent = async evid => await this.eventsRepository.deleteDbEvent(evid);
 }
 
 export default Firebase;

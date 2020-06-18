@@ -86,7 +86,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/CommunityLinks/:clid',
-    name: 'Community Links',
+    name: 'Community Link',
     component: lazy(() => import('views/Auth/AuthCommunityLinkView')),
     exact: true,
     iconLibrary: null,
@@ -158,7 +158,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/FacebookLinks/:fid',
-    name: 'Facebook Links',
+    name: 'Facebook Link',
     component: lazy(() => import('views/Auth/AuthFacebookLinkView')),
     exact: true,
     iconLibrary: null,
@@ -182,7 +182,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/Contacts/:cid',
-    name: 'Contact Details',
+    name: 'Contact Message',
     component: lazy(() => import('views/Auth/AuthContactView')),
     exact: true,
     iconLibrary: null,
@@ -250,6 +250,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Events',
+    name: 'Events',
+    component: lazy(() => import('views/Auth/AuthEventsView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'ui-1_calendar-60',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Events/:evid',
+    name: 'Event',
+    component: lazy(() => import('views/Auth/AuthEventView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {

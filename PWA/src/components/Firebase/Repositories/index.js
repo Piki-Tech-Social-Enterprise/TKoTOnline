@@ -10,6 +10,7 @@ import ContactRepository from './ContactRepository';
 import FunctionsRepository from './FunctionsRepository';
 import EPanuiListRepository from './EPanuiListRepository';
 import FacebookLinksRepository from './FacebookLinksRepository';
+import EventsRepository from './EventsRepository';
 
 export default BaseRepository;
 export {
@@ -23,5 +24,6 @@ export {
   ContactRepository,
   FunctionsRepository,
   EPanuiListRepository,
-  FacebookLinksRepository
+  FacebookLinksRepository,
+  EventsRepository
 };
