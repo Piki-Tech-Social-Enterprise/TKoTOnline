@@ -10,7 +10,7 @@
     "chart.js": "2.9.3",
     "firebase": "^7.15.1",
     "googleapis": "^52.1.0",
-    "history": "5.0.0",
+    "history": "4.10.0",
     "node-sass": "4.14.1",
     "perfect-scrollbar": "1.5.0",
     "react": "16.13.1",

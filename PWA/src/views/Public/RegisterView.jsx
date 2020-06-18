@@ -180,6 +180,17 @@ const RegisterView = props => {
             >
               Register
             </Button>
+            <Button
+              block
+              className="btn-round my-2"
+              color="secondary"
+              size="lg"
+              type="button"
+              disabled={isSubmitting}
+              href="/public/Login"
+            >
+              Back
+            </Button>
           </CardFooter>
           <SweetAlert show={show} title={title} text={text} onConfirm={() => setSweetAlertStates()} />
         </Form>

@@ -5,9 +5,6 @@ import {
   withFirebase
 } from 'components/Firebase';
 import {
-  Link
-} from 'react-router-dom';
-import {
   Button,
   Card,
   CardHeader,
@@ -38,7 +35,7 @@ const ForgotPassword = props => {
       displayMessage = 'Email is invalid.';
     } else {
       console.log("firebase is ready to attach");
-      displayMessage='Success';
+      displayMessage = 'Success';
       try {
         await props.firebase.sendPasswordResetEmail(email);
         console.log('anything');
@@ -62,34 +59,48 @@ const ForgotPassword = props => {
   } = process.env;
   return (
     <Container className="login-view text-center">
-        <Card className="card-login card-plain">
-          <CardHeader className="text-center">
-            <div className="logo-container">
-              <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/tkot-logo-512x512.png")} />
-            </div>
+      <Card className="card-login card-plain">
+        <CardHeader className="text-center">
+          <div className="logo-container">
+            <img alt={`${REACT_APP_PWA_NAME}`} src={require("assets/img/tkot/tkot-logo-512x512.png")} />
+          </div>
           {REACT_APP_PWA_NAME} v{REACT_APP_PWA_BUILD_VERSION}
-          </CardHeader>
-          <CardBody className="pb-0">
-            <p>Reset your password</p>
-              <Form className="register-form" onSubmit={handleSubmit} noValidate>
-                <Input id="Email" placeholder="Email" type="text" />
-                <Button type="submit" block className="mt-4 btn-round btn btn-danger btn-block" disabled={isSubmitting}>
-                  Reset
-              </Button>
-                <SweetAlert
-                  show={show}
-                  title={title}
-                  text={text}
-                  onConfirm={() => setSweetAlertStates()}/>
-                <Link to="/Login" className="mt-4 btn-round btn btn-primary btn-block">Back</Link>
-                {/* <CopyrightInfomation
-                  rowClassName="mt-4"
-                /> */}
-            </Form>
-          </CardBody>
-        </Card>
-  </Container>
-);
+        </CardHeader>
+        <CardBody className="pb-0">
+          <p>Reset your password</p>
+          <Form className="register-form" onSubmit={handleSubmit} noValidate>
+            <Input id="Email" placeholder="Email" type="text" />
+            <Button
+              block
+              className="btn-round my-2"
+              color="danger"
+              size="lg"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Reset
+            </Button>
+            <Button
+              block
+              className="btn-round my-2"
+              color="secondary"
+              size="lg"
+              type="button"
+              disabled={isSubmitting}
+              href="/public/Login"
+            >
+              Back
+            </Button>
+            <SweetAlert
+              show={show}
+              title={title}
+              text={text}
+              onConfirm={() => setSweetAlertStates()} />
+          </Form>
+        </CardBody>
+      </Card>
+    </Container>
+  );
 };
 
-export default withFirebase (ForgotPassword);
+export default withFirebase(ForgotPassword);

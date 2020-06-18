@@ -15,7 +15,6 @@ const withAuthentication = Component => {
     const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem(localStorageItemId)));
     useEffect(() => {
       let listener = null;
-      setIsLoading(true);
       (async function useEffectAsync() {
         listener = await props.firebase.authUserListener(authUser => {
           localStorage.setItem(localStorageItemId, JSON.stringify(authUser));
