@@ -11,7 +11,8 @@ const Routes = {
   contactUs: '/ContactUs',
   facebookLinks: '/FacebookLinks',
   facebookLink: '/FacebookLinks/:fid',
-  events: '/#Events'
+  events: '/#Events',
+  solutions: '/#Solutions'
 };
 
 export default Routes;

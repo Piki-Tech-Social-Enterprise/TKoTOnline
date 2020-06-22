@@ -9,6 +9,7 @@ import NewsFeedSection from 'components/Sections/NewsFeed';
 // import VolunteersSection from 'components/Sections/Volunteers';
 import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 import EventsSection from 'components/Sections/Events';
+import SolutionsSection from 'components/Sections/Solutions';
 
 const HomeView = () => {
   useEffect(() => {
@@ -47,6 +48,8 @@ const HomeView = () => {
           {/* <VolunteersSection /> */}
           {/* Events */}
           <EventsSection />
+          {/* Solutions */}
+          <SolutionsSection />
         </div>
         <HomeFooter />
       </div>

@@ -8,6 +8,7 @@ import ContactRepository from './ContactRepository';
 import FunctionsRepository from './FunctionsRepository';
 import FacebookLinksRepository from './FacebookLinksRepository';
 import EventsRepository from './EventsRepository';
+import SolutionsRepository from './SolutionsRepository';
 
 export default BaseRepository;
 export {
@@ -19,5 +20,6 @@ export {
   ContactRepository,
   FunctionsRepository,
   FacebookLinksRepository,
-  EventsRepository
+  EventsRepository,
+  SolutionsRepository
 };

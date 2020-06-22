@@ -48,6 +48,7 @@ const HomeFooter = props => {
     communityLinks,
     newsFeed,
     events,
+    solutions,
     // interactiveMap,
     // volunteers,
     facebookLinks,
@@ -75,6 +76,9 @@ const HomeFooter = props => {
             </NavItem>
             <NavItem>
               <NavLink href={events}>Events</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href={solutions}>Solutions</NavLink>
             </NavItem>
             {/* <NavItem>
               <NavLink href={interactiveMap}>Interactive Map</NavLink>

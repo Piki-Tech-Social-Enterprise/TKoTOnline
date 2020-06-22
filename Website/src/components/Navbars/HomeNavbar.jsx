@@ -19,6 +19,7 @@ const {
   // volunteers,
   facebookLinks,
   events,
+  solutions,
   aboutUs,
   contactUs
 } = Routes;
@@ -66,6 +67,9 @@ const HomeNavbar = () => {
               </NavItem>
               <NavItem active={hash !== '' && events.endsWith(hash)}>
                 <NavLink href={events}>Events</NavLink>
+              </NavItem>
+              <NavItem active={hash !== '' && solutions.endsWith(hash)}>
+                <NavLink href={solutions}>Solutions</NavLink>
               </NavItem>
               {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
                 <NavLink href={interactiveMap}>Interactive Map</NavLink>

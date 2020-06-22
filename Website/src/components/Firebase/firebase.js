@@ -8,7 +8,8 @@ import {
   ContactRepository,
   FunctionsRepository,
   FacebookLinksRepository,
-  EventsRepository
+  EventsRepository,
+  SolutionsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -27,6 +28,7 @@ class Firebase {
     this.functionsRepository = new FunctionsRepository(firebaseApp);
     this.facebookLinkRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
+    this.solutionsRepository = new SolutionsRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -62,6 +64,8 @@ class Firebase {
   getDbFacebookLinkValue = async fid => await this.facebookLinkRepository.getDbFacebookLinkValue(fid);
   getDbEvents = async () => await this.eventsRepository.getDbEvents();
   getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
+  getDbSolutions = async () => await this.solutionsRepository.getDbSolutions();
+  getDbSolutionsAsArray = async includeInactive => await this.solutionsRepository.getDbSolutionsAsArray(includeInactive);
 }
 
 export default Firebase;
