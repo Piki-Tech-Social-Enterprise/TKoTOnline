@@ -11,6 +11,7 @@ import FunctionsRepository from './FunctionsRepository';
 import EPanuiListRepository from './EPanuiListRepository';
 import FacebookLinksRepository from './FacebookLinksRepository';
 import EventsRepository from './EventsRepository';
+import SolutionsRepository from './SolutionsRepository'; 
 
 export default BaseRepository;
 export {
@@ -25,5 +26,6 @@ export {
   FunctionsRepository,
   EPanuiListRepository,
   FacebookLinksRepository,
-  EventsRepository
+  EventsRepository,
+  SolutionsRepository
 };

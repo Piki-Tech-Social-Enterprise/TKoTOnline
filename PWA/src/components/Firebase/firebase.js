@@ -11,7 +11,8 @@ import {
   FunctionsRepository,
   EPanuiListRepository,
   FacebookLinksRepository,
-  EventsRepository
+  EventsRepository,
+  SolutionsRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -33,6 +34,7 @@ class Firebase {
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
     this.facebookLinksRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
+    this.solutionsRepository = new SolutionsRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -119,6 +121,13 @@ class Firebase {
   getDbEventValue = async evid => await this.eventsRepository.getDbEventValue(evid);
   saveDbEvent = async (event, saveDbEvent_completed) => await this.eventsRepository.saveDbEvent(event, saveDbEvent_completed);
   deleteDbEvent = async evid => await this.eventsRepository.deleteDbEvent(evid);
+
+  getDbSolutions = async () => await this.solutionsRepository.getDbSolutions();
+  getDbSolutionsAsArray = async includeInactive => await this.solutionsRepository.getDbSolutionsAsArray(includeInactive);
+  getDbSolution = async slid => await this.solutionsRepository.getDbSolutions(slid);
+  getDbSolutionValue = async slid => await this.solutionsRepository.getDbSolutionValue(slid);
+  saveDbSolution = async (solution, saveDbSolution_completed) => await this.solutionsRepository.saveDbSolution(solution, saveDbSolution_completed);
+  deleteDbSolution = async slid => await this.solutionsRepository.deleteDbSolution(slid);
 }
 
 export default Firebase;

@@ -274,6 +274,30 @@ const authRoutes = [
     roles: adminRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
+  },
+  {
+    layout: '/auth',
+    path: '/Solutions',
+    name: 'Solutions',
+    component: lazy(() => import('views/Auth/AuthSolutionsView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'business_bulb-63',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Solutions/:slid',
+    name: 'Solution',
+    component: lazy(() => import('views/Auth/AuthSolutionView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
   }
 ];
 const getAuthRouteByName = name => {
