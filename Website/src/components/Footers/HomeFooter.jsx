@@ -86,13 +86,13 @@ const HomeFooter = props => {
             {/* <NavItem>
               <NavLink href={volunteers}>Volunteers</NavLink>
             </NavItem> */}
-            <NavItem>
-              <NavLink href={facebookLinks}>Facebook</NavLink>
-            </NavItem>
           </Nav>
         </Col>
         <Col xs={12} md={6} lg={3}>
           <Nav vertical className="footer-links">
+            <NavItem>
+              <NavLink href={facebookLinks}>Facebook</NavLink>
+            </NavItem>
             <NavItem>
               <NavLink href={aboutUs}>About</NavLink>
             </NavItem>
