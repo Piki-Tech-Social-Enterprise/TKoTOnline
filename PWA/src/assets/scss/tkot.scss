@@ -1,7 +1,13 @@
 @import 'now-ui-dashboard/variables';
 @import 'now-ui-dashboard/mixins';
+@import 'tkot/roboto-condensed';
+@import 'tkot/open-sans';
 
-$tkot-bg-color: #171b5d;
+$tkot-primary-blue: #211C5F;
+$tkot-primary-red: #A32222;
+$tkot-secondary-color-grey: #919396;
+$tkot-secondary-color-black: #000000;
+$tkot-bg-color: $tkot-primary-blue;
 
 .clear-filter {
   &:after,

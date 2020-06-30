@@ -1,8 +1,39 @@
 @import 'now-ui-kit/variables';
 @import 'now-ui-kit/mixins';
+@import 'tkot/roboto-condensed';
+@import 'tkot/open-sans';
 
-$tkot-bg-color: #171b5d;
+$tkot-primary-blue: #211C5F;
+$tkot-primary-red: #A32222;
+$tkot-secondary-color-grey: #919396;
+$tkot-secondary-color-black: #000000;
+$tkot-bg-color: $tkot-primary-blue;
 $tkot-padding-top: 6rem;
+
+.tkot-primary-blue-bg-color {
+  background-color: $tkot-primary-blue;
+}
+.tkot-primary-red-bg-color {
+  background-color: $tkot-primary-red;
+}
+.tkot-secondary-color-grey-bg-color {
+  background-color: $tkot-secondary-color-grey;
+}
+.tkot-secondary-color-black-bg-color {
+  background-color: $tkot-secondary-color-black;
+}
+.tkot-primary-blue-color {
+  color: $tkot-primary-blue;
+}
+.tkot-primary-red-color {
+  color: $tkot-primary-red;
+}
+.tkot-secondary-color-grey-color {
+  color: $tkot-secondary-color-grey;
+}
+.tkot-secondary-color-black-color {
+  color: $tkot-secondary-color-black;
+}
 
 .tkot-section {
   padding: $tkot-padding-top 0 0;
@@ -79,15 +110,6 @@ $tkot-padding-top: 6rem;
 
 #header-container {
   margin-top: 100px;
-}
-
-.h1-seo {
-  font-family: 'Roboto', sans-serif;
-}
-
-.h3-seo {
-  color: #8f95c3;
-  text-align: left;
 }
 
 .fixed-top {

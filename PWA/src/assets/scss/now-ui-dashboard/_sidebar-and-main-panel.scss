@@ -194,7 +194,7 @@
             margin: 10px 10px;
             color: $white-color;
             line-height: 20px;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: $sans-serif-family; // "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
         .simple-text{

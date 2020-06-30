@@ -428,10 +428,10 @@ Copyright (c) 2015 Daniel Eden
   .show > .btn-primary.dropdown-toggle,
   .show > .btn-primary.dropdown-toggle:focus,
   .show > .btn-primary.dropdown-toggle:hover {
-    background-color: #fa7a50;
+    background-color: #e62c4e;
     color: #FFFFFF;
     box-shadow: none;
-    border-color: #fa7a50; }
+    border-color: #e62c4e; }
   .btn-primary:not([data-action]):not([class*="btn-outline-"]):hover {
     box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
   .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary:disabled, .btn-primary:disabled:hover, .btn-primary:disabled:focus, .btn-primary:disabled.focus, .btn-primary:disabled:active, .btn-primary:disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active,
@@ -447,7 +447,7 @@ Copyright (c) 2015 Daniel Eden
     color: #d91a3d; }
     .btn-primary.btn-link:hover, .btn-primary.btn-link:focus, .btn-primary.btn-link:active {
       background-color: transparent;
-      color: #fa7a50;
+      color: #e62c4e;
       text-decoration: none;
       box-shadow: none; }
 
@@ -618,10 +618,10 @@ Copyright (c) 2015 Daniel Eden
   .show > .btn-neutral.dropdown-toggle:focus,
   .show > .btn-neutral.dropdown-toggle:hover {
     background-color: #FFFFFF;
-    color: #fa7a50 !important;
+    color: #e62c4e !important;
     box-shadow: none; }
   .btn-neutral:hover, .btn-neutral:focus {
-    color: #fa7a50; }
+    color: #e62c4e; }
     .btn-neutral:hover:not(.nav-link), .btn-neutral:focus:not(.nav-link) {
       box-shadow: none !important; }
   .btn-neutral.btn-link {
@@ -640,8 +640,8 @@ Copyright (c) 2015 Daniel Eden
   .show > .btn-outline-primary.dropdown-toggle:focus,
   .show > .btn-outline-primary.dropdown-toggle:hover {
     background-color: transparent;
-    color: #fa7a50;
-    border-color: #fa7a50;
+    color: #e62c4e;
+    border-color: #e62c4e;
     box-shadow: none; }
 
 .btn-outline-success {
@@ -1222,9 +1222,10 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; }
+  font-family: "Open Sans"; }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto Condensed";
   font-weight: 400; }
 
 a {
@@ -1353,7 +1354,7 @@ a.text-gray:focus, a.text-gray:hover {
 body {
   color: #2c2c2c;
   font-size: 14px;
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Open Sans";
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased; }
 
@@ -1924,9 +1925,9 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     text-transform: uppercase;
     font-weight: 700; }
   .dropdown-menu.dropdown-primary {
-    background-color: #f95823; }
+    background-color: #cb1839; }
     .dropdown-menu.dropdown-primary:before {
-      color: #f95823; }
+      color: #cb1839; }
     .dropdown-menu.dropdown-primary .dropdown-header:not([href]):not([tabindex]) {
       color: rgba(255, 255, 255, 0.8); }
     .dropdown-menu.dropdown-primary .dropdown-item {
@@ -2056,7 +2057,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .alert.alert-info {
     background-color: #46b3ff; }
   .alert.alert-primary {
-    background-color: #fa764b; }
+    background-color: #e5274a; }
   .alert i.fa,
   .alert i.now-ui-icons {
     font-size: 20px; }
@@ -2819,7 +2820,7 @@ Created using IcoMoon - icomoon.io
       margin: 10px 10px;
       color: #FFFFFF;
       line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      font-family: "Open Sans"; }
     .sidebar .logo .simple-text,
     .off-canvas-sidebar .logo .simple-text {
       text-transform: uppercase;
@@ -4117,7 +4118,7 @@ Created using IcoMoon - icomoon.io
   .alert.alert-info {
     background-color: #46b3ff; }
   .alert.alert-primary {
-    background-color: #fa764b; }
+    background-color: #e5274a; }
   .alert i.fa,
   .alert i.now-ui-icons {
     font-size: 20px; }
@@ -4381,7 +4382,7 @@ Created using IcoMoon - icomoon.io
       margin: 10px 10px;
       color: #FFFFFF;
       line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      font-family: "Open Sans"; }
     .sidebar .logo .simple-text,
     .off-canvas-sidebar .logo .simple-text {
       text-transform: uppercase;

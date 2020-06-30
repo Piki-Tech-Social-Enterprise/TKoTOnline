@@ -23,7 +23,7 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/now-ui-dashboard.scss?v1.2.0";
 import "assets/scss/tkot.scss?v1.0.0";
-import "assets/css/demo.css";
+// import "assets/css/demo.css";
 
 import AdminLayout from "layouts/Admin.jsx";
 import AuthLayout from 'layouts/AuthLayout';

@@ -1402,7 +1402,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .show > .btn-primary.dropdown-toggle,
   .show > .btn-primary.dropdown-toggle:focus,
   .show > .btn-primary.dropdown-toggle:hover {
-    background-color: #fa7a50;
+    background-color: #e62c4e;
     color: #FFFFFF;
     box-shadow: none; }
   .btn-primary:hover {
@@ -1424,8 +1424,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     .show > .btn-primary.btn-simple.dropdown-toggle:focus,
     .show > .btn-primary.btn-simple.dropdown-toggle:hover {
       background-color: transparent;
-      color: #fa7a50;
-      border-color: #fa7a50;
+      color: #e62c4e;
+      border-color: #e62c4e;
       box-shadow: none; }
   .btn-primary.btn-link {
     color: #d91a3d; }
@@ -1434,7 +1434,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     .show > .btn-primary.btn-link.dropdown-toggle:focus,
     .show > .btn-primary.btn-link.dropdown-toggle:hover {
       background-color: transparent;
-      color: #fa7a50;
+      color: #e62c4e;
       text-decoration: none;
       box-shadow: none; }
 
@@ -1638,7 +1638,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .btn-neutral.btn-primary {
     color: #d91a3d; }
     .btn-neutral.btn-primary:hover, .btn-neutral.btn-primary:focus, .btn-neutral.btn-primary:active {
-      color: #fa7a50 !important; }
+      color: #e62c4e !important; }
   .btn-neutral.btn-info {
     color: #2CA8FF; }
     .btn-neutral.btn-info:hover, .btn-neutral.btn-info:focus, .btn-neutral.btn-info:active {
@@ -1660,10 +1660,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .show > .btn-neutral.dropdown-toggle:focus,
   .show > .btn-neutral.dropdown-toggle:hover {
     background-color: #FFFFFF;
-    color: #fa7a50;
+    color: #e62c4e;
     box-shadow: none; }
   .btn-neutral:hover, .btn-neutral:focus {
-    color: #fa7a50 !important; }
+    color: #e62c4e !important; }
     .btn-neutral:hover:not(.nav-link), .btn-neutral:focus:not(.nav-link) {
       box-shadow: none; }
   .btn-neutral.btn-simple {
@@ -1696,8 +1696,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .show > .btn-outline-primary.dropdown-toggle:focus,
   .show > .btn-outline-primary.dropdown-toggle:hover {
     background-color: transparent;
-    color: #fa7a50;
-    border-color: #fa7a50;
+    color: #e62c4e;
+    border-color: #e62c4e;
     box-shadow: none; }
 
 .btn-outline-success {
@@ -2497,9 +2497,10 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; }
+  font-family: "Open Sans"; }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto Condensed";
   font-weight: 400; }
 
 small {
@@ -2624,7 +2625,7 @@ p {
 body {
   color: #2c2c2c;
   font-size: 14px;
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Open Sans";
   overflow-x: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased; }
@@ -3448,9 +3449,9 @@ Created using IcoMoon - icomoon.io
     text-transform: uppercase;
     font-weight: 700; }
   .dropdown-menu.dropdown-primary {
-    background-color: #f95823; }
+    background-color: #cb1839; }
     .dropdown-menu.dropdown-primary:before {
-      color: #f95823; }
+      color: #cb1839; }
     .dropdown-menu.dropdown-primary .dropdown-header:not([href]):not([tabindex]) {
       color: rgba(255, 255, 255, 0.8); }
     .dropdown-menu.dropdown-primary .dropdown-item {
@@ -4065,13 +4066,13 @@ img {
 .section-full-page[filter-color="purple"]:after, .section-full-page[filter-color="primary"]:after {
   background: rgba(227, 227, 227, 0.26);
   /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(249, 99, 50, 0.95));
+  background: -webkit-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(217, 26, 61, 0.95));
   /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(249, 99, 50, 0.95));
+  background: -o-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(217, 26, 61, 0.95));
   /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(249, 99, 50, 0.95));
+  background: -moz-linear-gradient(90deg, rgba(227, 227, 227, 0.26), rgba(217, 26, 61, 0.95));
   /* For Firefox 3.6 to 15 */
-  background: linear-gradient(0deg, rgba(227, 227, 227, 0.26), rgba(249, 99, 50, 0.95));
+  background: linear-gradient(0deg, rgba(227, 227, 227, 0.26), rgba(217, 26, 61, 0.95));
   /* Standard syntax */ }
 
 .section-full-page[data-image]:after {
@@ -5146,7 +5147,7 @@ img {
       position: relative;
       top: 1px; }
   .footer .copyright {
-    float: right; } }
+    align-content: center; } }
 
 @media screen and (min-width: 768px) {
   .image-container.image-right {

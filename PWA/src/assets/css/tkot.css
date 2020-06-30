@@ -1,9 +1,21 @@
 /*     brand Colors              */
 /*      light colors         */
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url("../../fonts/RobotoCondensed/RobotoCondensed-Regular.ttf"), url("../../fonts/RobotoCondensed/RobotoCondensed-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("../../fonts/OpenSans/OpenSans-Regular.ttf"), url("../../fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
 .clear-filter:after, .clear-filter:before {
   display: none; }
 
-.clear-filter[filter-color="orange"] {
+.clear-filter[filter-color='orange'] {
   background: rgba(44, 44, 44, 0.2);
   /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(90deg, rgba(44, 44, 44, 0.2), rgba(224, 23, 3, 0.6));
@@ -15,7 +27,7 @@
   background: linear-gradient(0deg, rgba(44, 44, 44, 0.2), rgba(224, 23, 3, 0.6));
   /* Standard syntax */ }
 
-.clear-filter[filter-color="blue"] {
+.clear-filter[filter-color='blue'] {
   background: rgba(44, 44, 44, 0.2);
   /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(90deg, rgba(44, 44, 44, 0.2), rgba(3, 161, 224, 0.6));
@@ -204,5 +216,83 @@
   font-size: 10px;
   color: #FFFFFF;
   text-decoration: none; }
+
+.sidebar[data-color='tkot']:after {
+  background: #211C5F; }
+
+.sidebar[data-color='tkot'] .nav li.active > a:not([data-toggle="collapse"]) {
+  color: #211C5F; }
+  .sidebar[data-color='tkot'] .nav li.active > a:not([data-toggle="collapse"]) i {
+    color: #211C5F; }
+
+.sidebar .logo {
+  padding: 1.15rem 0.7rem; }
+
+.sidebar .bg-image {
+  background-image: url(../img/tkot/Te-Takarangi-hero-2.jpg);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  position: absolute;
+  background-size: cover;
+  background-position: center center; }
+
+.sidebar .bg-image::after {
+  width: 100%;
+  height: 100%;
+  content: '';
+  display: block;
+  opacity: 0.8;
+  z-index: 3;
+  position: absolute;
+  background: #000; }
+
+.sidebar::after {
+  opacity: 0.5; }
+
+.panel-header-xs {
+  height: 0;
+  padding-top: 4.25rem; }
+
+.table > thead > tr > th {
+  font-size: 1em;
+  padding: 0; }
+
+.table .clickable,
+.table > thead > tr > th.sort-column {
+  cursor: pointer; }
+
+.clickable {
+  cursor: pointer; }
+
+:disabled,
+[disabled],
+.disabled {
+  cursor: not-allowed !important; }
+
+.user-roles .custom-control-label {
+  padding-top: 0.18rem; }
+
+.onboard-form input {
+  opacity: 1;
+  position: relative; }
+
+.fullscreen-background-image {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: none;
+  z-index: -99999; }
+
+.text-aqua {
+  color: aqua; }
 
 /*# sourceMappingURL=tkot.css.map */

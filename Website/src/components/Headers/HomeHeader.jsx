@@ -11,8 +11,8 @@ const HomeHeader = () => {
       }} />
       <Container>
         <div id="header-container">
-          <h1 className="h1-seo1 text-left">Te Kahu o Taonui</h1>
-          <h3 className="h3-seo1 text-secondary text-left">Nau mai, haere mai</h3>
+          <h1 className="text-uppercase text-left">Te Kahu o Taonui</h1>
+          <div className="h3 tkot-secondary-color-grey-color text-left font-italic">Me mahi tahi tātou</div>
         </div>
       </Container>
     </div>
