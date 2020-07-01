@@ -21,7 +21,6 @@ import {
 } from 'components/Firebase';
 
 const ContactUsView = props => {
-  const defaultDisplayMesssage = 'Contact Form Saved';
   const INITIAL_STATE = {
     active: true,
     firstName: '',
@@ -66,20 +65,15 @@ const ContactUsView = props => {
       message
     } = contact;
     let cid = contact.cid;
-    let displayIcon = 'success';
-    let displayTitle = 'Contact Form recieved';
-    let displayMessage = 'Contact Form Saved';
+    let displayIcon = 'error';
+    let displayTitle = 'Contact failed';
+    let displayMessage = '';
     try {
       if (!email || !firstName || !lastName || !message) {
-        displayIcon = 'error';
-        displayTitle = 'Error'
-        displayMessage = 'First Name, Last Name, Email and Message are all required ';
+        displayMessage = 'First Name, Last Name, Email and Message are required fields.';
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-        displayIcon = 'error';
-        displayTitle = 'Error'
         displayMessage = 'Email is invalid.';
-      }
-      if (displayMessage === defaultDisplayMesssage) {
+      } else {
         if (isNew) {
           cid = await firebase.saveDbContact({});
         }
@@ -95,11 +89,12 @@ const ContactUsView = props => {
           updated: now.toString(),
           updatedBy: firstName
         });
-
+        displayIcon = 'success';
+        displayTitle = 'Contact successfully sent';
+        displayMessage = `Thank you ${firstName} ${lastName}, your registration was successful. We will send an email to ${email} soon.`;
+        handleGotoParent();
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update Contact Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
@@ -107,11 +102,8 @@ const ContactUsView = props => {
     if (displayMessage) {
       swal.fire({
         icon: displayIcon,
-        title: displayTitle
-      }).then((result) => {
-        if (result.value) {
-          handleGotoParent()
-        }
+        title: displayTitle,
+        text: displayMessage
       });
     }
   };
@@ -121,7 +113,7 @@ const ContactUsView = props => {
       <Container className="p-5 mt-5">
         <Row>
           <Col className="px-0 mt-5">
-            <h3>CONTACT US</h3>
+            <h3>CONTACT</h3>
             <p>We would like to hear from you</p>
             <div className="panel-header panel-header-xs" />
             <Container className="content">
@@ -144,7 +136,7 @@ const ContactUsView = props => {
                         </FormGroup>
                         <FormGroup>
                           <Label>Message</Label>
-                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" />
+                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" className="mh-100" rows={5} />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Send</Button>
