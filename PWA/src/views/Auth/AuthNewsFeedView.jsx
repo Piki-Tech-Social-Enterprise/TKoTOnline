@@ -81,50 +81,50 @@ const AuthNewsFeedView = props => {
     } = newsFeed;
     let nfid = newsFeed.nfid;
     let imageUrl = newsFeed.imageUrl;
-    let displayIcon = 'success';
-    let displayTitle = 'Update News Feed Successful';
+    let displayIcon = 'error';
+    let displayTitle = 'Save News Feed Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !caption || !content) {
-        displayMessage = 'The Image, Header, Caption, and Content fields are required.';
-      } else
-        if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
-          const {
-            size
-          } = imageUrlFile;
-          throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
-        } else {
-          if (isNew) {
-            nfid = await firebase.saveDbNewsFeed({});
-            if (imageUrlFile && imageUrlFile.name) {
-              imageUrl = newsFeedImageUrlFormat
-                .replace(newsFeedKeyFormat, nfid)
-                .replace(newsFeedFilenameFormat, imageUrlFile.name);
-            }
-          }
-          await firebase.saveDbNewsFeed({
-            active: active,
-            created: now.toString(),
-            createdBy: uid,
-            caption,
-            content,
-            header,
-            imageUrl,
-            isFeatured,
-            nfid: nfid,
-            updated: now.toString(),
-            updatedBy: uid
-          });
-          if (imageUrlFile) {
-            await firebase.saveStorageFile(imageUrl, imageUrlFile);
-          }
-          if (isNew) {
-            handleGotoParentList();
+      if (!imageUrl || !header || !content) {
+        displayMessage = 'The Image, Header, and Content fields are required.';
+      } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = imageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else {
+        if (isNew) {
+          nfid = await firebase.saveDbNewsFeed({});
+          if (imageUrlFile && imageUrlFile.name) {
+            imageUrl = newsFeedImageUrlFormat
+              .replace(newsFeedKeyFormat, nfid)
+              .replace(newsFeedFilenameFormat, imageUrlFile.name);
           }
         }
+        await firebase.saveDbNewsFeed({
+          active: active,
+          created: now.toString(),
+          createdBy: uid,
+          caption,
+          content,
+          header,
+          imageUrl,
+          isFeatured,
+          nfid: nfid,
+          updated: now.toString(),
+          updatedBy: uid
+        });
+        if (imageUrlFile) {
+          await firebase.saveStorageFile(imageUrl, imageUrlFile);
+        }
+        if (isNew) {
+          handleGotoParentList();
+        }
+        displayIcon = 'success';
+        displayTitle = 'Update Event Successful';
+        displayMessage = `Changes saved`;
+      }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update News Feed Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);

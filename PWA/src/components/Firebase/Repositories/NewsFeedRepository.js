@@ -85,7 +85,7 @@ class NewsFeedRepository extends BaseRepository {
           active: active || (typeof active === 'boolean' && active) || false,
           created: created || dbNewsFeed.created,
           createdBy: createdBy || dbNewsFeed.createdBy,
-          caption: caption || dbNewsFeed.caption || '',
+          caption: caption || '',
           content: content || dbNewsFeed.content || '',
           header: header || dbNewsFeed.header || '',
           imageUrl: imageUrl || dbNewsFeed.imageUrl || '',
