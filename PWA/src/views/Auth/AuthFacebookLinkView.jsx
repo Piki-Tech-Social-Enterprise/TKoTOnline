@@ -61,17 +61,13 @@ const AuthFacebookLinkView = props => {
       name,
     } = facebookLink;
     let fid = facebookLink.fid;
-    let displayIcon = 'success';
-    let displayTitle = 'Update Facebook Link Successful';
+    let displayIcon = 'error';
+    let displayTitle = 'Save Facebook Link Successful';
     let displayMessage = 'Changes saved';
     try {
       if (!name || !url) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'The Name and URL fields are required.';
       } else if (!url.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'Must be a valid URL';
       } else {
         if (isNew) {
@@ -90,10 +86,10 @@ const AuthFacebookLinkView = props => {
         if (isNew) {
           handleGotoParentList();
         }
+        displayIcon = 'success';
+        displayTitle = 'Save Facebook Link Successful';
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update Facebook Link Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);

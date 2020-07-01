@@ -61,17 +61,13 @@ const AuthEventView = props => {
       eventName,
     } = event;
     let evid = event.evid;
-    let displayIcon = 'success';
-    let displayTitle = 'Update Event Successful';
+    let displayIcon = 'error';
+    let displayTitle = 'Save Event Failed';
     let displayMessage = 'Changes saved';
     try {
       if (!eventName || !eventURL) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'The Event Name and Event URL fields are required.';
       } else if (!eventURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'Must be a valid Event URL';
       } else {
         if (isNew) {
@@ -90,10 +86,11 @@ const AuthEventView = props => {
         if (isNew) {
           handleGotoParentList();
         }
+        displayIcon = 'success';
+        displayTitle = 'Update Event Successful';
+        displayMessage = `Changes saved`;
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update Event Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);

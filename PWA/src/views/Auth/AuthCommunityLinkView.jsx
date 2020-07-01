@@ -61,18 +61,14 @@ const AuthCommunityLinkView = props => {
       linkName,
     } = communityLink;
     let clid = communityLink.clid;
-    let displayIcon = 'success';
-    let displayTitle = 'Update Community link Successful';
+    let displayIcon = 'error';
+    let displayTitle = 'Save Community Link Failed';
     let displayMessage = 'Changes saved';
     try {
       if (!linkName || !link) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
-        displayMessage = 'The Link Name and link fields are required.';
+        displayMessage = 'The Link Name and Link fields are required.';
       } else if (!link.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
-        displayMessage = 'Must be a valid link';
+        displayMessage = 'Must be a valid Link';
       } else {
         if (isNew) {
           clid = await firebase.saveDbCommunityLink({});
@@ -90,10 +86,10 @@ const AuthCommunityLinkView = props => {
         if (isNew) {
           handleGotoParentList();
         }
+        displayIcon = 'success';
+        displayTitle = 'Save Community Link Successful';
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update Community link Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);

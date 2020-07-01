@@ -61,17 +61,13 @@ const AuthSolutionView = props => {
       solutionName,
     } = solution;
     let slid = solution.slid;
-    let displayIcon = 'success';
-    let displayTitle = 'Update Solution Successful';
+    let displayIcon = 'error';
+    let displayTitle = 'Save Solution Successful';
     let displayMessage = 'Changes saved';
     try {
       if (!solutionName || !solutionURL) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'The Solution Name and Solution URL fields are required.';
       } else if (!solutionURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
         displayMessage = 'Must be a valid Solution URL';
       } else {
         if (isNew) {
@@ -90,10 +86,10 @@ const AuthSolutionView = props => {
         if (isNew) {
           handleGotoParentList();
         }
+        displayIcon = 'success';
+        displayTitle = 'Save Solution Successful';
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Update Solution Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
