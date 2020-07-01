@@ -63,7 +63,7 @@ const EventsMegaMenuColumn = props => {
             } = columnItem;
             return (
               <NavItem key={evid} className="events px-0 pb-0 bg-light1">
-                <NavLink href={eventURL} className="px-0 text-dark bg-info1">{eventName}</NavLink>
+                <NavLink href={eventURL} className="px-0 text-dark bg-info1" target="_blank" rel="noopener noreferrer">{eventName}</NavLink>
               </NavItem>
             );
           })

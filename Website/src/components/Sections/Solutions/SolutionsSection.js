@@ -63,7 +63,7 @@ const SolutionsMegaMenuColumn = props => {
             } = columnItem;
             return (
               <NavItem key={slid} className="solutions px-0 pb-0 bg-light1">
-                <NavLink href={solutionURL} className="px-0 text-dark bg-info1">{solutionName}</NavLink>
+                <NavLink href={solutionURL} className="px-0 text-dark bg-info1" target="_blank" rel="noopener noreferrer">{solutionName}</NavLink>
               </NavItem>
             );
           })

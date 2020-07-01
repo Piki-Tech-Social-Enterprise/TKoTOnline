@@ -121,7 +121,7 @@ const AuthNewsFeedView = props => {
           handleGotoParentList();
         }
         displayIcon = 'success';
-        displayTitle = 'Update Event Successful';
+        displayTitle = 'Save News Feed Successful';
         displayMessage = `Changes saved`;
       }
     } catch (error) {

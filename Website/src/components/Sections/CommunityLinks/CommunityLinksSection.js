@@ -63,7 +63,7 @@ const CommunityLinksMegaMenuColumn = props => {
             } = columnItem;
             return (
               <NavItem key={clid} className="links px-0 pb-0 bg-light1">
-                <NavLink href={link} className="px-0 text-dark bg-info1">{linkName}</NavLink>
+                <NavLink href={link} className="px-0 text-dark bg-info1" target="_blank" rel="noopener noreferrer">{linkName}</NavLink>
               </NavItem>
             );
           })
