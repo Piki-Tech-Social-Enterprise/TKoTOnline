@@ -90,7 +90,7 @@ const AuthCommunityLinksView = props => {
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No Community links found.',
+                        noDataText: 'No Community Links found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleCommunityLinksRowClick

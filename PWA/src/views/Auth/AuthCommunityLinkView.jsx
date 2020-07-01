@@ -128,8 +128,8 @@ const AuthCommunityLinkView = props => {
         await firebase.deleteDbCommunityLink(clid);
         swal.fire({
           icon: 'success',
-          title: 'Delete Community link Successful',
-          text: 'Your Community link has been deleted.'
+          title: 'Delete Community Link Successful',
+          text: 'Your Community Link has been deleted.'
         });
         handleGotoParentList();
       }
@@ -139,10 +139,10 @@ const AuthCommunityLinkView = props => {
     if (displayMessage) {
       swal.fire({
         icon: 'error',
-        title: 'Delete Community link Error',
+        title: 'Delete Community Link Error',
         html: displayMessage
       });
-      console.log(`Delete Community link Error: ${displayMessage}`);
+      console.log(`Delete Community Link Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
@@ -183,7 +183,7 @@ const AuthCommunityLinkView = props => {
         <Row>
           <Col>
             <Card>
-              {/* <h3>Community link</h3> */}
+              {/* <h3>Community Link</h3> */}
               <CardBody>
                 {
                   isLoading
