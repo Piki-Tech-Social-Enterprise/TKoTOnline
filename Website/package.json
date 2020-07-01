@@ -8,10 +8,10 @@
   "dependencies": {
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "firebase": "^7.15.1",
-    "moment": "2.26.0",
+    "firebase": "^7.15.5",
+    "moment": "2.27.0",
     "node-sass": "4.14.1",
-    "nouislider": "14.5.0",
+    "nouislider": "14.6.0",
     "react": "16.13.1",
     "react-bootstrap-switch": "15.5.3",
     "react-chartjs-2": "^2.9.0",
@@ -20,8 +20,8 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
-    "reactstrap": "8.4.1",
-    "sweetalert2": "^9.15.1"
+    "reactstrap": "8.5.1",
+    "sweetalert2": "^9.15.2"
   },
   "scripts": {
     "start": "npm run startLocal",
