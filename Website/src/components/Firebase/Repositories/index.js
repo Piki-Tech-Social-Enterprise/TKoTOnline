@@ -9,6 +9,7 @@ import FunctionsRepository from './FunctionsRepository';
 import FacebookLinksRepository from './FacebookLinksRepository';
 import EventsRepository from './EventsRepository';
 import SolutionsRepository from './SolutionsRepository';
+import IwiMembersRepository from './IwiMembersRepository';
 
 export default BaseRepository;
 export {
@@ -21,5 +22,6 @@ export {
   FunctionsRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository
+  SolutionsRepository,
+  IwiMembersRepository
 };

@@ -18,8 +18,21 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
+import FirebaseInput from 'components/FirebaseInput';
+import {
+  formatBytes,
+  formatInteger
+} from 'components/App/Utilities';
+
+const solutionsRef = '/images/solutions';
+const solutionKeyFormat = '{slid}';
+const solutionFilenameFormat = '{filename}';
+const solutionImageFolderUrlFormat = `${solutionsRef}/${solutionKeyFormat}/`;
+const solutionImageUrlFormat = `${solutionImageFolderUrlFormat}${solutionFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
+  solutionImageURL: '',
+  solutionImageURLFile: null,
   solutionURL: '',
   solutionName: '',
   slid: null
@@ -27,7 +40,7 @@ const INITIAL_STATE = {
 const AuthSolutionView = props => {
   const isNew = props.match.params.slid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [solution, setsolution] = useState(INITIAL_STATE);
+  const [solution, setSolution] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
@@ -37,7 +50,7 @@ const AuthSolutionView = props => {
     } = e.target;
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setsolution(nf => ({
+    setSolution(nf => ({
       ...nf,
       [name]: useChecked
         ? checked
@@ -47,6 +60,7 @@ const AuthSolutionView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
+    const maxImageFileSize = 2097152;
     const now = new Date();
     const {
       authUser,
@@ -57,32 +71,48 @@ const AuthSolutionView = props => {
     } = authUser;
     const {
       active,
+      solutionImageURLFile,
       solutionURL,
       solutionName,
     } = solution;
     let slid = solution.slid;
+    let solutionImageURL = solution.solutionImageURL;
     let displayIcon = 'error';
     let displayTitle = 'Save Solution Successful';
     let displayMessage = 'Changes saved';
     try {
-      if (!solutionName || !solutionURL) {
-        displayMessage = 'The Solution Name and Solution URL fields are required.';
-      } else if (!solutionURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
+      if (!solutionName || !solutionImageURL) {
+        displayMessage = 'The Solution Name and Solution Image URL fields are required.';
+      } else if (solutionImageURLFile && solutionImageURLFile.size > maxImageFileSize) {
+        const {
+          size
+        } = solutionImageURLFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else if (solutionURL && !solutionURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
         displayMessage = 'Must be a valid Solution URL';
       } else {
         if (isNew) {
           slid = await firebase.saveDbSolution({});
+          if (solutionImageURLFile && solutionImageURLFile.name) {
+            solutionImageURL = solutionImageUrlFormat
+              .replace(solutionKeyFormat, slid)
+              .replace(solutionFilenameFormat, solutionImageURLFile.name);
+          }
         }
         await firebase.saveDbSolution({
           active: active,
           created: now.toString(),
           createdBy: uid,
+          solutionImageURL,
           solutionURL,
           solutionName,
           slid: slid,
           updated: now.toString(),
           updatedBy: uid
         });
+        if (solutionImageURLFile) {
+          await firebase.saveStorageFile(solutionImageURL, solutionImageURLFile);
+        }
         if (isNew) {
           handleGotoParentList();
         }
@@ -148,17 +178,29 @@ const AuthSolutionView = props => {
   const handleGotoParentList = () => {
     props.history.push('/auth/solutions');
   };
+  const handleImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const solutionImageURLFile = e.target.files[0];
+      setSolution(s => ({
+        ...s,
+        solutionImageURLFile: solutionImageURLFile
+      }));
+    }
+  };
   useEffect(() => {
     const retrievesolution = async () => {
       const dbSolution = await props.firebase.getDbSolutionValue(props.match.params.slid);
       const {
         active,
+        solutionImageURL,
         solutionURL,
         solutionName,
         slid
       } = dbSolution;
-      setsolution({
+      setSolution({
         active,
+        solutionImageURL,
         solutionURL,
         solutionName,
         slid
@@ -181,7 +223,7 @@ const AuthSolutionView = props => {
       <div className="panel-header panel-header-xs" />
       <Container className="content">
         <Row>
-          <Col>
+          <Col xs={12} sm={8}>
             <Card>
               <CardBody>
                 {
@@ -206,6 +248,31 @@ const AuthSolutionView = props => {
                       </FormGroup>
                     </Form>
                 }
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs={12} sm={4}>
+            <Card>
+              <CardBody>
+                <FormGroup>
+                  <Label>Solution Image URL</Label>
+                  <FirebaseInput
+                    value={solution.solutionImageURL || ''}
+                    onChange={handleChange}
+                    downloadURLInputProps={{
+                      id: 'solutionImageURL',
+                      name: 'solutionImageURL',
+                      placeholder: 'Solution Image URL',
+                      type: 'text'
+                    }}
+                    downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                    downloadURLFileInputOnChange={handleImageUrlFileChange}
+                    downloadURLFormat={solutionImageUrlFormat}
+                    downloadURLFormatKeyName={solutionKeyFormat}
+                    downloadURLFormatKeyValue={props.match.params.slid}
+                    downloadURLFormatFileName={solutionFilenameFormat}
+                  />
+                </FormGroup>
               </CardBody>
             </Card>
           </Col>

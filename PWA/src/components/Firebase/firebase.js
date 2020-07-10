@@ -12,7 +12,8 @@ import {
   EPanuiListRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository
+  SolutionsRepository,
+  IwiMembersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -35,6 +36,7 @@ class Firebase {
     this.facebookLinksRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
     this.solutionsRepository = new SolutionsRepository(firebaseApp);
+    this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -128,6 +130,13 @@ class Firebase {
   getDbSolutionValue = async slid => await this.solutionsRepository.getDbSolutionValue(slid);
   saveDbSolution = async (solution, saveDbSolution_completed) => await this.solutionsRepository.saveDbSolution(solution, saveDbSolution_completed);
   deleteDbSolution = async slid => await this.solutionsRepository.deleteDbSolution(slid);
+
+  getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
+  getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);
+  getDbIwiMember = async imid => await this.iwiMembersRepository.getDbIwiMembers(imid);
+  getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
+  saveDbIwiMember = async (iwiMember, saveDbIwiMember_completed) => await this.iwiMembersRepository.saveDbIwiMember(iwiMember, saveDbIwiMember_completed);
+  deleteDbIwiMember = async imid => await this.iwiMembersRepository.deleteDbIwiMember(imid);
 }
 
 export default Firebase;

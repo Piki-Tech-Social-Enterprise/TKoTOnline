@@ -6,9 +6,6 @@ import {
   Container,
   Row,
   Col,
-  Form,
-  FormGroup,
-  Input,
   Nav,
   NavItem,
   NavLink
@@ -97,21 +94,6 @@ const EventsSection = props => {
     masterEvents: [],
     eventsDescription: ''
   });
-  const handleSearchEvents = async e => {
-    e.preventDefault();
-    const {
-      target: eventURL
-    } = e;
-    const {
-      masterEvents
-    } = state;
-    const filterList = masterEvents.filter(searchEvent =>
-      searchEvent.eventName.toString().toLowerCase().indexOf(eventURL.value.toString().toLowerCase()) > -1);
-    setState(s => ({
-      ...s,
-      events: filterList
-    }));
-  };
   useEffect(() => {
     const {
       isLoading,
@@ -139,34 +121,34 @@ const EventsSection = props => {
     }
   }, [props, state]);
   return (
-    <Container id="Events" className="tkot-section bg-secondary1">
-      <Row>
-        <Col xs={12} sm={8}>
-          <h3>Events</h3>
-        </Col>
-        <Col xs={12} sm={4}>
-          <Form className="events-form">
-            <FormGroup>
-              <Input placeholder="Search" type="text" onChange={handleSearchEvents} />
-            </FormGroup>
-          </Form>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <p>{state.eventsDescription}</p>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {
-            state.isLoading
-              ? <LoadingSpinner />
-              : <EventsMegaMenu eventsMegaMenuItems={getEventsMegaMenuItems(state.events, state.columnCount)} />
-          }
-        </Col>
-      </Row>
-    </Container>
+    <div className="tkot-section bg-secondary1 tkot-primary-blue-bg-color-50-pc">
+      <Container>
+        <a id="Wananga" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <Row>
+          <Col className="text-uppercase text-center">
+            <h3>Upcoming Wānanga &amp; Events</h3>
+          </Col>
+        </Row>
+        {
+          state.eventsDescription
+            ? <Row>
+              <Col>
+                <p>{state.eventsDescription}</p>
+              </Col>
+            </Row>
+            : null
+        }
+        <Row>
+          <Col>
+            {
+              state.isLoading
+                ? <LoadingSpinner />
+                : <EventsMegaMenu eventsMegaMenuItems={getEventsMegaMenuItems(state.events, state.columnCount)} />
+            }
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

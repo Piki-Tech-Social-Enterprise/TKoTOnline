@@ -36,10 +36,10 @@ class SolutionsRepository extends BaseRepository {
   }
 
   getDbSolutionValue = async slid => {
-    const existingDbSolutions = await this.getDbSolution(slid);
-    const dbSolutionsRef = await existingDbSolutions.once('value');
-    const dbSolutions = await dbSolutionsRef.val();
-    return dbSolutions;
+    const existingDbSolution = await this.getDbSolution(slid);
+    const dbSolutionRef = await existingDbSolution.once('value');
+    const dbSolution = await dbSolutionRef.val();
+    return dbSolution;
   }
 
   saveDbSolution = async (solution, saveDbSolution_completed) => {
@@ -47,6 +47,7 @@ class SolutionsRepository extends BaseRepository {
       active,
       created,
       createdBy,
+      solutionImageURL,
       solutionURL,
       solutionName,
       slid,
@@ -55,37 +56,39 @@ class SolutionsRepository extends BaseRepository {
     } = solution;
     const now = new Date();
     let errorMessage = null;
-    let existingDbSolutions = await this.getDbSolution(slid || '')
-    let dbSolutionsRef = null;
-    let dbSolutions = null;
+    let existingDbSolution = await this.getDbSolution(slid || '')
+    let dbSolutionRef = null;
+    let dbSolution = null;
     if (!slid) {
-      dbSolutionsRef = await existingDbSolutions.push();
+      dbSolutionRef = await existingDbSolution.push();
       solution = {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
+        solutionImageURL: solutionImageURL || '',
         solutionURL: solutionURL || '',
         solutionName: solutionName || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
-        slid: await dbSolutionsRef.getKey()
+        slid: await dbSolutionRef.getKey()
       };
-      dbSolutionsRef.set(solution, saveDbSolution_completed);
+      dbSolutionRef.set(solution, saveDbSolution_completed);
     } else {
-      dbSolutionsRef = await existingDbSolutions.once('value');
-      dbSolutions = await dbSolutionsRef.val();
-      if (dbSolutions) {
+      dbSolutionRef = await existingDbSolution.once('value');
+      dbSolution = await dbSolutionRef.val();
+      if (dbSolution) {
         solution = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbSolutions.created,
-          createdBy: createdBy || dbSolutions.createdBy,
-          solutionURL: solutionURL || dbSolutions.solutionURL || '',
-          solutionName: solutionName || dbSolutions.solutionName || '',
+          created: created || dbSolution.created,
+          createdBy: createdBy || dbSolution.createdBy,
+          solutionImageURL: solutionImageURL || dbSolution.solutionImageURL || '',
+          solutionURL: solutionURL || '',
+          solutionName: solutionName || dbSolution.solutionName || '',
           slid: slid,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || dbSolutions.updatedBy
+          updatedBy: updatedBy || dbSolution.updatedBy
         };
-        existingDbSolutions.set(solution, saveDbSolution_completed);
+        existingDbSolution.set(solution, saveDbSolution_completed);
       } else {
         errorMessage = 'Save Db Solution Error: slid (' + slid + ') not found.';
       }
@@ -98,10 +101,10 @@ class SolutionsRepository extends BaseRepository {
   }
 
   deleteDbSolution = async slid => {
-    const existingDbSolutions = await this.getDbSolution(slid);
+    const existingDbSolution = await this.getDbSolution(slid);
     let errorMessage = null;
-    if (existingDbSolutions) {
-      await existingDbSolutions.remove();
+    if (existingDbSolution) {
+      await existingDbSolution.remove();
     } else {
       errorMessage = `Delete Db Solution Error: slid (${slid}) not found.`;
     }

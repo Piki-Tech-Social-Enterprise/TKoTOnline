@@ -7,12 +7,12 @@ const HomeHeader = () => {
   return (
     <div className="page-header clear-filter" id="header">
       <div className="page-header-image" style={{
-        backgroundImage: `url(${require('assets/img/tkot/Te-Takarangi-hero-2.jpg')})`
+        backgroundImage: `url(${require('assets/img/tkot/tkot-home-header-background-image.png')})`
       }} />
       <Container>
         <div id="header-container">
-          <h1 className="text-uppercase text-left">Te Kahu o Taonui</h1>
-          <div className="h3 tkot-secondary-color-grey-color text-left font-italic">Me mahi tahi tātou</div>
+          <div className="h1 text-dark mb-0 font-weight-bolder">Me mahi tahi tātou</div>
+          <div className="text-secondary">Working together to strengthen Māori whānau, hāpu and Iwi in Te Tai Tokerau.</div>
         </div>
       </Container>
     </div>

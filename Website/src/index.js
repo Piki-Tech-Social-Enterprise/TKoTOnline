@@ -42,6 +42,10 @@ import AboutUsView from 'views/AboutUsView';
 import ContactUsView from 'views/ContactUsView';
 import FacebookLinksView from 'views/FacebookLinksView';
 import FacebookLinkView from 'views/FacebookLinkView';
+import ProjectsView from 'views/ProjectsView';
+import ProjectView from 'views/ProjectView';
+import NewsFeedsView from 'views/NewsFeedsView';
+import NewsFeedView from 'views/NewsFeedView';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -95,6 +99,26 @@ ReactDOM.render(
         <Route
           path="/FacebookLinks/:fid"
           render={props => <FacebookLinkView {...props} />}
+          exact
+        />
+        <Route
+          path="/Projects"
+          render={props => <ProjectsView {...props} />}
+          exact
+        />
+        <Route
+          path="/Projects/:pid"
+          render={props => <ProjectView {...props} />}
+          exact
+        />
+        <Route
+          path="/NewsFeeds"
+          render={props => <NewsFeedsView {...props} />}
+          exact
+        />
+        <Route
+          path="/NewsFeeds/:nfid"
+          render={props => <NewsFeedView {...props} />}
           exact
         />
       </Switch>

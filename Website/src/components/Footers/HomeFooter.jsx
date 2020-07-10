@@ -6,14 +6,14 @@ import {
   Container,
   Col,
   Row,
-  Nav,
-  NavItem,
-  NavLink,
-  Button
+  // Nav,
+  // NavItem,
+  // NavLink,
+  // Button
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import SocialMedia from './SocialMedia';
-import Routes from '../Routes/routes';
+// import Routes from '../Routes/routes';
 
 const HomeFooterLink = props => {
   const {
@@ -44,29 +44,29 @@ const HomeFooter = props => {
     REACT_APP_WEB_NAME
   } = process.env;
   const thisYear = 1900 + new Date().getYear();
-  const {
-    communityLinks,
-    newsFeed,
-    events,
-    solutions,
-    // interactiveMap,
-    // volunteers,
-    facebookLinks,
-    aboutUs,
-    contactUs
-  } = Routes;
-  const {
-    REACT_APP_PWA_BASE_URL
-  } = process.env;
+  // const {
+  //   communityLinks,
+  //   newsFeed,
+  //   events,
+  //   solutions,
+  //   // interactiveMap,
+  //   // volunteers,
+  //   facebookLinks,
+  //   aboutUs,
+  //   contactUs
+  // } = Routes;
+  // const {
+  //   REACT_APP_PWA_BASE_URL
+  // } = process.env;
   return (
-    <footer className={`footer${((isDefault && ' footer-default') || '')}`}>
+    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark`}>
       <Row className="footer-content">
-        <Col xs={12} lg={3} className="footer-logo">
+        <Col xs={12} lg={4} className="footer-logo">
           <a href="/">
-            <img alt="..." className="n-logo" width="150" src={require("assets/img/tkot/tkot-logo-512x512.png")} />
+            <img alt="..." className="n-logo" width="250" src={require("assets/img/tkot/tkot-logo-white.png")} />
           </a>
         </Col>
-        <Col xs={12} md={6} lg={3}>
+        {/* <Col xs={12} md={6} lg={3}>
           <Nav vertical className="footer-links">
             <NavItem>
               <NavLink href={communityLinks}>Community</NavLink>
@@ -79,14 +79,14 @@ const HomeFooter = props => {
             </NavItem>
             <NavItem>
               <NavLink href={solutions}>Solutions</NavLink>
-            </NavItem>
+            </NavItem> */}
             {/* <NavItem>
               <NavLink href={interactiveMap}>Interactive Map</NavLink>
             </NavItem> */}
             {/* <NavItem>
               <NavLink href={volunteers}>Volunteers</NavLink>
             </NavItem> */}
-          </Nav>
+          {/* </Nav>
         </Col>
         <Col xs={12} md={6} lg={3}>
           <Nav vertical className="footer-links">
@@ -105,9 +105,13 @@ const HomeFooter = props => {
                 </Button>
               </NavItem>
           </Nav>
-        </Col>
-        <Col xs={12} lg={3}>
+        </Col> */}
+        <Col xs={12} lg={4}>
+          <p className="text-uppercase font-weight-bolder">Connect with us</p>
           <SocialMedia size="40" />
+        </Col>
+        <Col xs={12} lg={4}>
+          <p className="text-uppercase font-weight-bolder">Contact us</p>
         </Col>
       </Row>
       <Row>

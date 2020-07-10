@@ -19,26 +19,26 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 
-const AuthSolutionsView = props => {
+const AuthIwiMembersView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [SolutionsAsArray, setSolutionsAsArray] = useState([]);
+  const [IwiMembersAsArray, setIwiMembersAsArray] = useState([]);
   useEffect(() => {
-    const retrieveSolutions = async () => {
-      const dbSolutionsAsArray = await props.firebase.getDbSolutionsAsArray(true);
-      setSolutionsAsArray(dbSolutionsAsArray);
+    const retrieveIwiMembers = async () => {
+      const dbIwiMembersAsArray = await props.firebase.getDbIwiMembersAsArray(true);
+      setIwiMembersAsArray(dbIwiMembersAsArray);
       setIsLoading(false);
     };
     if (isLoading) {
-      retrieveSolutions();
+      retrieveIwiMembers();
     }
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setSolutionsAsArray]);
+  }, [props, isLoading, setIsLoading, setIwiMembersAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    SolutionsAsArray.sort((a, b) => {
+    IwiMembersAsArray.sort((a, b) => {
       const aValue = a[sortName];
       const bValue = b[sortName];
       return (
@@ -55,22 +55,22 @@ const AuthSolutionsView = props => {
     });
   };
   const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddSolutionsClick(onClick)} />
+    <InsertButton btnText="Add New" onClick={() => handleAddIwiMembersClick(onClick)} />
   );
-  const handleAddSolutionsClick = async onClick => {
-    props.history.push(`/auth/Solutions/New`);
+  const handleAddIwiMembersClick = async onClick => {
+    props.history.push(`/auth/IwiMembers/New`);
     onClick();
   };
-  const handleSolutionsRowClick = async row => {
-    props.history.push(`/auth/Solutions/${row.slid}`);
+  const handleIwiMembersRowClick = async row => {
+    props.history.push(`/auth/IwiMembers/${row.imid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbSolutions = SolutionsAsArray.findIndex(dbSolutions => dbSolutions.slid === updatedChildState.dbId);
-    if (indexOfDbSolutions > -1) {
+    const indexOfDbIwiMembers = IwiMembersAsArray.findIndex(dbIwiMembers => dbIwiMembers.imid === updatedChildState.dbId);
+    if (indexOfDbIwiMembers > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        SolutionsAsArray[indexOfDbSolutions].active = updatedChildState.dbActive;
+        IwiMembersAsArray[indexOfDbIwiMembers].active = updatedChildState.dbActive;
       }
-      setSolutionsAsArray(SolutionsAsArray);
+      setIwiMembersAsArray(IwiMembersAsArray);
     }
   }
   return (
@@ -84,31 +84,31 @@ const AuthSolutionsView = props => {
                 {
                   isLoading
                     ? <LoadingOverlayModal color="text-info" />
-                    : <BootstrapTable data={SolutionsAsArray} version="4" bordered={false} condensed hover
+                    : <BootstrapTable data={IwiMembersAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="solutions-table-export"
+                      insertRow exportCSV csvFileName="iwi-members-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No Solutions found.',
+                        noDataText: 'No Iwi Members found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
-                        onRowClick: handleSolutionsRowClick
+                        onRowClick: handleIwiMembersRowClick
                       }}>
-                      <TableHeaderColumn dataField="solutionImageURL" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.solutionName} imageURL={cell || ''} />
+                      <TableHeaderColumn dataField="iwiMemberImageURL" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.iwiMemberName} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="solutionName" dataSort>Solution Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="solutionURL" dataSort>Solution URL</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="iwiMemberName" dataSort>Iwi Member Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="iwiMemberURL" dataSort>Iwi Member URL</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
-                          dbObjectName="Solution"
-                          dbId={row.slid}
-                          dbIdName="slid"
+                          dbObjectName="Iwi Member"
+                          dbId={row.imid}
+                          dbIdName="imid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbSolution}
+                          onSaveDbObject={props.firebase.saveDbIwiMember}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>
@@ -125,4 +125,4 @@ const AuthSolutionsView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthSolutionsView);
+export default withAuthorization(condition)(AuthIwiMembersView);

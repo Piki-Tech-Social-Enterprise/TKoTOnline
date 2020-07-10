@@ -24,25 +24,23 @@ import {
   formatInteger
 } from 'components/App/Utilities';
 
-const newsFeedsRef = '/images/newsFeeds';
-const newsFeedKeyFormat = '{nfid}';
-const newsFeedFilenameFormat = '{filename}';
-const newsFeedImageFolderUrlFormat = `${newsFeedsRef}/${newsFeedKeyFormat}/`;
-const newsFeedImageUrlFormat = `${newsFeedImageFolderUrlFormat}${newsFeedFilenameFormat}`;
+const iwiMembersRef = '/images/iwiMembers';
+const iwiMemberKeyFormat = '{imid}';
+const iwiMemberFilenameFormat = '{filename}';
+const iwiMemberImageFolderUrlFormat = `${iwiMembersRef}/${iwiMemberKeyFormat}/`;
+const iwiMemberImageUrlFormat = `${iwiMemberImageFolderUrlFormat}${iwiMemberFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
-  caption: '',
-  content: '',
-  header: '',
-  imageUrl: '',
-  imageUrlFile: null,
-  isFeatured: false,
-  nfid: null
+  iwiMemberImageURL: '',
+  iwiMemberImageURLFile: null,
+  iwiMemberName: '',
+  iwiMemberURL: '',
+  imid: null
 };
-const AuthNewsFeedView = props => {
-  const isNew = props.match.params.nfid === 'New';
+const AuthIwiMemberView = props => {
+  const isNew = props.match.params.imid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [newsFeed, setNewsFeed] = useState(INITIAL_STATE);
+  const [iwiMember, setIwiMember] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
@@ -50,9 +48,9 @@ const AuthNewsFeedView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['isFeatured', 'active'];
+    const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setNewsFeed(nf => ({
+    setIwiMember(nf => ({
       ...nf,
       [name]: useChecked
         ? checked
@@ -73,55 +71,53 @@ const AuthNewsFeedView = props => {
     } = authUser;
     const {
       active,
-      caption,
-      content,
-      header,
-      imageUrlFile,
-      isFeatured
-    } = newsFeed;
-    let nfid = newsFeed.nfid;
-    let imageUrl = newsFeed.imageUrl;
+      iwiMemberImageURLFile,
+      iwiMemberName,
+      iwiMemberURL
+    } = iwiMember;
+    let imid = iwiMember.imid;
+    let iwiMemberImageURL = iwiMember.iwiMemberImageURL;
     let displayIcon = 'error';
-    let displayTitle = 'Save News Feed Failed';
+    let displayTitle = 'Save Iwi Member Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !content) {
-        displayMessage = 'The Image, Header, and Content fields are required.';
-      } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
+      if (!iwiMemberImageURL || !iwiMemberName || !iwiMemberURL) {
+        displayMessage = 'The Iwi Member Image URL, Iwi Member Name, and Iwi Member URL fields are required.';
+      } else if (iwiMemberImageURLFile && iwiMemberImageURLFile.size > maxImageFileSize) {
         const {
           size
-        } = imageUrlFile;
+        } = iwiMemberImageURLFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else if (!iwiMemberURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
+        displayMessage = 'Must be a valid Iwi Member URL';
       } else {
         if (isNew) {
-          nfid = await firebase.saveDbNewsFeed({});
-          if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = newsFeedImageUrlFormat
-              .replace(newsFeedKeyFormat, nfid)
-              .replace(newsFeedFilenameFormat, imageUrlFile.name);
+          imid = await firebase.saveDbIwiMember({});
+          if (iwiMemberImageURLFile && iwiMemberImageURLFile.name) {
+            iwiMemberImageURL = iwiMemberImageUrlFormat
+              .replace(iwiMemberKeyFormat, imid)
+              .replace(iwiMemberFilenameFormat, iwiMemberImageURLFile.name);
           }
         }
-        await firebase.saveDbNewsFeed({
+        await firebase.saveDbIwiMember({
           active: active,
           created: now.toString(),
           createdBy: uid,
-          caption,
-          content,
-          header,
-          imageUrl,
-          isFeatured,
-          nfid: nfid,
+          iwiMemberImageURL,
+          iwiMemberName,
+          iwiMemberURL,
+          imid: imid,
           updated: now.toString(),
           updatedBy: uid
         });
-        if (imageUrlFile) {
-          await firebase.saveStorageFile(imageUrl, imageUrlFile);
+        if (iwiMemberImageURLFile) {
+          await firebase.saveStorageFile(iwiMemberImageURL, iwiMemberImageURLFile);
         }
         if (isNew) {
           handleGotoParentList();
         }
         displayIcon = 'success';
-        displayTitle = 'Save News Feed Successful';
+        displayTitle = 'Save Iwi Member Successful';
       }
     } catch (error) {
       displayMessage = `${error.message}`;
@@ -157,16 +153,16 @@ const AuthNewsFeedView = props => {
           match
         } = props;
         const {
-          nfid
+          imid
         } = match.params;
-        const newsFeedImageFolderUrl = newsFeedImageFolderUrlFormat.replace(newsFeedKeyFormat, nfid);
-        const storageFiles = await firebase.getStorageFiles(newsFeedImageFolderUrl);
+        const iwiMemberImageFolderUrl = iwiMemberImageFolderUrlFormat.replace(iwiMemberKeyFormat, imid);
+        const storageFiles = await firebase.getStorageFiles(iwiMemberImageFolderUrl);
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
-        await firebase.deleteDbNewsFeed(nfid);
+        await firebase.deleteDbIwiMember(imid);
         swal.fire({
           icon: 'success',
-          title: 'Delete News Feed Successful',
-          text: 'Your News Feed has been deleted.'
+          title: 'Delete Iwi Member Successful',
+          text: 'Your Iwi Member has been deleted.'
         });
         handleGotoParentList();
       }
@@ -176,51 +172,47 @@ const AuthNewsFeedView = props => {
     if (displayMessage) {
       swal.fire({
         icon: 'error',
-        title: 'Delete News Feed Error',
+        title: 'Delete Iwi Member Error',
         html: displayMessage
       });
-      console.log(`Delete News Feed Error: ${displayMessage}`);
+      console.log(`Delete Iwi Member Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
-    props.history.push('/auth/NewsFeeds');
+    props.history.push('/auth/IwiMembers');
   };
   const handleImageUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
-      const imageUrlFile = e.target.files[0];
-      setNewsFeed(nf => ({
-        ...nf,
-        imageUrlFile: imageUrlFile
+      const iwiMemberImageURLFile = e.target.files[0];
+      setIwiMember(im => ({
+        ...im,
+        iwiMemberImageURLFile: iwiMemberImageURLFile
       }));
     }
   };
   useEffect(() => {
-    const retrieveNewsFeed = async () => {
-      const dbNewsFeed = await props.firebase.getDbNewsFeedValue(props.match.params.nfid);
+    const retrieveIwiMember = async () => {
+      const dbIwiMember = await props.firebase.getDbIwiMemberValue(props.match.params.imid);
       const {
         active,
-        caption,
-        content,
-        header,
-        imageUrl,
-        isFeatured,
-        nfid
-      } = dbNewsFeed;
-      setNewsFeed({
+        iwiMemberImageURL,
+        iwiMemberName,
+        iwiMemberURL,
+        imid
+      } = dbIwiMember;
+      setIwiMember({
         active,
-        caption,
-        content,
-        header,
-        imageUrl,
-        isFeatured,
-        nfid
+        iwiMemberImageURL,
+        iwiMemberName,
+        iwiMemberURL,
+        imid
       });
       setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {
-        retrieveNewsFeed();
+        retrieveIwiMember();
       }
     }
     return () => {
@@ -235,29 +227,23 @@ const AuthNewsFeedView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal color="text-body" />
+            ? <LoadingOverlayModal color="text-light" />
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs={12} sm={8}>
                   <Card>
+                    {/* <h3>Iwi Member</h3> */}
                     <CardBody>
                       <FormGroup>
-                        <Label>Header</Label>
-                        <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
+                        <Label>Iwi Member Name</Label>
+                        <Input placeholder="Iwi Member Name" name="iwiMemberName" value={iwiMember.iwiMemberName} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Caption</Label>
-                        <Input placeholder="Caption" name="caption" value={newsFeed.caption} onChange={handleChange} type="text" />
+                        <Label>Iwi Member URL</Label>
+                        <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Content</Label>
-                        <Input placeholder="Content" name="content" value={newsFeed.content} onChange={handleChange} type="textarea" rows="3" />
-                      </FormGroup>
-                      <FormGroup>
-                        <CustomInput label="Is Featured?" bsSize="lg" name="isFeatured" checked={newsFeed.isFeatured} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
-                      </FormGroup>
-                      <FormGroup>
-                        <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
+                        <CustomInput label="Active" name="active" checked={iwiMember.active} onChange={handleChange} type="switch" id="iwiMemberActive" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
@@ -271,22 +257,22 @@ const AuthNewsFeedView = props => {
                   <Card>
                     <CardBody>
                       <FormGroup>
-                        <Label>Image</Label>
+                        <Label>Iwi Member Image URL</Label>
                         <FirebaseInput
-                          value={newsFeed.imageUrl}
+                          value={iwiMember.iwiMemberImageURL}
                           onChange={handleChange}
                           downloadURLInputProps={{
-                            id: 'imageUrl',
-                            name: 'imageUrl',
-                            placeholder: 'Image',
+                            id: 'iwiMemberImageURL',
+                            name: 'iwiMemberImageURL',
+                            placeholder: 'Iwi Member Image URL',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
                           downloadURLFileInputOnChange={handleImageUrlFileChange}
-                          downloadURLFormat={newsFeedImageUrlFormat}
-                          downloadURLFormatKeyName={newsFeedKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.nfid}
-                          downloadURLFormatFileName={newsFeedFilenameFormat}
+                          downloadURLFormat={iwiMemberImageUrlFormat}
+                          downloadURLFormatKeyName={iwiMemberKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.imid}
+                          downloadURLFormatFileName={iwiMemberFilenameFormat}
                         />
                       </FormGroup>
                     </CardBody>
@@ -302,4 +288,4 @@ const AuthNewsFeedView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthNewsFeedView);
+export default withAuthorization(condition)(AuthIwiMemberView);

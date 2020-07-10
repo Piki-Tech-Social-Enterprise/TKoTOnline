@@ -1,5 +1,7 @@
 const Routes = {
   home: '/',
+  iwiMembers: '/#IwiMembers',
+  about: '/#About',
   communityLinks: '/#CommunityLinks',
   newsFeed: '/#NewsFeed',
   interactiveMap: '/#InteractiveMap',
@@ -11,8 +13,9 @@ const Routes = {
   contactUs: '/ContactUs',
   facebookLinks: '/FacebookLinks',
   facebookLink: '/FacebookLinks/:fid',
-  events: '/#Events',
-  solutions: '/#Solutions'
+  events: '/#Wananga',
+  solutions: '/#Projects',
+  projectsPage: '/Projects'
 };
 
 export default Routes;

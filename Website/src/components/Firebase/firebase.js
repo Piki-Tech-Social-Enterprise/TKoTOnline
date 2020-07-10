@@ -9,7 +9,8 @@ import {
   FunctionsRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository
+  SolutionsRepository,
+  IwiMembersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -21,7 +22,7 @@ class Firebase {
       : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);
     this.storageRepository = new StorageRepository(firebaseApp);
     this.newsFeedRepository = new NewsFeedRepository(firebaseApp);
-    this.communityLinkRepository = new CommunityLinksRepository(firebaseApp);
+    this.communityLinksRepository = new CommunityLinksRepository(firebaseApp);
     this.settingsRepository = new SettingsRepository(firebaseApp);
     this.volunteersRepository = new VolunteersRepository(firebaseApp);
     this.contactRepository = new ContactRepository(firebaseApp);
@@ -29,6 +30,7 @@ class Firebase {
     this.facebookLinkRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
     this.solutionsRepository = new SolutionsRepository(firebaseApp);
+    this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -42,8 +44,8 @@ class Firebase {
   getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
-  getDbCommunityLinks = async () => await this.communityLinkRepository.getDbCommunityLinks();
-  getDbCommunityLinksAsArray = async includeInactive => await this.communityLinkRepository.getDbCommunityLinksAsArray(includeInactive);
+  getDbCommunityLinks = async () => await this.communityLinksRepository.getDbCommunityLinks();
+  getDbCommunityLinksAsArray = async includeInactive => await this.communityLinksRepository.getDbCommunityLinksAsArray(includeInactive);
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
   getDbSettingValue = async sid => await this.settingsRepository.getDbSettingValue(sid);
   getDbSettingsAsArray = async includeInactive => await this.settingsRepository.getDbSettingsAsArray(includeInactive);
@@ -66,6 +68,8 @@ class Firebase {
   getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
   getDbSolutions = async () => await this.solutionsRepository.getDbSolutions();
   getDbSolutionsAsArray = async includeInactive => await this.solutionsRepository.getDbSolutionsAsArray(includeInactive);
+  getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
+  getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);
 }
 
 export default Firebase;
