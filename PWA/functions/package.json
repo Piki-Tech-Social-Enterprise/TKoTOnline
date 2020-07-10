@@ -57,7 +57,7 @@
     "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"
   },
   "engines": {
-    "node": "10"
+    "node": "8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
