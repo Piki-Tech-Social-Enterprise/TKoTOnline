@@ -17,8 +17,8 @@ const NewsFeedSection = props => {
       <a id="NewsFeed" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <Row>
         <Col>
-          <div className="mx-auto text-uppercase text-center">
-            <h3>Our Latest News</h3>
+          <div className="mx-auto text-center">
+            <h3 className="text-uppercase">Our Latest News</h3>
             <NewsFeedCarousel />
             {
               showLearnMoreButton
@@ -26,7 +26,7 @@ const NewsFeedSection = props => {
                   <Button href="/NewsFeeds" outline color='dark' style={{
                     color: 'inherit'
                   }}>
-                    Learn more...
+                    View more...
                 </Button>
                 </div>
                 : null

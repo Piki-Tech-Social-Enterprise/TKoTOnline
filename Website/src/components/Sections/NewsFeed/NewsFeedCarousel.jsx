@@ -19,7 +19,6 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  CardText,
   CardLink
 } from 'reactstrap';
 import LoadingSpinner from 'components/App/LoadingSpinner';
@@ -27,6 +26,7 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
+import draftToHtml from 'draftjs-to-html';
 
 const INITIAL_STATE = {
   isLoading: true,
@@ -230,48 +230,57 @@ const NewsFeedCarousel = props => {
     isLoading
       ? <LoadingSpinner />
       : <>
-        <div className="news-feed-carousel">
-          <Carousel interval={5000} activeIndex={activeIndex} next={handleNext} previous={handlePrevious}>
-            <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleGoto} />
-            {createCarouselItems}
-          </Carousel>
-          <div className="news-feed-sidebar col-sm-4 px-0 bg-primary1">
-            <ul>
-              {
-                carouselItems.map((carouselItem, index) => {
-                  return (
-                    <li onClick={async e => {
-                      e.preventDefault();
-                      handleGoto(index);
-                    }} className="news-feed-sidebar-item" key={index}>
-                      <h4>{carouselItem.header}</h4>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-            <Form className="news-feed-form bg-light px-0 pt-3">
-              <FormGroup>
-                <Input placeholder="Search" type="text" onChange={handleSearchNewsFeeds} />
-              </FormGroup>
-            </Form>
-          </div>
-        </div>
+        {
+          carouselItems && carouselItems.length
+            ? <div className="news-feed-carousel">
+              <Carousel interval={5000} activeIndex={activeIndex} next={handleNext} previous={handlePrevious}>
+                <CarouselIndicators items={carouselItems} activeIndex={activeIndex} onClickHandler={handleGoto} />
+                {createCarouselItems}
+              </Carousel>
+              <div className="news-feed-sidebar col-sm-4 px-0 bg-primary1">
+                <ul>
+                  {
+                    carouselItems.map((carouselItem, index) => {
+                      return (
+                        <li onClick={async e => {
+                          e.preventDefault();
+                          handleGoto(index);
+                        }} className="news-feed-sidebar-item" key={index}>
+                          <h4>{carouselItem.header}</h4>
+                        </li>
+                      );
+                    })
+                  }
+                </ul>
+                <Form className="news-feed-form bg-light px-0 pt-3">
+                  <FormGroup>
+                    <Input placeholder="Search" type="text" onChange={handleSearchNewsFeeds} />
+                  </FormGroup>
+                </Form>
+              </div>
+            </div>
+            : null
+        }
         <Container className="my-3" fluid>
           <Row className="flex-row flex-nowrap news-feed-cards-row">
             {
               cardItems.map((cardItem, index) => {
+                const contentAsJson = JSON.parse(cardItem.content);
+                const contentAsHtml = draftToHtml(contentAsJson);
+                const contentAsText = contentAsHtml.replace(/(<([^>]+)>)/ig, '');
                 return (
                   <Col xs={12} md={4} key={index}>
                     <Card className="card-block">
                       <CardHeader>
-                        <CardTitle>{cardItem.header}</CardTitle>
+                        <CardTitle className="h5 my-3 mx-2">{cardItem.header}</CardTitle>
                       </CardHeader>
-                      <FirebaseImage className="card-img" imageURL={cardItem.imageUrl} alt={cardItem.header} />
-                      <CardBody className="text-left bg-light">
-                        <h6>{cardItem.caption}</h6>
-                        <CardText className="small d-inline-block block-with-text" >{cardItem.content}</CardText>
-                        <CardLink href="#NewsFeed">Read more...</CardLink>
+                      <FirebaseImage className="card-img-max-height" imageURL={cardItem.imageUrl} alt={cardItem.header} />
+                      <CardBody className="text-left bg-white">
+                        <p className="font-weight-bold">{cardItem.caption}</p>
+                        <p className="d-inline-block block-with-text">{contentAsText}</p>
+                        <CardLink href={`/NewsFeeds/${cardItem.nfid}`} style={{
+                          color: 'inherit'
+                        }}>Read more...</CardLink>
                       </CardBody>
                     </Card>
                   </Col>

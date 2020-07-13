@@ -8,7 +8,8 @@
     "axios": "^0.19.2",
     "bootstrap": "4.5.0",
     "chart.js": "2.9.3",
-    "firebase": "^7.15.5",
+    "draft-js": "^0.11.6",
+    "firebase": "^7.16.0",
     "googleapis": "^52.1.0",
     "history": "4.10.0",
     "node-sass": "4.14.1",
@@ -17,13 +18,14 @@
     "react-bootstrap-table": "^4.3.1",
     "react-chartjs-2": "2.9.0",
     "react-dom": "16.13.1",
+    "react-draft-wysiwyg": "^1.14.5",
     "react-google-maps": "9.4.5",
     "react-notification-alert": "0.0.12",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.5.1",
-    "sweetalert2": "^9.15.2",
+    "sweetalert2": "^9.15.3",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
@@ -97,11 +99,11 @@
     "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.8",
+    "@types/googlemaps": "3.39.9",
     "@types/markerclustererplus": "2.1.33",
-    "@types/react": "16.9.41",
+    "@types/react": "16.9.43",
     "jquery": "3.5.1",
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   },
   "browserslist": {
     "production": [

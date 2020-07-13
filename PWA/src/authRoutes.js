@@ -133,8 +133,8 @@ const authRoutes = [
   },
   {
     layout: '/auth',
-    path: '/Solutions',
-    name: 'Solutions',
+    path: '/Projects',
+    name: 'Projects',
     component: lazy(() => import('views/Auth/AuthSolutionsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
@@ -145,8 +145,8 @@ const authRoutes = [
   },
   {
     layout: '/auth',
-    path: '/Solutions/:slid',
-    name: 'Solution',
+    path: '/Projects/:slid',
+    name: 'Project',
     component: lazy(() => import('views/Auth/AuthSolutionView')),
     exact: true,
     iconLibrary: null,
@@ -157,8 +157,8 @@ const authRoutes = [
   },
   {
     layout: '/auth',
-    path: '/Events',
-    name: 'Events',
+    path: '/Wananga',
+    name: 'Wananga',
     component: lazy(() => import('views/Auth/AuthEventsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
@@ -169,8 +169,8 @@ const authRoutes = [
   },
   {
     layout: '/auth',
-    path: '/Events/:evid',
-    name: 'Event',
+    path: '/Wananga/:evid',
+    name: 'Wananga',
     component: lazy(() => import('views/Auth/AuthEventView')),
     exact: true,
     iconLibrary: null,

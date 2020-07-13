@@ -12,6 +12,7 @@ import {
   NavLink
 } from 'reactstrap';
 import Routes from '../Routes/routes';
+import PropTypes from 'prop-types';
 
 const {
   iwiMembers,
@@ -28,9 +29,9 @@ const {
 } = Routes;
 const HomeNavbar = props => {
   const {
-    initalTransparent
+    initalTransparent,
+    colorOnScrollValue
   } = props;
-  const colorOnScrollValue = 300;
   const tkotBackgroundTransparent = 'tkot-background-transparent';
   const tkotBackgroundWhite = 'tkot-background-white';
   const defaultTkotBackground = initalTransparent || false
@@ -64,7 +65,7 @@ const HomeNavbar = props => {
     return () => {
       window.removeEventListener('scroll', updateNavbarColor);
     }
-  }, [defaultTkotBackground])
+  }, [defaultTkotBackground, colorOnScrollValue])
   return (
     <>
       {state.collapseOpen ? (
@@ -137,6 +138,13 @@ const HomeNavbar = props => {
       </Navbar>
     </>
   );
+};
+
+HomeNavbar.propTypes = {
+  colorOnScrollValue: PropTypes.number
+};
+HomeNavbar.defaultProps = {
+  colorOnScrollValue: 300
 };
 
 export default HomeNavbar;

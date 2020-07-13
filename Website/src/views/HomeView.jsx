@@ -40,7 +40,7 @@ const HomeView = () => {
     <>
       <HomeNavbar initalTransparent />
       <div className="wrapper">
-        <HomeHeader />
+        <HomeHeader pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')} />
         <div className="main bg-primary1">
           {/* Iwi Members */}
           <IwiMembers />

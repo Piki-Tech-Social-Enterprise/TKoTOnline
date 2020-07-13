@@ -7,8 +7,8 @@ import { Container } from 'reactstrap'
  
 const SocialMedia = props => {
 	return (
-	<Container >
-		<ul className="social-ul d-flex justify-content-center">
+	<Container className="px-0">
+		<ul className="social-ul d-flex">
 			<li className={"box-social" + props.margin}>
 				<a href="#TKoTOnline">
 					<Facebook
@@ -27,7 +27,6 @@ const SocialMedia = props => {
 					/>
 				</a>
 			</li>
-
 			<li className={"box-social " + props.margin}>
 				<a href="#TKoTOnline">
 					<Linkedin

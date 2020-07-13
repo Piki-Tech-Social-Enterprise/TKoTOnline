@@ -59,7 +59,7 @@ const HomeFooter = props => {
   //   REACT_APP_PWA_BASE_URL
   // } = process.env;
   return (
-    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark`}>
+    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark py-5`}>
       <Row className="footer-content">
         <Col xs={12} lg={4} className="footer-logo">
           <a href="/">

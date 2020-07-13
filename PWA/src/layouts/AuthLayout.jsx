@@ -42,9 +42,9 @@ const hasRoles = (roles, rolesToCheck) => {
   });
   return hasRolesConfirmed;
 };
-const applyRedirect = props => {
+const ApplyRedirect = props => {
   const fromRoute = getAuthRouteByName('Home');
-  const adminDefaultRoute = getAuthRouteByName('Community Links');
+  const adminDefaultRoute = getAuthRouteByName('Iwi');
   const basicDefaultRoute = getAuthRouteByName('Resource Drive');
   const {
     authUser
@@ -137,7 +137,7 @@ const AuthLayout = props => {
               <AuthNavbar {...props} routes={authenticatedRoutes} />
               <Switch>
                 <Suspense fallback={<LoadingOverlayModal color="text-danger" />}>
-                  {applyRedirect(props)}
+                  <ApplyRedirect {...props} />
                   {authenticatedRoutes.map((prop, key) => {
                     const {
                       layout,

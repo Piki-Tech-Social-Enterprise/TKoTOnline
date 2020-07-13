@@ -23,6 +23,15 @@ import {
   formatBytes,
   formatInteger
 } from 'components/App/Utilities';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw
+} from 'draft-js';
+import {
+  Editor
+} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const newsFeedsRef = '/images/newsFeeds';
 const newsFeedKeyFormat = '{nfid}';
@@ -37,7 +46,8 @@ const INITIAL_STATE = {
   imageUrl: '',
   imageUrlFile: null,
   isFeatured: false,
-  nfid: null
+  nfid: null,
+  editorState: EditorState.createEmpty()
 };
 const AuthNewsFeedView = props => {
   const isNew = props.match.params.nfid === 'New';
@@ -77,7 +87,8 @@ const AuthNewsFeedView = props => {
       content,
       header,
       imageUrlFile,
-      isFeatured
+      isFeatured,
+      editorState
     } = newsFeed;
     let nfid = newsFeed.nfid;
     let imageUrl = newsFeed.imageUrl;
@@ -106,7 +117,7 @@ const AuthNewsFeedView = props => {
           created: now.toString(),
           createdBy: uid,
           caption,
-          content,
+          content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
           header,
           imageUrl,
           isFeatured,
@@ -207,15 +218,19 @@ const AuthNewsFeedView = props => {
         isFeatured,
         nfid
       } = dbNewsFeed;
-      setNewsFeed({
+      setNewsFeed(nf => ({
+        ...nf,
         active,
         caption,
         content,
         header,
         imageUrl,
         isFeatured,
-        nfid
-      });
+        nfid,
+        editorState: content && content.startsWith('{') && content.endsWith('}')
+          ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
+          : nf.editorState
+      }));
       setIsLoading(false);
     };
     if (isLoading) {
@@ -242,20 +257,21 @@ const AuthNewsFeedView = props => {
                   <Card>
                     <CardBody>
                       <FormGroup>
-                        <Label>Header</Label>
-                        <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Caption</Label>
-                        <Input placeholder="Caption" name="caption" value={newsFeed.caption} onChange={handleChange} type="text" />
-                      </FormGroup>
-                      <FormGroup>
                         <Label>Content</Label>
-                        <Input placeholder="Content" name="content" value={newsFeed.content} onChange={handleChange} type="textarea" rows="3" />
+                        <Editor
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class"
+                          toolbarClassName="toolbar-class"
+                          editorState={newsFeed.editorState}
+                          onEditorStateChange={editorState => setNewsFeed(nf => ({
+                            ...nf,
+                            editorState: editorState
+                          }))}
+                        />
                       </FormGroup>
-                      <FormGroup>
+                      {/* <FormGroup>
                         <CustomInput label="Is Featured?" bsSize="lg" name="isFeatured" checked={newsFeed.isFeatured} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
-                      </FormGroup>
+                      </FormGroup> */}
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
                       </FormGroup>
@@ -270,6 +286,10 @@ const AuthNewsFeedView = props => {
                 <Col xs={12} sm={4}>
                   <Card>
                     <CardBody>
+                      <FormGroup>
+                        <Label>Header</Label>
+                        <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
+                      </FormGroup>
                       <FormGroup>
                         <Label>Image</Label>
                         <FirebaseInput
@@ -288,6 +308,10 @@ const AuthNewsFeedView = props => {
                           downloadURLFormatKeyValue={props.match.params.nfid}
                           downloadURLFormatFileName={newsFeedFilenameFormat}
                         />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Caption</Label>
+                        <Input placeholder="Caption" name="caption" value={newsFeed.caption} onChange={handleChange} type="text" />
                       </FormGroup>
                     </CardBody>
                   </Card>

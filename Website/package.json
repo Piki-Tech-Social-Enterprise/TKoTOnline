@@ -8,7 +8,9 @@
   "dependencies": {
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "firebase": "^7.15.5",
+    "draft-js": "^0.11.6",
+    "draftjs-to-html": "^0.9.1",
+    "firebase": "^7.16.0",
     "moment": "2.27.0",
     "node-sass": "4.14.1",
     "nouislider": "14.6.0",
@@ -21,7 +23,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.5.1",
-    "sweetalert2": "^9.15.2"
+    "sweetalert2": "^9.15.3"
   },
   "scripts": {
     "start": "npm run startLocal",
@@ -95,7 +97,7 @@
     ]
   },
   "optionalDependencies": {
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
