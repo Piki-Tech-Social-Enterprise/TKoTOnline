@@ -1,44 +1,46 @@
-import React from "react";
-import { ReactComponent as Facebook } from "../../assets/icons/facebook-f-brands.svg";
-import { ReactComponent as Instagram } from "../../assets/icons/instagram-brands.svg";
-import { ReactComponent as Linkedin } from "../../assets/icons/linkedin-in-brands.svg";
-import { Container } from 'reactstrap' 
+import React from 'react';
+import PropTypes from 'prop-types';
 
- 
 const SocialMedia = props => {
+	const {
+		links,
+		margin,
+		size
+	} = props;
 	return (
-	<Container className="px-0">
 		<ul className="social-ul d-flex">
-			<li className={"box-social" + props.margin}>
-				<a href="#TKoTOnline">
-					<Facebook
-						className="social-media-fill"
-						width={props.size}
-						height={props.size}
-					/>
-				</a>
-			</li>
-			<li className={"box-social " + props.margin}>
-				<a href="#TKoTOnline">
-					<Instagram
-						className="social-media-fill"
-						width={props.size}
-						height={props.size}
-					/>
-				</a>
-			</li>
-			<li className={"box-social " + props.margin}>
-				<a href="#TKoTOnline">
-					<Linkedin
-						className="social-media-fill"
-						width={props.size}
-						height={props.size}
-					/>
-				</a>
-			</li>
+			{
+				links.map((link, key) => {
+					const {
+						href,
+						iconFaName
+					} = link;
+					return (
+						<li className={`box-social ${margin}`} key={key}>
+							<a href={href} target="_blank" rel="noopener noreferrer">
+								<i className={`social-media-fill ${iconFaName}`} style={{
+									fontSize: `${size}px`
+								}} />
+							</a>
+						</li>
+					);
+				})
+			}
 		</ul>
-		</Container>
 	);
 };
 
-export default SocialMedia
+SocialMedia.propTypes = {
+	links: PropTypes.arrayOf(PropTypes.shape({
+		href: PropTypes.string.isRequired,
+		iconFaName: PropTypes.string.isRequired
+	})).isRequired,
+	margin: PropTypes.string,
+	size: PropTypes.number
+};
+SocialMedia.defaultProps = {
+	margin: '',
+	size: 40
+};
+
+export default SocialMedia;

@@ -79,6 +79,10 @@ const fromCamelcaseToTitlecase = camelCase => (
     .replace(/([A-Z])/g, match => ` ${match}`)
     .replace(/^./, match => match.toUpperCase())
 );
+const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
+const TIME_MOMENT_FORMAT = 'HH:mm:ss';
+const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
+const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
 export default shallowCompare;
 export {
   useWindowEvent,
@@ -87,5 +91,9 @@ export {
   handleLoadBlob,
   formatBytes,
   formatInteger,
-  fromCamelcaseToTitlecase
+  fromCamelcaseToTitlecase,
+  DATE_MOMENT_FORMAT,
+  TIME_MOMENT_FORMAT,
+  DATE_TIME_MOMENT_FORMAT,
+  ISO8601_DATE_FORMAT
 };

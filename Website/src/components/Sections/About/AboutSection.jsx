@@ -1,16 +1,46 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import {
   Container,
   Row,
   Col,
   Button
 } from 'reactstrap';
+import {
+  withFirebase
+} from 'components/Firebase';
+import LoadingSpinner from 'components/App/LoadingSpinner';
 import Routes from 'components/Routes/routes';
 
 const {
   aboutUs
 } = Routes;
-const AboutSection = () => {
+const AboutSection = props => {
+  const [state, setState] = useState({
+    isLoading: true,
+    settings: {}
+  });
+  useEffect(() => {
+    const {
+      isLoading
+    } = state;
+    const getData = async () => {
+      const {
+        firebase
+      } = props;
+      const dbSettings = await firebase.getDbSettingsValues(true);
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        settings: dbSettings
+      }));
+    };
+    if (isLoading) {
+      getData();
+    }
+  }, [props, state]);
   return (
     <div className="tkot-section">
       <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
@@ -24,8 +54,12 @@ const AboutSection = () => {
             <img alt="..." className="n-logo pt-2 mt-1" src={require("assets/img/tkot/tkot-blue-red-logo.png")} width="300" />
           </Col>
           <Col xs={12} sm={6}>
-            <p>Blurb about how TKoT is set up now, summary of vision & goals</p>
-            <div className="pt-4 mt-5">
+            {
+              state.isLoading
+                ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
+                : <p>{state.settings.homePageAboutDescription}</p>
+            }
+            <div className="pt-4 mt-3">
               <Button href={aboutUs} outline color='dark' style={{
                 color: 'inherit'
               }}>
@@ -39,4 +73,4 @@ const AboutSection = () => {
   );
 };
 
-export default AboutSection;
+export default withFirebase(AboutSection);

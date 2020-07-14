@@ -13,6 +13,7 @@ import {
   withFirebase
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
+import draftToHtml from 'draftjs-to-html';
 
 const AboutUsView = props => {
   const [state, setState] = useState({
@@ -45,7 +46,9 @@ const AboutUsView = props => {
             {
               state.isLoading
                 ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                : <p>{state.aboutPageDescription}</p>
+                : <div
+                  dangerouslySetInnerHTML={{__html: draftToHtml(JSON.parse(state.aboutPageDescription))}}
+                />
             }
           </Col>
         </Row>

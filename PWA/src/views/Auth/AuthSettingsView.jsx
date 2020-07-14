@@ -17,13 +17,25 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw
+} from 'draft-js';
+import {
+  Editor
+} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 const INITIAL_STATE = {
-  communityLinksDescription: '',
-  sid: null
+  homePageAboutDescription: '',
+  aboutPageDescription: '',
+  sid: null,
+  editorState: EditorState.createEmpty()
 };
 const AuthSettingsView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [settings, setSetting] = useState(INITIAL_STATE);
+  const [settings, setSettings] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
@@ -33,8 +45,8 @@ const AuthSettingsView = props => {
     } = e.target;
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setSetting(nf => ({
-      ...nf,
+    setSettings(s => ({
+      ...s,
       [name]: useChecked
         ? checked
         : value
@@ -52,42 +64,32 @@ const AuthSettingsView = props => {
       uid
     } = authUser;
     const {
-      communityLinksDescription,
-      volunteersDescription,
-      aboutPageDescription
+      homePageAboutDescription,
+      aboutPageDescription,
+      editorState
     } = settings;
     let sid = settings.sid;
-    let displayIcon = 'success';
-    let displayTitle = 'Update setting Successful';
-    let displayMessage = 'Changes saved';
+    let displayIcon = 'error';
+    let displayTitle = 'Updating Settings Failed';
+    let displayMessage = '';
     try {
-      if (!communityLinksDescription) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
-        displayMessage = 'You need to have a description for the community links section.';
-      } else if (!volunteersDescription) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
-        displayMessage = 'You need to have a description for the volunteers section.';
-      }else if (!aboutPageDescription) {
-        displayTitle = 'Failed';
-        displayIcon = 'error';
-        displayMessage = 'You need to have a description for the About Page.';
+      if (!homePageAboutDescription && !aboutPageDescription) {
+        displayMessage = 'The Home Page About Description and About Page Description fields are required.';
       } else {
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
-          communityLinksDescription: communityLinksDescription,
-          volunteersDescription: volunteersDescription,
-          aboutPageDescription: aboutPageDescription,
+          homePageAboutDescription: homePageAboutDescription,
+          aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
         });
+        displayIcon = 'success';
+        displayTitle = 'Updating Settings Successful';
+        displayMessage = 'Changes saved';
       }
     } catch (error) {
-      displayIcon = 'error';
-      displayTitle = 'Updating your Settings has Failed';
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
@@ -105,18 +107,19 @@ const AuthSettingsView = props => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
       if (dbSettings) {
         const {
-          communityLinksDescription,
-          volunteersDescription,
+          homePageAboutDescription,
           aboutPageDescription,
           sid
         } = dbSettings;
-        console.log(dbSettings);
-        setSetting({
-          communityLinksDescription,
-          volunteersDescription,
+        setSettings(s => ({
+          ...s,
+          homePageAboutDescription,
           aboutPageDescription,
-          sid
-        });
+          sid,
+          editorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
+            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageDescription)))
+            : s.editorState
+        }));
       }
       setIsLoading(false);
     };
@@ -143,16 +146,21 @@ const AuthSettingsView = props => {
                     ? <LoadingOverlayModal color="text-white" />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
-                        <Label>Community Links Description</Label>
-                        <Input placeholder="Community Links Description" name="communityLinksDescription" value={settings.communityLinksDescription} onChange={handleChange} type="textarea" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Volunteers Description</Label>
-                        <Input placeholder="Volunteers Description" name="volunteersDescription" value={settings.volunteersDescription} onChange={handleChange} type="textarea" />
+                        <Label>Home Page About Description</Label>
+                        <Input placeholder="Home Page About Description" name="homePageAboutDescription" value={settings.homePageAboutDescription} onChange={handleChange} type="textarea" />
                       </FormGroup>
                       <FormGroup>
                         <Label>About Page Description</Label>
-                        <Input placeholder="About Page Description" name="aboutPageDescription" value={settings.aboutPageDescription} onChange={handleChange} type="textarea" />
+                        <Editor
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class"
+                          toolbarClassName="toolbar-class"
+                          editorState={settings.editorState}
+                          onEditorStateChange={editorState => setSettings(s => ({
+                            ...s,
+                            editorState: editorState
+                          }))}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>

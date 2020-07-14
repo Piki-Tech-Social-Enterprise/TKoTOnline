@@ -54,6 +54,7 @@ const HomeFooter = props => {
     firstName: '',
     lastName: '',
     email: '',
+    message: 'Sign Up to Newsletter',
     cid: null
   };
   const [contact, setContact] = useState(INITIAL_STATE);
@@ -132,7 +133,7 @@ const HomeFooter = props => {
     }
   };
   return (
-    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark py-5`}>
+    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark pt-5 pb-3`}>
       <Row className="footer-content">
         <Col xs={12} lg={4} className="footer-logo">
           <a href="/">
@@ -140,30 +141,46 @@ const HomeFooter = props => {
           </a>
         </Col>
         <Col xs={12} lg={4}>
-          <p className="text-uppercase font-weight-bolder">Connect with us</p>
-          <SocialMedia size="40" />
+          <Container className="px-0 py-3 pt-sm-0">
+            <p className="text-uppercase font-weight-bolder">Connect with us</p>
+            <SocialMedia
+              links={[{
+                href: 'mailto:admin@tkot.org.nz',
+                iconFaName: 'fas fa-envelope'
+              }, {
+                href: 'https://www.facebook.com/TeKahuOTaonui',
+                iconFaName: 'fab fa-facebook-f'
+                // }, {
+                //   href: '#TKoTOnline',
+                //   iconFaName: 'fab fa-instagram'
+                // }, {
+                //   href: '#TKoTOnline',
+                //   iconFaName: 'fab fa-linkedin-in'
+              }]}
+            />
+          </Container>
         </Col>
         <Col xs={12} lg={4}>
-          <p className="text-uppercase font-weight-bolder">We’ll Keep You Updated</p>
-          <Container className="pl-0">
+          <Container className="pl-0 py-3 pt-sm-0">
             <Row>
               <Col>
+                <p className="text-uppercase font-weight-bolder">We’ll Keep You Updated</p>
                 <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
                 <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
                   <Row noGutters>
                     <Col xs={12} sm={6} className="pr-1">
                       <FormGroup>
-                        <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                        <Input className="text-secondary" placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
                       </FormGroup>
                     </Col>
                     <Col xs={12} sm={6} className="pl-1">
                       <FormGroup>
-                        <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                        <Input className="text-secondary" placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
                       </FormGroup>
                     </Col>
                   </Row>
                   <FormGroup>
-                    <Input placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
+                    <Input className="text-secondary" placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
                   </FormGroup>
                   <FormGroup>
                     <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up</Button>
@@ -177,7 +194,7 @@ const HomeFooter = props => {
       <Row>
         <Col xs={12}>
           <Container fluid={!!isFluid} className="float-left">
-            <div className="copyright">
+            <div className="copyright pt-1">
               {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />
             </div>
           </Container>

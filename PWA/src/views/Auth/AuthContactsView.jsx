@@ -16,6 +16,10 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import ContactStatusBadge from 'components/App/ContactStatusBadge';
+import moment from 'moment';
+import {
+  DATE_TIME_MOMENT_FORMAT
+} from 'components/App/Utilities';
 
 const AuthContactsView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,9 +56,9 @@ const AuthContactsView = props => {
       );
     });
   };
-  const handleContactsRowClick = async row => {
-    props.history.push(`/auth/Contacts/${row.cid}`);
-  };
+  // const handleContactsRowClick = async row => {
+  //   props.history.push(`/auth/Contacts/${row.cid}`);
+  // };
   const handleChildUpdate = updatedChildState => {
     const indexOfDbContacts = ContactsAsArray.findIndex(dbContacts => dbContacts.cid === updatedChildState.dbId);
     if (indexOfDbContacts > -1) {
@@ -84,9 +88,12 @@ const AuthContactsView = props => {
                         hideSizePerPage: true,
                         noDataText: 'No Contacts found.',
                         onSortChange: handleSortChange,
-                        onRowClick: handleContactsRowClick
+                        // onRowClick: handleContactsRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="email" width="35%" dataSort>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="created" dataSort width="150px" dataFormat={cell => (
+                        moment(cell).format(DATE_TIME_MOMENT_FORMAT)
+                      )}>Created</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="email" width="30%" dataSort>Email</TableHeaderColumn>
                       <TableHeaderColumn dataField="firstName" width="25%" dataSort>First Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="lastName" width="25%" dataSort>Last Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
