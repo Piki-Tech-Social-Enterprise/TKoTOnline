@@ -105,8 +105,6 @@ $tkot-padding-top: 3rem;
   overflow: scroll hidden;
 }
 .card-block {
-  height: 225px;
-  max-height: 225px;
   min-height: 225px;
 }
 
@@ -294,5 +292,8 @@ $tkot-padding-top: 3rem;
   border-radius: $border-radius-extreme;
   .card-img-max-height {
     max-height: 174px !important;
+  }
+  .card-body {
+    margin-bottom: 0.5rem;
   }
 }
