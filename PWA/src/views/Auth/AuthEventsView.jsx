@@ -57,11 +57,11 @@ const AuthEventsView = props => {
     <InsertButton btnText="Add New" onClick={() => handleAddEventsClick(onClick)} />
   );
   const handleAddEventsClick = async onClick => {
-    props.history.push(`/auth/Events/New`);
+    props.history.push(`/auth/Wananga/New`);
     onClick();
   };
   const handleEventsRowClick = async row => {
-    props.history.push(`/auth/Events/${row.evid}`);
+    props.history.push(`/auth/Wananga/${row.evid}`);
   };
   const handleChildUpdate = updatedChildState => {
     const indexOfDbEvents = EventsAsArray.findIndex(dbEvents => dbEvents.evid === updatedChildState.dbId);

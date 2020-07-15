@@ -87,6 +87,12 @@ const intoChunks = (array, size) => {
   }
   return chunks;
 };
+const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
+const TIME_MOMENT_FORMAT = 'HH:mm:ss';
+const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
+const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
+const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
+const TAG_SEPARATOR = ', ';
 
 export default shallowCompare;
 export {
@@ -97,5 +103,11 @@ export {
   formatBytes,
   formatInteger,
   fromCamelcaseToTitlecase,
-  intoChunks
+  intoChunks,
+  DATE_MOMENT_FORMAT,
+  TIME_MOMENT_FORMAT,
+  DATE_TIME_MOMENT_FORMAT,
+  ISO8601_DATE_FORMAT,
+  NEWSFEED_DATE_MOMENT_FORMAT,
+  TAG_SEPARATOR
 };

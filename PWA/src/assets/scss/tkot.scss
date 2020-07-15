@@ -2,6 +2,7 @@
 @import 'now-ui-dashboard/mixins';
 @import 'tkot/roboto-condensed';
 @import 'tkot/open-sans';
+@import 'tkot/react-datetime';
 
 $tkot-primary-blue: #211C5F;
 $tkot-primary-red: #A32222;
@@ -148,4 +149,12 @@ $tkot-bg-color: $tkot-primary-blue;
 }
 .text-aqua {
   color: aqua;
+}
+.wrapper-class {
+  // .toolbar-class {
+
+  // }
+  .editor-class {
+    min-height: 11.688rem;
+  }
 }

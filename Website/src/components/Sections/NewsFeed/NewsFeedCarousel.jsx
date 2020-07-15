@@ -27,6 +27,7 @@ import {
   withFirebase
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
+import NewsFeedCaption from 'components/App/NewsFeedCaption';
 
 const INITIAL_STATE = {
   isLoading: true,
@@ -197,7 +198,7 @@ const NewsFeedCarousel = props => {
     return (
       <CarouselItem onExiting={() => handleAnimate(true)} onExited={() => handleAnimate(false)} key={index}>
         <FirebaseImage imageURL={item.imageUrl} alt={item.header} />
-        <CarouselCaption captionText={item.caption} captionHeader={item.header} />
+        <CarouselCaption captionText={item.category} captionHeader={item.header} />
       </CarouselItem>
     );
   });
@@ -218,14 +219,20 @@ const NewsFeedCarousel = props => {
   };
   useEffect(() => {
     const getDbNewsFeeds = async () => {
-      const dbNewsFeeds = await props.firebase.getDbNewsFeedsAsArray();
-      // console.log(`dbNewsFeeds: ${JSON.stringify(dbNewsFeeds, null, 2)}`);
-      handleItems(dbNewsFeeds);
+      const {
+        firebase,
+        searchCategory
+      } = props;
+      console.log('searchCategory: ', searchCategory);
+      const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
+      handleItems(searchCategory
+        ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
+        : dbNewsFeeds);
     };
     if (isLoading) {
       getDbNewsFeeds();
     }
-  });
+  }, [props, handleItems, isLoading]);
   return (
     isLoading
       ? <LoadingSpinner />
@@ -276,7 +283,12 @@ const NewsFeedCarousel = props => {
                       </CardHeader>
                       <FirebaseImage className="card-img-max-height" imageURL={cardItem.imageUrl} alt={cardItem.header} />
                       <CardBody className="text-left bg-white">
-                        <p className="font-weight-bold">{cardItem.caption}</p>
+                        <p className="font-weight-bold">
+                          <NewsFeedCaption
+                            newsFeed={cardItem}
+                          />
+                        </p>
+                        {/* <p className="font-weight-bold">{`${moment(cardItem.date, DATE_MOMENT_FORMAT).format(NEWSFEED_DATE_MOMENT_FORMAT)} | ${cardItem.category}`}</p> */}
                         <p className="d-inline-block block-with-text">{contentAsText}</p>
                         <CardLink href={`/NewsFeeds/${cardItem.nfid}`} style={{
                           color: 'inherit'

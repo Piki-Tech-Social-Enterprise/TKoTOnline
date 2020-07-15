@@ -21,7 +21,9 @@ import swal from 'sweetalert2';
 import FirebaseInput from 'components/FirebaseInput';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  DATE_MOMENT_FORMAT,
+  TAG_SEPARATOR
 } from 'components/App/Utilities';
 import {
   EditorState,
@@ -32,6 +34,9 @@ import {
   Editor
 } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import InputDateTime from 'components/App/InputDateTime';
+import TagsInput from 'react-tagsinput-2';
+import 'react-tagsinput-2/react-tagsinput.css';
 
 const newsFeedsRef = '/images/newsFeeds';
 const newsFeedKeyFormat = '{nfid}';
@@ -40,8 +45,12 @@ const newsFeedImageFolderUrlFormat = `${newsFeedsRef}/${newsFeedKeyFormat}/`;
 const newsFeedImageUrlFormat = `${newsFeedImageFolderUrlFormat}${newsFeedFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
-  caption: '',
+  category: '',
+  categoryTags: [
+    'Uncategorized'
+  ],
   content: '',
+  date: '',
   header: '',
   imageUrl: '',
   imageUrlFile: null,
@@ -83,8 +92,9 @@ const AuthNewsFeedView = props => {
     } = authUser;
     const {
       active,
-      caption,
+      categoryTags,
       content,
+      date,
       header,
       imageUrlFile,
       isFeatured,
@@ -96,8 +106,8 @@ const AuthNewsFeedView = props => {
     let displayTitle = 'Save News Feed Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !content) {
-        displayMessage = 'The Image, Header, and Content fields are required.';
+      if (!imageUrl || !header || !content || !date) {
+        displayMessage = 'The Image, Header, Content and Date fields are required.';
       } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
         const {
           size
@@ -116,8 +126,9 @@ const AuthNewsFeedView = props => {
           active: active,
           created: now.toString(),
           createdBy: uid,
-          caption,
+          category: categoryTags.join(TAG_SEPARATOR),
           content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+          date,
           header,
           imageUrl,
           isFeatured,
@@ -206,13 +217,21 @@ const AuthNewsFeedView = props => {
       }));
     }
   };
+  const handlePreviewClick = async e => {
+    e.preventDefault();
+    const {
+      REACT_APP_WEB_BASE_URL
+    } = process.env;
+    window.open(`${REACT_APP_WEB_BASE_URL}/NewsFeeds/${newsFeed.nfid}`, '_blank');
+  };
   useEffect(() => {
     const retrieveNewsFeed = async () => {
       const dbNewsFeed = await props.firebase.getDbNewsFeedValue(props.match.params.nfid);
       const {
         active,
-        caption,
+        category,
         content,
+        date,
         header,
         imageUrl,
         isFeatured,
@@ -221,8 +240,12 @@ const AuthNewsFeedView = props => {
       setNewsFeed(nf => ({
         ...nf,
         active,
-        caption,
+        category,
+        categoryTags: category && category.length
+          ? category.split(TAG_SEPARATOR)
+          : nf.categoryTags,
         content,
+        date,
         header,
         imageUrl,
         isFeatured,
@@ -310,8 +333,37 @@ const AuthNewsFeedView = props => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Caption</Label>
-                        <Input placeholder="Caption" name="caption" value={newsFeed.caption} onChange={handleChange} type="text" />
+                        <Label>Date</Label>
+                        <InputDateTime
+                          dateFormat={DATE_MOMENT_FORMAT}
+                          inputProps={{
+                            name: 'date',
+                            placeholder: 'Date'
+                          }}
+                          value={newsFeed.date}
+                          onChange={value =>
+                            handleChange({
+                              target: {
+                                name: 'date',
+                                value: value.format(DATE_MOMENT_FORMAT)
+                              }
+                            })}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Category</Label>
+                        <TagsInput
+                          value={newsFeed.categoryTags}
+                          onChange={tags => handleChange({
+                            target: {
+                              name: 'categoryTags',
+                              value: tags
+                            }
+                          })}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Button type="button" color="success" size="lg" className="btn-round px-0" block onClick={handlePreviewClick} disabled={isNew || isSubmitting}>Preview <i className="fas fa-external-link-alt" /></Button>
                       </FormGroup>
                     </CardBody>
                   </Card>

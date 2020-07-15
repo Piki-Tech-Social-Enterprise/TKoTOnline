@@ -100,9 +100,10 @@ const AuthNewsFeedsView = props => {
                         <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="caption" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn dataField="date" dataSort width="100px">Date</TableHeaderColumn>
+                      <TableHeaderColumn dataField="category" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '250px'
-                      }}>Caption</TableHeaderColumn>
+                      }}>Category</TableHeaderColumn>
                       {/* <TableHeaderColumn dataField="content" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '250px'
                       }}>Content</TableHeaderColumn> */}

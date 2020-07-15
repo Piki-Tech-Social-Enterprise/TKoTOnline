@@ -38,7 +38,7 @@ const HomeView = () => {
   });
   return (
     <>
-      <HomeNavbar initalTransparent />
+      <HomeNavbar initalTransparent isHomePage />
       <div className="wrapper">
         <HomeHeader pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')} />
         <div className="main bg-primary1">

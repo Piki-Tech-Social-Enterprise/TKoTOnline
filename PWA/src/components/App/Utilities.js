@@ -83,6 +83,101 @@ const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
 const TIME_MOMENT_FORMAT = 'HH:mm:ss';
 const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
 const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
+const keyCodes = {
+  backspace: 8,
+  tab: 9,
+  enter: 13,
+  space: 32,
+  arrowLeft: 37,
+  arrowRight: 39,
+  colon: 59,
+  divide: 111,
+  semiColon: 186,
+  forwardSlash: 191
+};
+const isShiftPlusTab = (shiftKey, keyCode) => {
+  if (!shiftKey) {
+    return false;
+  }
+  return (keyCode === keyCodes.tab);
+};
+const isShiftSemiColon = (shiftKey, keyCode) => {
+  if (!shiftKey) {
+    return false;
+  }
+  return (keyCode === keyCodes.semiColon || keyCode === keyCodes.colon);
+};
+const isNumeric = keyCode => {
+  return (keyCode >= 48 && keyCode <= 57)
+    || (keyCode >= 96 && keyCode <= 105);
+};
+const isAlpha = keyCode => {
+  return (keyCode >= 65 && keyCode <= 90);
+};
+const handleKeyDown = (handleKeyDownOptions) => {
+  const {
+    e,
+    allowOptions,
+    validKeyCodes
+  } = handleKeyDownOptions,
+    {
+      shiftKey,
+      which: keyCode
+    } = e,
+    {
+      shiftPlusTab,
+      shiftSemiColon,
+      numeric,
+      alpha
+    } = allowOptions;
+  if ((shiftPlusTab && isShiftPlusTab(shiftKey, keyCode))
+    || (shiftSemiColon && isShiftSemiColon(shiftKey, keyCode))
+    || (numeric && isNumeric(keyCode))
+    || (alpha && isAlpha(keyCode))
+    || validKeyCodes.includes(keyCode)) {
+    return true;
+  }
+  e.preventDefault();
+  return false;
+};
+const handleKeyDownForDate = e => {
+  return handleKeyDown({
+    e,
+    allowOptions: {
+      shiftPlusTab: true,
+      shiftSemiColon: true,
+      numeric: true
+    },
+    validKeyCodes: [
+      keyCodes.backspace,
+      keyCodes.enter,
+      keyCodes.tab,
+      keyCodes.arrowLeft,
+      keyCodes.arrowRight,
+      keyCodes.divide,
+      keyCodes.forwardSlash
+    ]
+  });
+};
+const handleKeyDownForTime = e => {
+  return handleKeyDown({
+    e,
+    allowOptions: {
+      shiftPlusTab: true,
+      shiftSemiColon: true,
+      numeric: true
+    },
+    validKeyCodes: [
+      keyCodes.backspace,
+      keyCodes.enter,
+      keyCodes.tab,
+      keyCodes.arrowLeft,
+      keyCodes.arrowRight
+    ]
+  });
+};
+const TAG_SEPARATOR = ', ';
+
 export default shallowCompare;
 export {
   useWindowEvent,
@@ -95,5 +190,14 @@ export {
   DATE_MOMENT_FORMAT,
   TIME_MOMENT_FORMAT,
   DATE_TIME_MOMENT_FORMAT,
-  ISO8601_DATE_FORMAT
+  ISO8601_DATE_FORMAT,
+  keyCodes,
+  isShiftPlusTab,
+  isShiftSemiColon,
+  isNumeric,
+  isAlpha,
+  handleKeyDown,
+  handleKeyDownForDate,
+  handleKeyDownForTime,
+  TAG_SEPARATOR
 };

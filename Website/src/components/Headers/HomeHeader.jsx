@@ -18,7 +18,11 @@ const HomeHeader = props => {
       <Container>
         <div id="header-container">
           <div className="h1 text-dark py-3 mb-0 font-weight-bolder">{pageHeaderTitle}</div>
-          <div className="h5 py-3 text-secondary">{pageHeaderCaption}</div>
+          <div className="h5 py-3 text-secondary">{
+            typeof pageHeaderCaption === 'function'
+              ? pageHeaderCaption()
+              : pageHeaderCaption
+          }</div>
         </div>
       </Container>
     </div>
@@ -27,8 +31,7 @@ const HomeHeader = props => {
 
 HomeHeader.propTypes = {
   pageHeaderImage: PropTypes.string.isRequired,
-  pageHeaderTitle: PropTypes.string,
-  pageHeaderCaption: PropTypes.string
+  pageHeaderTitle: PropTypes.string
 };
 HomeHeader.defaultProps = {
   pageHeaderTitle: 'Me mahi tahi tātou',

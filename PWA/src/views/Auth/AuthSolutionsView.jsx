@@ -58,11 +58,11 @@ const AuthSolutionsView = props => {
     <InsertButton btnText="Add New" onClick={() => handleAddSolutionsClick(onClick)} />
   );
   const handleAddSolutionsClick = async onClick => {
-    props.history.push(`/auth/Solutions/New`);
+    props.history.push(`/auth/Projects/New`);
     onClick();
   };
   const handleSolutionsRowClick = async row => {
-    props.history.push(`/auth/Solutions/${row.slid}`);
+    props.history.push(`/auth/Projects/${row.slid}`);
   };
   const handleChildUpdate = updatedChildState => {
     const indexOfDbSolutions = SolutionsAsArray.findIndex(dbSolutions => dbSolutions.slid === updatedChildState.dbId);

@@ -50,7 +50,7 @@ $tkot-padding-top: 3rem;
 
 /* --- News Feed Carousel --- */
 .news-feed-carousel {
-  .carousel-caption {
+  .carousel-category {
     left: 0;
     right: 0;
     bottom: 0;
@@ -92,7 +92,7 @@ $tkot-padding-top: 3rem;
   }
 }
 @media (max-width: 991px) {
-  .carousel-caption p,
+  .carousel-category p,
   .news-feed-carousel {
     .news-feed-sidebar,
     .news-feed-form {

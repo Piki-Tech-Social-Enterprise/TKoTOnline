@@ -15,6 +15,7 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
+import NewsFeedCaption from 'components/App/NewsFeedCaption';
 
 const NewsFeedView = props => {
   const [state, setState] = useState({
@@ -62,7 +63,7 @@ const NewsFeedView = props => {
           <HomeHeader
             pageHeaderImage={state.imageDownloadURL}
             pageHeaderTitle={state.dbNewsFeed.header}
-            pageHeaderCaption={state.dbNewsFeed.caption}
+            pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
           />
           <Container className="bg-warning1 py-3">
             <Row>

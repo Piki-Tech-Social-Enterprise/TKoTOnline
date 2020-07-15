@@ -19,18 +19,22 @@ const {
   about,
   // communityLinks,
   newsFeed,
+  newsFeeds,
   // interactiveMap,
   // volunteers,
   // facebookLinks,
   events,
+  eventsPage,
   solutions,
-  // aboutUs,
-  // contactUs
+  aboutUs,
+  contactUs,
+  projectsPage
 } = Routes;
 const HomeNavbar = props => {
   const {
     initalTransparent,
-    colorOnScrollValue
+    colorOnScrollValue,
+    isHomePage
   } = props;
   const tkotBackgroundTransparent = 'tkot-background-transparent';
   const tkotBackgroundWhite = 'tkot-background-white';
@@ -42,6 +46,7 @@ const HomeNavbar = props => {
     navbarColor: defaultTkotBackground
   });
   const {
+    pathname,
     hash
   } = window.location;
   const {
@@ -100,38 +105,54 @@ const HomeNavbar = props => {
               <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
                 <NavLink href={iwiMembers}>Iwi</NavLink>
               </NavItem>
-              <NavItem active={hash !== '' && about.endsWith(hash)}>
-                <NavLink href={about}>About</NavLink>
-              </NavItem>
-              <NavItem active={hash !== '' && solutions.endsWith(hash)}>
-                <NavLink href={solutions}>Projects</NavLink>
-              </NavItem>
-              <NavItem active={hash !== '' && events.endsWith(hash)}>
-                <NavLink href={events}>Wananga</NavLink>
-              </NavItem>
-              <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
-                <NavLink href={newsFeed}>News</NavLink>
-              </NavItem>
-              {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
-                <NavLink href={interactiveMap}>Interactive Map</NavLink>
-              </NavItem> */}
-              {/* <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
-                <NavLink href={volunteers}>Volunteers</NavLink>
-              </NavItem> */}
-              {/* <NavItem active={hash !== '' && pathname.endsWith(facebookLinks)}>
-                <NavLink href={facebookLinks}>Facebook</NavLink>
-              </NavItem> */}
-              {/* <NavItem active={pathname.endsWith(aboutUs)}>
-                <NavLink href={aboutUs}>About</NavLink>
-              </NavItem> */}
-              {/* <NavItem active={pathname.endsWith(contactUs)}>
+              {
+                isHomePage
+                  ? <>
+                    <NavItem active={hash !== '' && about.endsWith(hash)}>
+                      <NavLink href={about}>About</NavLink>
+                    </NavItem>
+                    <NavItem active={hash !== '' && solutions.endsWith(hash)}>
+                      <NavLink href={solutions}>Projects</NavLink>
+                    </NavItem>
+                    <NavItem active={hash !== '' && events.endsWith(hash)}>
+                      <NavLink href={events}>Wananga</NavLink>
+                    </NavItem>
+                    <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
+                      <NavLink href={newsFeed}>News</NavLink>
+                    </NavItem>
+                  </>
+                  : <>
+                    <NavItem active={pathname.endsWith(aboutUs)}>
+                      <NavLink href={aboutUs}>About</NavLink>
+                    </NavItem>
+                    <NavItem active={pathname.endsWith(projectsPage)}>
+                      <NavLink href={projectsPage}>Projects</NavLink>
+                    </NavItem>
+                    <NavItem active={pathname.endsWith(eventsPage)}>
+                      <NavLink href={eventsPage}>Wananga</NavLink>
+                    </NavItem>
+                    <NavItem active={pathname.endsWith(newsFeeds)}>
+                      <NavLink href={newsFeeds}>News</NavLink>
+                    </NavItem>
+                  </>
+              }
+              <NavItem active={pathname.endsWith(contactUs)}>
                 <NavLink href={contactUs}>Contact</NavLink>
-              </NavItem> */}
+              </NavItem>
               <NavItem>
                 <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline color='light'>
                   Login
                 </Button>
               </NavItem>
+              {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
+              <NavLink href={interactiveMap}>Interactive Map</NavLink>
+            </NavItem> */}
+              {/* <NavItem active={hash !== '' && volunteers.endsWith(hash)}>
+              <NavLink href={volunteers}>Volunteers</NavLink>
+            </NavItem> */}
+              {/* <NavItem active={hash !== '' && pathname.endsWith(facebookLinks)}>
+              <NavLink href={facebookLinks}>Facebook</NavLink>
+            </NavItem> */}
             </Nav>
           </Collapse>
         </Container>

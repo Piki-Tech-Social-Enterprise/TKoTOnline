@@ -4,6 +4,7 @@ const Routes = {
   about: '/#About',
   communityLinks: '/#CommunityLinks',
   newsFeed: '/#NewsFeed',
+  newsFeeds: '/NewsFeeds',
   interactiveMap: '/#InteractiveMap',
   volunteers: '/#Volunteers',
   volunteerRegistration: '/Volunteer',
@@ -14,6 +15,7 @@ const Routes = {
   facebookLinks: '/FacebookLinks',
   facebookLink: '/FacebookLinks/:fid',
   events: '/#Wananga',
+  eventsPage: '/Wananga',
   solutions: '/#Projects',
   projectsPage: '/Projects'
 };
