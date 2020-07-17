@@ -11,7 +11,7 @@ import NewsFeedSection from 'components/Sections/NewsFeed';
 import IwiMembers from 'components/Sections/IwiMembers';
 // import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 import EventsSection from 'components/Sections/Events';
-import SolutionsSection from 'components/Sections/Solutions';
+import ProjectsSection from 'components/Sections/Projects';
 
 const HomeView = () => {
   useEffect(() => {
@@ -48,10 +48,10 @@ const HomeView = () => {
           <AboutSection />
           {/* Community Links Section) */}
           {/* <CommuintyLinksSection /> */}
-          {/* Solutions */}
-          <SolutionsSection />
+          {/* Projects */}
+          <ProjectsSection showLearnMoreButton />
           {/* Events */}
-          <EventsSection />
+          <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" />
           {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
           <NewsFeedSection showLearnMoreButton />
           {/* Interactive Map of Iwi Links */}

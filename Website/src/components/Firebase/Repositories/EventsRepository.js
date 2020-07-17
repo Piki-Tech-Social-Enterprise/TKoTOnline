@@ -30,6 +30,17 @@ class EventsRepository extends BaseRepository {
     }
     return dbEventAsArray;
   }
+
+  getDbEvent = async evid => {
+    return await this.db.ref(`events/${evid}`);
+  }
+
+  getDbEventValue = async evid => {
+    const existingDbEvent = await this.getDbEvent(evid);
+    const dbEventRef = await existingDbEvent.once('value');
+    const dbEvent = await dbEventRef.val();
+    return dbEvent;
+  }
 }
 
 export default EventsRepository;

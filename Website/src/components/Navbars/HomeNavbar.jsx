@@ -25,7 +25,7 @@ const {
   // facebookLinks,
   events,
   eventsPage,
-  solutions,
+  projects,
   aboutUs,
   contactUs,
   projectsPage
@@ -111,8 +111,8 @@ const HomeNavbar = props => {
                     <NavItem active={hash !== '' && about.endsWith(hash)}>
                       <NavLink href={about}>About</NavLink>
                     </NavItem>
-                    <NavItem active={hash !== '' && solutions.endsWith(hash)}>
-                      <NavLink href={solutions}>Projects</NavLink>
+                    <NavItem active={hash !== '' && projects.endsWith(hash)}>
+                      <NavLink href={projects}>Projects</NavLink>
                     </NavItem>
                     <NavItem active={hash !== '' && events.endsWith(hash)}>
                       <NavLink href={events}>Wananga</NavLink>

@@ -4,16 +4,16 @@ import HomeFooter from 'components/Footers/HomeFooter';
 import {
   withFirebase
 } from 'components/Firebase';
-import NewsFeedSection from 'components/Sections/NewsFeed';
+import EventsSection from 'components/Sections/Events';
 
-const NewsFeedsView = () => {
+const EventsView = () => {
   return (
     <>
       <HomeNavbar />
-      <NewsFeedSection containerClassName="mt-5" />
+      <EventsSection containerClassName="mt-5" />
       <HomeFooter />
     </>
   );
 };
 
-export default withFirebase(NewsFeedsView);
+export default withFirebase(EventsView);

@@ -9,6 +9,7 @@
     "bootstrap": "4.5.0",
     "chart.js": "2.9.3",
     "draft-js": "^0.11.6",
+    "draftjs-to-html": "^0.9.1",
     "firebase": "^7.16.0",
     "googleapis": "^52.1.0",
     "history": "4.10.0",

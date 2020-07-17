@@ -14,13 +14,17 @@ import {
   TableHeaderColumn,
   InsertButton
 } from 'react-bootstrap-table';
+import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  draftToText
+} from 'components/App/Utilities';
 
 const AuthEventsView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [EventsAsArray, setEventsAsArray] = useState([]);
+  const [eventsAsArray, setEventsAsArray] = useState([]);
   useEffect(() => {
     const retrieveEvents = async () => {
       const dbEventsAsArray = await props.firebase.getDbEventsAsArray(true);
@@ -37,7 +41,7 @@ const AuthEventsView = props => {
     };
   }, [props, isLoading, setIsLoading, setEventsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    EventsAsArray.sort((a, b) => {
+    eventsAsArray.sort((a, b) => {
       const aValue = a[sortName];
       const bValue = b[sortName];
       return (
@@ -54,22 +58,22 @@ const AuthEventsView = props => {
     });
   };
   const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddEventsClick(onClick)} />
+    <InsertButton btnText="Add New" onClick={() => handleAddEventClick(onClick)} />
   );
-  const handleAddEventsClick = async onClick => {
+  const handleAddEventClick = async onClick => {
     props.history.push(`/auth/Wananga/New`);
     onClick();
   };
-  const handleEventsRowClick = async row => {
+  const handleEventRowClick = async row => {
     props.history.push(`/auth/Wananga/${row.evid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbEvents = EventsAsArray.findIndex(dbEvents => dbEvents.evid === updatedChildState.dbId);
-    if (indexOfDbEvents > -1) {
+    const indexOfDbEvent = eventsAsArray.findIndex(dbEvent => dbEvent.evid === updatedChildState.dbId);
+    if (indexOfDbEvent > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        EventsAsArray[indexOfDbEvents].active = updatedChildState.dbActive;
+        eventsAsArray[indexOfDbEvent].active = updatedChildState.dbActive;
       }
-      setEventsAsArray(EventsAsArray);
+      setEventsAsArray(eventsAsArray);
     }
   }
   return (
@@ -82,21 +86,31 @@ const AuthEventsView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-info" />
-                    : <BootstrapTable data={EventsAsArray} version="4" bordered={false} condensed hover
+                    ? <LoadingOverlayModal color="text-dark" />
+                    : <BootstrapTable data={eventsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="events-table-export"
+                      insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No Events found.',
+                        noDataText: 'No Wananga found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
-                        onRowClick: handleEventsRowClick
+                        onRowClick: handleEventRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="eventName" dataSort>Event Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="eventURL" dataSort>Event URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="imageUrl" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
+                      )}>Image</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                        maxWidth: '400px'
+                      }} dataFormat={(cell) => {
+                        const contentAsText = draftToText(cell);
+                        return (
+                          <span>{contentAsText}</span>
+                        );
+                      }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Event"

@@ -1,6 +1,7 @@
 import {
   useEffect
 } from 'react';
+import draftToHtml from 'draftjs-to-html';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -93,6 +94,13 @@ const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
 const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
 const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
 const TAG_SEPARATOR = ', ';
+const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
+const draftToText = draftRaw => {
+  const draftAsJson = JSON.parse(draftRaw);
+  const draftAsHtml = draftToHtml(draftAsJson);
+  const draftAsText = draftAsHtml.replace(/(<([^>]+)>)/ig, '');
+  return draftAsText;
+};
 
 export default shallowCompare;
 export {
@@ -109,5 +117,7 @@ export {
   DATE_TIME_MOMENT_FORMAT,
   ISO8601_DATE_FORMAT,
   NEWSFEED_DATE_MOMENT_FORMAT,
-  TAG_SEPARATOR
+  TAG_SEPARATOR,
+  stripHtml,
+  draftToText
 };

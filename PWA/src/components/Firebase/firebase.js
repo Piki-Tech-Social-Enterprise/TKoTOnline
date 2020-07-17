@@ -12,7 +12,7 @@ import {
   EPanuiListRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository,
+  ProjectsRepository,
   IwiMembersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
@@ -35,7 +35,7 @@ class Firebase {
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
     this.facebookLinksRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
-    this.solutionsRepository = new SolutionsRepository(firebaseApp);
+    this.projectsRepository = new ProjectsRepository(firebaseApp);
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
   }
 
@@ -124,12 +124,12 @@ class Firebase {
   saveDbEvent = async (event, saveDbEvent_completed) => await this.eventsRepository.saveDbEvent(event, saveDbEvent_completed);
   deleteDbEvent = async evid => await this.eventsRepository.deleteDbEvent(evid);
 
-  getDbSolutions = async () => await this.solutionsRepository.getDbSolutions();
-  getDbSolutionsAsArray = async includeInactive => await this.solutionsRepository.getDbSolutionsAsArray(includeInactive);
-  getDbSolution = async slid => await this.solutionsRepository.getDbSolutions(slid);
-  getDbSolutionValue = async slid => await this.solutionsRepository.getDbSolutionValue(slid);
-  saveDbSolution = async (solution, saveDbSolution_completed) => await this.solutionsRepository.saveDbSolution(solution, saveDbSolution_completed);
-  deleteDbSolution = async slid => await this.solutionsRepository.deleteDbSolution(slid);
+  getDbProjects = async () => await this.projectsRepository.getDbProjects();
+  getDbProjectsAsArray = async includeInactive => await this.projectsRepository.getDbProjectsAsArray(includeInactive);
+  getDbProject = async pid => await this.projectsRepository.getDbProjects(pid);
+  getDbProjectValue = async pid => await this.projectsRepository.getDbProjectValue(pid);
+  saveDbProject = async (project, saveDbProject_completed) => await this.projectsRepository.saveDbProject(project, saveDbProject_completed);
+  deleteDbProject = async pid => await this.projectsRepository.deleteDbProject(pid);
 
   getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
   getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);

@@ -21,9 +21,7 @@ import swal from 'sweetalert2';
 import FirebaseInput from 'components/FirebaseInput';
 import {
   formatBytes,
-  formatInteger,
-  DATE_MOMENT_FORMAT,
-  TAG_SEPARATOR
+  formatInteger
 } from 'components/App/Utilities';
 import {
   EditorState,
@@ -34,34 +32,25 @@ import {
   Editor
 } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import InputDateTime from 'components/App/InputDateTime';
-import TagsInput from 'react-tagsinput-2';
-import 'react-tagsinput-2/react-tagsinput.css';
 
-const newsFeedsRef = '/images/newsFeeds';
-const newsFeedKeyFormat = '{nfid}';
-const newsFeedFilenameFormat = '{filename}';
-const newsFeedImageFolderUrlFormat = `${newsFeedsRef}/${newsFeedKeyFormat}/`;
-const newsFeedImageUrlFormat = `${newsFeedImageFolderUrlFormat}${newsFeedFilenameFormat}`;
+const projectsRef = '/images/projects';
+const projectKeyFormat = '{pid}';
+const projectFilenameFormat = '{filename}';
+const projectImageFolderUrlFormat = `${projectsRef}/${projectKeyFormat}/`;
+const projectImageUrlFormat = `${projectImageFolderUrlFormat}${projectFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
-  category: '',
-  categoryTags: [
-    'Uncategorized'
-  ],
   content: '',
-  date: '',
   header: '',
   imageUrl: '',
   imageUrlFile: null,
-  isFeatured: false,
-  nfid: null,
+  pid: null,
   editorState: EditorState.createEmpty()
 };
-const AuthNewsFeedView = props => {
-  const isNew = props.match.params.nfid === 'New';
+const AuthProjectView = props => {
+  const isNew = props.match.params.pid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [newsFeed, setNewsFeed] = useState(INITIAL_STATE);
+  const [project, setProject] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = async e => {
     const {
@@ -69,10 +58,10 @@ const AuthNewsFeedView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['isFeatured', 'active'];
+    const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setNewsFeed(nf => ({
-      ...nf,
+    setProject(p => ({
+      ...p,
       [name]: useChecked
         ? checked
         : value
@@ -92,21 +81,18 @@ const AuthNewsFeedView = props => {
     } = authUser;
     const {
       active,
-      categoryTags,
       content,
-      date,
       header,
-      imageUrlFile,
-      isFeatured
-    } = newsFeed;
-    let nfid = newsFeed.nfid;
-    let imageUrl = newsFeed.imageUrl;
+      imageUrlFile
+    } = project;
+    let pid = project.pid;
+    let imageUrl = project.imageUrl;
     let displayIcon = 'error';
-    let displayTitle = 'Save News Feed Failed';
+    let displayTitle = 'Save Project Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !content || !date) {
-        displayMessage = 'The Image, Header, Content and Date fields are required.';
+      if (!imageUrl || !header || !content) {
+        displayMessage = 'The Image, Header and Content fields are required.';
       } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
         const {
           size
@@ -114,24 +100,21 @@ const AuthNewsFeedView = props => {
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (isNew) {
-          nfid = await firebase.saveDbNewsFeed({});
+          pid = await firebase.saveDbProject({});debugger;
           if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = newsFeedImageUrlFormat
-              .replace(newsFeedKeyFormat, nfid)
-              .replace(newsFeedFilenameFormat, imageUrlFile.name);
+            imageUrl = projectImageUrlFormat
+              .replace(projectKeyFormat, pid)
+              .replace(projectFilenameFormat, imageUrlFile.name);
           }
         }
-        await firebase.saveDbNewsFeed({
+        await firebase.saveDbProject({
           active: active,
           created: now.toString(),
           createdBy: uid,
-          category: categoryTags.join(TAG_SEPARATOR),
           content: content,
-          date,
           header,
           imageUrl,
-          isFeatured,
-          nfid: nfid,
+          pid: pid,
           updated: now.toString(),
           updatedBy: uid
         });
@@ -142,7 +125,7 @@ const AuthNewsFeedView = props => {
           handleGotoParentList();
         }
         displayIcon = 'success';
-        displayTitle = 'Save News Feed Successful';
+        displayTitle = 'Save Project Successful';
       }
     } catch (error) {
       displayMessage = `${error.message}`;
@@ -178,16 +161,16 @@ const AuthNewsFeedView = props => {
           match
         } = props;
         const {
-          nfid
+          pid
         } = match.params;
-        const newsFeedImageFolderUrl = newsFeedImageFolderUrlFormat.replace(newsFeedKeyFormat, nfid);
-        const storageFiles = await firebase.getStorageFiles(newsFeedImageFolderUrl);
+        const projectImageFolderUrl = projectImageFolderUrlFormat.replace(projectKeyFormat, pid);
+        const storageFiles = await firebase.getStorageFiles(projectImageFolderUrl);
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
-        await firebase.deleteDbNewsFeed(nfid);
+        await firebase.deleteDbProject(pid);
         swal.fire({
           icon: 'success',
-          title: 'Delete News Feed Successful',
-          text: 'Your News Feed has been deleted.'
+          title: 'Delete Project Successful',
+          text: 'Your Project has been deleted.'
         });
         handleGotoParentList();
       }
@@ -197,21 +180,21 @@ const AuthNewsFeedView = props => {
     if (displayMessage) {
       swal.fire({
         icon: 'error',
-        title: 'Delete News Feed Error',
+        title: 'Delete Project Error',
         html: displayMessage
       });
-      console.log(`Delete News Feed Error: ${displayMessage}`);
+      console.log(`Delete Project Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
-    props.history.push('/auth/NewsFeeds');
+    props.history.push('/auth/Projects');
   };
   const handleImageUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
       const imageUrlFile = e.target.files[0];
-      setNewsFeed(nf => ({
-        ...nf,
+      setProject(p => ({
+        ...p,
         imageUrlFile: imageUrlFile
       }));
     }
@@ -221,43 +204,34 @@ const AuthNewsFeedView = props => {
     const {
       REACT_APP_WEB_BASE_URL
     } = process.env;
-    window.open(`${REACT_APP_WEB_BASE_URL}/NewsFeeds/${newsFeed.nfid}`, '_blank');
+    window.open(`${REACT_APP_WEB_BASE_URL}/Projects/${project.pid}`, '_blank');
   };
   useEffect(() => {
-    const retrieveNewsFeed = async () => {
-      const dbNewsFeed = await props.firebase.getDbNewsFeedValue(props.match.params.nfid);
+    const retrieveProject = async () => {
+      const dbProject = await props.firebase.getDbProjectValue(props.match.params.pid);
       const {
         active,
-        category,
         content,
-        date,
         header,
         imageUrl,
-        isFeatured,
-        nfid
-      } = dbNewsFeed;
-      setNewsFeed(nf => ({
-        ...nf,
+        pid
+      } = dbProject;
+      setProject(p => ({
+        ...p,
         active,
-        category,
-        categoryTags: category && category.length
-          ? category.split(TAG_SEPARATOR)
-          : nf.categoryTags,
         content,
-        date,
         header,
         imageUrl,
-        isFeatured,
-        nfid,
+        pid,
         editorState: content && content.startsWith('{') && content.endsWith('}')
           ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
-          : nf.editorState
+          : p.editorState
       }));
       setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {
-        retrieveNewsFeed();
+        retrieveProject();
       }
     }
     return () => {
@@ -284,19 +258,16 @@ const AuthNewsFeedView = props => {
                           wrapperClassName="wrapper-class"
                           editorClassName="editor-class"
                           toolbarClassName="toolbar-class"
-                          editorState={newsFeed.editorState}
-                          onEditorStateChange={editorState => setNewsFeed(nf => ({
-                            ...nf,
+                          editorState={project.editorState}
+                          onEditorStateChange={editorState => setProject(p => ({
+                            ...p,
                             content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
                             editorState: editorState
                           }))}
                         />
                       </FormGroup>
-                      {/* <FormGroup>
-                        <CustomInput label="Is Featured?" bsSize="lg" name="isFeatured" checked={newsFeed.isFeatured} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
-                      </FormGroup> */}
                       <FormGroup>
-                        <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
+                        <CustomInput label="Active" name="active" checked={project.active} onChange={handleChange} type="switch" id="ProjectActive" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
@@ -311,12 +282,12 @@ const AuthNewsFeedView = props => {
                     <CardBody>
                       <FormGroup>
                         <Label>Header</Label>
-                        <Input placeholder="Header" name="header" value={newsFeed.header} onChange={handleChange} type="text" />
+                        <Input placeholder="Header" name="header" value={project.header} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
                         <Label>Image</Label>
                         <FirebaseInput
-                          value={newsFeed.imageUrl}
+                          value={project.imageUrl}
                           onChange={handleChange}
                           downloadURLInputProps={{
                             id: 'imageUrl',
@@ -326,40 +297,10 @@ const AuthNewsFeedView = props => {
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
                           downloadURLFileInputOnChange={handleImageUrlFileChange}
-                          downloadURLFormat={newsFeedImageUrlFormat}
-                          downloadURLFormatKeyName={newsFeedKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.nfid}
-                          downloadURLFormatFileName={newsFeedFilenameFormat}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Date</Label>
-                        <InputDateTime
-                          dateFormat={DATE_MOMENT_FORMAT}
-                          inputProps={{
-                            name: 'date',
-                            placeholder: 'Date'
-                          }}
-                          value={newsFeed.date}
-                          onChange={value =>
-                            handleChange({
-                              target: {
-                                name: 'date',
-                                value: value.format(DATE_MOMENT_FORMAT)
-                              }
-                            })}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>Category</Label>
-                        <TagsInput
-                          value={newsFeed.categoryTags}
-                          onChange={tags => handleChange({
-                            target: {
-                              name: 'categoryTags',
-                              value: tags
-                            }
-                          })}
+                          downloadURLFormat={projectImageUrlFormat}
+                          downloadURLFormatKeyName={projectKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.pid}
+                          downloadURLFormatFileName={projectFilenameFormat}
                         />
                       </FormGroup>
                       <FormGroup>
@@ -378,4 +319,4 @@ const AuthNewsFeedView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthNewsFeedView);
+export default withAuthorization(condition)(AuthProjectView);

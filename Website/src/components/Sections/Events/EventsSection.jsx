@@ -6,145 +6,94 @@ import {
   Container,
   Row,
   Col,
-  Nav,
-  NavItem,
-  NavLink
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  CardLink
 } from 'reactstrap';
+import LoadingSpinner from 'components/App/LoadingSpinner';
+import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import {
-  intoChunks
-} from 'components/App/Utilities';
 
-const getChunkSize = (array, columnCount) => {
-  const {
-    length: arrayLength
-  } = array;
-  const arrayLengthRemainder = arrayLength % columnCount;
-  const arrayChunk = arrayLength - arrayLengthRemainder;
-  const initalSize = arrayChunk / columnCount;
-  const twoColumn = 2;
-  const twoColumnRemainder = (arrayLengthRemainder % twoColumn);
-  const offset = twoColumnRemainder === 0
-    ? arrayLengthRemainder / twoColumn
-    : (arrayLengthRemainder - twoColumnRemainder) / twoColumn;
-  const chunkSize = initalSize + (arrayLengthRemainder <= 1
-    ? arrayLengthRemainder
-    : offset);
-  return chunkSize;
-};
-const getEventsMegaMenuItems = (events, columnCount) => {
-  const eventsMegaMenuItems = {};
-  const chunks = intoChunks(events, getChunkSize(events, columnCount));
-  chunks.map((chunk, index) => {
-    eventsMegaMenuItems[`column${index + 1}Items`] = chunk;
-    return null;
-  });
-  return eventsMegaMenuItems;
-};
-const EventsMegaMenuColumn = props => {
-  const {
-    columnItems
-  } = props;
-  return (
-    <Col>
-      <Nav vertical>
-        {
-          columnItems.map(columnItem => {
-            const {
-              evid,
-              eventURL,
-              eventName
-            } = columnItem;
-            return (
-              <NavItem key={evid} className="events px-0 pb-0 bg-light1">
-                <NavLink href={eventURL} className="px-0 text-dark bg-info1" target="_blank" rel="noopener noreferrer">{eventName}</NavLink>
-              </NavItem>
-            );
-          })
-        }
-      </Nav>
-    </Col>
-  );
-};
-const EventsMegaMenu = props => {
-  const {
-    eventsMegaMenuItems
-  } = props;
-  return (
-    <Row>
-      {
-        Object.keys(eventsMegaMenuItems).map(key => {
-          const columnItems = eventsMegaMenuItems[key];
-          return columnItems.length
-            ? <EventsMegaMenuColumn columnItems={columnItems} key={key} />
-            : null
-        })
-      }
-    </Row>
-  );
-};
 const EventsSection = props => {
   const [state, setState] = useState({
     isLoading: true,
-    events: [],
-    columnCount: 4,
-    masterEvents: [],
-    eventsDescription: ''
+    dbEvents: []
   });
+  const {
+    containerClassName,
+    showLearnMoreButton
+  } = props;
+  const {
+    isLoading,
+    dbEvents
+  } = state;
   useEffect(() => {
-    const {
-      isLoading,
-      masterEvents
-    } = state;
-    const getData = async () => {
+    const getDbEvents = async () => {
       const {
         firebase
       } = props;
       const dbEvents = await firebase.getDbEventsAsArray();
-      const dbSettingsValues = await firebase.getDbSettingsValues(true);
-      // debugger;
       setState(s => ({
         ...s,
         isLoading: false,
-        events: dbEvents,
-        masterEvents: masterEvents.length
-          ? masterEvents
-          : dbEvents,
-        eventsDescription: ((dbSettingsValues && dbSettingsValues.eventsDescription) || '')
+        dbEvents
       }));
     };
     if (isLoading) {
-      getData();
+      getDbEvents();
     }
-  }, [props, state]);
+  }, [props, isLoading, setState]);
   return (
-    <div className="tkot-section bg-secondary1 tkot-primary-blue-bg-color-50-pc">
+    <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
         <a id="Wananga" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
         <Row>
-          <Col className="text-uppercase text-center">
-            <h3>Upcoming Wānanga &amp; Events</h3>
-          </Col>
-        </Row>
-        {
-          state.eventsDescription
-            ? <Row>
-              <Col>
-                <p>{state.eventsDescription}</p>
-              </Col>
-            </Row>
-            : null
-        }
-        <Row>
           <Col>
-            {
-              state.isLoading
-                ? <LoadingSpinner />
-                : <EventsMegaMenu eventsMegaMenuItems={getEventsMegaMenuItems(state.events, state.columnCount)} />
-            }
+            <div className="mx-auto text-center">
+              <h3 className="text-uppercase">Our Wānanga &amp; Events</h3>
+              <Container className="my-3" fluid>
+                <Row className="flex-row flex-nowrap cards-row">
+                  {
+                    isLoading
+                      ? <LoadingSpinner />
+                      : dbEvents.map((dbEvent, index) => {
+                        return (
+                          <Col xs={12} md={4} key={index}>
+                            <Card className="card-block" style={{
+                              border: 'none',
+                              borderRadius: '0.25rem',
+                              boxShadow: 'none'
+                            }}>
+                              <FirebaseImage className="card-img-max-height card-img-top" imageURL={dbEvent.imageUrl} alt={dbEvent.header} />
+                              <CardBody className="bg-white">
+                                <CardTitle className="h5 my-3 mx-2">{dbEvent.header}</CardTitle>
+                                <CardLink href={`/Wananga/${dbEvent.evid}`} style={{
+                                  color: 'inherit'
+                                }}>Read more...</CardLink>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        );
+                      })
+                  }
+                </Row>
+              </Container>
+              {
+                showLearnMoreButton
+                  ? <div className="mb-5 text-center">
+                    <Button href="/Wananga" outline color='dark' style={{
+                      color: 'inherit'
+                    }}>
+                      View more...
+                </Button>
+                  </div>
+                  : null
+              }
+            </div>
           </Col>
         </Row>
       </Container>

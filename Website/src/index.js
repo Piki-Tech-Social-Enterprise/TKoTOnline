@@ -46,6 +46,8 @@ import ProjectsView from 'views/ProjectsView';
 import ProjectView from 'views/ProjectView';
 import NewsFeedsView from 'views/NewsFeedsView';
 import NewsFeedView from 'views/NewsFeedView';
+import EventsView from 'views/EventsView';
+import EventView from 'views/EventView';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -119,6 +121,16 @@ ReactDOM.render(
         <Route
           path="/NewsFeeds/:nfid"
           render={props => <NewsFeedView {...props} />}
+          exact
+        />
+        <Route
+          path="/Wananga"
+          render={props => <EventsView {...props} />}
+          exact
+        />
+        <Route
+          path="/Wananga/:evid"
+          render={props => <EventView {...props} />}
           exact
         />
       </Switch>

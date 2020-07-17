@@ -9,7 +9,7 @@ import {
   FunctionsRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository,
+  ProjectsRepository,
   IwiMembersRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
@@ -29,7 +29,7 @@ class Firebase {
     this.functionsRepository = new FunctionsRepository(firebaseApp);
     this.facebookLinkRepository = new FacebookLinksRepository(firebaseApp);
     this.eventsRepository = new EventsRepository(firebaseApp);
-    this.solutionsRepository = new SolutionsRepository(firebaseApp);
+    this.projectsRepository = new ProjectsRepository(firebaseApp);
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
   }
 
@@ -66,8 +66,10 @@ class Firebase {
   getDbFacebookLinkValue = async fid => await this.facebookLinkRepository.getDbFacebookLinkValue(fid);
   getDbEvents = async () => await this.eventsRepository.getDbEvents();
   getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
-  getDbSolutions = async () => await this.solutionsRepository.getDbSolutions();
-  getDbSolutionsAsArray = async includeInactive => await this.solutionsRepository.getDbSolutionsAsArray(includeInactive);
+  getDbEventValue = async evid => await this.eventsRepository.getDbEventValue(evid);
+  getDbEvents = async () => await this.eventsRepository.getDbEvents();
+  getDbProjectsAsArray = async includeInactive => await this.projectsRepository.getDbProjectsAsArray(includeInactive);
+  getDbProjectValue = async pid => await this.projectsRepository.getDbProjectValue(pid);
   getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
   getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);
 }

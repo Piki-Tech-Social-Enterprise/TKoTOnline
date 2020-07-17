@@ -16,37 +16,37 @@ import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
 
-const ProjectView = props => {
+const EventView = props => {
   const [state, setState] = useState({
     isLoading: true,
-    dbProject: null,
+    dbEvent: null,
     imageDownloadURL: ''
   });
   useEffect(() => {
-    const retrieveProjectValue = async () => {
+    const retrieveEventValue = async () => {
       const {
         firebase,
         match
       } = props;
       const {
-        pid
+        evid
       } = match.params;
-      const dbProject = await firebase.getDbProjectValue(pid);
+      const dbEvent = await firebase.getDbEventValue(evid);
       const {
         imageUrl
-      } = dbProject;
+      } = dbEvent;
       const imageDownloadURL = imageUrl.startsWith('/images/')
         ? await firebase.getStorageFileDownloadURL(imageUrl)
         : imageUrl
       setState(s => ({
         ...s,
         isLoading: false,
-        dbProject: dbProject,
+        dbEvent: dbEvent,
         imageDownloadURL: imageDownloadURL
       }));
     };
     if (state.isLoading) {
-      retrieveProjectValue();
+      retrieveEventValue();
     }
   }, [props, state]);
   return (
@@ -54,20 +54,20 @@ const ProjectView = props => {
       {
         state.isLoading
           ? <LoadingSpinner />
-          : <div id="Project">
+          : <div id="Event">
             <HomeNavbar
               initalTransparent={true}
               colorOnScrollValue={25}
             />
             <HomeHeader
               pageHeaderImage={state.imageDownloadURL}
-              pageHeaderTitle={state.dbProject.header}
+              pageHeaderTitle={state.dbEvent.header}
               pageHeaderCaption=""
             />
             <Container className="bg-warning1 py-3">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbProject.content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbEvent.content)) }}
                 />
               </Row>
             </Container>
@@ -78,4 +78,4 @@ const ProjectView = props => {
   );
 };
 
-export default withFirebase(ProjectView);
+export default withFirebase(EventView);

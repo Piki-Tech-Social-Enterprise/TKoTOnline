@@ -16,7 +16,7 @@ const Routes = {
   facebookLink: '/FacebookLinks/:fid',
   events: '/#Wananga',
   eventsPage: '/Wananga',
-  solutions: '/#Projects',
+  projects: '/#Projects',
   projectsPage: '/Projects'
 };
 

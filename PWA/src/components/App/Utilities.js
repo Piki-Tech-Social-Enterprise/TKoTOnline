@@ -1,6 +1,7 @@
 import {
   useEffect
 } from 'react';
+import draftToHtml from 'draftjs-to-html';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -177,6 +178,13 @@ const handleKeyDownForTime = e => {
   });
 };
 const TAG_SEPARATOR = ', ';
+const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
+const draftToText = draftRaw => {
+  const draftAsJson = JSON.parse(draftRaw);
+  const draftAsHtml = draftToHtml(draftAsJson);
+  const draftAsText = draftAsHtml.replace(/(<([^>]+)>)/ig, '');
+  return draftAsText;
+};
 
 export default shallowCompare;
 export {
@@ -199,5 +207,7 @@ export {
   handleKeyDown,
   handleKeyDownForDate,
   handleKeyDownForTime,
-  TAG_SEPARATOR
+  TAG_SEPARATOR,
+  stripHtml,
+  draftToText
 };

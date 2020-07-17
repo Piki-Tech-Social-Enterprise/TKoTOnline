@@ -100,8 +100,7 @@ $tkot-padding-top: 3rem;
     }
   }
 }
-.news-feed-cards-row {
-  min-height: 25.625rem;
+.cards-row {
   overflow: scroll hidden;
 }
 .card-block {
@@ -246,7 +245,9 @@ $tkot-padding-top: 3rem;
   height: 70vh;
 }
 
-#NewsFeed .page-header {
+#NewsFeed .page-header,
+#Project .page-header,
+#Event .page-header {
   min-height: inherit;
 }
 
@@ -282,7 +283,7 @@ $tkot-padding-top: 3rem;
   background: $tkot-secondary-color-black !important;
 }
 
-.solution-image {
+.project-image {
   height: 240px;
   width: 100%;
 }

@@ -18,27 +18,30 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  draftToText
+} from 'components/App/Utilities';
 
-const AuthSolutionsView = props => {
+const AuthProjectsView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [SolutionsAsArray, setSolutionsAsArray] = useState([]);
+  const [projectsAsArray, setProjectsAsArray] = useState([]);
   useEffect(() => {
-    const retrieveSolutions = async () => {
-      const dbSolutionsAsArray = await props.firebase.getDbSolutionsAsArray(true);
-      setSolutionsAsArray(dbSolutionsAsArray);
+    const retrieveProjects = async () => {
+      const dbProjectsAsArray = await props.firebase.getDbProjectsAsArray(true);
+      setProjectsAsArray(dbProjectsAsArray);
       setIsLoading(false);
     };
     if (isLoading) {
-      retrieveSolutions();
+      retrieveProjects();
     }
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setSolutionsAsArray]);
+  }, [props, isLoading, setIsLoading, setProjectsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    SolutionsAsArray.sort((a, b) => {
+    projectsAsArray.sort((a, b) => {
       const aValue = a[sortName];
       const bValue = b[sortName];
       return (
@@ -55,22 +58,22 @@ const AuthSolutionsView = props => {
     });
   };
   const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddSolutionsClick(onClick)} />
+    <InsertButton btnText="Add New" onClick={() => handleAddProjectClick(onClick)} />
   );
-  const handleAddSolutionsClick = async onClick => {
+  const handleAddProjectClick = async onClick => {
     props.history.push(`/auth/Projects/New`);
     onClick();
   };
-  const handleSolutionsRowClick = async row => {
-    props.history.push(`/auth/Projects/${row.slid}`);
+  const handleProjectRowClick = async row => {
+    props.history.push(`/auth/Projects/${row.pid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbSolutions = SolutionsAsArray.findIndex(dbSolutions => dbSolutions.slid === updatedChildState.dbId);
-    if (indexOfDbSolutions > -1) {
+    const indexOfDbProject = projectsAsArray.findIndex(dbProject => dbProject.pid === updatedChildState.dbId);
+    if (indexOfDbProject > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        SolutionsAsArray[indexOfDbSolutions].active = updatedChildState.dbActive;
+        projectsAsArray[indexOfDbProject].active = updatedChildState.dbActive;
       }
-      setSolutionsAsArray(SolutionsAsArray);
+      setProjectsAsArray(projectsAsArray);
     }
   }
   return (
@@ -83,32 +86,39 @@ const AuthSolutionsView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-info" />
-                    : <BootstrapTable data={SolutionsAsArray} version="4" bordered={false} condensed hover
+                    ? <LoadingOverlayModal color="text-dark" />
+                    : <BootstrapTable data={projectsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="solutions-table-export"
+                      insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
                         hideSizePerPage: true,
-                        noDataText: 'No Solutions found.',
+                        noDataText: 'No Projects found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
-                        onRowClick: handleSolutionsRowClick
+                        onRowClick: handleProjectRowClick
                       }}>
-                      <TableHeaderColumn dataField="solutionImageURL" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.solutionName} imageURL={cell || ''} />
+                      <TableHeaderColumn dataField="imageUrl" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="solutionName" dataSort>Solution Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="solutionURL" dataSort>Solution URL</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                        maxWidth: '400px'
+                      }} dataFormat={(cell) => {
+                        const contentAsText = draftToText(cell);
+                        return (
+                          <span>{contentAsText}</span>
+                        );
+                      }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
-                          dbObjectName="Solution"
-                          dbId={row.slid}
-                          dbIdName="slid"
+                          dbObjectName="Project"
+                          dbId={row.pid}
+                          dbIdName="pid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbSolution}
+                          onSaveDbObject={props.firebase.saveDbProject}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>
@@ -125,4 +135,4 @@ const AuthSolutionsView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthSolutionsView);
+export default withAuthorization(condition)(AuthProjectsView);

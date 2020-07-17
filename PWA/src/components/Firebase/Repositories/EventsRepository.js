@@ -36,10 +36,10 @@ class EventsRepository extends BaseRepository {
   }
 
   getDbEventValue = async evid => {
-    const existingDbEvents = await this.getDbEvent(evid);
-    const dbEventsRef = await existingDbEvents.once('value');
-    const dbEvents = await dbEventsRef.val();
-    return dbEvents;
+    const existingDbEvent = await this.getDbEvent(evid);
+    const dbEventRef = await existingDbEvent.once('value');
+    const dbEvent = await dbEventRef.val();
+    return dbEvent;
   }
 
   saveDbEvent = async (event, saveDbEvent_completed) => {
@@ -47,63 +47,66 @@ class EventsRepository extends BaseRepository {
       active,
       created,
       createdBy,
-      eventURL,
-      eventName,
+      content,
+      header,
+      imageUrl,
       evid,
       updated,
       updatedBy
     } = event;
     const now = new Date();
     let errorMessage = null;
-    let existingDbEvents = await this.getDbEvent(evid || '')
-    let dbEventsRef = null;
-    let dbEvents = null;
+    let existingDbEvent = await this.getDbEvent(evid || '')
+    let dbEventRef = null;
+    let dbEvent = null;
     if (!evid) {
-      dbEventsRef = await existingDbEvents.push();
+      dbEventRef = await existingDbEvent.push();
       event = {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
-        eventURL: eventURL || '',
-        eventName: eventName || '',
+        content: content || '',
+        header: header || '',
+        imageUrl: imageUrl || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
-        evid: await dbEventsRef.getKey()
+        evid: await dbEventRef.getKey()
       };
-      dbEventsRef.set(event, saveDbEvent_completed);
+      dbEventRef.set(event, saveDbEvent_completed);
     } else {
-      dbEventsRef = await existingDbEvents.once('value');
-      dbEvents = await dbEventsRef.val();
-      if (dbEvents) {
+      dbEventRef = await existingDbEvent.once('value');
+      dbEvent = await dbEventRef.val();
+      if (dbEvent) {
         event = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbEvents.created,
-          createdBy: createdBy || dbEvents.createdBy,
-          eventURL: eventURL || dbEvents.eventURL || '',
-          eventName: eventName || dbEvents.eventName || '',
+          created: created || dbEvent.created,
+          createdBy: createdBy || dbEvent.createdBy,
+          content: content || dbEvent.content || '',
+          header: header || dbEvent.header || '',
+          imageUrl: imageUrl || dbEvent.imageUrl || '',
           evid: evid,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || dbEvents.updatedBy
+          updatedBy: updatedBy || dbEvent.updatedBy
         };
-        existingDbEvents.set(event, saveDbEvent_completed);
+        existingDbEvent.set(event, saveDbEvent_completed);
       } else {
-        errorMessage = 'Save Db Events Error: evid (' + evid + ') not found.';
+        errorMessage = 'Save Db Event Error: evid (' + evid + ') not found.';
       }
     }
     if (errorMessage) {
-      console.log('Save Db Events Error: ' + errorMessage);
+      console.log('Save Db Event Error: ' + errorMessage);
       throw new Error(errorMessage);
     }
     return event.evid;
   }
 
   deleteDbEvent = async evid => {
-    const existingDbEvents = await this.getDbEvent(evid);
+    const existingDbEvent = await this.getDbEvent(evid);
     let errorMessage = null;
-    if (existingDbEvents) {
-      await existingDbEvents.remove();
+    if (existingDbEvent) {
+      await existingDbEvent.remove();
     } else {
-      errorMessage = `Delete Db News Feed Error: evid (${evid}) not found.`;
+      errorMessage = `Delete Db Event Error: evid (${evid}) not found.`;
     }
     if (errorMessage) {
       console.log(errorMessage);

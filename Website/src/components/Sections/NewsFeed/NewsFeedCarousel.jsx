@@ -26,8 +26,10 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
-import draftToHtml from 'draftjs-to-html';
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
+import {
+  draftToText
+} from 'components/App/Utilities';
 
 const INITIAL_STATE = {
   isLoading: true,
@@ -223,7 +225,7 @@ const NewsFeedCarousel = props => {
         firebase,
         searchCategory
       } = props;
-      console.log('searchCategory: ', searchCategory);
+      // console.log('searchCategory: ', searchCategory);
       const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
       handleItems(searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
@@ -269,12 +271,10 @@ const NewsFeedCarousel = props => {
             : null
         }
         <Container className="my-3" fluid>
-          <Row className="flex-row flex-nowrap news-feed-cards-row">
+          <Row className="flex-row flex-nowrap cards-row">
             {
               cardItems.map((cardItem, index) => {
-                const contentAsJson = JSON.parse(cardItem.content);
-                const contentAsHtml = draftToHtml(contentAsJson);
-                const contentAsText = contentAsHtml.replace(/(<([^>]+)>)/ig, '');
+                const contentAsText = draftToText(cardItem.content);
                 return (
                   <Col xs={12} md={4} key={index}>
                     <Card className="card-block">

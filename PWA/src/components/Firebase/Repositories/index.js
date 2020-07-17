@@ -11,7 +11,7 @@ import FunctionsRepository from './FunctionsRepository';
 import EPanuiListRepository from './EPanuiListRepository';
 import FacebookLinksRepository from './FacebookLinksRepository';
 import EventsRepository from './EventsRepository';
-import SolutionsRepository from './SolutionsRepository';
+import ProjectsRepository from './ProjectsRepository';
 import IwiMembersRepository from './IwiMembersRepository';
 
 export default BaseRepository;
@@ -28,6 +28,6 @@ export {
   EPanuiListRepository,
   FacebookLinksRepository,
   EventsRepository,
-  SolutionsRepository,
+  ProjectsRepository,
   IwiMembersRepository
 };
