@@ -50,7 +50,6 @@ const INITIAL_STATE = {
       uid: null,
     }
   ],
-  isVolunteer: false,
   roles: {
     basicRole: Roles.basicRole
   },
@@ -312,7 +311,6 @@ const AuthUserView = props => {
         active,
         displayName,
         roles,
-        isVolunteer,
         email,
         photoURL,
         providerData,
@@ -321,7 +319,6 @@ const AuthUserView = props => {
       setUser({
         active,
         displayName,
-        isVolunteer,
         roles,
         email,
         photoURL,
@@ -384,7 +381,7 @@ const AuthUserView = props => {
                         <FormGroup>
                           <Label>Password</Label>
                           <InputGroup>
-                            <Input placeholder="Password (Leave blank to keep existing)" name="password" value={user.password} onChange={handleChange} type="password" disabled={isProfile} />
+                            <Input placeholder="Password (Leave blank to keep existing)" name="password" value={user.password || ''} onChange={handleChange} type="password" disabled={isProfile} />
                             {
                               !isProfile
                                 ? null
@@ -404,7 +401,7 @@ const AuthUserView = props => {
                             : <>
                               <FormGroup>
                                 <Label>Confirm Password</Label>
-                                <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} type="password" />
+                                <Input placeholder="Confirm Password (Leave blank to keep existing)" name="confirmPassword" value={user.confirmPassword || ''} onChange={handleChange} type="password" />
                               </FormGroup>
                             </>
                         }
@@ -427,10 +424,6 @@ const AuthUserView = props => {
                             </>
                             : null
                         }
-                        <FormGroup>
-                          <Label>isVolunteer</Label><br />
-                          <CustomInput label="" name="isVolunteer" checked={user.isVolunteer} type="switch" id="IsVolunteer" />
-                        </FormGroup>
                         <FormGroup>
                           <Label>Active</Label><br />
                           <CustomInput label="" name="active" checked={user.active} onChange={handleChange} type="switch" id="UserActive" />
