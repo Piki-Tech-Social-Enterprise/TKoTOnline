@@ -79,7 +79,7 @@ const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.con
   ? functions.config().envcmd
   : {});
 const config = Object.assign(process.env, envcmd);
-console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+// console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
 const firebaseConfig = {
   apiKey: config.REACT_APP_FIREBASE_API_KEY,
   authDomain: config.REACT_APP_FIREBASE_AUTH_DOMAIN,

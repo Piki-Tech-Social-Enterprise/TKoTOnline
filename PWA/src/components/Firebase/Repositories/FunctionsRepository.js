@@ -85,6 +85,23 @@ class FunctionsRepository extends BaseRepository {
       return response;
     }
   }
+  deleteAsync = async options => {
+    let response = {
+      data: {
+        results: {}
+      }
+    };
+    try {
+      const url = this._buildUrl(options);
+      response = await axios.delete(url, options.bodyData);
+      console.log(`FunctionsRepository.deleteAsync - response: ${JSON.stringify(response, null, 2)}`);
+    } catch (error) {
+      console.log(`FunctionsRepository.deleteAsync Error: ${JSON.stringify(error, null, 2)}`);
+      response = error.response || response;
+    } finally {
+      return response;
+    }
+  }
   call = async options => {
     debugger;
     let response = null;

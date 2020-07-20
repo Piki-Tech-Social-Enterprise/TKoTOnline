@@ -101,6 +101,7 @@ class Firebase {
   getAsync = async (options, config) => await this.functionsRepository.getAsync(options, config);
   postAsync = async options => await this.functionsRepository.postAsync(options);
   putAsync = async options => await this.functionsRepository.putAsync(options);
+  deleteAsync = async options => await this.functionsRepository.deleteAsync(options);
   call = async options => await this.functionsRepository.call(options);
 
   getDbEPanuiList = async () => await this.ePanuiListRepository.getDbEPanuiList();

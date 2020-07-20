@@ -14,8 +14,8 @@ const admin = require('firebase-admin');
 
 class UserHelper {
   constructor() {
-    console.log(`config: ${JSON.stringify(config, null, 2)}`);
-    console.log(`admin.apps.length: ${admin.apps.length}`);
+    // console.log(`config: ${JSON.stringify(config, null, 2)}`);
+    // console.log(`admin.apps.length: ${admin.apps.length}`);
     if (admin.apps.length === 0) {
       admin.initializeApp();
     } else {
@@ -30,7 +30,11 @@ class UserHelper {
       .bind(this);
     this.updateAuthUser = this.handleUpdateAuthUser
       .bind(this);
+    this.deleteAuthUser = this.handleDeleteAuthUser
+      .bind(this);
     this.saveDbUser = this.handleSaveDbUser
+      .bind(this);
+    this.deleteDbUser = this.handleDeleteDbUser
       .bind(this);
     return this;
   }
@@ -88,6 +92,21 @@ class UserHelper {
     const userRecord = await this.adminAuth.updateUser(updateRequest);
     console.log(`handleUpdateAuthUser.userRecord: ${JSON.stringify(userRecord, null, 2)}`);
     return userRecord;
+  }
+
+  async handleDeleteAuthUser(authUser) {
+    const {
+      uid
+    } = authUser;
+    const existingAuthUser = await this.adminAuth.getUser(uid);
+    console.log(`existingAuthUser: ${JSON.stringify(existingAuthUser, null, 2)}`);
+    if (existingAuthUser) {
+      await this.adminAuth.deleteUser(uid);
+    }
+  }
+
+  async getDbUser(uid) {
+    return await this.adminDatabase.ref(`users/${uid}`);
   }
 
   async handleSaveDbUser(user, saveDbUser_completed) {
@@ -163,6 +182,20 @@ class UserHelper {
       throw new Error(errorMessage);
     }
     return user.uid;
+  }
+
+  async handleDeleteDbUser(uid) {
+      const existingDbUser = await this.getDbUser(uid);
+      let errorMessage = null;
+      if (existingDbUser) {
+        await existingDbUser.remove();
+      } else {
+        errorMessage = 'Delete Db User Error: uid (' + uid + ') not found.';
+      }
+      if (errorMessage) {
+        console.log('Delete Db User Error: ' + errorMessage);
+        throw new Error(errorMessage);
+      }
   }
 }
 

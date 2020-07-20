@@ -30,7 +30,7 @@ const handleResizeImage = async objectMetadata => {
     ? functions.config().envcmd
     : {});
   const config = Object.assign(process.env, envcmd);
-  console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+  // console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
   if (admin.apps.length === 0) {
     admin.initializeApp();
   }

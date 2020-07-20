@@ -16,6 +16,8 @@ const {
   handleGetDataFromFirebase,
   handleSetProfile,
   handleUpdateProfile,
+  handleDeleteProfile,
+  handleDeleteProfileAlt,
   handleIsUnique,
   handleIsUniqueAlt
 } = require('./https');
@@ -104,6 +106,38 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/updateProfile
 */
 exports.updateProfile = handleUpdateProfile;
+/*
+--- Delete Profile ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/deleteProfile
+{
+  uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1',
+  dbUser: {
+    uid: '-M7eyOltEQhhBJhG-0TL'
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/deleteProfile
+*/
+exports.deleteProfile = handleDeleteProfile;
+/*
+--- Delete Profile Alt ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/deleteProfileAlt
+{
+  uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1',
+  dbUser: {
+    uid: '-M7eyOltEQhhBJhG-0TL'
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/deleteProfileAlt
+*/
+exports.deleteProfileAlt = handleDeleteProfileAlt;
 /*
 --- Is Unique ---
 Usage:

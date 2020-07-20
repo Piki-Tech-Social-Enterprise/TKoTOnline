@@ -253,7 +253,8 @@ const AuthUserView = props => {
       if (!!result.value) {
         const {
           firebase,
-          match
+          match,
+          // authUser
         } = props;
         const {
           uid
@@ -264,7 +265,26 @@ const AuthUserView = props => {
         if (isProfile) {
           await firebase.deleteDbUser(uid);
         } else {
-          // TODO: Delete User via Admin SDK
+          const {
+            REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
+          } = process.env;
+          const functionsRepositoryOptions = {
+            baseUrl: GCF_URL,
+            functionName: 'deleteProfile',
+            data: {
+              uid: uid
+            }
+            // bodyData: {
+            //   uid: authUser.uid,
+            //   dbUser: {
+            //     uid
+            //   }
+            // }
+          };
+          const result = await firebase.call(functionsRepositoryOptions);
+          // const result = await firebase.postAsync(functionsRepositoryOptions);
+          // const result = await firebase.deleteAsync(functionsRepositoryOptions);
+          console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
         }
         swal.fire({
           icon: 'success',

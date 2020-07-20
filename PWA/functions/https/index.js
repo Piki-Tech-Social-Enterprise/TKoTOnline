@@ -18,6 +18,10 @@ const {
   handleSetProfile
 } = require('./handleSetProfile');
 const {
+  handleDeleteProfile,
+  handleDeleteProfileAlt
+} = require('./handleDeleteProfile');
+const {
   handleIsUnique,
   handleIsUniqueAlt
 } = require('./handleIsUnique');
@@ -40,6 +44,12 @@ exports.handleUpdateProfile = functions
 exports.handleSetProfile = functions
   .https
   .onRequest(handleSetProfile);
+exports.handleDeleteProfile = functions
+  .https
+  .onCall(handleDeleteProfile);
+exports.handleDeleteProfileAlt = functions
+  .https
+  .onRequest(handleDeleteProfileAlt);
 exports.handleIsUnique = functions
   .https
   .onCall(handleIsUnique);
