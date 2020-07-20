@@ -37,15 +37,12 @@ $tkot-padding-top: 3rem;
   color: $tkot-secondary-color-black;
 }
 
-.tkot-section:first-child {
-  padding-top: 0;
-}
+// .tkot-section:first-child {
+//   padding-top: 0;
+// }
 
 .tkot-section {
   padding: $tkot-padding-top 0 0;
-}
-.tkot-section:last-child {
-  padding-bottom: $tkot-padding-top;
 }
 
 /* --- News Feed Carousel --- */
@@ -264,8 +261,9 @@ $tkot-padding-top: 3rem;
   background-size: cover;
   background-position: center center;
   width: 100%;
-  height: 256px;
+  height: 25rem;
   opacity: 0.2;
+  z-index: -1;
 }
 
 .tkot-anchor {
@@ -277,6 +275,15 @@ $tkot-padding-top: 3rem;
 
 .tkot-primary-blue-bg-color-50-pc {
   background-color: rgba($tkot-primary-blue, 0.5);
+}
+.tkot-primary-red-bg-color-50-pc {
+  background-color: rgba($tkot-primary-red, 0.5);
+}
+.tkot-secondary-color-grey-bg-color-50-pc {
+  background-color: rgba($tkot-secondary-color-grey, 0.5);
+}
+.tkot-secondary-color-black-bg-color-50-pc {
+  background-color: rgba($tkot-secondary-color-black, 0.5);
 }
 
 .navbar-toggler-bar {
@@ -297,4 +304,9 @@ $tkot-padding-top: 3rem;
   .card-body {
     margin-bottom: 0.5rem;
   }
+}
+
+.nav-item.active .nav-link,
+.nav-item .nav-link.active {
+  background-color: rgba(lightgrey, 0.8) !important;
 }

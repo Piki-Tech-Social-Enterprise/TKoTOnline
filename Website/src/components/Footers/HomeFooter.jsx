@@ -164,7 +164,7 @@ const HomeFooter = props => {
           <Container className="pl-0 py-3 pt-sm-0">
             <Row>
               <Col>
-                <p className="text-uppercase font-weight-bolder">We’ll Keep You Updated</p>
+                <p className="text-uppercase font-weight-bolder">Hono Mai - We’ll Keep You Updated</p>
                 <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
                 <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
                   <Row noGutters>

@@ -17,6 +17,7 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
+import Routes from 'components/Routes/routes';
 
 const EventsSection = props => {
   const [state, setState] = useState({
@@ -89,7 +90,10 @@ const EventsSection = props => {
                       color: 'inherit'
                     }}>
                       View more...
-                </Button>
+                    </Button>
+                    <a href={Routes.newsFeed} className="text-decoration-none text-dark">
+                      <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+                    </a>
                   </div>
                   : null
               }

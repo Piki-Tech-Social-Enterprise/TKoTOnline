@@ -12,7 +12,18 @@ import IwiMembers from 'components/Sections/IwiMembers';
 // import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 import EventsSection from 'components/Sections/Events';
 import ProjectsSection from 'components/Sections/Projects';
+import {
+  Scrollspy
+} from 'reactstrap-scrollspy';
+import Routes from 'components/Routes/routes';
 
+const {
+  iwiMembers,
+  about,
+  projects,
+  events,
+  newsFeed
+} = Routes;
 const HomeView = () => {
   useEffect(() => {
     const {
@@ -37,31 +48,42 @@ const HomeView = () => {
     };
   });
   return (
-    <>
+    <Scrollspy
+      names={[
+        'HomeNavbar',
+        'HomeHeader',
+        iwiMembers.replace('/#', ''),
+        about.replace('/#', ''),
+        projects.replace('/#', ''),
+        events.replace('/#', ''),
+        newsFeed.replace('/#', ''),
+        'HomeFooter'
+      ]}
+      homeIndex={1}
+    >
       <HomeNavbar initalTransparent isHomePage />
-      <div className="wrapper">
-        <HomeHeader pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')} />
-        <div className="main bg-primary1">
-          {/* Iwi Members */}
-          <IwiMembers />
-          {/* About */}
-          <AboutSection />
-          {/* Community Links Section) */}
-          {/* <CommuintyLinksSection /> */}
-          {/* Projects */}
-          <ProjectsSection showLearnMoreButton />
-          {/* Events */}
-          <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" />
-          {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-          <NewsFeedSection showLearnMoreButton />
-          {/* Interactive Map of Iwi Links */}
-          {/* <InteractiveMapSection /> */}
-          {/* Volunteers via Mutual Aid */}
-          {/* <VolunteersSection /> */}
-        </div>
-        <HomeFooter />
-      </div>
-    </>
+      <HomeHeader pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')} />
+      {/* Iwi Members */}
+      <IwiMembers />
+      {/* About */}
+      <AboutSection />
+      {/* Community Links Section) */}
+      {/* <CommuintyLinksSection /> */}
+      {/* Projects */}
+      <ProjectsSection showLearnMoreButton />
+      {/* Events */}
+      {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
+      {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
+      <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" />
+      {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
+      {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+      <NewsFeedSection showLearnMoreButton />
+      {/* Interactive Map of Iwi Links */}
+      {/* <InteractiveMapSection /> */}
+      {/* Volunteers via Mutual Aid */}
+      {/* <VolunteersSection /> */}
+      <HomeFooter />
+    </Scrollspy>
   );
 };
 

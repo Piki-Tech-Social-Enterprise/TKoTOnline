@@ -3,6 +3,7 @@ import {
   Container
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import Routes from 'components/Routes/routes';
 
 const HomeHeader = props => {
   const {
@@ -24,6 +25,9 @@ const HomeHeader = props => {
               : pageHeaderCaption
           }</div>
         </div>
+        <a href={Routes.iwiMembers} className="text-decoration-none">
+          <p className="my-5 py-3 text-dark"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+        </a>
       </Container>
     </div>
   );

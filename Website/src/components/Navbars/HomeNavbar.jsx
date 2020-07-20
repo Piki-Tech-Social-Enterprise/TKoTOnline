@@ -13,6 +13,9 @@ import {
 } from 'reactstrap';
 import Routes from '../Routes/routes';
 import PropTypes from 'prop-types';
+import {
+  ScrollspyNavLink
+} from 'reactstrap-scrollspy';
 
 const {
   iwiMembers,
@@ -103,22 +106,32 @@ const HomeNavbar = props => {
           <Collapse className="justify-content-end" isOpen={state.collapseOpen} navbar>
             <Nav navbar>
               <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
-                <NavLink href={iwiMembers}>Iwi</NavLink>
+                <ScrollspyNavLink name={iwiMembers.replace('/#', '')}>
+                  <NavLink href={iwiMembers}>Iwi</NavLink>
+                </ScrollspyNavLink>
               </NavItem>
               {
                 isHomePage
                   ? <>
                     <NavItem active={hash !== '' && about.endsWith(hash)}>
-                      <NavLink href={about}>About</NavLink>
+                      <ScrollspyNavLink name={about.replace('/#', '')}>
+                        <NavLink href={about}>About</NavLink>
+                      </ScrollspyNavLink>
                     </NavItem>
                     <NavItem active={hash !== '' && projects.endsWith(hash)}>
-                      <NavLink href={projects}>Projects</NavLink>
+                      <ScrollspyNavLink name={projects.replace('/#', '')}>
+                        <NavLink href={projects}>Projects</NavLink>
+                      </ScrollspyNavLink>
                     </NavItem>
                     <NavItem active={hash !== '' && events.endsWith(hash)}>
-                      <NavLink href={events}>Wananga</NavLink>
+                      <ScrollspyNavLink name={events.replace('/#', '')}>
+                        <NavLink href={events}>Wananga</NavLink>
+                      </ScrollspyNavLink>
                     </NavItem>
                     <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
-                      <NavLink href={newsFeed}>News</NavLink>
+                      <ScrollspyNavLink name={newsFeed.replace('/#', '')}>
+                        <NavLink href={newsFeed}>News</NavLink>
+                      </ScrollspyNavLink>
                     </NavItem>
                   </>
                   : <>

@@ -17,6 +17,7 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
+import Routes from 'components/Routes/routes';
 
 const ProjectsSection = props => {
   const [state, setState] = useState({
@@ -67,8 +68,8 @@ const ProjectsSection = props => {
                             boxShadow: 'none'
                           }}>
                             <FirebaseImage className="card-img-max-height" imageURL={dbProject.imageUrl} alt={dbProject.header} />
-                            <CardBody className="bg-white">
-                              <CardTitle className="h5 my-3 mx-2">{dbProject.header}</CardTitle>
+                            <CardBody className="bg-white tkot-primary-blue-color">
+                              <CardTitle className="h5 text-uppercase my-3 mx-2">{dbProject.header}</CardTitle>
                               <CardLink href={`/Projects/${dbProject.pid}`} style={{
                                 color: 'inherit'
                               }}>Read more...</CardLink>
@@ -87,7 +88,10 @@ const ProjectsSection = props => {
                     color: 'inherit'
                   }}>
                     View more...
-                </Button>
+                  </Button>
+                  <a href={Routes.events} className="text-decoration-none text-dark">
+                    <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+                  </a>
                 </div>
                 : null
             }

@@ -12,6 +12,7 @@ import {
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import FirebaseImage from 'components/App/FirebaseImage';
+import Routes from 'components/Routes/routes';
 
 const IwiMembersSection = props => {
   const [state, setState] = useState({
@@ -48,7 +49,7 @@ const IwiMembersSection = props => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="text-center">
           <Row>
             {
               state.isLoading
@@ -61,15 +62,19 @@ const IwiMembersSection = props => {
                     iwiMemberURL
                   } = iwiMember;
                   return (
-                    <Col xs={6} sm={2} key={imid}>
-                      <a href={iwiMemberURL} className="text-dark bg-info1" target="_blank" rel="noopener noreferrer">
+                    <Col xs={6} sm={2} key={imid} className="h5 text-center text-uppercase">
+                      <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
                         <FirebaseImage className="iwi-member-image m-3" imageURL={iwiMemberImageURL} alt={iwiMemberName} />
+                        <span>{iwiMemberName}</span>
                       </a>
                     </Col>
                   );
                 })
             }
           </Row>
+          <a href={Routes.about} className="text-decoration-none text-dark">
+            <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+          </a>
         </Col>
       </Row>
     </Container>

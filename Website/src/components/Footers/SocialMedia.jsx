@@ -8,7 +8,7 @@ const SocialMedia = props => {
 		size
 	} = props;
 	return (
-		<ul className="social-ul d-flex">
+		<ul className="social-ul d-flex mx-0 px-0 mx-sm-3 px-sm-3">
 			{
 				links.map((link, key) => {
 					const {
