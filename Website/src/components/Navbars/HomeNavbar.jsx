@@ -108,52 +108,52 @@ const HomeNavbar = props => {
               {
                 isHomePage
                   ? <>
-                    <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
+                    <NavItem>
                       <ScrollspyNavLink name={iwiMembers.replace('/#', '')}>
-                        <NavLink href={iwiMembers}>Iwi</NavLink>
+                        <NavLink href={iwiMembers} active={hash !== '' && iwiMembers.endsWith(hash)}>Iwi</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
-                    <NavItem active={hash !== '' && about.endsWith(hash)}>
+                    <NavItem>
                       <ScrollspyNavLink name={about.replace('/#', '')}>
-                        <NavLink href={about}>About</NavLink>
+                        <NavLink href={about} active={hash !== '' && about.endsWith(hash)}>About</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
-                    <NavItem active={hash !== '' && projects.endsWith(hash)}>
+                    <NavItem>
                       <ScrollspyNavLink name={projects.replace('/#', '')}>
-                        <NavLink href={projects}>Projects</NavLink>
+                        <NavLink href={projects} active={hash !== '' && projects.endsWith(hash)}>Projects</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
-                    <NavItem active={hash !== '' && events.endsWith(hash)}>
+                    <NavItem>
                       <ScrollspyNavLink name={events.replace('/#', '')}>
-                        <NavLink href={events}>Wananga</NavLink>
+                        <NavLink href={events} active={hash !== '' && events.endsWith(hash)}>Wananga</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
-                    <NavItem active={hash !== '' && newsFeed.endsWith(hash)}>
+                    <NavItem>
                       <ScrollspyNavLink name={newsFeed.replace('/#', '')}>
-                        <NavLink href={newsFeed}>News</NavLink>
+                        <NavLink href={newsFeed} active={hash !== '' && newsFeed.endsWith(hash)}>News</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
                   </>
                   : <>
-                    <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
-                      <NavLink href={iwiMembers}>Iwi</NavLink>
+                    <NavItem>
+                      <NavLink href={iwiMembers} active={hash !== '' && iwiMembers.endsWith(hash)}>Iwi</NavLink>
                     </NavItem>
-                    <NavItem active={pathname.endsWith(aboutUs)}>
-                      <NavLink href={aboutUs}>About</NavLink>
+                    <NavItem>
+                      <NavLink href={aboutUs} active={pathname.endsWith(aboutUs)}>About</NavLink>
                     </NavItem>
-                    <NavItem active={pathname.endsWith(projectsPage)}>
-                      <NavLink href={projectsPage}>Projects</NavLink>
+                    <NavItem>
+                      <NavLink href={projectsPage} active={pathname.endsWith(projectsPage)}>Projects</NavLink>
                     </NavItem>
-                    <NavItem active={pathname.endsWith(eventsPage)}>
-                      <NavLink href={eventsPage}>Wananga</NavLink>
+                    <NavItem>
+                      <NavLink href={eventsPage} active={pathname.endsWith(eventsPage)}>Wananga</NavLink>
                     </NavItem>
-                    <NavItem active={pathname.endsWith(newsFeeds)}>
-                      <NavLink href={newsFeeds}>News</NavLink>
+                    <NavItem>
+                      <NavLink href={newsFeeds} active={pathname.endsWith(newsFeeds)}>News</NavLink>
                     </NavItem>
                   </>
               }
-              <NavItem active={pathname.endsWith(contactUs)}>
-                <NavLink href={contactUs}>Contact</NavLink>
+              <NavItem>
+                <NavLink href={contactUs} active={pathname.endsWith(contactUs)}>Contact</NavLink>
               </NavItem>
               <NavItem>
                 <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline color='light'>
