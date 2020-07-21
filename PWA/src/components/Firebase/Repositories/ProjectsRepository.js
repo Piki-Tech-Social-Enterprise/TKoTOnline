@@ -79,8 +79,6 @@ class ProjectsRepository extends BaseRepository {
       if (dbProject) {
         project = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbProject.created,
-          createdBy: createdBy || dbProject.createdBy,
           content: content || dbProject.content || '',
           header: header || dbProject.header || '',
           imageUrl: imageUrl || dbProject.imageUrl || '',

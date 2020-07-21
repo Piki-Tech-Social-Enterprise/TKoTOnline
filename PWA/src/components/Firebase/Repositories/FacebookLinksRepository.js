@@ -77,8 +77,6 @@ class FacebookLinksRepository extends BaseRepository {
       if (dbFacebookLinks) {
         facebookLink = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbFacebookLinks.created,
-          createdBy: createdBy || dbFacebookLinks.createdBy,
           url: url || dbFacebookLinks.url || '',
           name: name || dbFacebookLinks.name || '',
           fid: fid,

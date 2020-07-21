@@ -1,5 +1,6 @@
 import React, {
-  useEffect
+  useEffect,
+  useState
 } from 'react';
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
@@ -16,6 +17,13 @@ import {
   Scrollspy
 } from 'reactstrap-scrollspy';
 import Routes from 'components/Routes/routes';
+import {
+  withFirebase
+} from 'components/Firebase';
+import LoadingSpinner from 'components/App/LoadingSpinner';
+import {
+  defaultPageSetup
+} from 'components/App/Utilities';
 
 const {
   iwiMembers,
@@ -24,70 +32,90 @@ const {
   events,
   newsFeed
 } = Routes;
-const HomeView = () => {
-  useEffect(() => {
-    const {
-      body
-    } = document;
-    const {
-      classList: bodyClassNames
-    } = body;
-    const indexPageClassName = 'index-page';
-    const sidebarCollapseClassName = 'sidebar-collapse';
-    const tkotBackgroundImage = 'tkot-background-image';
-    const navOpenClassName = 'nav-open';
-    bodyClassNames.add(indexPageClassName);
-    bodyClassNames.add(sidebarCollapseClassName);
-    bodyClassNames.add(tkotBackgroundImage);
-    document.documentElement.classList.remove(navOpenClassName);
-    window.scrollTo(0, 0);
-    body.scrollTop = 0;
-    return () => {
-      bodyClassNames.remove(indexPageClassName);
-      bodyClassNames.remove(sidebarCollapseClassName);
-    };
+const HomeView = props => {
+  const [state, setState] = useState({
+    isLoading: true,
+    dbSettings: null,
+    homePageHeaderImageDownloadUrl: ''
   });
+  useEffect(() => {
+    const retrieveSettingValues = async () => {
+      const {
+        firebase
+      } = props;
+      const dbSettings = await firebase.getDbSettingsValues(true);
+      const {
+        homePageHeaderImageUrl
+      } = dbSettings;
+      const homePageHeaderImageDownloadUrl = homePageHeaderImageUrl.startsWith('/images/')
+        ? await firebase.getStorageFileDownloadURL(homePageHeaderImageUrl)
+        : homePageHeaderImageUrl;
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        dbSettings: dbSettings,
+        homePageHeaderImageDownloadUrl: homePageHeaderImageDownloadUrl
+      }));
+    };
+    defaultPageSetup(true);
+    if (state.isLoading) {
+      retrieveSettingValues();
+    }
+    return defaultPageSetup;
+  }, [props, state]);
   return (
-    <Scrollspy
-      names={[
-        'HomeNavbar',
-        'HomeHeader',
-        iwiMembers.replace('/#', ''),
-        about.replace('/#', ''),
-        projects.replace('/#', ''),
-        events.replace('/#', ''),
-        newsFeed.replace('/#', ''),
-        'HomeFooter'
-      ]}
-      homeIndex={1}
-    >
-      <HomeNavbar initalTransparent isHomePage />
-      <HomeHeader
-        pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')}
-        showClickScrollDownForMoreLink
-      />
-      {/* Iwi Members */}
-      <IwiMembers />
-      {/* About */}
-      <AboutSection />
-      {/* Community Links Section) */}
-      {/* <CommuintyLinksSection /> */}
-      {/* Projects */}
-      <ProjectsSection showLearnMoreButton />
-      {/* Events */}
-      {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
-      {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
-      <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" />
-      {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
-      {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-      <NewsFeedSection showLearnMoreButton />
-      {/* Interactive Map of Iwi Links */}
-      {/* <InteractiveMapSection /> */}
-      {/* Volunteers via Mutual Aid */}
-      {/* <VolunteersSection /> */}
-      <HomeFooter />
-    </Scrollspy>
+    <>
+      {
+        state.isLoading
+          ? <LoadingSpinner
+            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+            innerClassName="m-5 p-5 text-center"
+          />
+          : <Scrollspy
+            names={[
+              'HomeNavbar',
+              'HomeHeader',
+              iwiMembers.replace('/#', ''),
+              about.replace('/#', ''),
+              projects.replace('/#', ''),
+              events.replace('/#', ''),
+              newsFeed.replace('/#', ''),
+              'HomeFooter'
+            ]}
+            homeIndex={1}
+          >
+            <HomeNavbar
+              initalTransparent
+              isHomePage
+            />
+            <HomeHeader
+              pageHeaderImage={state.homePageHeaderImageDownloadUrl}
+              showClickScrollDownForMoreLink
+            />
+            {/* Iwi Members */}
+            <IwiMembers />
+            {/* About */}
+            <AboutSection />
+            {/* Community Links Section) */}
+            {/* <CommuintyLinksSection /> */}
+            {/* Projects */}
+            <ProjectsSection showLearnMoreButton />
+            {/* Events */}
+            {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
+            {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
+            <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" />
+            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
+            {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+            <NewsFeedSection showLearnMoreButton />
+            {/* Interactive Map of Iwi Links */}
+            {/* <InteractiveMapSection /> */}
+            {/* Volunteers via Mutual Aid */}
+            {/* <VolunteersSection /> */}
+            <HomeFooter />
+          </Scrollspy>
+      }
+    </>
   );
 };
 
-export default HomeView;
+export default withFirebase(HomeView);

@@ -12,9 +12,8 @@ import shallowCompare, {
 } from './Utilities';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-const {dirname} = require("path");
 
-
+const {dirname} = require('path');
 const propTypes = {
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
@@ -128,9 +127,9 @@ class FirebaseImage extends Component {
       imageResize
     } = this.props;
     let newImgName = imageURL;
-    const fileName = imageURL.split("/").pop();
+    const fileName = imageURL.split('/').pop();
     const ext = fileName.split('.').pop();
-    const imgName = fileName.replace(`.${ext}`, "");
+    const imgName = fileName.replace(`.${ext}`, '');
     let bucketDir = dirname(newImgName);
     let src = noImageAvailable;
     if (newImgName) {

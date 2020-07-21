@@ -81,8 +81,6 @@ class EventsRepository extends BaseRepository {
       if (dbEvent) {
         event = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbEvent.created,
-          createdBy: createdBy || dbEvent.createdBy,
           content: content || dbEvent.content || '',
           externalUrl: externalUrl || dbEvent.externalUrl || '',
           header: header || dbEvent.header || '',

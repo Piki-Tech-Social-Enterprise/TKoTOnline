@@ -101,6 +101,29 @@ const draftToText = draftRaw => {
   const draftAsText = draftAsHtml.replace(/(<([^>]+)>)/ig, '');
   return draftAsText;
 };
+const defaultPageSetup = init => {
+  const {
+    body
+  } = document;
+  const {
+    classList: bodyClassNames
+  } = body;
+  const indexPageClassName = 'index-page';
+  const sidebarCollapseClassName = 'sidebar-collapse';
+  const tkotBackgroundImage = 'tkot-background-image';
+  const navOpenClassName = 'nav-open';
+  if (init) {
+    bodyClassNames.add(indexPageClassName);
+    bodyClassNames.add(sidebarCollapseClassName);
+    bodyClassNames.add(tkotBackgroundImage);
+    document.documentElement.classList.remove(navOpenClassName);
+    window.scrollTo(0, 0);
+    body.scrollTop = 0;
+  } else {
+    bodyClassNames.remove(indexPageClassName);
+    bodyClassNames.remove(sidebarCollapseClassName);
+  }
+};
 
 export default shallowCompare;
 export {
@@ -119,5 +142,6 @@ export {
   NEWSFEED_DATE_MOMENT_FORMAT,
   TAG_SEPARATOR,
   stripHtml,
-  draftToText
+  draftToText,
+  defaultPageSetup
 };

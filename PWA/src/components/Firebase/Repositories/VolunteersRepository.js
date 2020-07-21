@@ -102,8 +102,6 @@ class VolunteersRepository extends BaseRepository {
       if (dbVolunteer) {
         volunteer = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbVolunteer.created,
-          createdBy: createdBy || dbVolunteer.createdBy,
           firstName: firstName || dbVolunteer.firstName || '',
           lastName: lastName || dbVolunteer.lastName || '',
           phoneNumber: phoneNumber || dbVolunteer.phoneNumber || '',

@@ -26,8 +26,20 @@ import {
   Editor
 } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {
+  formatBytes,
+  formatInteger
+} from 'components/App/Utilities';
+import FirebaseInput from 'components/FirebaseInput';
 
+const settingsRef = '/images/settings';
+const settingKeyFormat = '{sid}';
+const settingFilenameFormat = '{filename}';
+const settingImageFolderUrlFormat = `${settingsRef}/${settingKeyFormat}/`;
+const settingHomePageHeaderImageUrlFormat = `${settingImageFolderUrlFormat}${settingFilenameFormat}`;
 const INITIAL_STATE = {
+  homePageHeaderImageUrl: '',
+  homePageHeaderImageUrlFile: null,
   homePageAboutDescription: '',
   aboutPageDescription: '',
   sid: null,
@@ -55,6 +67,7 @@ const AuthSettingsView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
+    const maxImageFileSize = 2097152;
     const now = new Date();
     const {
       authUser,
@@ -64,27 +77,43 @@ const AuthSettingsView = props => {
       uid
     } = authUser;
     const {
+      homePageHeaderImageUrlFile,
       homePageAboutDescription,
       aboutPageDescription,
       editorState
     } = settings;
     let sid = settings.sid;
+    let homePageHeaderImageUrl = settings.homePageHeaderImageUrl;
     let displayIcon = 'error';
     let displayTitle = 'Updating Settings Failed';
     let displayMessage = '';
     try {
-      if (!homePageAboutDescription && !aboutPageDescription) {
-        displayMessage = 'The Home Page About Description and About Page Description fields are required.';
+      if (!homePageHeaderImageUrl || !homePageAboutDescription || !aboutPageDescription) {
+        displayMessage = 'The Home Page Header Image, Home Page About Description and About Page Description fields are required.';
+      } else if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = homePageHeaderImageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
+        if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
+          homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
+            .replace(settingKeyFormat, sid)
+            .replace(settingFilenameFormat, homePageHeaderImageUrlFile.name);
+        }
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
+          homePageHeaderImageUrl: homePageHeaderImageUrl,
           homePageAboutDescription: homePageAboutDescription,
           aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
         });
+        if (homePageHeaderImageUrlFile) {
+          await firebase.saveStorageFile(homePageHeaderImageUrl, homePageHeaderImageUrlFile);
+        }
         displayIcon = 'success';
         displayTitle = 'Updating Settings Successful';
         displayMessage = 'Changes saved';
@@ -102,17 +131,29 @@ const AuthSettingsView = props => {
       });
     }
   };
+  const handleHomePageHeaderImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const homePageHeaderImageUrlFile = e.target.files[0];
+      setSettings(s => ({
+        ...s,
+        homePageHeaderImageUrlFile: homePageHeaderImageUrlFile
+      }));
+    }
+  };
   useEffect(() => {
     const retrieveSettings = async () => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
       if (dbSettings) {
         const {
+          homePageHeaderImageUrl,
           homePageAboutDescription,
           aboutPageDescription,
           sid
         } = dbSettings;
         setSettings(s => ({
           ...s,
+          homePageHeaderImageUrl,
           homePageAboutDescription,
           aboutPageDescription,
           sid,
@@ -145,6 +186,26 @@ const AuthSettingsView = props => {
                   isLoading
                     ? <LoadingOverlayModal color="text-white" />
                     : <Form noValidate onSubmit={handleSubmit}>
+                      <FormGroup>
+                        <Label>Image</Label>
+                        <FirebaseInput
+                          value={settings.homePageHeaderImageUrl || ''}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'homePageHeaderImageUrl',
+                            name: 'homePageHeaderImageUrl',
+                            placeholder: 'Image',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleHomePageHeaderImageUrlFileChange}
+                          downloadURLFormat={settingHomePageHeaderImageUrlFormat}
+                          downloadURLFormatKeyName={settingKeyFormat}
+                          downloadURLFormatKeyValue={settings.sid}
+                          downloadURLFormatFileName={settingFilenameFormat}
+                          imageResize="md"
+                        />
+                      </FormGroup>
                       <FormGroup>
                         <Label>Home Page About Description</Label>
                         <Input placeholder="Home Page About Description" name="homePageAboutDescription" value={settings.homePageAboutDescription} onChange={handleChange} type="textarea" />

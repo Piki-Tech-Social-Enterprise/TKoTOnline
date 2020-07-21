@@ -79,8 +79,6 @@ class IwiMembersRepository extends BaseRepository {
       if (dbIwiMember) {
         iwiMember = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbIwiMember.created,
-          createdBy: createdBy || dbIwiMember.createdBy,
           iwiMemberImageURL: iwiMemberImageURL || dbIwiMember.iwiMemberImageURL || '',
           iwiMemberName: iwiMemberName || dbIwiMember.iwiMemberName || '',
           iwiMemberURL: iwiMemberURL || dbIwiMember.iwiMemberURL || '',

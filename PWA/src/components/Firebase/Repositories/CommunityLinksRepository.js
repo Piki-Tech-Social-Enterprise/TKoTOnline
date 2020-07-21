@@ -77,8 +77,6 @@ class CommunityLinksRepository extends BaseRepository {
       if (dbCommunityLinks) {
         communityLink = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbCommunityLinks.created,
-          createdBy: createdBy || dbCommunityLinks.createdBy,
           link: link || dbCommunityLinks.link || '',
           linkName: linkName || dbCommunityLinks.linkName || '',
           clid: clid,

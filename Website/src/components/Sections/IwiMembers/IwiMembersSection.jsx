@@ -64,7 +64,7 @@ const IwiMembersSection = props => {
                   return (
                     <Col xs={6} sm={2} key={imid} className="h5 text-center text-uppercase">
                       <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
-                        <FirebaseImage className="iwi-member-image m-3" imageURL={iwiMemberImageURL} alt={iwiMemberName} />
+                        <FirebaseImage className="iwi-member-image m-3" imageURL={iwiMemberImageURL} alt={iwiMemberName} /><br />
                         <span>{iwiMemberName}</span>
                       </a>
                     </Col>

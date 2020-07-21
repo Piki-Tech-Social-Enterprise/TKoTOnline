@@ -1,4 +1,5 @@
 import React, {
+  useEffect,
   useState
 } from 'react';
 import {
@@ -19,6 +20,10 @@ import swal from 'sweetalert2';
 import {
   withFirebase
 } from 'components/Firebase';
+import LoadingSpinner from 'components/App/LoadingSpinner';
+import {
+  defaultPageSetup
+} from 'components/App/Utilities';
 
 const ContactUsView = props => {
   const INITIAL_STATE = {
@@ -107,9 +112,16 @@ const ContactUsView = props => {
       });
     }
   };
+  useEffect(() => {
+    defaultPageSetup(true);
+    return defaultPageSetup;
+  });
   return (
     <>
-      <HomeNavbar />
+      <HomeNavbar
+        initalTransparent
+        colorOnScrollValue={25}
+      />
       <Container className="p-5 mt-5">
         <Row>
           <Col className="px-0 mt-5">

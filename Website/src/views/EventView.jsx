@@ -41,7 +41,7 @@ const EventView = props => {
       } else {
         const imageDownloadURL = imageUrl.startsWith('/images/')
           ? await firebase.getStorageFileDownloadURL(imageUrl)
-          : imageUrl
+          : imageUrl;
         setState(s => ({
           ...s,
           isLoading: false,

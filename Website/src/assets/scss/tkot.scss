@@ -285,6 +285,9 @@ $tkot-padding-top: 3rem;
 .tkot-secondary-color-black-bg-color-50-pc {
   background-color: rgba($tkot-secondary-color-black, 0.5);
 }
+.tkot-secondary-color-black-bg-color-20-pc {
+  background-color: rgba($tkot-secondary-color-black, 0.2);
+}
 
 .navbar-toggler-bar {
   background: $tkot-secondary-color-black !important;
@@ -308,4 +311,14 @@ $tkot-padding-top: 3rem;
 
 .nav-item .nav-link.active {
   background-color: rgba(lightgrey, 0.8) !important;
+}
+
+.footer-logo .n-logo {
+  position: relative;
+  top: -2rem;
+}
+
+.nav-item,
+.nav-link {
+  font-size: 1.0417rem !important;
 }

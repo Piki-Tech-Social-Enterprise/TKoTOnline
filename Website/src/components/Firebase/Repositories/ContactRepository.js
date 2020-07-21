@@ -76,8 +76,6 @@ class ContactRepository extends BaseRepository {
       if (dbContacts) {
         contact = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbContacts.created,
-          createdBy: createdBy || dbContacts.createdBy,
           firstName: firstName || dbContacts.firstName || '',
           lastName: lastName || dbContacts.lastName || '',
           email: email || dbContacts.email || '',

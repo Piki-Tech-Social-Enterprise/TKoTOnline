@@ -85,8 +85,6 @@ class EPanuiListRepository extends BaseRepository {
       if (dbEPanui) {
         ePanui = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbEPanui.created,
-          createdBy: createdBy || dbEPanui.createdBy,
           eid: eid,
           date: date || dbEPanui.date,
           name: name || dbEPanui.name,

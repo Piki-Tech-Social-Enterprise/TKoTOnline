@@ -83,8 +83,6 @@ class NewsFeedRepository extends BaseRepository {
       if (dbNewsFeed) {
         newsFeed = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbNewsFeed.created,
-          createdBy: createdBy || dbNewsFeed.createdBy,
           category: category || dbNewsFeed.category || '',
           content: content || dbNewsFeed.content || '',
           header: header || dbNewsFeed.header || '',
