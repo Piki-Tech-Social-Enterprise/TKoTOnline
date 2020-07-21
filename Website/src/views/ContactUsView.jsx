@@ -20,7 +20,6 @@ import swal from 'sweetalert2';
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
   defaultPageSetup
 } from 'components/App/Utilities';
