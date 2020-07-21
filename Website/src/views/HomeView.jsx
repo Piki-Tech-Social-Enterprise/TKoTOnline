@@ -62,7 +62,10 @@ const HomeView = () => {
       homeIndex={1}
     >
       <HomeNavbar initalTransparent isHomePage />
-      <HomeHeader pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')} />
+      <HomeHeader
+        pageHeaderImage={require('assets/img/tkot/tkot-home-header-background-image.png')}
+        showClickScrollDownForMoreLink
+      />
       {/* Iwi Members */}
       <IwiMembers />
       {/* About */}

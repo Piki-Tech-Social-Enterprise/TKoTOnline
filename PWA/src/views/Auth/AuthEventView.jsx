@@ -13,7 +13,8 @@ import {
   Label,
   Input,
   CustomInput,
-  Button
+  Button,
+  InputGroup
 } from 'reactstrap';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
@@ -41,6 +42,7 @@ const eventImageUrlFormat = `${eventImageFolderUrlFormat}${eventFilenameFormat}`
 const INITIAL_STATE = {
   active: true,
   content: '',
+  externalUrl: '',
   header: '',
   imageUrl: '',
   imageUrlFile: null,
@@ -82,6 +84,7 @@ const AuthEventView = props => {
     const {
       active,
       content,
+      externalUrl,
       header,
       imageUrlFile
     } = event;
@@ -91,16 +94,18 @@ const AuthEventView = props => {
     let displayTitle = 'Save Event Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !content) {
-        displayMessage = 'The Image, Header and Content fields are required.';
+      if (!imageUrl || !header || (!externalUrl && !content)) {
+        displayMessage = 'The Image, Header and External URL/Content fields are required.';
       } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
         const {
           size
         } = imageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else if (externalUrl && !externalUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+        displayMessage = 'External URL is invalid.';
       } else {
         if (isNew) {
-          evid = await firebase.saveDbEvent({});debugger;
+          evid = await firebase.saveDbEvent({}); debugger;
           if (imageUrlFile && imageUrlFile.name) {
             imageUrl = eventImageUrlFormat
               .replace(eventKeyFormat, evid)
@@ -112,6 +117,7 @@ const AuthEventView = props => {
           created: now.toString(),
           createdBy: uid,
           content: content,
+          externalUrl,
           header,
           imageUrl,
           evid: evid,
@@ -212,6 +218,7 @@ const AuthEventView = props => {
       const {
         active,
         content,
+        externalUrl,
         header,
         imageUrl,
         evid
@@ -220,6 +227,7 @@ const AuthEventView = props => {
         ...p,
         active,
         content,
+        externalUrl,
         header,
         imageUrl,
         evid,
@@ -252,6 +260,12 @@ const AuthEventView = props => {
                 <Col xs={12} sm={8}>
                   <Card>
                     <CardBody>
+                      <FormGroup>
+                        <Label>External URL</Label>
+                        <InputGroup>
+                          <Input placeholder="External URL" name="externalUrl" value={event.externalUrl} onChange={handleChange} type="url" />
+                        </InputGroup>
+                      </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>
                         <Editor

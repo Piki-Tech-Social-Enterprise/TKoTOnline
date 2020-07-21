@@ -274,14 +274,21 @@ const NewsFeedCarousel = props => {
           <Row className="flex-row flex-nowrap cards-row">
             {
               cardItems.map((cardItem, index) => {
-                const contentAsText = draftToText(cardItem.content);
+                const {
+                  content,
+                  header,
+                  imageUrl,
+                  externalUrl,
+                  nfid
+                } = cardItem;
+                const contentAsText = draftToText(content);
                 return (
                   <Col xs={12} md={4} key={index}>
                     <Card className="card-block">
                       <CardHeader>
-                        <CardTitle className="h5 my-3 mx-2">{cardItem.header}</CardTitle>
+                        <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
                       </CardHeader>
-                      <FirebaseImage className="card-img-max-height" imageURL={cardItem.imageUrl} alt={cardItem.header} />
+                      <FirebaseImage className="card-img-max-height" imageURL={imageUrl} alt={header} />
                       <CardBody className="text-left bg-white">
                         <p className="font-weight-bold">
                           <NewsFeedCaption
@@ -290,9 +297,13 @@ const NewsFeedCarousel = props => {
                         </p>
                         {/* <p className="font-weight-bold">{`${moment(cardItem.date, DATE_MOMENT_FORMAT).format(NEWSFEED_DATE_MOMENT_FORMAT)} | ${cardItem.category}`}</p> */}
                         <p className="d-inline-block block-with-text">{contentAsText}</p>
-                        <CardLink href={`/NewsFeeds/${cardItem.nfid}`} style={{
-                          color: 'inherit'
-                        }}>Read more...</CardLink>
+                        <CardLink
+                          href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
+                          target={externalUrl ? '_blank' : '_self'}
+                          rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
+                          style={{
+                            color: 'inherit'
+                          }}>Read more...</CardLink>
                       </CardBody>
                     </Card>
                   </Col>

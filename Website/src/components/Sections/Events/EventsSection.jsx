@@ -62,6 +62,12 @@ const EventsSection = props => {
                     isLoading
                       ? <LoadingSpinner />
                       : dbEvents.map((dbEvent, index) => {
+                        const {
+                          imageUrl,
+                          header,
+                          externalUrl,
+                          evid
+                        } = dbEvent;
                         return (
                           <Col xs={12} md={4} key={index}>
                             <Card className="card-block" style={{
@@ -69,12 +75,16 @@ const EventsSection = props => {
                               borderRadius: '0.25rem',
                               boxShadow: 'none'
                             }}>
-                              <FirebaseImage className="card-img-max-height card-img-top" imageURL={dbEvent.imageUrl} alt={dbEvent.header} />
+                              <FirebaseImage className="card-img-max-height card-img-top" imageURL={imageUrl} alt={header} />
                               <CardBody className="bg-white">
-                                <CardTitle className="h5 my-3 mx-2">{dbEvent.header}</CardTitle>
-                                <CardLink href={`/Wananga/${dbEvent.evid}`} style={{
-                                  color: 'inherit'
-                                }}>Read more...</CardLink>
+                                <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
+                                <CardLink
+                                  href={externalUrl ? externalUrl : `/Wananga/${evid}`}
+                                  target={externalUrl ? '_blank' : '_self'}
+                                  rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
+                                  style={{
+                                    color: 'inherit'
+                                  }}>Read more...</CardLink>
                               </CardBody>
                             </Card>
                           </Col>

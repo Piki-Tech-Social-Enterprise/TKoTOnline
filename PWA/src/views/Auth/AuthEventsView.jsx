@@ -105,8 +105,13 @@ const AuthEventsView = props => {
                       <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell) => {
-                        const contentAsText = draftToText(cell);
+                      }} dataFormat={(cell, row) => {
+                        const {
+                          externalUrl
+                        } = row;
+                        const contentAsText = externalUrl
+                          ? externalUrl
+                          : draftToText(cell, '&nbsp;');
                         return (
                           <span>{contentAsText}</span>
                         );

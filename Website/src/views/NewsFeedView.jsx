@@ -34,17 +34,22 @@ const NewsFeedView = props => {
       } = match.params;
       const dbNewsFeed = await firebase.getDbNewsFeedValue(nfid);
       const {
+        externalUrl,
         imageUrl
       } = dbNewsFeed;
-      const imageDownloadURL = imageUrl.startsWith('/images/')
-      ? await firebase.getStorageFileDownloadURL(imageUrl)
-      : imageUrl
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbNewsFeed: dbNewsFeed,
-        imageDownloadURL: imageDownloadURL
-      }));
+      if (externalUrl) {
+        window.location.href = externalUrl;
+      } else {
+        const imageDownloadURL = imageUrl.startsWith('/images/')
+          ? await firebase.getStorageFileDownloadURL(imageUrl)
+          : imageUrl
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbNewsFeed: dbNewsFeed,
+          imageDownloadURL: imageDownloadURL
+        }));
+      }
     };
     if (state.isLoading) {
       retrieveNewsFeedValue();
@@ -55,25 +60,25 @@ const NewsFeedView = props => {
       {
         state.isLoading
           ? <LoadingSpinner />
-          : <div id="NewsFeed">
-          <HomeNavbar
-            initalTransparent={true}
-            colorOnScrollValue={25}
-          />
-          <HomeHeader
-            pageHeaderImage={state.imageDownloadURL}
-            pageHeaderTitle={state.dbNewsFeed.header}
-            pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
-          />
-          <Container className="bg-warning1 py-3">
-            <Row>
-              <Col
-                dangerouslySetInnerHTML={{__html: draftToHtml(JSON.parse(state.dbNewsFeed.content))}}
+            : <div id="NewsFeed">
+              <HomeNavbar
+                initalTransparent={true}
+                colorOnScrollValue={25}
               />
-            </Row>
-          </Container>
-          <HomeFooter />
-          </div>
+              <HomeHeader
+                pageHeaderImage={state.imageDownloadURL}
+                pageHeaderTitle={state.dbNewsFeed.header}
+                pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
+              />
+              <Container className="bg-warning1 py-3">
+                <Row>
+                  <Col
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbNewsFeed.content)) }}
+                  />
+                </Row>
+              </Container>
+              <HomeFooter />
+            </div>
       }
     </>
   );

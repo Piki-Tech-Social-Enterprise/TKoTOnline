@@ -9,7 +9,8 @@ const HomeHeader = props => {
   const {
     pageHeaderImage,
     pageHeaderTitle,
-    pageHeaderCaption
+    pageHeaderCaption,
+    showClickScrollDownForMoreLink
   } = props;
   return (
     <div className="page-header clear-filter" id="header">
@@ -25,9 +26,13 @@ const HomeHeader = props => {
               : pageHeaderCaption
           }</div>
         </div>
-        <a href={Routes.iwiMembers} className="text-decoration-none">
-          <p className="my-5 py-3 text-dark"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-        </a>
+        {
+          showClickScrollDownForMoreLink
+            ? <a href={Routes.iwiMembers} className="text-decoration-none">
+              <p className="my-5 py-3 text-dark"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+            </a>
+            : null
+        }
       </Container>
     </div>
   );

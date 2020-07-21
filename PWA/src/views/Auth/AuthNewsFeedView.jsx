@@ -13,7 +13,8 @@ import {
   Label,
   Input,
   CustomInput,
-  Button
+  Button,
+  InputGroup
 } from 'reactstrap';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
@@ -51,6 +52,7 @@ const INITIAL_STATE = {
   ],
   content: '',
   date: '',
+  externalUrl: '',
   header: '',
   imageUrl: '',
   imageUrlFile: null,
@@ -95,6 +97,7 @@ const AuthNewsFeedView = props => {
       categoryTags,
       content,
       date,
+      externalUrl,
       header,
       imageUrlFile,
       isFeatured
@@ -105,13 +108,15 @@ const AuthNewsFeedView = props => {
     let displayTitle = 'Save News Feed Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!imageUrl || !header || !content || !date) {
-        displayMessage = 'The Image, Header, Content and Date fields are required.';
+      if (!imageUrl || !header || !date || (!externalUrl && !content)) {
+        displayMessage = 'The Image, Header, Date and External URL/Content fields are required.';
       } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
         const {
           size
         } = imageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else if (externalUrl && !externalUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+        displayMessage = 'External URL is invalid.';
       } else {
         if (isNew) {
           nfid = await firebase.saveDbNewsFeed({});
@@ -128,6 +133,7 @@ const AuthNewsFeedView = props => {
           category: categoryTags.join(TAG_SEPARATOR),
           content: content,
           date,
+          externalUrl,
           header,
           imageUrl,
           isFeatured,
@@ -231,6 +237,7 @@ const AuthNewsFeedView = props => {
         category,
         content,
         date,
+        externalUrl,
         header,
         imageUrl,
         isFeatured,
@@ -245,6 +252,7 @@ const AuthNewsFeedView = props => {
           : nf.categoryTags,
         content,
         date,
+        externalUrl,
         header,
         imageUrl,
         isFeatured,
@@ -278,6 +286,12 @@ const AuthNewsFeedView = props => {
                 <Col xs={12} sm={8}>
                   <Card>
                     <CardBody>
+                      <FormGroup>
+                        <Label>External URL</Label>
+                        <InputGroup>
+                          <Input placeholder="External URL" name="externalUrl" value={newsFeed.externalUrl} onChange={handleChange} type="url" />
+                        </InputGroup>
+                      </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>
                         <Editor

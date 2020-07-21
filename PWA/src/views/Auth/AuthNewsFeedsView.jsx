@@ -18,6 +18,9 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  draftToText
+} from 'components/App/Utilities';
 
 const AuthNewsFeedsView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,12 +104,20 @@ const AuthNewsFeedsView = props => {
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="date" dataSort width="100px">Date</TableHeaderColumn>
-                      <TableHeaderColumn dataField="category" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
-                        maxWidth: '250px'
-                      }}>Category</TableHeaderColumn>
-                      {/* <TableHeaderColumn dataField="content" dataSort width="250px" columnClassName="d-inline-block text-truncate" tdStyle={{
-                        maxWidth: '250px'
-                      }}>Content</TableHeaderColumn> */}
+                      {/* <TableHeaderColumn dataField="category" dataSort>Category</TableHeaderColumn> */}
+                      <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                        maxWidth: '400px'
+                      }} dataFormat={(cell, row) => {
+                        const {
+                          externalUrl
+                        } = row;
+                        const contentAsText = externalUrl
+                          ? externalUrl
+                          : draftToText(cell, '&nbsp;');
+                        return (
+                          <span>{contentAsText}</span>
+                        );
+                      }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"

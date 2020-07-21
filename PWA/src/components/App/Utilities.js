@@ -178,11 +178,23 @@ const handleKeyDownForTime = e => {
   });
 };
 const TAG_SEPARATOR = ', ';
+const isJson = value => {
+  return (value && (
+      (value.startsWith('{') && value.endsWith('}')) ||
+      (value.startsWith('[') && value.endsWith(']'))
+    )
+  );
+};
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
-const draftToText = draftRaw => {
+const draftToText = (draftRaw, defaultValue = undefined) => {
+  if (!isJson(draftRaw)) {
+    return defaultValue !== undefined
+      ? defaultValue
+      : draftRaw;
+  }
   const draftAsJson = JSON.parse(draftRaw);
   const draftAsHtml = draftToHtml(draftAsJson);
-  const draftAsText = draftAsHtml.replace(/(<([^>]+)>)/ig, '');
+  const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
 
@@ -208,6 +220,7 @@ export {
   handleKeyDownForDate,
   handleKeyDownForTime,
   TAG_SEPARATOR,
+  isJson,
   stripHtml,
   draftToText
 };
