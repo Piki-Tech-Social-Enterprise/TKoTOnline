@@ -20,7 +20,7 @@ const TermsOfServiceView = () => {
           <h3>TERMS OF USE ("Terms")</h3>
           <p>Last updated: 30 April 2020</p>
           <h5>Overview</h5>
-          <p>Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the [Email] website (the "Service") operated by Te Kahu o Taonui ("us", "we", or "our"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
+          <p>Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the website (the "Service") operated by Te Kahu o Taonui ("us", "we", or "our"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
           <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p>
           <h5>General</h5>
           <p>We reserve the right to refuse service to anyone for any reason at any time. You understand that your content (not including credit card information), may be transferred unencrypted and involve (a) transmissions over various networks; and (b) changes to conform and adapt to technical requirements of connecting networks or devices. Credit card information is always encrypted during transfer over networks. You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service or any contact on the website through which the service is provided, without express written permission by us. The headings used in this agreement are included for convenience only and will not limit or otherwise affect these Terms.</p>
@@ -33,7 +33,7 @@ const TermsOfServiceView = () => {
           <h5>Changes</h5>
           <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 (change this) days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
           <h5>Contact Us</h5>
-          <p>If you have any questions about these Terms, please contact us at <a href={`mailto:${REACT_APP_WEB_EMAIL}?subject=Terms of Use`}>{REACT_APP_WEB_EMAIL}</a></p>
+          <p>If you have any questions about these Terms, please contact us at <a href={`mailto:${REACT_APP_WEB_EMAIL}?subject=Terms of Use`} className="text-dark text-decoration-none">{REACT_APP_WEB_EMAIL}</a></p>
         </Col>
       </Row>
     </Container>

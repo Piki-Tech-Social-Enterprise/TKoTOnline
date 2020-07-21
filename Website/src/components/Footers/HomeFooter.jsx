@@ -158,6 +158,13 @@ const HomeFooter = props => {
                 //   iconFaName: 'fab fa-linkedin-in'
               }]}
             />
+            <p className="text-uppercase font-weight-bolder my-0 mt-3">Website co-created by</p>
+            {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
+              <img className="mx-3" width={120} alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
+            {/* </a> */}
+            <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer">
+              <img className="mx-3" width={120} alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
+            </a>
           </Container>
         </Col>
         <Col xs={12} lg={4}>
@@ -193,8 +200,8 @@ const HomeFooter = props => {
       </Row>
       <Row>
         <Col xs={12}>
-          <Container fluid={!!isFluid} className="float-left">
-            <div className="copyright pt-1">
+          <Container fluid={!!isFluid}>
+            <div className="copyright pt-1 ml-0 text-center">
               {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />
             </div>
           </Container>

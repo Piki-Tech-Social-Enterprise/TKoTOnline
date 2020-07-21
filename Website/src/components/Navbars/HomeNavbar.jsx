@@ -105,14 +105,14 @@ const HomeNavbar = props => {
           </div>
           <Collapse className="justify-content-end" isOpen={state.collapseOpen} navbar>
             <Nav navbar>
-              <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
-                <ScrollspyNavLink name={iwiMembers.replace('/#', '')}>
-                  <NavLink href={iwiMembers}>Iwi</NavLink>
-                </ScrollspyNavLink>
-              </NavItem>
               {
                 isHomePage
                   ? <>
+                    <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
+                      <ScrollspyNavLink name={iwiMembers.replace('/#', '')}>
+                        <NavLink href={iwiMembers}>Iwi</NavLink>
+                      </ScrollspyNavLink>
+                    </NavItem>
                     <NavItem active={hash !== '' && about.endsWith(hash)}>
                       <ScrollspyNavLink name={about.replace('/#', '')}>
                         <NavLink href={about}>About</NavLink>
@@ -135,6 +135,9 @@ const HomeNavbar = props => {
                     </NavItem>
                   </>
                   : <>
+                    <NavItem active={hash !== '' && iwiMembers.endsWith(hash)}>
+                      <NavLink href={iwiMembers}>Iwi</NavLink>
+                    </NavItem>
                     <NavItem active={pathname.endsWith(aboutUs)}>
                       <NavLink href={aboutUs}>About</NavLink>
                     </NavItem>
