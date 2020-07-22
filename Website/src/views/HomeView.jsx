@@ -106,7 +106,7 @@ const HomeView = props => {
             <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" />
             {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
             {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-            <NewsFeedSection showLearnMoreButton />
+            <NewsFeedSection />
             {/* Interactive Map of Iwi Links */}
             {/* <InteractiveMapSection /> */}
             {/* Volunteers via Mutual Aid */}
