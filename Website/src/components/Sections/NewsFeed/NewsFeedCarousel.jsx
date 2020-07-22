@@ -281,7 +281,7 @@ const NewsFeedCarousel = props => {
                   externalUrl,
                   nfid
                 } = cardItem;
-                const contentAsText = draftToText(content);
+                const contentAsText = draftToText(content, '');
                 return (
                   <Col xs={12} md={4} key={index}>
                     <Card className="card-block">

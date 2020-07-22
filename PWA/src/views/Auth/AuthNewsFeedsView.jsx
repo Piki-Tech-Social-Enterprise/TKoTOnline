@@ -113,7 +113,7 @@ const AuthNewsFeedsView = props => {
                         } = row;
                         const contentAsText = externalUrl
                           ? externalUrl
-                          : draftToText(cell, '&nbsp;');
+                          : draftToText(cell, '');
                         return (
                           <span>{contentAsText}</span>
                         );

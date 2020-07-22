@@ -94,11 +94,23 @@ const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
 const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
 const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
 const TAG_SEPARATOR = ', ';
+const isJson = value => {
+  return (value && (
+      (value.startsWith('{') && value.endsWith('}')) ||
+      (value.startsWith('[') && value.endsWith(']'))
+    )
+  );
+};
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
-const draftToText = draftRaw => {
+const draftToText = (draftRaw, defaultValue = undefined) => {
+  if (!isJson(draftRaw)) {
+    return defaultValue !== undefined
+      ? defaultValue
+      : draftRaw;
+  }
   const draftAsJson = JSON.parse(draftRaw);
   const draftAsHtml = draftToHtml(draftAsJson);
-  const draftAsText = draftAsHtml.replace(/(<([^>]+)>)/ig, '');
+  const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
 const defaultPageSetup = init => {
@@ -141,6 +153,7 @@ export {
   ISO8601_DATE_FORMAT,
   NEWSFEED_DATE_MOMENT_FORMAT,
   TAG_SEPARATOR,
+  isJson,
   stripHtml,
   draftToText,
   defaultPageSetup

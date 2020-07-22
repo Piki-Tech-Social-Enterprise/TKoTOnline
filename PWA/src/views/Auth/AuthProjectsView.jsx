@@ -106,7 +106,7 @@ const AuthProjectsView = props => {
                       <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }} dataFormat={(cell) => {
-                        const contentAsText = draftToText(cell);
+                        const contentAsText = draftToText(cell, '');
                         return (
                           <span>{contentAsText}</span>
                         );
