@@ -19,6 +19,10 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
+import InputDateTime from 'components/App/InputDateTime';
+import {
+  DATE_MOMENT_FORMAT
+} from 'components/App/Utilities';
 
 const INITIAL_STATE = {
   active: true,
@@ -74,7 +78,7 @@ const AuthEPanuiView = props => {
       if (isNew) {
         if (!url || !name || !date) {
           displayMessage = 'Date, Name, and URL are required fields.';
-        // eslint-disable-next-line
+          // eslint-disable-next-line
         } else if (!url.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
           displayMessage = 'URL is invalid.';
         }
@@ -223,9 +227,21 @@ const AuthEPanuiView = props => {
                       <CardBody>
                         <FormGroup>
                           <Label>Date</Label>
-                          <InputGroup>
-                            <Input placeholder="Date" name="date" value={ePanui.date} onChange={handleChange} type="text" />
-                          </InputGroup>
+                          <InputDateTime
+                            dateFormat={DATE_MOMENT_FORMAT}
+                            inputProps={{
+                              name: 'date',
+                              placeholder: 'Date'
+                            }}
+                            value={ePanui.date}
+                            onChange={value =>
+                              handleChange({
+                                target: {
+                                  name: 'date',
+                                  value: value.format(DATE_MOMENT_FORMAT)
+                                }
+                              })}
+                          />
                         </FormGroup>
                         <FormGroup>
                           <Label>Name</Label>
