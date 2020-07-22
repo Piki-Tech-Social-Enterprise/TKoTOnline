@@ -19,6 +19,9 @@ const {
   projects
 } = Routes;
 const AboutSection = props => {
+  const {
+    pageAboutImage
+  } = props;
   const [state, setState] = useState({
     isLoading: true,
     settings: {}
@@ -46,7 +49,7 @@ const AboutSection = props => {
     <div className="tkot-section pt-4">
       <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <div className="about-image" style={{
-        backgroundImage: `url('${require('assets/img/tkot/tkot-about-background-image.png')}')`
+        backgroundImage: `url(${pageAboutImage})`
       }}>
       </div>
       <Container className="py-5 text-center">

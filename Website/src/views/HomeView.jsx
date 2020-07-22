@@ -36,7 +36,8 @@ const HomeView = props => {
   const [state, setState] = useState({
     isLoading: true,
     dbSettings: null,
-    homePageHeaderImageDownloadUrl: ''
+    homePageHeaderImageDownloadUrl: '',
+    homePageAboutImageDownloadUrl: ''
   });
   useEffect(() => {
     const retrieveSettingValues = async () => {
@@ -45,16 +46,21 @@ const HomeView = props => {
       } = props;
       const dbSettings = await firebase.getDbSettingsValues(true);
       const {
-        homePageHeaderImageUrl
+        homePageHeaderImageUrl,
+        homePageAboutImageUrl
       } = dbSettings;
       const homePageHeaderImageDownloadUrl = homePageHeaderImageUrl.startsWith('/images/')
         ? await firebase.getStorageFileDownloadURL(homePageHeaderImageUrl)
         : homePageHeaderImageUrl;
+      const homePageAboutImageDownloadUrl = homePageAboutImageUrl.startsWith('/images/')
+        ? await firebase.getStorageFileDownloadURL(homePageAboutImageUrl)
+        : homePageAboutImageUrl;
       setState(s => ({
         ...s,
         isLoading: false,
         dbSettings: dbSettings,
-        homePageHeaderImageDownloadUrl: homePageHeaderImageDownloadUrl
+        homePageHeaderImageDownloadUrl: homePageHeaderImageDownloadUrl,
+        homePageAboutImageDownloadUrl: homePageAboutImageDownloadUrl
       }));
     };
     defaultPageSetup(true);
@@ -95,7 +101,9 @@ const HomeView = props => {
             {/* Iwi Members */}
             <IwiMembers />
             {/* About */}
-            <AboutSection />
+            <AboutSection
+              pageAboutImage={state.homePageAboutImageDownloadUrl}
+            />
             {/* Community Links Section) */}
             {/* <CommuintyLinksSection /> */}
             {/* Projects */}

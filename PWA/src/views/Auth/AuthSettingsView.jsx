@@ -40,6 +40,8 @@ const settingHomePageHeaderImageUrlFormat = `${settingImageFolderUrlFormat}${set
 const INITIAL_STATE = {
   homePageHeaderImageUrl: '',
   homePageHeaderImageUrlFile: null,
+  homePageAboutImageUrl: '',
+  homePageAboutImageUrlFile: null,
   homePageAboutDescription: '',
   aboutPageDescription: '',
   sid: null,
@@ -78,33 +80,46 @@ const AuthSettingsView = props => {
     } = authUser;
     const {
       homePageHeaderImageUrlFile,
+      homePageAboutImageUrlFile,
       homePageAboutDescription,
       aboutPageDescription,
       editorState
     } = settings;
     let sid = settings.sid;
     let homePageHeaderImageUrl = settings.homePageHeaderImageUrl;
+    let homePageAboutImageUrl = settings.homePageAboutImageUrl;
     let displayIcon = 'error';
     let displayTitle = 'Updating Settings Failed';
     let displayMessage = '';
     try {
-      if (!homePageHeaderImageUrl || !homePageAboutDescription || !aboutPageDescription) {
-        displayMessage = 'The Home Page Header Image, Home Page About Description and About Page Description fields are required.';
+      if (!homePageHeaderImageUrl || !homePageAboutImageUrl || !homePageAboutDescription || !aboutPageDescription) {
+        displayMessage = 'The Home Page Header Image, Home Page About Image, Home Page About Description and About Page Description fields are required.';
       } else if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.size > maxImageFileSize) {
         const {
           size
         } = homePageHeaderImageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+      } else if (homePageAboutImageUrlFile && homePageAboutImageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = homePageAboutImageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
           homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
             .replace(settingKeyFormat, sid)
             .replace(settingFilenameFormat, homePageHeaderImageUrlFile.name);
+        }debugger;
+        if (homePageAboutImageUrlFile && homePageAboutImageUrlFile.name) {
+          homePageAboutImageUrl = settingHomePageHeaderImageUrlFormat
+            .replace(settingKeyFormat, sid)
+            .replace(settingFilenameFormat, homePageAboutImageUrlFile.name);
         }
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
           homePageHeaderImageUrl: homePageHeaderImageUrl,
+          homePageAboutImageUrl: homePageAboutImageUrl,
           homePageAboutDescription: homePageAboutDescription,
           aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
           sid: sid,
@@ -113,6 +128,9 @@ const AuthSettingsView = props => {
         });
         if (homePageHeaderImageUrlFile) {
           await firebase.saveStorageFile(homePageHeaderImageUrl, homePageHeaderImageUrlFile);
+        }
+        if (homePageAboutImageUrlFile) {
+          await firebase.saveStorageFile(homePageAboutImageUrl, homePageAboutImageUrlFile);
         }
         displayIcon = 'success';
         displayTitle = 'Updating Settings Successful';
@@ -141,12 +159,23 @@ const AuthSettingsView = props => {
       }));
     }
   };
+  const handleHomePageAboutImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const homePageAboutImageUrlFile = e.target.files[0];
+      setSettings(s => ({
+        ...s,
+        homePageAboutImageUrlFile: homePageAboutImageUrlFile
+      }));
+    }
+  };
   useEffect(() => {
     const retrieveSettings = async () => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
       if (dbSettings) {
         const {
           homePageHeaderImageUrl,
+          homePageAboutImageUrl,
           homePageAboutDescription,
           aboutPageDescription,
           sid
@@ -154,6 +183,7 @@ const AuthSettingsView = props => {
         setSettings(s => ({
           ...s,
           homePageHeaderImageUrl,
+          homePageAboutImageUrl,
           homePageAboutDescription,
           aboutPageDescription,
           sid,
@@ -187,18 +217,38 @@ const AuthSettingsView = props => {
                     ? <LoadingOverlayModal color="text-white" />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
-                        <Label>Image</Label>
+                        <Label>Home Page Header Image</Label>
                         <FirebaseInput
                           value={settings.homePageHeaderImageUrl || ''}
                           onChange={handleChange}
                           downloadURLInputProps={{
                             id: 'homePageHeaderImageUrl',
                             name: 'homePageHeaderImageUrl',
-                            placeholder: 'Image',
+                            placeholder: 'Home Page Header Image',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
                           downloadURLFileInputOnChange={handleHomePageHeaderImageUrlFileChange}
+                          downloadURLFormat={settingHomePageHeaderImageUrlFormat}
+                          downloadURLFormatKeyName={settingKeyFormat}
+                          downloadURLFormatKeyValue={settings.sid}
+                          downloadURLFormatFileName={settingFilenameFormat}
+                          imageResize="md"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Home Page About Image</Label>
+                        <FirebaseInput
+                          value={settings.homePageAboutImageUrl || ''}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'homePageAboutImageUrl',
+                            name: 'homePageAboutImageUrl',
+                            placeholder: 'Home Page About Image',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleHomePageAboutImageUrlFileChange}
                           downloadURLFormat={settingHomePageHeaderImageUrlFormat}
                           downloadURLFormatKeyName={settingKeyFormat}
                           downloadURLFormatKeyValue={settings.sid}

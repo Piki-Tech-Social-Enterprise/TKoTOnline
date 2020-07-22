@@ -33,6 +33,7 @@ class SettingsRepository extends BaseRepository {
       created,
       createdBy,
       homePageHeaderImageUrl,
+      homePageAboutImageUrl,
       homePageAboutDescription,
       aboutPageDescription,
       sid,
@@ -51,6 +52,7 @@ class SettingsRepository extends BaseRepository {
         created: created || now.toString(),
         createdBy: createdBy || '',
         homePageHeaderImageUrl: homePageHeaderImageUrl || '',
+        homePageAboutImageUrl: homePageAboutImageUrl || '',
         homePageAboutDescription: homePageAboutDescription || '',
         aboutPageDescription: aboutPageDescription || '',
         updated: updated || now.toString(),
@@ -65,6 +67,7 @@ class SettingsRepository extends BaseRepository {
         settings = {
           active: active || (typeof active === 'boolean' && active) || false,
           homePageHeaderImageUrl: homePageHeaderImageUrl || dbSettings.homePageHeaderImageUrl,
+          homePageAboutImageUrl: homePageAboutImageUrl || dbSettings.homePageAboutImageUrl,
           homePageAboutDescription: homePageAboutDescription || dbSettings.homePageAboutDescription,
           aboutPageDescription: aboutPageDescription || dbSettings.aboutPageDescription,
           sid: sid,
