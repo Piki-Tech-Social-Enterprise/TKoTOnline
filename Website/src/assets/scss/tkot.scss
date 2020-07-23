@@ -261,7 +261,7 @@ $tkot-padding-top: 3rem;
   background-size: cover;
   background-position: center center;
   width: 100%;
-  height: 25rem;
+  height: 21rem;
   opacity: 0.2;
   z-index: -1;
 }
@@ -324,5 +324,10 @@ $tkot-padding-top: 3rem;
 }
 
 .iwi-member-name {
-  font-size: 1.25rem;
+  font-size: 0.96rem;
 }
+
+.bg-black {
+  background-color: $black-bg;
+}
+

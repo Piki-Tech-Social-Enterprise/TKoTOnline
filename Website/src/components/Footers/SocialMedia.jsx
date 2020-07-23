@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 const SocialMedia = props => {
 	const {
 		links,
-		margin,
-		size
+		margin
 	} = props;
 	return (
-		<ul className="social-ul d-flex mx-0 px-0 mx-sm-3 px-sm-3">
+		<ul className="list-group">
 			{
 				links.map((link, key) => {
 					const {
@@ -18,9 +17,10 @@ const SocialMedia = props => {
 					return (
 						<li className={`box-social ${margin}`} key={key}>
 							<a href={href} target="_blank" rel="noopener noreferrer">
-								<i className={`social-media-fill ${iconFaName}`} style={{
-									fontSize: `${size}px`
-								}} />
+								<span class="fa-stack fa-2x">
+									<i class="fas fa-circle fa-stack-2x" />
+									<i class={`${iconFaName} fa-stack-1x fa-inverse`} />
+								</span>
 							</a>
 						</li>
 					);
@@ -35,12 +35,10 @@ SocialMedia.propTypes = {
 		href: PropTypes.string.isRequired,
 		iconFaName: PropTypes.string.isRequired
 	})).isRequired,
-	margin: PropTypes.string,
-	size: PropTypes.number
+	margin: PropTypes.string
 };
 SocialMedia.defaultProps = {
-	margin: '',
-	size: 40
+	margin: ''
 };
 
 export default SocialMedia;

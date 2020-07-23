@@ -42,8 +42,7 @@ const HomeTermsLink = () => {
 };
 const HomeFooter = props => {
   const {
-    isDefault,
-    isFluid
+    isDefault
   } = props;
   const {
     REACT_APP_WEB_NAME
@@ -133,89 +132,85 @@ const HomeFooter = props => {
     }
   };
   return (
-    <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark mt-3 pt-5 pb-3`}>
-      <Container>
-        <Row className="footer-content px-0">
-          <Col xs={12} lg={4} className="footer-logo">
-            <a href="/">
-              <img alt="..." className="n-logo" width="250" src={require("assets/img/tkot/tkot-logo-white.png")} />
+    <>
+      <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark mt-3 pt-5 pb-3`}>
+        <Container>
+          <Row className="footer-content px-0">
+            <Col xs={12} lg={4} className="footer-logo text-left">
+              <a href="/">
+                <img alt="..." className="n-logo" width="250" src={require("assets/img/tkot/tkot-logo-white.png")} />
+              </a>
+            </Col>
+            <Col xs={12} lg={4}>
+              <Container className="pl-0 py-3 pt-sm-0">
+                <Row>
+                  <Col>
+                    <p className="text-uppercase font-weight-bolder">Hono Mai - We’ll Keep You Updated</p>
+                    <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
+                    <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
+                      <Row noGutters>
+                        <Col xs={12} sm={6} className="pr-0 pr-sm-1">
+                          <FormGroup>
+                            <Input className="text-secondary" placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                          </FormGroup>
+                        </Col>
+                        <Col xs={12} sm={6} className="pl-0 pl-sm-1">
+                          <FormGroup>
+                            <Input className="text-secondary" placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <FormGroup>
+                        <Input className="text-secondary" placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up</Button>
+                      </FormGroup>
+                    </Form>
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+            <Col xs={12} lg={4}>
+              <Container className="px-0 py-3 pt-sm-0">
+                <Row noGutters>
+                  <Col xs={12}>
+                    <p className="text-uppercase font-weight-bolder">Connect with us</p>
+                    <SocialMedia
+                      links={[{
+                        href: 'mailto:admin@tkot.org.nz',
+                        iconFaName: 'fas fa-envelope text-dark'
+                      }, {
+                        href: 'https://www.facebook.com/TeKahuOTaonui',
+                        iconFaName: 'fab fa-facebook-f text-dark'
+                      }]}
+                      margin="my-2"
+                      size="16"
+                    />
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
+      <div className="bg-black text-light small">
+        <Row className="copyright mx-0 mx-sm-3 py-0">
+          <Col xs={12} sm={6} className="my-auto">
+            <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
+          </Col>
+          <Col xs={12} sm={6} className="text-sm-right">
+            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3">Website co-created by</span>
+            {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
+            <img className="mx-0 ml-sm-3" width={40} alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
+            {/* </a> */}
+            <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer">
+              <img className="mx-0 ml-sm-3" width={40} alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
             </a>
           </Col>
-          <Col xs={12} lg={4}>
-            <Container className="px-0 py-3 pt-sm-0">
-              <Row noGutters>
-                <Col xs={12} sm={6} lg={12}>
-                  <p className="text-uppercase font-weight-bolder">Connect with us</p>
-                  <SocialMedia
-                    links={[{
-                      href: 'mailto:admin@tkot.org.nz',
-                      iconFaName: 'fas fa-envelope'
-                    }, {
-                      href: 'https://www.facebook.com/TeKahuOTaonui',
-                      iconFaName: 'fab fa-facebook-f'
-                      // }, {
-                      //   href: '#TKoTOnline',
-                      //   iconFaName: 'fab fa-instagram'
-                      // }, {
-                      //   href: '#TKoTOnline',
-                      //   iconFaName: 'fab fa-linkedin-in'
-                    }]}
-                  />
-                </Col>
-                <Col xs={12} sm={6} lg={12}>
-                  <p className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3">Website co-created by</p>
-                  {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
-                  <img className="mx-0 ml-sm-3" width={120} alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
-                  {/* </a> */}
-                  <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer">
-                    <img className="mx-0 ml-sm-3" width={120} alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
-                  </a>
-                </Col>
-              </Row>
-            </Container>
-          </Col>
-          <Col xs={12} lg={4}>
-            <Container className="pl-0 py-3 pt-sm-0">
-              <Row>
-                <Col>
-                  <p className="text-uppercase font-weight-bolder">Hono Mai - We’ll Keep You Updated</p>
-                  <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
-                  <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
-                    <Row noGutters>
-                      <Col xs={12} sm={6} className="pr-1">
-                        <FormGroup>
-                          <Input className="text-secondary" placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
-                        </FormGroup>
-                      </Col>
-                      <Col xs={12} sm={6} className="pl-1">
-                        <FormGroup>
-                          <Input className="text-secondary" placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <FormGroup>
-                      <Input className="text-secondary" placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
-                    </FormGroup>
-                    <FormGroup>
-                      <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up</Button>
-                    </FormGroup>
-                  </Form>
-                </Col>
-              </Row>
-            </Container>
-          </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <Container fluid={!!isFluid}>
-              <div className="copyright pt-1 ml-0 text-center">
-                {REACT_APP_WEB_NAME} &copy; {thisYear} <HomePrivacyLink /> &amp; <HomeTermsLink />
-              </div>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
-    </footer>
+      </div>
+    </>
   );
 };
 

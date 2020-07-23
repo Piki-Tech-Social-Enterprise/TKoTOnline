@@ -15,6 +15,9 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import Routes from 'components/Routes/routes';
 
 const IwiMembersSection = props => {
+  const {
+    showClickScrollDownForMoreLink
+  } = props;
   const [state, setState] = useState({
     isLoading: true,
     iwiMembers: [],
@@ -72,9 +75,13 @@ const IwiMembersSection = props => {
                 })
             }
           </Row>
-          <a href={Routes.about} className="text-decoration-none text-dark">
-            <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-          </a>
+          {
+            showClickScrollDownForMoreLink
+              ? <a href={Routes.about} className="text-decoration-none text-dark">
+                <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+              </a>
+              : null
+          }
         </Col>
       </Row>
     </Container>

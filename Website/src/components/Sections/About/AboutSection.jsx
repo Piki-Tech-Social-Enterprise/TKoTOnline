@@ -20,7 +20,8 @@ const {
 } = Routes;
 const AboutSection = props => {
   const {
-    pageAboutImage
+    pageAboutImage,
+    showClickScrollDownForMoreLink
   } = props;
   const [state, setState] = useState({
     isLoading: true,
@@ -72,9 +73,13 @@ const AboutSection = props => {
             </div>
           </Col>
         </Row>
-        <a href={projects} className="text-decoration-none text-dark">
-          <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-        </a>
+        {
+          showClickScrollDownForMoreLink
+            ? <a href={projects} className="text-decoration-none text-dark">
+              <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+            </a>
+            : null
+        }
       </Container>
     </div>
   );
