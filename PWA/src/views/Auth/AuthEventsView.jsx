@@ -19,7 +19,9 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 import {
-  draftToText
+  draftToText,
+  sortArray,
+  renderCaret
 } from 'components/App/Utilities';
 
 const AuthEventsView = props => {
@@ -41,21 +43,7 @@ const AuthEventsView = props => {
     };
   }, [props, isLoading, setIsLoading, setEventsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    eventsAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(eventsAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddEventClick(onClick)} />
@@ -93,17 +81,18 @@ const AuthEventsView = props => {
                       insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
                         defaultSortName: 'header',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Wananga found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEventRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }} dataFormat={(cell, row) => {
                         const {
@@ -116,7 +105,7 @@ const AuthEventsView = props => {
                           <span>{contentAsText}</span>
                         );
                       }}>Content</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Event"
                           dbId={row.evid}

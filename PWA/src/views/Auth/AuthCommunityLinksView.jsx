@@ -17,6 +17,10 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  sortArray,
+  renderCaret
+} from 'components/App/Utilities';
 
 const AuthCommunityLinksView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,21 +41,7 @@ const AuthCommunityLinksView = props => {
     };
   }, [props, isLoading, setIsLoading, setCommunityLinksAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    CommunityLinksAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(CommunityLinksAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddCommunityLinksClick(onClick)} />
@@ -88,16 +78,17 @@ const AuthCommunityLinksView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="community-links-table-export"
                       search pagination options={{
-                        defaultSortName: 'header',
+                        defaultSortName: 'linkName',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Community Links found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleCommunityLinksRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="linkName" dataSort>Link Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="link" dataSort>Link</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="linkName" dataSort caretRender={renderCaret}>Link Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="link" dataSort caretRender={renderCaret}>Link</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Community Link"
                           dbId={row.clid}

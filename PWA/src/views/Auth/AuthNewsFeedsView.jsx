@@ -19,7 +19,9 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 import {
-  draftToText
+  draftToText,
+  sortArray,
+  renderCaret
 } from 'components/App/Utilities';
 
 const AuthNewsFeedsView = props => {
@@ -41,21 +43,7 @@ const AuthNewsFeedsView = props => {
     };
   }, [props, isLoading, setIsLoading, setNewsFeedsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    newsFeedsAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(newsFeedsAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddNewsFeedClick(onClick)} />
@@ -92,20 +80,21 @@ const AuthNewsFeedsView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
-                        defaultSortName: 'header',
+                        defaultSortName: 'date',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No News Feeds found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleNewsFeedRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="header" dataSort>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="date" dataSort width="100px">Date</TableHeaderColumn>
-                      {/* <TableHeaderColumn dataField="category" dataSort>Category</TableHeaderColumn> */}
-                      <TableHeaderColumn dataField="content" dataSort width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="date" dataSort caretRender={renderCaret} width="100px">Date</TableHeaderColumn>
+                      {/* <TableHeaderColumn dataField="category" dataSort caretRender={renderCaret}>Category</TableHeaderColumn> */}
+                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }} dataFormat={(cell, row) => {
                         const {
@@ -118,7 +107,7 @@ const AuthNewsFeedsView = props => {
                           <span>{contentAsText}</span>
                         );
                       }}>Content</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"
                           dbId={row.nfid}

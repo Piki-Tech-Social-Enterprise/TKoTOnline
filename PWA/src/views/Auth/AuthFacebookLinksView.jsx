@@ -89,15 +89,16 @@ const AuthFacebookLinksView = props => {
                       insertRow exportCSV csvFileName="news-feeds-table-export"
                       search pagination options={{
                         defaultSortName: 'name',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Facebook Links found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleFacebookLinksRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="name" dataSort>Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="url" dataSort>URL</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="name" dataSort caretRender={renderCaret}>Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="url" dataSort caretRender={renderCaret}>URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Facebook Link"
                           dbId={row.fid}

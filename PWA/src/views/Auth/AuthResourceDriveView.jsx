@@ -22,6 +22,10 @@ import docImage from "../../assets/img/tkot/File Type Images/doc-image.png";
 import powerpointImage from "../../assets/img/tkot/File Type Images/powerpoint-image.png";
 import txtImage from "../../assets/img/tkot/File Type Images/txt-image.png";
 import videoImage from "../../assets/img/tkot/File Type Images/video-image.jpg";
+import {
+  sortArray,
+  renderCaret
+} from 'components/App/Utilities';
 
 const AuthResourceDriveView = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -105,29 +109,7 @@ const AuthResourceDriveView = () => {
   },[]);
   
   const handleSortChange = async (sortName, sortOrder) => {
-    fileArray.sort((a, b) => {
-      let aValue = a[sortName],
-        bValue = b[sortName];
-      if (sortName === 'providerData') {
-        aValue = Object.keys(aValue).map(k => aValue[k])[0].providerId;
-        bValue = Object.keys(bValue).map(k => bValue[k])[0].providerId;
-      }
-      if (sortName === 'roles') {
-        aValue = Object.keys(aValue).map(k => aValue[k])[0];
-        bValue = Object.keys(bValue).map(k => bValue[k])[0];
-      }
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(fileArray, sortName, sortOrder);
     setIsLoading(false);
   }
   const onRowSelect = (row, isSelected, e) => {
@@ -315,11 +297,12 @@ const AuthResourceDriveView = () => {
                           selectRow={ selectRowProp }
                           search pagination options={{
                             defaultSortName: 'googleDriveFileName',
+                            defaultSortOrder: 'asc',
                             hideSizePerPage: true,
                             noDataText: 'No Files found.',
                             onSortChange: handleSortChange
                           }}>
-                          <TableHeaderColumn dataField="photoURL" dataSort width="45px" dataFormat={(cell, row) => (
+                          <TableHeaderColumn dataField="photoURL" dataSort caretRender={renderCaret} width="45px" dataFormat={(cell, row) => (
                             <FirebaseImage
                               imageResize="sm"
                               loadingIconSize="sm"
@@ -327,12 +310,12 @@ const AuthResourceDriveView = () => {
                               imageURL={cell}
                             />
                           )}>{' '}</TableHeaderColumn>
-                          <TableHeaderColumn isKey dataField="googleDriveFileName" dataSort width="327px">Name</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileType" dataSort width="327px">Type</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileSize" dataSort width="327px">Size</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileOwner" dataSort width="327px">Owner</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileLastModified" dataSort width="327px">Last Modified</TableHeaderColumn>
-                          <TableHeaderColumn hidden dataField="rid" dataSort>rid</TableHeaderColumn>
+                          <TableHeaderColumn isKey dataField="googleDriveFileName" dataSort caretRender={renderCaret} width="327px">Name</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileType" dataSort caretRender={renderCaret} width="327px">Type</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileSize" dataSort caretRender={renderCaret} width="327px">Size</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileOwner" dataSort caretRender={renderCaret} width="327px">Owner</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileLastModified" dataSort caretRender={renderCaret} width="327px">Last Modified</TableHeaderColumn>
+                          <TableHeaderColumn hidden dataField="rid" dataSort caretRender={renderCaret}>rid</TableHeaderColumn>
                         </BootstrapTable>
                   }
               </CardBody>

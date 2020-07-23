@@ -20,6 +20,10 @@ import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import * as Roles from 'components/Domains/Roles';
 import RoleBadges from 'components/App/RoleBadges';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  sortArray,
+  renderCaret
+} from 'components/App/Utilities';
 
 const getAvailableRoles = () => {
   const availableRoles = {};
@@ -51,21 +55,7 @@ const AuthUsersView = props => {
     };
   }, [props, isLoading, setIsLoading, setUsersAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    usersAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(usersAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddUserClick(onClick)} />
@@ -106,18 +96,19 @@ const AuthUsersView = props => {
                       insertRow exportCSV csvFileName="users-table-export"
                       search pagination options={{
                         defaultSortName: 'email',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Users found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleUserRowClick
                       }}>
-                      <TableHeaderColumn dataField="photoURL" dataSort width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="photoURL" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.displayName} imageURL={cell} />
                       )}>Photo</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="email" dataSort>Email</TableHeaderColumn>
-                      <TableHeaderColumn dataField="displayName" dataSort>Display Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="email" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="displayName" dataSort caretRender={renderCaret}>Display Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="roles" dataSort caretRender={renderCaret} width="125px" dataFormat={(cell, row) => (
                         <RoleBadges
                           availableRoles={availableRoles}
                           roles={cell}
@@ -125,7 +116,7 @@ const AuthUsersView = props => {
                           onChildUpdate={handleChildUpdate}
                         />
                       )} >Roles</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="User"
                           dbId={row.uid}

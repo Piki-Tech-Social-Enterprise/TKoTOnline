@@ -18,7 +18,9 @@ import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import ContactStatusBadge from 'components/App/ContactStatusBadge';
 import moment from 'moment';
 import {
-  DATE_TIME_MOMENT_FORMAT
+  DATE_TIME_MOMENT_FORMAT,
+  sortArray,
+  renderCaret
 } from 'components/App/Utilities';
 
 const AuthContactsView = props => {
@@ -40,21 +42,7 @@ const AuthContactsView = props => {
     };
   }, [props, isLoading, setIsLoading, setContactsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    ContactsAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(ContactsAsArray, sortName, sortOrder);
   };
   // const handleContactsRowClick = async row => {
   //   props.history.push(`/auth/Contacts/${row.cid}`);
@@ -84,19 +72,20 @@ const AuthContactsView = props => {
                       tableHeaderClass="text-primary"
                       exportCSV csvFileName="contacts-export"
                       search pagination options={{
-                        defaultSortName: 'header',
+                        defaultSortName: 'created',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Contacts found.',
                         onSortChange: handleSortChange,
                         // onRowClick: handleContactsRowClick
                       }}>
-                      <TableHeaderColumn dataField="created" dataSort width="150px" dataFormat={cell => (
+                      <TableHeaderColumn dataField="created" dataSort caretRender={renderCaret} width="150px" dataFormat={cell => (
                         moment(cell).format(DATE_TIME_MOMENT_FORMAT)
                       )}>Created</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="email" width="30%" dataSort>Email</TableHeaderColumn>
-                      <TableHeaderColumn dataField="firstName" width="25%" dataSort>First Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="lastName" width="25%" dataSort>Last Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="email" width="30%" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="firstName" width="25%" dataSort caretRender={renderCaret}>First Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="lastName" width="25%" dataSort caretRender={renderCaret}>Last Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <ContactStatusBadge
                           dbObjectName="Contact"
                           dbId={row.cid}

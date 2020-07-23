@@ -1,7 +1,8 @@
-import {
+import React, {
   useEffect
 } from 'react';
 import draftToHtml from 'draftjs-to-html';
+import moment from 'moment';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -180,9 +181,9 @@ const handleKeyDownForTime = e => {
 const TAG_SEPARATOR = ', ';
 const isJson = value => {
   return (value && (
-      (value.startsWith('{') && value.endsWith('}')) ||
-      (value.startsWith('[') && value.endsWith(']'))
-    )
+    (value.startsWith('{') && value.endsWith('}')) ||
+    (value.startsWith('[') && value.endsWith(']'))
+  )
   );
 };
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
@@ -196,6 +197,68 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsHtml = draftToHtml(draftAsJson);
   const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
+};
+const isNumber = value => value && !isNaN(value);
+const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
+const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
+const tryToConvertValue = value => {
+  let convertedValue = undefined;
+  // let valueType = undefined;
+  if (isNumber(value)) {
+    // valueType = 'number';
+    convertedValue = Number(value);
+  } else if (isBoolean(value)) {
+    // valueType = 'boolean';
+    convertedValue = Boolean(value);
+  } else if (isDate(value)) {
+    // valueType = 'date';
+    convertedValue = toDate(value);
+  } else {
+    // valueType = 'unknown';
+    convertedValue = value;
+  }
+  // console.log(`value: ${value}, valueType: ${valueType}, convertedValue: ${convertedValue}`);
+  return convertedValue;
+};
+const sortArray = (array, sortName, sortOrder) => {
+  console.log(`array-before: ${JSON.stringify(array, null, 2)}`);
+  array.sort((a, b) => {
+    const aValue = tryToConvertValue(a[sortName]);
+    const bValue = tryToConvertValue(b[sortName]);
+    const result = sortOrder === 'asc'
+      ? bValue - aValue
+      : aValue - bValue;
+    // const result = (aValue > bValue)
+    //   ? (sortOrder === 'asc')
+    //     ? 1
+    //     : -1
+    //   : (bValue > aValue)
+    //     ? (sortOrder === 'asc')
+    //       ? -1
+    //       : 1
+    //     : 0;
+    console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
+    // sortName: date, sortOrder: desc, aValue: Tue Apr 07 2020, bValue: Mon Apr 06 2020, result: -1
+    return result;
+  });
+  console.log(`array-after: ${JSON.stringify(array, null, 2)}`);
+};
+const renderCaret = (direction, fieldName) => {
+  let iconName;
+  switch (direction) {
+    case 'asc':
+      iconName = 'fa-sort-up';
+      break;
+    case 'desc':
+      iconName = 'fa-sort-down';
+      break;
+    default:
+      iconName = 'fa-sort';
+  }
+  return (
+    <i className={`react-bootstrap-table-caret ${fieldName} fas ${iconName}`} />
+  );
 };
 
 export default shallowCompare;
@@ -222,5 +285,12 @@ export {
   TAG_SEPARATOR,
   isJson,
   stripHtml,
-  draftToText
+  draftToText,
+  isNumber,
+  isBoolean,
+  isDate,
+  toDate,
+  tryToConvertValue,
+  sortArray,
+  renderCaret
 };

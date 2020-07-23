@@ -19,6 +19,10 @@ import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import * as Roles from 'components/Domains/VolunteerRoles';
 import VolunteerRoleBadges from 'components/App/VolunteerRoleBadges';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  sortArray,
+  renderCaret
+} from 'components/App/Utilities';
 
 const getAvailableRoles = () => {
   const availableRoles = {};
@@ -50,21 +54,7 @@ const AuthVolunteersView = props => {
     };
   }, [props, isLoading, setIsLoading, setVolunteersAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    volunteersAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
+    sortArray(volunteersAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddUserClick(onClick)} />
@@ -105,16 +95,17 @@ const AuthVolunteersView = props => {
                       insertRow exportCSV csvFileName="volunteers-table-export"
                       search pagination options={{
                         defaultSortName: 'email',
+                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Volunteers found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleUserRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="email" width="35%" dataSort>Email</TableHeaderColumn>
-                      <TableHeaderColumn dataField="firstName" dataSort>First Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="lastName" dataSort>Last Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="roles" dataSort width="125px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="email" width="35%" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="firstName" dataSort caretRender={renderCaret}>First Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="lastName" dataSort caretRender={renderCaret}>Last Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="roles" dataSort caretRender={renderCaret} width="125px" dataFormat={(cell, row) => (
                         <VolunteerRoleBadges
                           availableRoles={availableRoles}
                           roles={cell}
@@ -122,7 +113,7 @@ const AuthVolunteersView = props => {
                           onChildUpdate={handleChildUpdate}
                         />
                       )} >Roles</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Volunteer"
                           dbId={row.vid}
