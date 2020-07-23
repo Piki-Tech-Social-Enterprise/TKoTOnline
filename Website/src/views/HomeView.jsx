@@ -96,7 +96,7 @@ const HomeView = props => {
             />
             <HomeHeader
               pageHeaderImage={state.homePageHeaderImageDownloadUrl}
-              showClickScrollDownForMoreLink
+              showClickScrollDownForMoreLink={false}
             />
             {/* Iwi Members */}
             <IwiMembers />
