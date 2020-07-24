@@ -13,7 +13,7 @@ const HomeHeader = props => {
     showClickScrollDownForMoreLink
   } = props;
   return (
-    <div className="page-header clear-filter" id="header">
+    <div className="page-header clear-filter" id="Home">
       <div className="page-header-image" style={{
         backgroundImage: `url(${pageHeaderImage})`
       }} />

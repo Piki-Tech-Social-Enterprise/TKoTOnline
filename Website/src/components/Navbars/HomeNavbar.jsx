@@ -18,6 +18,8 @@ import {
 } from 'reactstrap-scrollspy';
 
 const {
+  home,
+  // homePage,
   iwiMembers,
   about,
   // communityLinks,
@@ -109,6 +111,11 @@ const HomeNavbar = props => {
                 isHomePage
                   ? <>
                     <NavItem>
+                      <ScrollspyNavLink name={home.replace('/#', '')}>
+                        <NavLink href={home} active={pathname === home}>Home</NavLink>
+                      </ScrollspyNavLink>
+                    </NavItem>
+                    <NavItem>
                       <ScrollspyNavLink name={iwiMembers.replace('/#', '')}>
                         <NavLink href={iwiMembers} active={hash !== '' && iwiMembers.endsWith(hash)}>Iwi</NavLink>
                       </ScrollspyNavLink>
@@ -135,6 +142,9 @@ const HomeNavbar = props => {
                     </NavItem>
                   </>
                   : <>
+                    <NavItem>
+                      <NavLink href={home} active={hash !== '' && home.endsWith(hash)}>Home</NavLink>
+                    </NavItem>
                     <NavItem>
                       <NavLink href={iwiMembers} active={hash !== '' && iwiMembers.endsWith(hash)}>Iwi</NavLink>
                     </NavItem>

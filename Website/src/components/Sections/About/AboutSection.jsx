@@ -50,37 +50,37 @@ const AboutSection = props => {
     <div className="tkot-section pt-4">
       <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <div className="about-image" style={{
-        backgroundImage: `url(${pageAboutImage})`
+        backgroundImage: `linear-gradient(27deg, rgba(145, 147, 150, 0.6), rgba(255, 255, 255, 1)), url(${pageAboutImage})`
       }}>
-      </div>
-      <Container className="py-5 text-center">
-        <Row noGutters>
-          <Col xs={12} sm={6}>
-            <img alt="..." className="n-logo pt-2 mt-1" src={require("assets/img/tkot/tkot-blue-red-logo.png")} width="300" />
-          </Col>
-          <Col xs={12} sm={6} className="text-left">
-            {
-              state.isLoading
-                ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                : <p>{state.settings.homePageAboutDescription}</p>
-            }
-            <div className="pt-4 mt-3">
-              <Button href={aboutUs} outline color='dark' style={{
-                color: 'inherit'
-              }}>
-                Learn more...
+        <Container className="py-5 text-center">
+          <Row noGutters>
+            <Col xs={12} sm={6} className="bg-warning1">
+              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-blue-red-logo.png")} width="300" />
+            </Col>
+            <Col xs={12} sm={6} className="text-left bg-success1">
+              {
+                state.isLoading
+                  ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
+                  : <p>{state.settings.homePageAboutDescription}</p>
+              }
+              <div className="pt-4 mt-3">
+                <Button href={aboutUs} outline color='dark' style={{
+                  color: 'inherit'
+                }}>
+                  Learn more...
               </Button>
-            </div>
-          </Col>
-        </Row>
-        {
-          showClickScrollDownForMoreLink
-            ? <a href={projects} className="text-decoration-none text-dark">
-              <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-            </a>
-            : null
-        }
-      </Container>
+              </div>
+            </Col>
+          </Row>
+          {
+            showClickScrollDownForMoreLink
+              ? <a href={projects} className="text-decoration-none text-dark">
+                <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+              </a>
+              : null
+          }
+        </Container>
+      </div>
     </div>
   );
 };

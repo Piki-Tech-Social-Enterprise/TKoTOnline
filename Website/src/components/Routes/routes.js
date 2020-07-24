@@ -1,5 +1,6 @@
 const Routes = {
-  home: '/',
+  home: '/#Home',
+  homePage: '/',
   iwiMembers: '/#IwiMembers',
   about: '/#About',
   communityLinks: '/#CommunityLinks',

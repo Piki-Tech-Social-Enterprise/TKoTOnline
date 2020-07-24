@@ -138,7 +138,7 @@ const HomeFooter = props => {
           <Row className="footer-content px-0">
             <Col xs={12} lg={4} className="footer-logo text-left">
               <a href="/">
-                <img alt="..." className="n-logo" width="250" src={require("assets/img/tkot/tkot-logo-white.png")} />
+                <img alt="..." className="n-logo py-3" width="289" src={require("assets/img/tkot/tkot-logo-white.png")} />
               </a>
             </Col>
             <Col xs={12} lg={4}>
@@ -175,14 +175,20 @@ const HomeFooter = props => {
               <Container className="px-0 py-3 pt-sm-0">
                 <Row noGutters>
                   <Col xs={12}>
-                    <p className="text-uppercase font-weight-bolder">Connect with us</p>
+                    <p className="text-uppercase font-weight-bolder text-lg-center">Contact Us</p>
                     <SocialMedia
                       links={[{
-                        href: 'mailto:admin@tkot.org.nz',
-                        iconFaName: 'fas fa-envelope text-dark'
-                      }, {
                         href: 'https://www.facebook.com/TeKahuOTaonui',
-                        iconFaName: 'fab fa-facebook-f text-dark'
+                        iconFaName: 'fab fa-facebook-f text-dark',
+                        text: 'Facebook'
+                      }, {
+                        href: 'mailto:admin@tkot.org.nz',
+                        iconFaName: 'fas fa-envelope text-dark',
+                        text: 'commsadmin@tkot.org.nz'
+                      }, {
+                        href: '',
+                        iconFaName: 'fas fa-building text-dark',
+                        text: 'PO Box 88, Kaeo\nNorthland 0448'
                       }]}
                       margin="my-2"
                       size="16"
@@ -195,12 +201,12 @@ const HomeFooter = props => {
         </Container>
       </footer>
       <div className="bg-black text-light small">
-        <Row className="copyright mx-0 mx-sm-3 py-0">
+        <Row className="copyright mx-0 mx-sm-3 py-1">
           <Col xs={12} sm={6} className="my-auto">
             <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
           </Col>
           <Col xs={12} sm={6} className="text-sm-right">
-            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3">Website co-created by</span>
+            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3">Website co-curated by</span>
             {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
             <img className="mx-0 ml-sm-3" width={40} alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
             {/* </a> */}

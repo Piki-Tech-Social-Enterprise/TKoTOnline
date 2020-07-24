@@ -113,7 +113,7 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
-const defaultPageSetup = init => {
+const defaultPageSetup = async init => {
   const {
     body
   } = document;

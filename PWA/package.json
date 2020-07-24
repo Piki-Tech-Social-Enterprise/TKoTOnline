@@ -11,7 +11,7 @@
     "draft-js": "^0.11.6",
     "draftjs-to-html": "^0.9.1",
     "history": "4.10.0",
-    "firebase": "^7.16.1",
+    "firebase": "^7.17.0",
     "googleapis": "^55.0.0",
     "node-sass": "4.14.1",
     "perfect-scrollbar": "1.5.0",
@@ -102,7 +102,7 @@
     "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.10",
+    "@types/googlemaps": "3.39.11",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.9.43",
     "jquery": "3.5.1",

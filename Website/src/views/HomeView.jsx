@@ -26,6 +26,7 @@ import {
 } from 'components/App/Utilities';
 
 const {
+  home,
   iwiMembers,
   about,
   projects,
@@ -55,6 +56,7 @@ const HomeView = props => {
       const homePageAboutImageDownloadUrl = homePageAboutImageUrl.startsWith('/images/')
         ? await firebase.getStorageFileDownloadURL(homePageAboutImageUrl)
         : homePageAboutImageUrl;
+      defaultPageSetup(true);
       setState(s => ({
         ...s,
         isLoading: false,
@@ -63,7 +65,6 @@ const HomeView = props => {
         homePageAboutImageDownloadUrl: homePageAboutImageDownloadUrl
       }));
     };
-    defaultPageSetup(true);
     if (state.isLoading) {
       retrieveSettingValues();
     }
@@ -79,7 +80,7 @@ const HomeView = props => {
           />
           : <Scrollspy
             names={[
-              'HomeNavbar',
+              home.replace('/#', ''),
               'HomeHeader',
               iwiMembers.replace('/#', ''),
               about.replace('/#', ''),

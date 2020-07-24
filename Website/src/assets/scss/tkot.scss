@@ -217,21 +217,19 @@ $tkot-padding-top: 3rem;
 
 .tkot-background-image {
   background: url('../img/tkot/tkot-background-image.png') no-repeat top right;
-  -webkit-background-size: 50% 3000px;
-  -moz-background-size: 50% 3000px;
-  -o-background-size: 50% 3000px;
-  background-size: 50% 3000px;
+  background-size: contain;
   height: 100%;
 }
 
 .page-header-image {
   background-color: transparent !important;
-  // background-position-y: bottom !important;
+  background-position: center center;
   height: 70vh !important;
   opacity: 0.2;
 }
 
 .page-header {
+  min-height: 70vh !important;
   .container {
     padding-bottom: 0;
   }
@@ -257,12 +255,10 @@ $tkot-padding-top: 3rem;
 }
 
 .about-image {
-  position: absolute;
   background-size: cover;
   background-position: center center;
   width: 100%;
-  height: 21rem;
-  opacity: 0.2;
+  height: 100%;
   z-index: -1;
 }
 
@@ -313,14 +309,9 @@ $tkot-padding-top: 3rem;
   background-color: rgba(lightgrey, 0.8) !important;
 }
 
-.footer-logo .n-logo {
-  position: relative;
-  top: -2rem;
-}
-
 .nav-item,
 .nav-link {
-  font-size: 1.0417rem !important;
+  font-size: 0.75rem !important;
 }
 
 .iwi-member-name {
@@ -331,3 +322,7 @@ $tkot-padding-top: 3rem;
   background-color: $black-bg;
 }
 
+.p {
+  font-size: 1.2em;
+  font-weight: 300;
+}

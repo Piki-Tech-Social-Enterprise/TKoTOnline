@@ -6,22 +6,39 @@ const SocialMedia = props => {
 		links,
 		margin
 	} = props;
+	const IconAndTextElement = props => {
+		const {
+			icon,
+			text
+		} = props;
+		return (
+			<>
+				<span className="fa-stack">
+					<i className="fas fa-circle fa-stack-2x" />
+					<i className={`${icon} fa-stack-1x fa-inverse`} />
+				</span>
+				<span className="mx-2 text-uppercase">{text}</span>
+			</>
+		);
+	};
 	return (
-		<ul className="list-group">
+		<ul className="list-group ml-0 ml-lg-5">
 			{
 				links.map((link, key) => {
 					const {
 						href,
-						iconFaName
+						iconFaName,
+						text
 					} = link;
 					return (
 						<li className={`box-social ${margin}`} key={key}>
-							<a href={href} target="_blank" rel="noopener noreferrer">
-								<span class="fa-stack fa-2x">
-									<i class="fas fa-circle fa-stack-2x" />
-									<i class={`${iconFaName} fa-stack-1x fa-inverse`} />
-								</span>
-							</a>
+							{
+								href
+									? <a href={href} target="_blank" rel="noopener noreferrer">
+										<IconAndTextElement icon={iconFaName} text={text} />
+									</a>
+									: <IconAndTextElement icon={iconFaName} text={text} />
+							}
 						</li>
 					);
 				})
@@ -33,7 +50,8 @@ const SocialMedia = props => {
 SocialMedia.propTypes = {
 	links: PropTypes.arrayOf(PropTypes.shape({
 		href: PropTypes.string.isRequired,
-		iconFaName: PropTypes.string.isRequired
+		iconFaName: PropTypes.string.isRequired,
+		text: PropTypes.string
 	})).isRequired,
 	margin: PropTypes.string
 };
