@@ -182,7 +182,7 @@ const HomeFooter = props => {
                         iconFaName: 'fab fa-facebook-f text-dark',
                         text: 'Facebook'
                       }, {
-                        href: 'mailto:admin@tkot.org.nz',
+                        href: 'mailto:commsadmin@tkot.org.nz',
                         iconFaName: 'fas fa-envelope text-dark',
                         text: 'commsadmin@tkot.org.nz'
                       }, {
