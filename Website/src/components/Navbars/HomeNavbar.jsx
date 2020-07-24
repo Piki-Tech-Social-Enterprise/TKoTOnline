@@ -87,7 +87,7 @@ const HomeNavbar = props => {
           }));
         }} />
       ) : null}
-      <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg">
+      <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg" id="HomeNavbar">
         <Container className="pl-0">
           <div className="navbar-translate">
             <a href="/">

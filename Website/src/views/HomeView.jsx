@@ -80,8 +80,8 @@ const HomeView = props => {
           />
           : <Scrollspy
             names={[
+              'HomeNavbar',
               home.replace('/#', ''),
-              'HomeHeader',
               iwiMembers.replace('/#', ''),
               about.replace('/#', ''),
               projects.replace('/#', ''),

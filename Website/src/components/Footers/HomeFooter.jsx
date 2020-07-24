@@ -133,7 +133,7 @@ const HomeFooter = props => {
   };
   return (
     <>
-      <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark mt-3 pt-5 pb-3`}>
+      <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark mt-3 pt-5 pb-3`} id="HomeFooter">
         <Container>
           <Row className="footer-content px-0">
             <Col xs={12} lg={4} className="footer-logo text-left">

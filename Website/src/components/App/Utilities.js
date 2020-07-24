@@ -131,9 +131,9 @@ const defaultPageSetup = async init => {
     document.documentElement.classList.remove(navOpenClassName);
     window.scrollTo(0, 0);
     body.scrollTop = 0;
-  } else {
-    bodyClassNames.remove(indexPageClassName);
-    bodyClassNames.remove(sidebarCollapseClassName);
+  // } else {
+  //   bodyClassNames.remove(indexPageClassName);
+  //   bodyClassNames.remove(sidebarCollapseClassName);
   }
 };
 
