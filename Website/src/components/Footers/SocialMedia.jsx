@@ -32,9 +32,15 @@ const SocialMedia = props => {
 					} = link;
 					return (
 						<li className={`box-social ${margin}`} key={key}>
-							<a href={href} target="_blank" rel="noopener noreferrer">
-								<IconAndTextElement icon={iconFaName} text={text} />
-							</a>
+							{
+								href
+									? <a href={href} target="_blank" rel="noopener noreferrer">
+										<IconAndTextElement icon={iconFaName} text={text} />
+									</a>
+									: <span className="box-social-text">
+										<IconAndTextElement icon={iconFaName} text={text} />
+									</span>
+							}
 						</li>
 					);
 				})
