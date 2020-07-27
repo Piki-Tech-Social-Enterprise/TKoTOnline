@@ -105,7 +105,7 @@ const AuthEventView = props => {
         displayMessage = 'External URL is invalid.';
       } else {
         if (isNew) {
-          evid = await firebase.saveDbEvent({}); debugger;
+          evid = await firebase.saveDbEvent({});
           if (imageUrlFile && imageUrlFile.name) {
             imageUrl = eventImageUrlFormat
               .replace(eventKeyFormat, evid)

@@ -100,7 +100,7 @@ const AuthProjectView = props => {
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (isNew) {
-          pid = await firebase.saveDbProject({});debugger;
+          pid = await firebase.saveDbProject({});
           if (imageUrlFile && imageUrlFile.name) {
             imageUrl = projectImageUrlFormat
               .replace(projectKeyFormat, pid)

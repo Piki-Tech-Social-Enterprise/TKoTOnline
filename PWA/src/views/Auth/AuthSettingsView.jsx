@@ -109,7 +109,7 @@ const AuthSettingsView = props => {
           homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
             .replace(settingKeyFormat, sid)
             .replace(settingFilenameFormat, homePageHeaderImageUrlFile.name);
-        }debugger;
+        }
         if (homePageAboutImageUrlFile && homePageAboutImageUrlFile.name) {
           homePageAboutImageUrl = settingHomePageHeaderImageUrlFormat
             .replace(settingKeyFormat, sid)

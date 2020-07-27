@@ -218,7 +218,7 @@ const AuthVolunteerView = props => {
         displayMessage = 'You need to select a role';
       }
       if (displayMessage === defaultDisplayMesssage) {
-        debugger;
+        // debugger;
         const revisedPhoneNumber = revisePhoneNumber(phoneNumber);
         if (isNew) {
           vid = await firebase.saveDbVolunteer({

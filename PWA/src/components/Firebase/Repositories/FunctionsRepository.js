@@ -103,7 +103,7 @@ class FunctionsRepository extends BaseRepository {
     }
   }
   call = async options => {
-    debugger;
+    // debugger;
     let response = null;
     try {
       const {
