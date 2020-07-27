@@ -12,7 +12,6 @@ import {
   FormGroup,
   Label,
   Input,
-  InputGroup,
   CustomInput,
   Button
 } from 'reactstrap';
@@ -245,15 +244,11 @@ const AuthEPanuiView = props => {
                         </FormGroup>
                         <FormGroup>
                           <Label>Name</Label>
-                          <InputGroup>
-                            <Input placeholder="Name" name="name" value={ePanui.name} onChange={handleChange} type="text" />
-                          </InputGroup>
+                          <Input placeholder="Name" name="name" value={ePanui.name} onChange={handleChange} type="text" />
                         </FormGroup>
                         <FormGroup>
                           <Label>URL</Label>
-                          <InputGroup>
-                            <Input placeholder="URL" name="url" value={ePanui.url} onChange={handleChange} type="url" />
-                          </InputGroup>
+                          <Input placeholder="URL" name="url" value={ePanui.url} onChange={handleChange} type="url" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Active</Label><br />

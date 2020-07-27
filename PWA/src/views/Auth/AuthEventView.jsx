@@ -13,8 +13,7 @@ import {
   Label,
   Input,
   CustomInput,
-  Button,
-  InputGroup
+  Button
 } from 'reactstrap';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
@@ -263,9 +262,7 @@ const AuthEventView = props => {
                     <CardBody>
                       <FormGroup>
                         <Label>External URL</Label>
-                        <InputGroup>
-                          <Input placeholder="External URL" name="externalUrl" value={event.externalUrl} onChange={handleChange} type="url" />
-                        </InputGroup>
+                        <Input placeholder="External URL" name="externalUrl" value={event.externalUrl} onChange={handleChange} type="url" />
                       </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>
