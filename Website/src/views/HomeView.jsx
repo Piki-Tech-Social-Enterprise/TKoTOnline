@@ -90,9 +90,10 @@ const HomeView = props => {
               'HomeFooter'
             ]}
             homeIndex={1}
+            topOffset="10%"
           >
             <HomeNavbar
-              initalTransparent
+              initalTransparent={false}
               isHomePage
             />
             <HomeHeader
@@ -112,10 +113,12 @@ const HomeView = props => {
             {/* Events */}
             {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
             {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
-            <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" />
+            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" /> */}
             {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
+            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-61-pc" /> */}
+            <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-61-pc" />
             {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-            <NewsFeedSection />
+            <NewsFeedSection showLearnMoreButton />
             {/* Interactive Map of Iwi Links */}
             {/* <InteractiveMapSection /> */}
             {/* Volunteers via Mutual Aid */}

@@ -50,25 +50,23 @@ const AboutSection = props => {
     <div className="tkot-section pt-4">
       <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <div className="about-image" style={{
-        backgroundImage: `linear-gradient(27deg, rgba(145, 147, 150, 0.6), rgba(255, 255, 255, 1)), url(${pageAboutImage})`
+        backgroundImage: `linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0)), url(${pageAboutImage})`
       }}>
         <Container className="py-5 text-center">
-          <Row noGutters>
+          <Row>
             <Col xs={12} sm={6} className="bg-warning1">
-              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-blue-red-logo.png")} width="300" />
+              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.png")} width="419" />
             </Col>
-            <Col xs={12} sm={6} className="text-left bg-success1">
+            <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto">
               {
                 state.isLoading
                   ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                  : <p>{state.settings.homePageAboutDescription}</p>
+                  : <span>{state.settings.homePageAboutDescription}</span>
               }
               <div className="pt-4 mt-3">
-                <Button href={aboutUs} outline color='dark' style={{
-                  color: 'inherit'
-                }}>
+                <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light" color="white">
                   Learn more...
-              </Button>
+                </Button>
               </div>
             </Col>
           </Row>

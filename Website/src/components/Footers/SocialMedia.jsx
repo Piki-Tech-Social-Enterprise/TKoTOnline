@@ -22,7 +22,7 @@ const SocialMedia = props => {
 		);
 	};
 	return (
-		<ul className="list-group ml-0 ml-lg-5">
+		<ul className="list-group ml-0 ml-xl-5">
 			{
 				links.map((link, key) => {
 					const {

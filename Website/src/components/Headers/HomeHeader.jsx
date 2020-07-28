@@ -13,14 +13,14 @@ const HomeHeader = props => {
     showClickScrollDownForMoreLink
   } = props;
   return (
-    <div className="page-header clear-filter" id="Home">
+    <div className="page-header clear-filter" filter-color="black" id="Home">
       <div className="page-header-image" style={{
         backgroundImage: `url(${pageHeaderImage})`
       }} />
-      <Container>
+      <Container className="py-5 text-center">
         <div id="header-container">
-          <div className="h1 text-dark py-3 mb-0 font-weight-bolder">{pageHeaderTitle}</div>
-          <div className="h5 py-3 text-secondary">{
+          <div className="h1 py-3 mb-0 font-weight-bold">{pageHeaderTitle}</div>
+          <div className="h5 py-0">{
             typeof pageHeaderCaption === 'function'
               ? pageHeaderCaption()
               : pageHeaderCaption

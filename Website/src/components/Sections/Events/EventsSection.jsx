@@ -9,8 +9,7 @@ import {
   Button,
   Card,
   CardBody,
-  CardTitle,
-  CardLink
+  CardTitle
 } from 'reactstrap';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import FirebaseImage from 'components/App/FirebaseImage';
@@ -55,7 +54,7 @@ const EventsSection = props => {
         <Row>
           <Col>
             <div className="mx-auto text-center">
-              <h3 className="text-uppercase">Our Wānanga &amp; Events</h3>
+              <h3 className="text-uppercase text-light">Our Wānanga &amp; Events</h3>
               <Container className="my-3" fluid>
                 <Row className="flex-row flex-nowrap cards-row">
                   {
@@ -69,7 +68,7 @@ const EventsSection = props => {
                           evid
                         } = dbEvent;
                         return (
-                          <Col xs={12} md={4} key={index}>
+                          <Col xs={12} sm={6} lg={4} key={index}>
                             <Card className="card-block" style={{
                               border: 'none',
                               borderRadius: '0.25rem',
@@ -78,13 +77,14 @@ const EventsSection = props => {
                               <FirebaseImage className="card-img-max-height card-img-top" imageURL={imageUrl} alt={header} />
                               <CardBody className="bg-white">
                                 <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
-                                <CardLink
+                                <Button
                                   href={externalUrl ? externalUrl : `/Wananga/${evid}`}
                                   target={externalUrl ? '_blank' : '_self'}
                                   rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                                  style={{
-                                    color: 'inherit'
-                                  }}>Read more...</CardLink>
+                                  className="tkot-primary-red-bg-color" color="white"
+                                >
+                                  Read more...
+                                </Button>
                               </CardBody>
                             </Card>
                           </Col>
@@ -96,12 +96,10 @@ const EventsSection = props => {
               {
                 showLearnMoreButton
                   ? <div className="mb-5 text-center">
-                    <Button href="/Wananga" outline color='dark' style={{
-                      color: 'inherit'
-                    }}>
+                    <Button href="/Wananga" className="tkot-primary-red-bg-color btn-outline-dark" color="white">
                       View more...
                     </Button>
-                    <a href={Routes.newsFeed} className="text-decoration-none text-dark">
+                    <a href={Routes.newsFeed} className="text-decoration-none text-light">
                       <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
                     </a>
                   </div>

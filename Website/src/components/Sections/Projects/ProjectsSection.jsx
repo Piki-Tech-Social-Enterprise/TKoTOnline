@@ -9,8 +9,7 @@ import {
   Button,
   Card,
   CardBody,
-  CardTitle,
-  CardLink
+  CardTitle
 } from 'reactstrap';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import FirebaseImage from 'components/App/FirebaseImage';
@@ -62,7 +61,7 @@ const ProjectsSection = props => {
                     ? <LoadingSpinner />
                     : dbProjects.map((dbProject, index) => {
                       return (
-                        <Col xs={12} md={4} key={index}>
+                        <Col xs={12} sm={6} lg={4} key={index}>
                           <Card className="card-block" style={{
                             border: 'none',
                             boxShadow: 'none'
@@ -70,9 +69,9 @@ const ProjectsSection = props => {
                             <FirebaseImage className="card-img-max-height" imageURL={dbProject.imageUrl} alt={dbProject.header} />
                             <CardBody className="bg-white tkot-primary-blue-color">
                               <CardTitle className="h5 text-uppercase my-3 mx-2">{dbProject.header}</CardTitle>
-                              <CardLink href={`/Projects/${dbProject.pid}`} style={{
-                                color: 'inherit'
-                              }}>Read more...</CardLink>
+                              <Button href={`/Projects/${dbProject.pid}`} className="tkot-primary-red-bg-color btn-outline-dark" color="white">
+                                Read more...
+                              </Button>
                             </CardBody>
                           </Card>
                         </Col>
@@ -84,9 +83,7 @@ const ProjectsSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-5 text-center">
-                  <Button href="/Projects" outline color='dark' style={{
-                    color: 'inherit'
-                  }}>
+                  <Button href="/Projects" className="tkot-primary-red-bg-color btn-outline-dark" color="white">
                     View more...
                   </Button>
                   <a href={Routes.events} className="text-decoration-none text-dark">

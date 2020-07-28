@@ -19,7 +19,7 @@ import {
 
 const {
   home,
-  // homePage,
+  homePage,
   iwiMembers,
   about,
   // communityLinks,
@@ -112,7 +112,7 @@ const HomeNavbar = props => {
                   ? <>
                     <NavItem>
                       <ScrollspyNavLink name={home.replace('/#', '')}>
-                        <NavLink href={home} active={pathname === home}>Home</NavLink>
+                        <NavLink href={home} active={pathname === home || pathname === homePage}>Home</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
                     <NavItem>

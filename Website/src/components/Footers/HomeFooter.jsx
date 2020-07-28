@@ -133,16 +133,17 @@ const HomeFooter = props => {
   };
   return (
     <>
-      <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark mt-3 pt-5 pb-3`} id="HomeFooter">
-        <Container>
-          <Row className="footer-content px-0">
-            <Col xs={12} lg={4} className="footer-logo text-left">
+      <div className="bg-dark text-light">
+        <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
+          {/* <Container> */}
+          <Row className="footer-content px-0 mx-0">
+            <Col xs={12} md={4} lg={3} className="footer-logo text-left bg-danger1">
               <a href="/">
                 <img alt="..." className="n-logo py-3" width="289" src={require("assets/img/tkot/tkot-logo-white.png")} />
               </a>
             </Col>
-            <Col xs={12} lg={4}>
-              <Container className="pl-0 py-3 pt-sm-0">
+            <Col xs={12} lg={6} className="bg-warning1">
+              <Container className="mx-0 pl-0 py-3 pt-sm-0">
                 <Row>
                   <Col>
                     <p className="text-uppercase font-weight-bolder">Hono Mai - We’ll Keep You Updated</p>
@@ -171,8 +172,8 @@ const HomeFooter = props => {
                 </Row>
               </Container>
             </Col>
-            <Col xs={12} lg={4}>
-              <Container className="px-0 py-3 pt-sm-0">
+            <Col xs={12} lg={3} className="bg-success1">
+              <Container className="mx-0 px-0 py-3 pt-sm-0">
                 <Row noGutters>
                   <Col xs={12}>
                     <p className="text-uppercase font-weight-bolder text-lg-center">Contact Us</p>
@@ -198,20 +199,21 @@ const HomeFooter = props => {
               </Container>
             </Col>
           </Row>
-        </Container>
-      </footer>
-      <div className="bg-black text-light small">
-        <Row className="copyright mx-0 mx-sm-3 py-1">
-          <Col xs={12} sm={6} className="my-auto">
+          {/* </Container> */}
+        </footer>
+      </div>
+      <div className="bg-black text-light">
+        <Row className="copyright p-0 m-0 pt-3">
+          <Col xs={12} lg={6} className="my-auto bg-danger1">
             <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
           </Col>
-          <Col xs={12} sm={6} className="text-sm-right">
-            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3">Website co-curated by</span>
+          <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
+            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />
             {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
-            <img className="mx-0 ml-sm-3" width={40} alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
+            <img className="ml-0 ml-sm-3 created-by-logo-image" alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
             {/* </a> */}
             <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer">
-              <img className="mx-0 ml-sm-3" width={40} alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
+              <img className="ml-3 created-by-logo-image" alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
             </a>
           </Col>
         </Row>

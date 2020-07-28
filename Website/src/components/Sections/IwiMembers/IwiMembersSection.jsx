@@ -47,7 +47,7 @@ const IwiMembersSection = props => {
     <Container className="tkot-section bg-secondary1">
       <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <Row>
-        <Col className="text-uppercase text-center">
+        <Col className="text-uppercase text-center mt-5 pt-4">
           <h3>Our Iwi Members</h3>
         </Col>
       </Row>
@@ -65,7 +65,7 @@ const IwiMembersSection = props => {
                     iwiMemberURL
                   } = iwiMember;
                   return (
-                    <Col xs={6} sm={2} key={imid} className="h5 text-center text-uppercase">
+                    <Col xs={6} sm={2} md={3} lg={2} key={imid} className="h5 text-center text-uppercase">
                       <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
                         <FirebaseImage className="iwi-member-image mx-3 mt-3 mb-0" imageURL={iwiMemberImageURL} alt={iwiMemberName} /><br />
                         <span className="iwi-member-name">{iwiMemberName}</span>
