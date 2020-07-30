@@ -16,7 +16,7 @@ import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
-import Routes from 'components/Routes/routes';
+// import Routes from 'components/Routes/routes';
 
 const EventsSection = props => {
   const [state, setState] = useState({
@@ -54,7 +54,7 @@ const EventsSection = props => {
         <Row>
           <Col>
             <div className="mx-auto text-center">
-              <h3 className="text-uppercase text-light">Our Wānanga &amp; Events</h3>
+              <h3 className="text-uppercase text-light">Te Tai Tokerau Events</h3>
               <Container className="my-3" fluid>
                 <Row className="flex-row flex-nowrap cards-row">
                   {
@@ -69,12 +69,13 @@ const EventsSection = props => {
                         } = dbEvent;
                         return (
                           <Col xs={12} sm={6} lg={4} key={index}>
-                            <Card className="card-block" style={{
-                              border: 'none',
-                              borderRadius: '0.25rem',
-                              boxShadow: 'none'
-                            }}>
-                              <FirebaseImage className="card-img-max-height card-img-top" imageURL={imageUrl} alt={header} />
+                            <Card className="card-block event-card">
+                              <FirebaseImage
+                                className="card-img-max-height card-img-top"
+                                imageURL={imageUrl}
+                                alt={header}
+                                loadingIconSize="lg"
+                              />
                               <CardBody className="bg-white">
                                 <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
                                 <Button
@@ -96,12 +97,12 @@ const EventsSection = props => {
               {
                 showLearnMoreButton
                   ? <div className="mb-5 text-center">
-                    <Button href="/Wananga" className="tkot-primary-red-bg-color btn-outline-dark" color="white">
+                    <Button href="/Wananga" className="text-light" color="link" size="lg">
                       View more...
                     </Button>
-                    <a href={Routes.newsFeed} className="text-decoration-none text-light">
+                    {/* <a href={Routes.newsFeed} className="text-decoration-none text-light">
                       <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-                    </a>
+                    </a> */}
                   </div>
                   : null
               }

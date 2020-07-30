@@ -62,7 +62,7 @@ const NewsFeedView = props => {
           ? <LoadingSpinner />
             : <div id="NewsFeed">
               <HomeNavbar
-                initalTransparent={true}
+                initalTransparent={false}
                 colorOnScrollValue={25}
               />
               <HomeHeader

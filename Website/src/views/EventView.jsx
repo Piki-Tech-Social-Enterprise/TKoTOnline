@@ -61,7 +61,7 @@ const EventView = props => {
           ? <LoadingSpinner />
             : <div id="Event">
               <HomeNavbar
-                initalTransparent={true}
+                initalTransparent={false}
                 colorOnScrollValue={25}
               />
               <HomeHeader

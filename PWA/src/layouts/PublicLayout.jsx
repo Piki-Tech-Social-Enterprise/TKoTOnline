@@ -14,7 +14,7 @@ import publicRoutes from 'publicRoutes';
 
 const PublicLayout = props => {
   return (
-    <div className="page-header clear-filter" filter-color="blue">
+    <div className="page-header clear-filter" filter-color="black">
       <div
         className="page-header-image"
         style={{

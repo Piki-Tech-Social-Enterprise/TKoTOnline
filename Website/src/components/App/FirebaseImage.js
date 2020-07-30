@@ -6,7 +6,7 @@ import {
 } from 'components/Firebase';
 import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
 import LoadingIcon from './LoadingIcon';
-import shallowCompare, {
+import /* shallowCompare, */ {
   isEmptyObject,
   handleLoadBlob
 } from './Utilities';
@@ -79,11 +79,11 @@ class FirebaseImage extends Component {
       alt: alt
     });
   }
-  shouldComponentUpdate = (nextProps, nextState) => {
-    const shallowCompared = shallowCompare(this, nextProps, nextState, false);
-    // console.log(`FirebaseImage.shouldComponentUpdate: ${shallowCompared}`);
-    return shallowCompared;
-  }
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   const shallowCompared = shallowCompare(this, nextProps, nextState, false);
+  //   // console.log(`FirebaseImage.shouldComponentUpdate: ${shallowCompared}`);
+  //   return shallowCompared;
+  // }
   componentDidUpdate = async prevProps => {
     const {
       isLoading,
@@ -170,13 +170,14 @@ class FirebaseImage extends Component {
   handleDownloadImageLoadComplete = downloadedImage => {
     this.setState({
       isLoading: false,
+      isImageLoading: false,
       src: downloadedImage
     });
   }
   handleLoad = async e => {
     e.preventDefault();
     this.setState({
-      isImageLoading: false
+      isLoading: false
     });
   }
   handleError = async e => {
@@ -193,12 +194,12 @@ class FirebaseImage extends Component {
       className,
       loadingIconSize
     } = this.props,
-    {
-      isLoading,
-      isImageLoading,
-      alt,
-      src
-    } = this.state,
+      {
+        isLoading,
+        isImageLoading,
+        alt,
+        src
+      } = this.state,
       isAnythingLoading = isLoading || isImageLoading,
       imgClassNames = `${className}${isAnythingLoading
         ? ' d-none'

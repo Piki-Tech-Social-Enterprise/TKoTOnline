@@ -66,8 +66,13 @@ const ProjectsSection = props => {
                             border: 'none',
                             boxShadow: 'none'
                           }}>
-                            <FirebaseImage className="card-img-max-height" imageURL={dbProject.imageUrl} alt={dbProject.header} />
-                            <CardBody className="bg-white tkot-primary-blue-color">
+                            <FirebaseImage
+                              className="card-img-max-height"
+                              imageURL={dbProject.imageUrl}
+                              alt={dbProject.header}
+                              loadingIconSize="lg"
+                            />
+                            <CardBody className="bg-white text-dark">
                               <CardTitle className="h5 text-uppercase my-3 mx-2">{dbProject.header}</CardTitle>
                               <Button href={`/Projects/${dbProject.pid}`} className="tkot-primary-red-bg-color btn-outline-dark" color="white">
                                 Read more...
@@ -83,7 +88,7 @@ const ProjectsSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-5 text-center">
-                  <Button href="/Projects" className="tkot-primary-red-bg-color btn-outline-dark" color="white">
+                  <Button href="/Projects" className="text-dark" color="link" size="lg">
                     View more...
                   </Button>
                   <a href={Routes.events} className="text-decoration-none text-dark">

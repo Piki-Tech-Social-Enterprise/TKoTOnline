@@ -2,6 +2,8 @@ import {
   useEffect
 } from 'react';
 import draftToHtml from 'draftjs-to-html';
+import moment from 'moment';
+import Routes from 'components/Routes/routes';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -96,9 +98,9 @@ const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
 const TAG_SEPARATOR = ', ';
 const isJson = value => {
   return (value && (
-      (value.startsWith('{') && value.endsWith('}')) ||
-      (value.startsWith('[') && value.endsWith(']'))
-    )
+    (value.startsWith('{') && value.endsWith('}')) ||
+    (value.startsWith('[') && value.endsWith(']'))
+  )
   );
 };
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
@@ -113,29 +115,140 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
-const defaultPageSetup = async init => {
+const indexPageClassName = 'index-page';
+const sidebarCollapseClassName = 'sidebar-collapse';
+const tkotBackgroundImage = 'tkot-background-image';
+const defaultInit = {
+  isLoading: false,
+  classNames: [
+    indexPageClassName,
+    sidebarCollapseClassName,
+    tkotBackgroundImage
+  ]
+};
+const defaultPageSetup = async (init = defaultInit) => {
   const {
     body
   } = document;
   const {
     classList: bodyClassNames
   } = body;
-  const indexPageClassName = 'index-page';
-  const sidebarCollapseClassName = 'sidebar-collapse';
-  const tkotBackgroundImage = 'tkot-background-image';
   const navOpenClassName = 'nav-open';
-  if (init) {
-    bodyClassNames.add(indexPageClassName);
-    bodyClassNames.add(sidebarCollapseClassName);
-    bodyClassNames.add(tkotBackgroundImage);
+  const initIsBoolean = isBoolean(init) && init;
+  const {
+    isLoading,
+    classNames
+  } = initIsBoolean
+    ? defaultInit
+    : init;
+  if (isLoading || initIsBoolean) {
+    classNames && classNames.map(className => bodyClassNames.add(className));
     document.documentElement.classList.remove(navOpenClassName);
     window.scrollTo(0, 0);
     body.scrollTop = 0;
-  // } else {
-  //   bodyClassNames.remove(indexPageClassName);
-  //   bodyClassNames.remove(sidebarCollapseClassName);
+    // } else {
+    //   bodyClassNames.remove(indexPageClassName);
+    //   bodyClassNames.remove(sidebarCollapseClassName);
   }
 };
+const isNumber = value => value && !isNaN(value);
+const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
+const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
+const tryToConvertValue = value => {
+  let convertedValue = undefined;
+  // let valueType = undefined;
+  if (isNumber(value)) {
+    // valueType = 'number';
+    convertedValue = Number(value);
+  } else if (isBoolean(value)) {
+    // valueType = 'boolean';
+    convertedValue = Boolean(value);
+  } else if (isDate(value)) {
+    // valueType = 'date';
+    convertedValue = toDate(value);
+  } else {
+    // valueType = 'unknown';
+    convertedValue = value;
+  }
+  // console.log(`value: ${value}, valueType: ${valueType}, convertedValue: ${convertedValue}`);
+  return convertedValue;
+};
+const sortArray = (array, sortName, sortOrder) => {
+  console.log('array-before: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
+  array.sort((a, b) => {
+    const aValue = tryToConvertValue(a[sortName]);
+    const bValue = tryToConvertValue(b[sortName]);
+    const result = sortOrder === 'asc'
+      ? bValue - aValue
+      : aValue - bValue;
+    console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
+    // sortName: date, sortOrder: desc, aValue: Tue Apr 07 2020, bValue: Mon Apr 06 2020, result: -1
+    return result;
+  });
+  console.log('array-after: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
+};
+const getNavItems = isHomePage => {
+  const {
+    home,
+    homePage,
+    iwiMembers,
+    about,
+    aboutUs,
+    newsFeed,
+    newsFeeds,
+    events,
+    eventsPage,
+    projects,
+    projectsPage,
+    contactUs
+  } = Routes;
+  const navItems = [{
+    id: 'homeNavItem',
+    route: isHomePage ? home : homePage,
+    name: 'Home',
+    tooltip: 'Kāinga',
+    group: 'left'
+  }, {
+    id: 'iwiMembersNavItem',
+    route: iwiMembers,
+    name: 'Iwi',
+    tooltip: 'Iwi',
+    group: 'left'
+  }, {
+    id: 'aboutNavItem',
+    route: isHomePage ? about : aboutUs,
+    name: 'About',
+    tooltip: 'Ko wai mātau',
+    group: 'left'
+  }, {
+    id: 'projectsNavItem',
+    route: isHomePage ? projects : projectsPage,
+    name: 'Projects',
+    tooltip: 'Hingonga',
+    group: 'left'
+  }, {
+    id: 'eventsNavItem',
+    route: isHomePage ? events : eventsPage,
+    name: 'Wānanga',
+    tooltip: 'Wānanga',
+    group: 'right'
+  }, {
+    id: 'newsFeedNavItem',
+    route: isHomePage ? newsFeed : newsFeeds,
+    name: 'News',
+    tooltip: 'Te Karere',
+    group: 'right'
+  }, {
+    id: 'contactUsNavItem',
+    route: contactUs,
+    name: 'Contact',
+    tooltip: 'Hono Mai',
+    group: 'right'
+  }];
+  return navItems;
+};
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export default shallowCompare;
 export {
@@ -156,5 +269,16 @@ export {
   isJson,
   stripHtml,
   draftToText,
-  defaultPageSetup
+  indexPageClassName,
+  sidebarCollapseClassName,
+  tkotBackgroundImage,
+  defaultPageSetup,
+  isNumber,
+  isBoolean,
+  isDate,
+  toDate,
+  tryToConvertValue,
+  sortArray,
+  getNavItems,
+  sleep
 };

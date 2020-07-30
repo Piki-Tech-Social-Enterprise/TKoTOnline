@@ -222,27 +222,18 @@ const tryToConvertValue = value => {
   return convertedValue;
 };
 const sortArray = (array, sortName, sortOrder) => {
-  console.log(`array-before: ${JSON.stringify(array, null, 2)}`);
+  console.log('array-before: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
   array.sort((a, b) => {
     const aValue = tryToConvertValue(a[sortName]);
     const bValue = tryToConvertValue(b[sortName]);
     const result = sortOrder === 'asc'
       ? bValue - aValue
       : aValue - bValue;
-    // const result = (aValue > bValue)
-    //   ? (sortOrder === 'asc')
-    //     ? 1
-    //     : -1
-    //   : (bValue > aValue)
-    //     ? (sortOrder === 'asc')
-    //       ? -1
-    //       : 1
-    //     : 0;
     console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
     // sortName: date, sortOrder: desc, aValue: Tue Apr 07 2020, bValue: Mon Apr 06 2020, result: -1
     return result;
   });
-  console.log(`array-after: ${JSON.stringify(array, null, 2)}`);
+  console.log('array-after: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
 };
 const renderCaret = (direction, fieldName) => {
   let iconName;

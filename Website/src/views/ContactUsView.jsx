@@ -121,14 +121,13 @@ const ContactUsView = props => {
         initalTransparent
         colorOnScrollValue={25}
       />
-      <Container className="p-5 mt-5">
+      <Container className="p-5 mt-3">
         <Row>
-          <Col className="px-0 mt-5">
-            <h3>CONTACT</h3>
+          <Col className="px-0">
+            <span className="h3">CONTACT US</span>
             <p>We would like to hear from you</p>
-            <div className="panel-header panel-header-xs" />
-            <Container className="content">
-              <Row>
+            <Container className="p-0">
+              <Row noGutters>
                 <Col>
                   <Card>
                     <CardBody>

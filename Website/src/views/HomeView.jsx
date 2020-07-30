@@ -22,6 +22,8 @@ import {
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
+  indexPageClassName,
+  sidebarCollapseClassName,
   defaultPageSetup
 } from 'components/App/Utilities';
 
@@ -36,6 +38,7 @@ const {
 const HomeView = props => {
   const [state, setState] = useState({
     isLoading: true,
+    isHomePage: true,
     dbSettings: null,
     homePageHeaderImageDownloadUrl: '',
     homePageAboutImageDownloadUrl: ''
@@ -56,7 +59,13 @@ const HomeView = props => {
       const homePageAboutImageDownloadUrl = homePageAboutImageUrl.startsWith('/images/')
         ? await firebase.getStorageFileDownloadURL(homePageAboutImageUrl)
         : homePageAboutImageUrl;
-      defaultPageSetup(true);
+      defaultPageSetup({
+        isLoading: true,
+        classNames: [
+          indexPageClassName,
+          sidebarCollapseClassName
+        ]
+      });
       setState(s => ({
         ...s,
         isLoading: false,
@@ -70,6 +79,7 @@ const HomeView = props => {
     }
     return defaultPageSetup;
   }, [props, state]);
+  const scrollspyTopOffset = '20%';
   return (
     <>
       {
@@ -78,53 +88,68 @@ const HomeView = props => {
             outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
             innerClassName="m-5 p-5 text-center"
           />
-          : <Scrollspy
-            names={[
-              'HomeNavbar',
-              home.replace('/#', ''),
-              iwiMembers.replace('/#', ''),
-              about.replace('/#', ''),
-              projects.replace('/#', ''),
-              events.replace('/#', ''),
-              newsFeed.replace('/#', ''),
-              'HomeFooter'
-            ]}
-            homeIndex={1}
-            topOffset="10%"
-          >
-            <HomeNavbar
-              initalTransparent={false}
-              isHomePage
-            />
-            <HomeHeader
-              pageHeaderImage={state.homePageHeaderImageDownloadUrl}
-              showClickScrollDownForMoreLink={false}
-            />
-            {/* Iwi Members */}
-            <IwiMembers />
-            {/* About */}
-            <AboutSection
-              pageAboutImage={state.homePageAboutImageDownloadUrl}
-            />
-            {/* Community Links Section) */}
-            {/* <CommuintyLinksSection /> */}
-            {/* Projects */}
-            <ProjectsSection showLearnMoreButton />
-            {/* Events */}
-            {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
-            {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
-            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" /> */}
-            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
-            {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-61-pc" /> */}
-            <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-61-pc" />
-            {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-            <NewsFeedSection showLearnMoreButton />
-            {/* Interactive Map of Iwi Links */}
-            {/* <InteractiveMapSection /> */}
-            {/* Volunteers via Mutual Aid */}
-            {/* <VolunteersSection /> */}
-            <HomeFooter />
-          </Scrollspy>
+          : <>
+            <Scrollspy
+              names={[
+                'HomeNavbar',
+                home.replace('/#', ''),
+                iwiMembers.replace('/#', ''),
+                about.replace('/#', ''),
+                'TkotBgImgContainer',
+                projects.replace('/#', ''),
+                events.replace('/#', ''),
+                newsFeed.replace('/#', ''),
+                'HomeFooter'
+              ]}
+              homeIndex={1}
+              topOffset={scrollspyTopOffset}
+            >
+              <HomeNavbar
+                initalTransparent={false}
+                isHomePage={state.isHomePage}
+              />
+              {/* About */}
+              <AboutSection
+                pageAboutImage={state.homePageAboutImageDownloadUrl}
+              />
+              {/* Iwi Members */}
+              <IwiMembers />
+              <HomeHeader
+                pageHeaderImage={state.homePageHeaderImageDownloadUrl}
+                showClickScrollDownForMoreLink={false}
+              />
+              {/* Community Links Section) */}
+              {/* <CommuintyLinksSection /> */}
+              <div className="tkot-background-image-container" id="TkotBgImgContainer">
+                <div className="tkot-background-image" />
+              </div>
+              {/* Projects */}
+              <ProjectsSection
+                showLearnMoreButton
+              />
+              {/* Events */}
+              {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
+              {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
+              {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" /> */}
+              {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
+              {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-61-pc" /> */}
+              <EventsSection
+                showLearnMoreButton
+                containerClassName="tkot-secondary-color-black-bg-color-61-pc"
+              />
+              {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
+              <NewsFeedSection
+                showLearnMoreButton
+              />
+              {/* Interactive Map of Iwi Links */}
+              {/* <InteractiveMapSection /> */}
+              {/* Volunteers via Mutual Aid */}
+              {/* <VolunteersSection /> */}
+              <HomeFooter
+                isHomePage={state.isHomePage}
+              />
+            </Scrollspy>
+          </>
       }
     </>
   );

@@ -5,36 +5,36 @@ import React, {
 import {
   Collapse,
   Navbar,
-  NavItem,
   Nav,
   Container,
-  Button,
-  NavLink
+  // Button
 } from 'reactstrap';
-import Routes from '../Routes/routes';
+// import Routes from '../Routes/routes';
 import PropTypes from 'prop-types';
+import NavItems from 'components/App/NavItems';
+import Tooltips from 'components/App/Tooltips';
 import {
-  ScrollspyNavLink
-} from 'reactstrap-scrollspy';
+  getNavItems
+} from 'components/App/Utilities';
 
-const {
-  home,
-  homePage,
-  iwiMembers,
-  about,
-  // communityLinks,
-  newsFeed,
-  newsFeeds,
-  // interactiveMap,
-  // volunteers,
-  // facebookLinks,
-  events,
-  eventsPage,
-  projects,
-  aboutUs,
-  contactUs,
-  projectsPage
-} = Routes;
+// const {
+//   home,
+//   homePage,
+//   iwiMembers,
+//   about,
+//   aboutUs,
+//   // communityLinks,
+//   newsFeed,
+//   newsFeeds,
+//   // interactiveMap,
+//   // volunteers,
+//   // facebookLinks,
+//   events,
+//   eventsPage,
+//   projects,
+//   projectsPage,
+//   contactUs
+// } = Routes;
 const HomeNavbar = props => {
   const {
     initalTransparent,
@@ -54,9 +54,10 @@ const HomeNavbar = props => {
     pathname,
     hash
   } = window.location;
-  const {
-    REACT_APP_PWA_BASE_URL
-  } = process.env;
+  // const {
+  //   REACT_APP_PWA_BASE_URL
+  // } = process.env;
+  const navItems = getNavItems(isHomePage);
   useEffect(() => {
     const updateNavbarColor = () => {
       let navbarColor = defaultTkotBackground;
@@ -90,9 +91,9 @@ const HomeNavbar = props => {
       <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg" id="HomeNavbar">
         <Container className="pl-0">
           <div className="navbar-translate">
-            <a href="/">
+            {/* <a href="/">
               <img alt="..." className="n-logo" src={require("assets/img/tkot/tkot-mixed-no-tag-line.png")} width="180" />
-            </a>
+            </a> */}
             <button className="navbar-toggler navbar-toggler" aria-expanded={state.collapseOpen} type="button" onClick={() => {
               document.documentElement.classList.toggle("nav-open");
               setState(s => ({
@@ -105,9 +106,15 @@ const HomeNavbar = props => {
               <span className="navbar-toggler-bar bottom-bar"></span>
             </button>
           </div>
-          <Collapse className="justify-content-end" isOpen={state.collapseOpen} navbar>
+          <Collapse className="justify-content-start" isOpen={state.collapseOpen} navbar>
             <Nav navbar>
-              {
+              <NavItems
+                useScrollspyNavLinks={isHomePage}
+                pathname={pathname}
+                hash={hash}
+                items={navItems}
+              />
+              {/* {
                 isHomePage
                   ? <>
                     <NavItem>
@@ -121,7 +128,7 @@ const HomeNavbar = props => {
                       </ScrollspyNavLink>
                     </NavItem>
                     <NavItem>
-                      <ScrollspyNavLink name={about.replace('/#', '')}>
+                      <ScrollspyNavLink name={home.replace('/#', '')}>
                         <NavLink href={about} active={hash !== '' && about.endsWith(hash)}>About</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
@@ -132,7 +139,7 @@ const HomeNavbar = props => {
                     </NavItem>
                     <NavItem>
                       <ScrollspyNavLink name={events.replace('/#', '')}>
-                        <NavLink href={events} active={hash !== '' && events.endsWith(hash)}>Wananga</NavLink>
+                        <NavLink href={events} active={hash !== '' && events.endsWith(hash)}>Wānanga</NavLink>
                       </ScrollspyNavLink>
                     </NavItem>
                     <NavItem>
@@ -161,15 +168,15 @@ const HomeNavbar = props => {
                       <NavLink href={newsFeeds} active={pathname.endsWith(newsFeeds)}>News</NavLink>
                     </NavItem>
                   </>
-              }
-              <NavItem>
+              } */}
+              {/* <NavItem>
                 <NavLink href={contactUs} active={pathname.endsWith(contactUs)}>Contact</NavLink>
-              </NavItem>
-              <NavItem>
+              </NavItem> */}
+              {/* <NavItem>
                 <Button href={`${REACT_APP_PWA_BASE_URL}/public/Login`} outline color='light'>
                   Login
                 </Button>
-              </NavItem>
+              </NavItem> */}
               {/* <NavItem active={hash && interactiveMap.endsWith(hash)}>
               <NavLink href={interactiveMap}>Interactive Map</NavLink>
             </NavItem> */}
@@ -180,6 +187,9 @@ const HomeNavbar = props => {
               <NavLink href={facebookLinks}>Facebook</NavLink>
             </NavItem> */}
             </Nav>
+            <Tooltips
+              items={navItems}
+            />
           </Collapse>
         </Container>
       </Navbar>

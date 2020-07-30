@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  Fragment
 } from 'react';
 import {
   Container,
@@ -44,7 +45,7 @@ const IwiMembersSection = props => {
     }
   }, [props, state]);
   return (
-    <Container className="tkot-section bg-secondary1">
+    <Container className="tkot-section bg-secondary1 mb-5 pb-5">
       <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <Row>
         <Col className="text-uppercase text-center mt-5 pt-4">
@@ -52,12 +53,12 @@ const IwiMembersSection = props => {
         </Col>
       </Row>
       <Row>
-        <Col className="text-center">
+        <Col className="text-center bg-danger1">
           <Row>
             {
               state.isLoading
                 ? <LoadingSpinner />
-                : state.iwiMembers.map(iwiMember => {
+                : state.iwiMembers.map((iwiMember, index) => {
                   const {
                     imid,
                     iwiMemberImageURL,
@@ -65,12 +66,32 @@ const IwiMembersSection = props => {
                     iwiMemberURL
                   } = iwiMember;
                   return (
-                    <Col xs={6} sm={2} md={3} lg={2} key={imid} className="h5 text-center text-uppercase">
-                      <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
-                        <FirebaseImage className="iwi-member-image mx-3 mt-3 mb-0" imageURL={iwiMemberImageURL} alt={iwiMemberName} /><br />
-                        <span className="iwi-member-name">{iwiMemberName}</span>
-                      </a>
-                    </Col>
+                    index > 0 && index % 6 === 0
+                      ? <Fragment key={imid}>
+                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
+                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
+                          <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
+                            <FirebaseImage
+                              className="iwi-member-image mx-3 mt-3 mb-0"
+                              imageURL={iwiMemberImageURL}
+                              alt={iwiMemberName}
+                            /><br />
+                            <span className="iwi-member-name">{iwiMemberName}</span>
+                          </a>
+                        </Col>
+                      </Fragment>
+                      : <Fragment key={imid}>
+                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase">
+                          <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
+                            <FirebaseImage
+                              className="iwi-member-image mx-3 mt-3 mb-0"
+                              imageURL={iwiMemberImageURL}
+                              alt={iwiMemberName}
+                            /><br />
+                            <span className="iwi-member-name">{iwiMemberName}</span>
+                          </a>
+                        </Col>
+                      </Fragment>
                   );
                 })
             }

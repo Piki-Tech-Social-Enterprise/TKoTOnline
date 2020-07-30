@@ -21,7 +21,8 @@ import {
 } from 'components/Firebase';
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
-  draftToText
+  draftToText,
+  sortArray
 } from 'components/App/Utilities';
 
 const NewsFeedSection = props => {
@@ -47,12 +48,14 @@ const NewsFeedSection = props => {
         firebase
       } = props;
       const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
+      const filteredDbNewsFeeds = searchCategory
+        ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
+        : dbNewsFeeds;
+      sortArray(filteredDbNewsFeeds, 'date', 'asc');
       setState(s => ({
         ...s,
         isLoading: false,
-        dbNewsFeeds: searchCategory
-          ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
-          : dbNewsFeeds
+        dbNewsFeeds: filteredDbNewsFeeds
       }));
     };
     if (isLoading) {
@@ -89,7 +92,12 @@ const NewsFeedSection = props => {
                             <CardHeader>
                               <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
                             </CardHeader>
-                            <FirebaseImage className="card-img-max-height" imageURL={imageUrl} alt={header} />
+                            <FirebaseImage
+                              className="card-img-max-height"
+                              imageURL={imageUrl}
+                              alt={header}
+                              loadingIconSize="lg"
+                            />
                             <CardBody className="text-left bg-white">
                               <p className="font-weight-bold">
                                 <NewsFeedCaption
@@ -116,7 +124,7 @@ const NewsFeedSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-5 text-center">
-                  <Button href="/NewsFeeds" className="tkot-primary-red-bg-color btn-outline-dark" color="white">
+                  <Button href="/NewsFeeds" className="text-dark" color="link" size="lg">
                     View more...
                   </Button>
                 </div>

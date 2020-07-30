@@ -43,6 +43,7 @@ const INITIAL_STATE = {
   homePageAboutImageUrl: '',
   homePageAboutImageUrlFile: null,
   homePageAboutDescription: '',
+  homePageVideoSourceUrl: '',
   aboutPageDescription: '',
   sid: null,
   editorState: EditorState.createEmpty()
@@ -82,6 +83,7 @@ const AuthSettingsView = props => {
       homePageHeaderImageUrlFile,
       homePageAboutImageUrlFile,
       homePageAboutDescription,
+      homePageVideoSourceUrl,
       aboutPageDescription,
       editorState
     } = settings;
@@ -104,6 +106,9 @@ const AuthSettingsView = props => {
           size
         } = homePageAboutImageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+        // eslint-disable-next-line
+        } else if (homePageVideoSourceUrl && !homePageVideoSourceUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+          displayMessage = 'Home Page Video Source URL is invalid.';
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
           homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
@@ -121,6 +126,7 @@ const AuthSettingsView = props => {
           homePageHeaderImageUrl: homePageHeaderImageUrl,
           homePageAboutImageUrl: homePageAboutImageUrl,
           homePageAboutDescription: homePageAboutDescription,
+          homePageVideoSourceUrl: homePageVideoSourceUrl,
           aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
           sid: sid,
           updated: now.toString(),
@@ -177,6 +183,7 @@ const AuthSettingsView = props => {
           homePageHeaderImageUrl,
           homePageAboutImageUrl,
           homePageAboutDescription,
+          homePageVideoSourceUrl,
           aboutPageDescription,
           sid
         } = dbSettings;
@@ -185,6 +192,7 @@ const AuthSettingsView = props => {
           homePageHeaderImageUrl,
           homePageAboutImageUrl,
           homePageAboutDescription,
+          homePageVideoSourceUrl,
           aboutPageDescription,
           sid,
           editorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
@@ -259,6 +267,10 @@ const AuthSettingsView = props => {
                       <FormGroup>
                         <Label>Home Page About Description</Label>
                         <Input placeholder="Home Page About Description" name="homePageAboutDescription" value={settings.homePageAboutDescription} onChange={handleChange} type="textarea" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Home Page Video Source URL</Label>
+                        <Input placeholder="Home Page Video Source URL" name="homePageVideoSourceUrl" value={settings.homePageVideoSourceUrl} onChange={handleChange} type="url" />
                       </FormGroup>
                       <FormGroup>
                         <Label>About Page Description</Label>

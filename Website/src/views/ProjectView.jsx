@@ -56,7 +56,7 @@ const ProjectView = props => {
           ? <LoadingSpinner />
           : <div id="Project">
             <HomeNavbar
-              initalTransparent={true}
+              initalTransparent={false}
               colorOnScrollValue={25}
             />
             <HomeHeader

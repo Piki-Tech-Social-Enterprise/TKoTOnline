@@ -9,6 +9,33 @@ $tkot-primary-red: #A32222;
 $tkot-secondary-color-grey: #919396;
 $tkot-secondary-color-black: #000000;
 $tkot-bg-color: $tkot-primary-blue;
+$tkot-bg-color-transparent: transparent;
+$tkot-bg-color-white: #FFFFFF;
+
+.tkot-primary-blue-bg-color {
+  background-color: $tkot-primary-blue;
+}
+.tkot-primary-red-bg-color {
+  background-color: $tkot-primary-red;
+}
+.tkot-secondary-color-grey-bg-color {
+  background-color: $tkot-secondary-color-grey;
+}
+.tkot-secondary-color-black-bg-color {
+  background-color: $tkot-secondary-color-black;
+}
+.tkot-primary-blue-color {
+  color: $tkot-primary-blue;
+}
+.tkot-primary-red-color {
+  color: $tkot-primary-red;
+}
+.tkot-secondary-color-grey-color {
+  color: $tkot-secondary-color-grey;
+}
+.tkot-secondary-color-black-color {
+  color: $tkot-secondary-color-black;
+}
 
 .clear-filter {
   &:after,
@@ -16,14 +43,17 @@ $tkot-bg-color: $tkot-primary-blue;
     display: none;
   }
   &[filter-color='orange'] {
-    @include linear-gradient(rgba($black-color, 0.2), rgba(224, 23, 3, 0.6));
+    @include linear-gradient(rgba($tkot-secondary-color-black, 0.2), rgba($tkot-primary-red, 0.6));
   }
-}
-.clear-filter[filter-color='blue'] {
-  @include linear-gradient(rgba($black-color, 0.2), rgba(3, 161, 224, 0.6));
+  &[filter-color='blue'] {
+    @include linear-gradient(rgba($tkot-secondary-color-black, 0.2), rgba($tkot-primary-blue, 0.6));
+  }
+  &[filter-color='black'] {
+    @include linear-gradient(rgba($tkot-secondary-color-black, 0.5), rgba($tkot-secondary-color-grey, 0.8));
+  }  
 }
 .bg-panel {
-  background-color: rgba($black-color, 0.8);
+  background-color: rgba($tkot-secondary-color-black, 0.8);
 }
 .login-view,
 .register-view {
@@ -70,7 +100,12 @@ $tkot-bg-color: $tkot-primary-blue;
 }
 .sidebar {
   &[data-color='tkot'] {
-    @include sidebar-color($tkot-bg-color);
+    // @include sidebar-color($tkot-primary-blue);
+    // @include sidebar-color($tkot-primary-red);
+    // @include sidebar-color($tkot-secondary-color-grey);
+    // @include sidebar-color($tkot-secondary-color-black);
+    // @include sidebar-color(rgba($tkot-secondary-color-black, 0.2));
+    @include sidebar-color(rgba($tkot-primary-blue, 0.7));
   }
   .logo {
     padding: 1.15rem 0.7rem;

@@ -11,7 +11,8 @@ import {
   Form,
   FormGroup,
   Input,
-  Button
+  Button,
+  Nav
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import SocialMedia from './SocialMedia';
@@ -19,6 +20,11 @@ import {
   withFirebase
 } from 'components/Firebase';
 import swal from 'sweetalert2';
+import NavItems from 'components/App/NavItems';
+import Tooltips from 'components/App/Tooltips';
+import {
+  getNavItems
+} from 'components/App/Utilities';
 
 const HomeFooterLink = props => {
   const {
@@ -42,11 +48,17 @@ const HomeTermsLink = () => {
 };
 const HomeFooter = props => {
   const {
-    isDefault
+    isDefault,
+    isHomePage
   } = props;
+  const {
+    pathname,
+    hash
+  } = window.location;
   const {
     REACT_APP_WEB_NAME
   } = process.env;
+  const navItems = getNavItems(isHomePage);
   const thisYear = 1900 + new Date().getYear();
   const INITIAL_STATE = {
     active: true,
@@ -137,35 +149,73 @@ const HomeFooter = props => {
         <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
           {/* <Container> */}
           <Row className="footer-content px-0 mx-0">
-            <Col xs={12} md={4} lg={3} className="footer-logo text-left bg-danger1">
+            <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
               <a href="/">
                 <img alt="..." className="n-logo py-3" width="289" src={require("assets/img/tkot/tkot-logo-white.png")} />
               </a>
             </Col>
-            <Col xs={12} lg={6} className="bg-warning1">
+            <Col xs={12} lg={3} className="bg-light1 text-dark1">
+              <Container className="mx-0 px-0 py-3 pt-sm-0">
+                <Row noGutters>
+                  <Col xs={12}>
+                    <p className="text-uppercase font-weight-bolder text-lg-center">Rārangi Tono - Menu</p>
+                    <Container className="p-0">
+                      <Row noGutters>
+                        <Col xs={6}>
+                          <Nav navbar>
+                            <NavItems
+                              useScrollspyNavLinks={isHomePage}
+                              pathname={pathname}
+                              hash={hash}
+                              items={navItems.filter(navItem => navItem.group === 'left')}
+                              navLinkClassName="text-lg-center"
+                            />
+                          </Nav>
+                        </Col>
+                        <Col xs={6}>
+                          <Nav navbar>
+                            <NavItems
+                              useScrollspyNavLinks={isHomePage}
+                              pathname={pathname}
+                              hash={hash}
+                              items={navItems.filter(navItem => navItem.group === 'right')}
+                              navLinkClassName="text-lg-center"
+                            />
+                          </Nav>
+                        </Col>
+                      </Row>
+                    </Container>
+                    <Tooltips
+                      items={navItems}
+                    />
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+            <Col xs={12} lg={3} className="bg-warning1">
               <Container className="mx-0 pl-0 py-3 pt-sm-0">
                 <Row>
                   <Col>
-                    <p className="text-uppercase font-weight-bolder">Hono Mai - We’ll Keep You Updated</p>
+                    <p className="text-uppercase font-weight-bolder text-lg-center">Hono Mai - We’ll Keep You Updated</p>
                     <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
                     <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
                       <Row noGutters>
                         <Col xs={12} sm={6} className="pr-0 pr-sm-1">
                           <FormGroup>
-                            <Input className="text-secondary" placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                            <Input className="text-secondary" placeholder="First Name/Ingoa Tuatahi" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
                           </FormGroup>
                         </Col>
                         <Col xs={12} sm={6} className="pl-0 pl-sm-1">
                           <FormGroup>
-                            <Input className="text-secondary" placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                            <Input className="text-secondary" placeholder="Last NameIngoa Tuarua" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
                           </FormGroup>
                         </Col>
                       </Row>
                       <FormGroup>
-                        <Input className="text-secondary" placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
+                        <Input className="text-secondary" placeholder="Email/Īmēra" name="email" value={contact.email} onChange={handleChange} type="email" />
                       </FormGroup>
                       <FormGroup>
-                        <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up</Button>
+                        <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up/Hono Mai</Button>
                       </FormGroup>
                     </Form>
                   </Col>
@@ -176,7 +226,7 @@ const HomeFooter = props => {
               <Container className="mx-0 px-0 py-3 pt-sm-0">
                 <Row noGutters>
                   <Col xs={12}>
-                    <p className="text-uppercase font-weight-bolder text-lg-center">Contact Us</p>
+                    <p className="text-uppercase font-weight-bolder text-lg-center">Whakapā Mai - Contact Us</p>
                     <SocialMedia
                       links={[{
                         href: 'https://www.facebook.com/TeKahuOTaonui',

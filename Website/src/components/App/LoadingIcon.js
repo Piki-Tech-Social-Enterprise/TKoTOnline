@@ -25,13 +25,18 @@ class LoadingIcon extends Component {
         iconSize = '';
         break;
       case 'lg':
-        iconSize = ' fa-5x';
+        // iconSize = ' fa-5x';
+        iconSize = ' h1';
         break;
       default:
-        iconSize = ' fa-3x';
+        // iconSize = ' fa-3x';
+        iconSize = ' h3';
     }
     return (
-      <span className={`fa fa-spin fa-spinner${iconSize}`} {...this.props} />
+      // <span className={`fa fa-spin fa-spinner${iconSize}`} {...this.props} />
+      <span className={iconSize}>
+        <i className="now-ui-icons loader_refresh spin" />
+      </span>
     );
   }
 }

@@ -48,25 +48,40 @@ const AboutSection = props => {
   }, [props, state]);
   return (
     <div className="tkot-section pt-4">
-      <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+      <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <div className="about-image" style={{
         backgroundImage: `linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0)), url(${pageAboutImage})`
       }}>
         <Container className="py-5 text-center">
           <Row>
-            <Col xs={12} sm={6} className="bg-warning1">
+            <Col xs={12} sm={6} className="bg-danger1">
               <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.png")} width="419" />
             </Col>
-            <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto">
-              {
-                state.isLoading
-                  ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                  : <span>{state.settings.homePageAboutDescription}</span>
-              }
-              <div className="pt-4 mt-3">
-                <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light" color="white">
-                  Learn more...
-                </Button>
+            <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
+              <div className="my-3">
+                {
+                  state.isLoading
+                    ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
+                    : <>
+                      <span>{state.settings.homePageAboutDescription}</span>
+                      <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3" color="white">
+                        Learn more...
+                      </Button>
+                      {
+                        state.settings.homePageVideoSourceUrl
+                          ? <iframe
+                            title="TKoT"
+                            width="100%"
+                            height="240"
+                            src={state.settings.homePageVideoSourceUrl}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                          : null
+                      }
+                    </>
+                }
               </div>
             </Col>
           </Row>
