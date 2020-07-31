@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const SocialMedia = props => {
 	const {
@@ -34,7 +37,7 @@ const SocialMedia = props => {
 						<li className={`box-social ${margin}`} key={key}>
 							{
 								href
-									? <a href={href} target="_blank" rel="noopener noreferrer">
+									? <a href={href} target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, `Clicked "${text}" link`, href)}>
 										<IconAndTextElement icon={iconFaName} text={text} />
 									</a>
 									: <span className="box-social-text">

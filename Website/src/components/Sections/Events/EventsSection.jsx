@@ -17,6 +17,9 @@ import {
   withFirebase
 } from 'components/Firebase';
 // import Routes from 'components/Routes/routes';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const EventsSection = props => {
   const [state, setState] = useState({
@@ -25,7 +28,8 @@ const EventsSection = props => {
   });
   const {
     containerClassName,
-    showLearnMoreButton
+    showLearnMoreButton,
+    isHomePage
   } = props;
   const {
     isLoading,
@@ -82,10 +86,10 @@ const EventsSection = props => {
                                   href={externalUrl ? externalUrl : `/Wananga/${evid}`}
                                   target={externalUrl ? '_blank' : '_self'}
                                   rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                                  className="tkot-primary-red-bg-color" color="white"
-                                >
-                                  Read more...
-                                </Button>
+                                  className="tkot-primary-red-bg-color"
+                                  color="white"
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Wānanga'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/Wananga/${evid}`)}
+                                >Read more...</Button>
                               </CardBody>
                             </Card>
                           </Col>
@@ -97,7 +101,7 @@ const EventsSection = props => {
               {
                 showLearnMoreButton
                   ? <div className="mb-5 text-center">
-                    <Button href="/Wananga" className="text-light" color="link" size="lg">
+                    <Button href="/Wananga" className="text-light" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                       View more...
                     </Button>
                     {/* <a href={Routes.newsFeed} className="text-decoration-none text-light">

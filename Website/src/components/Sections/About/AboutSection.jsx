@@ -1,6 +1,8 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  useRef,
+  useCallback
 } from 'react';
 import {
   Container,
@@ -13,6 +15,9 @@ import {
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import Routes from 'components/Routes/routes';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const {
   aboutUs,
@@ -27,6 +32,10 @@ const AboutSection = props => {
     isLoading: true,
     settings: {}
   });
+  const iframeRef = useRef(null);
+  const iframeRefCallback = useCallback(node => {
+    iframeRef.current = node;
+  }, []);
   useEffect(() => {
     const {
       isLoading
@@ -42,9 +51,24 @@ const AboutSection = props => {
         settings: dbSettings
       }));
     };
+    const handleIFrameBlur = () => {
+      if (
+        document.activeElement &&
+        iframeRef.current &&
+        iframeRef.current === document.activeElement
+      ) {
+        sendEvent('Home page', 'Clicked TKoT video');
+      }
+    };
     if (isLoading) {
       getData();
+      window.addEventListener('blur', handleIFrameBlur);
     }
+    return () => {
+      if (!isLoading) {
+        window.removeEventListener('blur', handleIFrameBlur);
+      }
+    };
   }, [props, state]);
   return (
     <div className="tkot-section pt-4">
@@ -64,7 +88,7 @@ const AboutSection = props => {
                     ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
                     : <>
                       <span>{state.settings.homePageAboutDescription}</span>
-                      <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3" color="white">
+                      <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3" color="white" onClick={() => sendEvent('Home page', 'Clicked "Learn More..." button')}>
                         Learn more...
                       </Button>
                       {
@@ -77,6 +101,7 @@ const AboutSection = props => {
                             frameBorder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            ref={iframeRefCallback}
                           />
                           : null
                       }

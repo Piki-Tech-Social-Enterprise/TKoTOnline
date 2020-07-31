@@ -24,6 +24,9 @@ import {
   draftToText,
   sortArray
 } from 'components/App/Utilities';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const NewsFeedSection = props => {
   const [state, setState] = useState({
@@ -32,7 +35,8 @@ const NewsFeedSection = props => {
   });
   const {
     containerClassName,
-    showLearnMoreButton
+    showLearnMoreButton,
+    isHomePage
   } = props;
   const parsedQs = queryString.parse(window.location.search);
   const {
@@ -109,10 +113,10 @@ const NewsFeedSection = props => {
                                 href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
                                 target={externalUrl ? '_blank' : '_self'}
                                 rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                                className="tkot-primary-red-bg-color btn-outline-dark" color="white"
-                              >
-                                Read more...
-                              </Button>
+                                className="tkot-primary-red-bg-color btn-outline-dark"
+                                color="white"
+                                onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/NewsFeeds/${nfid}`)}
+                              >Read more...</Button>
                             </CardBody>
                           </Card>
                         </Col>
@@ -124,7 +128,7 @@ const NewsFeedSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-5 text-center">
-                  <Button href="/NewsFeeds" className="text-dark" color="link" size="lg">
+                  <Button href="/NewsFeeds" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
                 </div>

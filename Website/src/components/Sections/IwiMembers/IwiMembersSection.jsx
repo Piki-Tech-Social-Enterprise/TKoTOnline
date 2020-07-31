@@ -14,6 +14,9 @@ import {
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import FirebaseImage from 'components/App/FirebaseImage';
 import Routes from 'components/Routes/routes';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const IwiMembersSection = props => {
   const {
@@ -66,32 +69,29 @@ const IwiMembersSection = props => {
                     iwiMemberURL
                   } = iwiMember;
                   return (
-                    index > 0 && index % 6 === 0
-                      ? <Fragment key={imid}>
-                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
-                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
-                          <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
-                            <FirebaseImage
-                              className="iwi-member-image mx-3 mt-3 mb-0"
-                              imageURL={iwiMemberImageURL}
-                              alt={iwiMemberName}
-                            /><br />
-                            <span className="iwi-member-name">{iwiMemberName}</span>
-                          </a>
-                        </Col>
-                      </Fragment>
-                      : <Fragment key={imid}>
-                        <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase">
-                          <a href={iwiMemberURL} className="text-dark text-decoration-none tkot-primary-blue-color" target="_blank" rel="noopener noreferrer">
-                            <FirebaseImage
-                              className="iwi-member-image mx-3 mt-3 mb-0"
-                              imageURL={iwiMemberImageURL}
-                              alt={iwiMemberName}
-                            /><br />
-                            <span className="iwi-member-name">{iwiMemberName}</span>
-                          </a>
-                        </Col>
-                      </Fragment>
+                    <Fragment key={imid}>
+                      {
+                        index > 0 && index % 6 === 0
+                          ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
+                          : null
+                      }
+                      <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
+                        <a
+                          href={iwiMemberURL}
+                          className="text-dark text-decoration-none tkot-primary-blue-color"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName}" Logo`)}
+                        >
+                          <FirebaseImage
+                            className="iwi-member-image mx-3 mt-3 mb-0"
+                            imageURL={iwiMemberImageURL}
+                            alt={iwiMemberName}
+                          /><br />
+                          <span className="iwi-member-name">{iwiMemberName}</span>
+                        </a>
+                      </Col>
+                    </Fragment>
                   );
                 })
             }

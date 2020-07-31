@@ -25,6 +25,9 @@ import Tooltips from 'components/App/Tooltips';
 import {
   getNavItems
 } from 'components/App/Utilities';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const HomeFooterLink = props => {
   const {
@@ -128,7 +131,8 @@ const HomeFooter = props => {
         setContact(c => ({
           ...c,
           ...INITIAL_STATE
-        }))
+        }));
+        sendEvent(`${window.location.pathname} page`, `Signed up "${firstName} ${lastName}, ${email}"`);
       }
     } catch (error) {
       displayMessage = `${error.message}`;
@@ -262,7 +266,7 @@ const HomeFooter = props => {
             {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
             <img className="ml-0 ml-sm-3 created-by-logo-image" alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
             {/* </a> */}
-            <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer">
+            <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
               <img className="ml-3 created-by-logo-image" alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
             </a>
           </Col>

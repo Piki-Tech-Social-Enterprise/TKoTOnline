@@ -17,6 +17,9 @@ import {
   withFirebase
 } from 'components/Firebase';
 import Routes from 'components/Routes/routes';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const ProjectsSection = props => {
   const [state, setState] = useState({
@@ -25,7 +28,8 @@ const ProjectsSection = props => {
   });
   const {
     containerClassName,
-    showLearnMoreButton
+    showLearnMoreButton,
+    isHomePage
   } = props;
   const {
     isLoading,
@@ -74,9 +78,12 @@ const ProjectsSection = props => {
                             />
                             <CardBody className="bg-white text-dark">
                               <CardTitle className="h5 text-uppercase my-3 mx-2">{dbProject.header}</CardTitle>
-                              <Button href={`/Projects/${dbProject.pid}`} className="tkot-primary-red-bg-color btn-outline-dark" color="white">
-                                Read more...
-                              </Button>
+                              <Button
+                                href={`/Projects/${dbProject.pid}`}
+                                className="tkot-primary-red-bg-color btn-outline-dark"
+                                color="white"
+                                onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Projects'} page`, 'Clicked "Read More..." button', dbProject.header)}
+                              >Read more...</Button>
                             </CardBody>
                           </Card>
                         </Col>
@@ -88,7 +95,7 @@ const ProjectsSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-5 text-center">
-                  <Button href="/Projects" className="text-dark" color="link" size="lg">
+                  <Button href="/Projects" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
                   <a href={Routes.events} className="text-decoration-none text-dark">

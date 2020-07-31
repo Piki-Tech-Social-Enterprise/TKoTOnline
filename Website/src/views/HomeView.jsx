@@ -126,6 +126,7 @@ const HomeView = props => {
               {/* Projects */}
               <ProjectsSection
                 showLearnMoreButton
+                isHomePage
               />
               {/* Events */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
@@ -136,10 +137,12 @@ const HomeView = props => {
               <EventsSection
                 showLearnMoreButton
                 containerClassName="tkot-secondary-color-black-bg-color-61-pc"
+                isHomePage
               />
               {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
               <NewsFeedSection
                 showLearnMoreButton
+                isHomePage
               />
               {/* Interactive Map of Iwi Links */}
               {/* <InteractiveMapSection /> */}
