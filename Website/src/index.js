@@ -55,7 +55,10 @@ const EventView = React.lazy(() => import('views/EventView'));
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <BrowserRouter>
-      <React.Suspense fallback={<LoadingSpinner />}>
+      <React.Suspense fallback={<LoadingSpinner
+        outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+        innerClassName="m-5 p-5 text-center"
+      />}>
         <Switch>
           <Route path="/" render={props => (
             <HomeView {...props} />

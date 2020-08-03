@@ -79,7 +79,7 @@ const HomeView = props => {
     }
     return defaultPageSetup;
   }, [props, state]);
-  const scrollspyTopOffset = '20%';
+  const scrollspyTopOffset = '10%';
   return (
     <>
       {

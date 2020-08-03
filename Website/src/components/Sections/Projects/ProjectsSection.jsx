@@ -98,9 +98,9 @@ const ProjectsSection = props => {
                   <Button href="/Projects" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
-                  <a href={Routes.events} className="text-decoration-none text-dark">
+                  {/* <a href={Routes.events} className="text-decoration-none text-dark">
                     <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-                  </a>
+                  </a> */}
                 </div>
                 : null
             }

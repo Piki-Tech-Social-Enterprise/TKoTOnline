@@ -106,7 +106,7 @@ const HomeNavbar = props => {
               <span className="navbar-toggler-bar bottom-bar"></span>
             </button>
           </div>
-          <Collapse className="justify-content-start" isOpen={state.collapseOpen} navbar>
+          <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
             <Nav navbar>
               <NavItems
                 useScrollspyNavLinks={isHomePage}

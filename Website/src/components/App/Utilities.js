@@ -226,7 +226,7 @@ const getNavItems = isHomePage => {
     route: isHomePage ? projects : projectsPage,
     name: 'Projects',
     tooltip: 'Hingonga',
-    group: 'left'
+    group: 'right'
   }, {
     id: 'eventsNavItem',
     route: isHomePage ? events : eventsPage,
@@ -244,7 +244,7 @@ const getNavItems = isHomePage => {
     route: contactUs,
     name: 'Contact',
     tooltip: 'Hono Mai',
-    group: 'right'
+    group: ''
   }];
   return navItems;
 };

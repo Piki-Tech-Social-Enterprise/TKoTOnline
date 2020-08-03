@@ -165,6 +165,30 @@ const HomeFooter = props => {
                     <p className="text-uppercase font-weight-bolder text-lg-center">Rārangi Tono - Menu</p>
                     <Container className="p-0">
                       <Row noGutters>
+                        <Col xs={12} className="navbar-expand justify-content-lg-center">
+                          <Nav navbar>
+                            <NavItems
+                              useScrollspyNavLinks={isHomePage}
+                              pathname={pathname}
+                              hash={hash}
+                              items={navItems.filter(navItem => navItem.group === 'left')}
+                              navLinkClassName="text-lg-center"
+                            />
+                          </Nav>
+                        </Col>
+                        <Col xs={12} className="navbar-expand justify-content-lg-center">
+                          <Nav navbar>
+                            <NavItems
+                              useScrollspyNavLinks={isHomePage}
+                              pathname={pathname}
+                              hash={hash}
+                              items={navItems.filter(navItem => navItem.group === 'right')}
+                              navLinkClassName="text-lg-center"
+                            />
+                          </Nav>
+                        </Col>
+                      </Row>
+                      {/* <Row noGutters>
                         <Col xs={6}>
                           <Nav navbar>
                             <NavItems
@@ -187,7 +211,7 @@ const HomeFooter = props => {
                             />
                           </Nav>
                         </Col>
-                      </Row>
+                      </Row> */}
                     </Container>
                     <Tooltips
                       items={navItems}
@@ -237,9 +261,9 @@ const HomeFooter = props => {
                         iconFaName: 'fab fa-facebook-f text-dark',
                         text: 'Facebook'
                       }, {
-                        href: 'mailto:commsadmin@tkot.org.nz',
+                        href: '/ContactUs',
                         iconFaName: 'fas fa-envelope text-dark',
-                        text: 'commsadmin@tkot.org.nz'
+                        text: 'admin@tkot.org.nz'
                       }, {
                         href: '',
                         iconFaName: 'fas fa-building text-dark',
