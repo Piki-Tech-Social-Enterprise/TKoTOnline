@@ -165,25 +165,25 @@ const HomeFooter = props => {
                     <p className="text-uppercase font-weight-bolder text-lg-center">Rārangi Tono - Menu</p>
                     <Container className="p-0">
                       <Row noGutters>
-                        <Col xs={12} className="navbar-expand justify-content-lg-center">
+                        <Col xs={6}>
                           <Nav navbar>
                             <NavItems
                               useScrollspyNavLinks={isHomePage}
                               pathname={pathname}
                               hash={hash}
                               items={navItems.filter(navItem => navItem.group === 'left')}
-                              navLinkClassName="text-lg-center"
+                              navLinkClassName="text-lg-center py-2"
                             />
                           </Nav>
                         </Col>
-                        <Col xs={12} className="navbar-expand justify-content-lg-center">
+                        <Col xs={6}>
                           <Nav navbar>
                             <NavItems
                               useScrollspyNavLinks={isHomePage}
                               pathname={pathname}
                               hash={hash}
                               items={navItems.filter(navItem => navItem.group === 'right')}
-                              navLinkClassName="text-lg-center"
+                              navLinkClassName="text-lg-center py-2"
                             />
                           </Nav>
                         </Col>
@@ -230,20 +230,20 @@ const HomeFooter = props => {
                       <Row noGutters>
                         <Col xs={12} sm={6} className="pr-0 pr-sm-1">
                           <FormGroup>
-                            <Input className="text-secondary" placeholder="First Name/Ingoa Tuatahi" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                            <Input className="text-dark" placeholder="First Name/Ingoa Tuatahi" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
                           </FormGroup>
                         </Col>
                         <Col xs={12} sm={6} className="pl-0 pl-sm-1">
                           <FormGroup>
-                            <Input className="text-secondary" placeholder="Last NameIngoa Tuarua" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                            <Input className="text-dark" placeholder="Last Name/Ingoa Tuarua" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
                           </FormGroup>
                         </Col>
                       </Row>
                       <FormGroup>
-                        <Input className="text-secondary" placeholder="Email/Īmēra" name="email" value={contact.email} onChange={handleChange} type="email" />
+                        <Input className="text-dark" placeholder="Email/Īmēra" name="email" value={contact.email} onChange={handleChange} type="email" />
                       </FormGroup>
                       <FormGroup>
-                        <Button type="submit" color="light" size="lg" className="btn-round my-2" outline block disabled={isSubmitting}>Sign Up/Hono Mai</Button>
+                        <Button type="submit" color="light" size="lg" className="tkot-primary-red-bg-color btn-outline-dark my-2" block disabled={isSubmitting}>Sign Up/Hono Mai</Button>
                       </FormGroup>
                     </Form>
                   </Col>

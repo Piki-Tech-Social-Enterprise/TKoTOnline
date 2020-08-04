@@ -249,7 +249,7 @@ $tkot-page-header-50-vh: 50vh;
 #header-container,
 .about-image {
   .h5 {
-    font-size: 0.98rem;
+    font-size: 1.3333rem;
   }
 }
 
@@ -421,5 +421,21 @@ $tkot-page-header-50-vh: 50vh;
   .iwi-member-col {
     max-width: 6.4286rem;
     padding: inherit;
+  }
+}
+
+#HomeFooter {
+  .nav-item {
+    padding: 3px 0;
+  }
+  .nav-link {
+    font-size: inherit !important;
+    padding: 0;
+  }
+  form {
+    input.form-control {
+      border-radius: 0.8571em !important;
+      background-color: $tkot-bg-color-white !important;
+    }
   }
 }

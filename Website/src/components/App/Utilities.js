@@ -193,7 +193,7 @@ const getNavItems = isHomePage => {
     home,
     homePage,
     iwiMembers,
-    about,
+    // about,
     aboutUs,
     newsFeed,
     newsFeeds,
@@ -217,7 +217,7 @@ const getNavItems = isHomePage => {
     group: 'left'
   }, {
     id: 'aboutNavItem',
-    route: isHomePage ? about : aboutUs,
+    route: aboutUs,
     name: 'About',
     tooltip: 'Ko wai mātau',
     group: 'left'
@@ -225,7 +225,7 @@ const getNavItems = isHomePage => {
     id: 'projectsNavItem',
     route: isHomePage ? projects : projectsPage,
     name: 'Projects',
-    tooltip: 'Hingonga',
+    tooltip: 'Kaupapa',
     group: 'right'
   }, {
     id: 'eventsNavItem',
@@ -237,7 +237,7 @@ const getNavItems = isHomePage => {
     id: 'newsFeedNavItem',
     route: isHomePage ? newsFeed : newsFeeds,
     name: 'News',
-    tooltip: 'Te Karere',
+    tooltip: 'He Karere',
     group: 'right'
   }, {
     id: 'contactUsNavItem',

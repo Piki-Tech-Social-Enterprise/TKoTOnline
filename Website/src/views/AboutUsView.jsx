@@ -1,6 +1,8 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  useRef,
+  useCallback
 } from 'react';
 import {
   Container,
@@ -17,13 +19,23 @@ import draftToHtml from 'draftjs-to-html';
 import {
   defaultPageSetup
 } from 'components/App/Utilities';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const AboutUsView = props => {
   const [state, setState] = useState({
     isLoading: true,
-    aboutPageDescription: ''
+    settings: {}
   });
+  const iframeRef = useRef(null);
+  const iframeRefCallback = useCallback(node => {
+    iframeRef.current = node;
+  }, []);
   useEffect(() => {
+    const {
+      isLoading
+    } = state;
     const retrieveSettingValues = async () => {
       const {
         firebase
@@ -32,14 +44,29 @@ const AboutUsView = props => {
       setState(s => ({
         ...s,
         isLoading: false,
-        aboutPageDescription: ((dbSettings && dbSettings.aboutPageDescription) || s.aboutPageDescription || '')
+        settings: dbSettings
       }));
     }
+    const handleIFrameBlur = () => {
+      if (
+        document.activeElement &&
+        iframeRef.current &&
+        iframeRef.current === document.activeElement
+      ) {
+        sendEvent('About Us page', 'Clicked TKoT video');
+      }
+    };
     defaultPageSetup(true);
     if (state.isLoading) {
       retrieveSettingValues();
+      window.addEventListener('blur', handleIFrameBlur);
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        window.removeEventListener('blur', handleIFrameBlur);
+        defaultPageSetup();
+      }
+    };
   }, [props, state])
   return (
     <>
@@ -58,8 +85,22 @@ const AboutUsView = props => {
               <Row>
                 <Col className="px-0 mt-5">
                   <h3>ABOUT US</h3>
+                  {
+                    state.settings.homePageVideoSourceUrl
+                      ? <iframe
+                        title="TKoT"
+                        width="100%"
+                        height="320"
+                        src={state.settings.homePageVideoSourceUrl}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        ref={iframeRefCallback}
+                      />
+                      : null
+                  }
                   <div
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.aboutPageDescription)) }}
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageDescription)) }}
                   />
                 </Col>
               </Row>

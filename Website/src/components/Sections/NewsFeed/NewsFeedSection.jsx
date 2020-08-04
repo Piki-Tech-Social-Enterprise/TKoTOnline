@@ -94,7 +94,7 @@ const NewsFeedSection = props => {
                         <Col xs={12} sm={6} lg={4} key={index}>
                           <Card className="card-block">
                             <CardHeader>
-                              <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
+                              <CardTitle className="h4 my-3 mx-2 font-weight-bold">{header}</CardTitle>
                             </CardHeader>
                             <FirebaseImage
                               className="card-img-max-height"
@@ -109,14 +109,16 @@ const NewsFeedSection = props => {
                                 />
                               </p>
                               <p className="d-inline-block block-with-text">{contentAsText}</p>
-                              <Button
-                                href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
-                                target={externalUrl ? '_blank' : '_self'}
-                                rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                                className="tkot-primary-red-bg-color btn-outline-dark"
-                                color="white"
-                                onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/NewsFeeds/${nfid}`)}
-                              >Read more...</Button>
+                              <div className="text-center">
+                                <Button
+                                  href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
+                                  target={externalUrl ? '_blank' : '_self'}
+                                  rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
+                                  className="tkot-primary-red-bg-color btn-outline-dark"
+                                  color="white"
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/NewsFeeds/${nfid}`)}
+                                >Read more...</Button>
+                              </div>
                             </CardBody>
                           </Card>
                         </Col>
