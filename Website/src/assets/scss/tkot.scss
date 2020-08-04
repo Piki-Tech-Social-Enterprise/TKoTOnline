@@ -429,12 +429,12 @@ $tkot-page-header-50-vh: 50vh;
     padding: 3px 0;
   }
   .nav-link {
-    font-size: inherit !important;
+    font-size: 0.8571em !important;
     padding: 0;
   }
   form {
     input.form-control {
-      border-radius: 0.8571em !important;
+      border-radius: 0 !important;
       background-color: $tkot-bg-color-white !important;
     }
   }
