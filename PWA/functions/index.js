@@ -52,7 +52,7 @@ https://us-central1-tkot-online-dev.cloudfunctions.net/getAccessTokenFromService
 */
 exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
 /*
---- Get Data ---
+--- Get Data From Firebase ---
 Usage:
 Local
 http://localhost:5001/tkot-online-dev/us-central1/getDataFromFirebase?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1

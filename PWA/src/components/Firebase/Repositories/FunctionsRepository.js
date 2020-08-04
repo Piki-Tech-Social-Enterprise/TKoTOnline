@@ -103,21 +103,23 @@ class FunctionsRepository extends BaseRepository {
     }
   }
   call = async options => {
-    // debugger;
     let response = null;
     try {
       const {
         functionName,
         data
       } = options;
+      // console.log('options: ', JSON.stringify(options, null, 2));
       const callFunction = this.functions.httpsCallable(`${functionName}`);
+      // debugger;
       response = await callFunction(data);
     } catch (error) {
       console.log(`FunctionsRepository.call Error: ${JSON.stringify(error, null, 2)}`);
       response = error.response || response;
-    } finally {
-      return response;
+      // debugger;
+      throw error;
     }
+    return response;
   }
 }
 

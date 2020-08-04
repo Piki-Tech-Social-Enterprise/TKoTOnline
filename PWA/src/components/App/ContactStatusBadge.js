@@ -45,7 +45,7 @@ import React, {
     }
     shouldComponentUpdate = (nextProps, nextState) => {
       const shallowCompared = shallowCompare(this, nextProps, nextState, false);
-      console.log(`StatusBadge.shouldComponentUpdate: ${shallowCompared}`)
+      // console.log(`StatusBadge.shouldComponentUpdate: ${shallowCompared}`);
       return shallowCompared;
     }
     componentDidUpdate = async prevProps => {

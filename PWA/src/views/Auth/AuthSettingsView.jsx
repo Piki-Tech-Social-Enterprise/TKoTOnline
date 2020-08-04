@@ -239,7 +239,7 @@ const AuthSettingsView = props => {
                           downloadURLFileInputOnChange={handleHomePageHeaderImageUrlFileChange}
                           downloadURLFormat={settingHomePageHeaderImageUrlFormat}
                           downloadURLFormatKeyName={settingKeyFormat}
-                          downloadURLFormatKeyValue={settings.sid}
+                          downloadURLFormatKeyValue={settings.sid || ''}
                           downloadURLFormatFileName={settingFilenameFormat}
                           imageResize="md"
                         />
@@ -259,7 +259,7 @@ const AuthSettingsView = props => {
                           downloadURLFileInputOnChange={handleHomePageAboutImageUrlFileChange}
                           downloadURLFormat={settingHomePageHeaderImageUrlFormat}
                           downloadURLFormatKeyName={settingKeyFormat}
-                          downloadURLFormatKeyValue={settings.sid}
+                          downloadURLFormatKeyValue={settings.sid || ''}
                           downloadURLFormatFileName={settingFilenameFormat}
                           imageResize="md"
                         />
