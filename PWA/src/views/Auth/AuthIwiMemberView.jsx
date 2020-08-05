@@ -23,19 +23,34 @@ import {
   formatBytes,
   formatInteger
 } from 'components/App/Utilities';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw
+} from 'draft-js';
+import {
+  Editor
+} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const iwiMembersRef = '/images/iwiMembers';
 const iwiMemberKeyFormat = '{imid}';
 const iwiMemberFilenameFormat = '{filename}';
 const iwiMemberImageFolderUrlFormat = `${iwiMembersRef}/${iwiMemberKeyFormat}/`;
 const iwiMemberImageUrlFormat = `${iwiMemberImageFolderUrlFormat}${iwiMemberFilenameFormat}`;
+const iwiChairImageUrlFormat = `${iwiMemberImageFolderUrlFormat}${iwiMemberFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
+  iwiChairImageURL: '',
+  iwiChairImageURLFile: null,
+  iwiChairName: '',
+  iwiChairProfile: '',
   iwiMemberImageURL: '',
   iwiMemberImageURLFile: null,
   iwiMemberName: '',
   iwiMemberURL: '',
-  imid: null
+  imid: null,
+  editorState: EditorState.createEmpty()
 };
 const AuthIwiMemberView = props => {
   const isNew = props.match.params.imid === 'New';
@@ -71,11 +86,15 @@ const AuthIwiMemberView = props => {
     } = authUser;
     const {
       active,
+      iwiChairImageURLFile,
+      iwiChairName,
+      iwiChairProfile,
       iwiMemberImageURLFile,
       iwiMemberName,
       iwiMemberURL
     } = iwiMember;
     let imid = iwiMember.imid;
+    let iwiChairImageURL = iwiMember.iwiChairImageURL;
     let iwiMemberImageURL = iwiMember.iwiMemberImageURL;
     let displayIcon = 'error';
     let displayTitle = 'Save Iwi Member Failed';
@@ -83,6 +102,11 @@ const AuthIwiMemberView = props => {
     try {
       if (!iwiMemberImageURL || !iwiMemberName || !iwiMemberURL) {
         displayMessage = 'The Iwi Member Image URL, Iwi Member Name, and Iwi Member URL fields are required.';
+      } else if (iwiChairImageURLFile && iwiChairImageURLFile.size > maxImageFileSize) {
+        const {
+          size
+        } = iwiChairImageURLFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else if (iwiMemberImageURLFile && iwiMemberImageURLFile.size > maxImageFileSize) {
         const {
           size
@@ -93,6 +117,11 @@ const AuthIwiMemberView = props => {
       } else {
         if (isNew) {
           imid = await firebase.saveDbIwiMember({});
+          if (iwiChairImageURLFile && iwiChairImageURLFile.name) {
+            iwiChairImageURL = iwiChairImageUrlFormat
+              .replace(iwiMemberKeyFormat, imid)
+              .replace(iwiMemberFilenameFormat, iwiChairImageURLFile.name);
+          }
           if (iwiMemberImageURLFile && iwiMemberImageURLFile.name) {
             iwiMemberImageURL = iwiMemberImageUrlFormat
               .replace(iwiMemberKeyFormat, imid)
@@ -103,6 +132,9 @@ const AuthIwiMemberView = props => {
           active: active,
           created: now.toString(),
           createdBy: uid,
+          iwiChairImageURL,
+          iwiChairName,
+          iwiChairProfile,
           iwiMemberImageURL,
           iwiMemberName,
           iwiMemberURL,
@@ -110,6 +142,9 @@ const AuthIwiMemberView = props => {
           updated: now.toString(),
           updatedBy: uid
         });
+        if (iwiChairImageURLFile) {
+          await firebase.saveStorageFile(iwiChairImageURL, iwiChairImageURLFile);
+        }
         if (iwiMemberImageURLFile) {
           await firebase.saveStorageFile(iwiMemberImageURL, iwiMemberImageURLFile);
         }
@@ -181,7 +216,7 @@ const AuthIwiMemberView = props => {
   const handleGotoParentList = () => {
     props.history.push('/auth/IwiMembers');
   };
-  const handleImageUrlFileChange = async e => {
+  const handleIwiMemberImageUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
       const iwiMemberImageURLFile = e.target.files[0];
@@ -191,23 +226,43 @@ const AuthIwiMemberView = props => {
       }));
     }
   };
+  const handleIwiChairImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const iwiChairImageURLFile = e.target.files[0];
+      setIwiMember(im => ({
+        ...im,
+        iwiChairImageURLFile: iwiChairImageURLFile
+      }));
+    }
+  };
   useEffect(() => {
     const retrieveIwiMember = async () => {
       const dbIwiMember = await props.firebase.getDbIwiMemberValue(props.match.params.imid);
       const {
         active,
+        iwiChairImageURL,
+        iwiChairName,
+        iwiChairProfile,
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
         imid
       } = dbIwiMember;
-      setIwiMember({
+      setIwiMember(im => ({
+        ...im,
         active,
+        iwiChairImageURL,
+        iwiChairName,
+        iwiChairProfile,
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
-        imid
-      });
+        imid,
+        editorState: iwiChairProfile && iwiChairProfile.startsWith('{') && iwiChairProfile.endsWith('}')
+          ? EditorState.createWithContent(convertFromRaw(JSON.parse(iwiChairProfile)))
+          : im.editorState
+      }));
       setIsLoading(false);
     };
     if (isLoading) {
@@ -232,15 +287,28 @@ const AuthIwiMemberView = props => {
               <Row>
                 <Col xs={12} sm={8}>
                   <Card>
-                    {/* <h3>Iwi Member</h3> */}
                     <CardBody>
                       <FormGroup>
                         <Label>Iwi Member Name</Label>
                         <Input placeholder="Iwi Member Name" name="iwiMemberName" value={iwiMember.iwiMemberName} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Iwi Member URL</Label>
-                        <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
+                        <Label>Iwi Chair Name</Label>
+                        <Input placeholder="Iwi Chair Name" name="iwiChairName" value={iwiMember.iwiChairName || ''} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Iwi Chair Profile</Label>
+                        <Editor
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class"
+                          toolbarClassName="toolbar-class"
+                          editorState={iwiMember.editorState}
+                          onEditorStateChange={editorState => setIwiMember(im => ({
+                            ...im,
+                            iwiChairProfile: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                            editorState: editorState
+                          }))}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={iwiMember.active} onChange={handleChange} type="switch" id="iwiMemberActive" />
@@ -257,6 +325,10 @@ const AuthIwiMemberView = props => {
                   <Card>
                     <CardBody>
                       <FormGroup>
+                        <Label>Iwi Member URL</Label>
+                        <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
                         <Label>Iwi Member Image URL</Label>
                         <FirebaseInput
                           value={iwiMember.iwiMemberImageURL}
@@ -268,8 +340,27 @@ const AuthIwiMemberView = props => {
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                          downloadURLFileInputOnChange={handleImageUrlFileChange}
+                          downloadURLFileInputOnChange={handleIwiMemberImageUrlFileChange}
                           downloadURLFormat={iwiMemberImageUrlFormat}
+                          downloadURLFormatKeyName={iwiMemberKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.imid}
+                          downloadURLFormatFileName={iwiMemberFilenameFormat}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Iwi Chair Image URL</Label>
+                        <FirebaseInput
+                          value={iwiMember.iwiChairImageURL || ''}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'iwiChairImageURL',
+                            name: 'iwiChairImageURL',
+                            placeholder: 'Iwi Chair Image URL',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleIwiChairImageUrlFileChange}
+                          downloadURLFormat={iwiChairImageUrlFormat}
                           downloadURLFormatKeyName={iwiMemberKeyFormat}
                           downloadURLFormatKeyValue={props.match.params.imid}
                           downloadURLFormatFileName={iwiMemberFilenameFormat}
