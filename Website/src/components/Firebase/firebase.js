@@ -72,6 +72,8 @@ class Firebase {
   getDbProjectValue = async pid => await this.projectsRepository.getDbProjectValue(pid);
   getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
   getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);
+  getDbIwiMember = async imid => await this.iwiMembersRepository.getDbIwiMember(imid);
+  getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
 }
 
 export default Firebase;

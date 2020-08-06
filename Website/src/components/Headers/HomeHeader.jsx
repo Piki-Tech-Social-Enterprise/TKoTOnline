@@ -10,15 +10,20 @@ const HomeHeader = props => {
     pageHeaderImage,
     pageHeaderTitle,
     pageHeaderCaption,
+    pageHeaderFilterColour,
     showClickScrollDownForMoreLink
   } = props;
   return (
     <>
       <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <div className="page-header clear-filter" filter-color="black">
-        <div className="page-header-image" style={{
-          backgroundImage: `url(${pageHeaderImage})`
-        }} />
+      <div className="page-header clear-filter" filter-color={pageHeaderFilterColour}>
+        {
+          pageHeaderImage
+            ? <div className="page-header-image" style={{
+              backgroundImage: `url(${pageHeaderImage})`
+            }} />
+            : null
+        }
         <Container className="py-5 text-center">
           <div id="header-container">
             <div className="h1 py-3 mb-0 font-weight-bold">{pageHeaderTitle}</div>
@@ -43,11 +48,17 @@ const HomeHeader = props => {
 
 HomeHeader.propTypes = {
   pageHeaderImage: PropTypes.string.isRequired,
-  pageHeaderTitle: PropTypes.string
+  pageHeaderTitle: PropTypes.string,
+  pageHeaderCaption: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
+  pageHeaderFilterColour: PropTypes.string
 };
 HomeHeader.defaultProps = {
   pageHeaderTitle: 'Me mahi tahi tātou',
-  pageHeaderCaption: 'Working together to strengthen Māori whānau, hāpu and Iwi in Te Tai Tokerau.'
+  pageHeaderCaption: 'Working together to strengthen Māori whānau, hāpu and Iwi in Te Tai Tokerau.',
+  pageHeaderFilterColour: 'black'
 };
 
 export default HomeHeader;

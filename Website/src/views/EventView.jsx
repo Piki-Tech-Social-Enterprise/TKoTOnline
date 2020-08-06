@@ -58,26 +58,29 @@ const EventView = props => {
     <>
       {
         state.isLoading
-          ? <LoadingSpinner />
-            : <div id="Event">
-              <HomeNavbar
-                initalTransparent={false}
-                colorOnScrollValue={25}
-              />
-              <HomeHeader
-                pageHeaderImage={state.imageDownloadURL}
-                pageHeaderTitle={state.dbEvent.header}
-                pageHeaderCaption=""
-              />
-              <Container className="bg-warning1 py-3">
-                <Row>
-                  <Col
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbEvent.content)) }}
-                  />
-                </Row>
-              </Container>
-              <HomeFooter />
-            </div>
+          ? <LoadingSpinner
+            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+            innerClassName="m-5 p-5 text-center"
+          />
+          : <div id="Event">
+            <HomeNavbar
+              initalTransparent={false}
+              colorOnScrollValue={25}
+            />
+            <HomeHeader
+              pageHeaderImage={state.imageDownloadURL}
+              pageHeaderTitle={state.dbEvent.header}
+              pageHeaderCaption=""
+            />
+            <Container className="bg-warning1 py-3">
+              <Row>
+                <Col
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbEvent.content)) }}
+                />
+              </Row>
+            </Container>
+            <HomeFooter />
+          </div>
       }
     </>
   );

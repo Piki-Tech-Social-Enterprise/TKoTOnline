@@ -51,6 +51,7 @@ const NewsFeedsView = React.lazy(() => import('views/NewsFeedsView'));
 const NewsFeedView = React.lazy(() => import('views/NewsFeedView'));
 const EventsView = React.lazy(() => import('views/EventsView'));
 const EventView = React.lazy(() => import('views/EventView'));
+const IwiChairView = React.lazy(() => import('views/IwiChairView'));
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -95,6 +96,7 @@ ReactDOM.render(
           <Route
             path="/AboutUs"
             render={props => <AboutUsView {...props} />}
+            exact
           />
           <Route
             path="/ContactUs"
@@ -138,6 +140,11 @@ ReactDOM.render(
           <Route
             path="/Wananga/:evid"
             render={props => <EventView {...props} />}
+            exact
+          />
+          <Route
+            path="/AboutUs/:imid"
+            render={props => <IwiChairView {...props} />}
             exact
           />
         </Switch>

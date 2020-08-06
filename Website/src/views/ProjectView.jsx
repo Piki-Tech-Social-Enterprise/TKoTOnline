@@ -53,7 +53,10 @@ const ProjectView = props => {
     <>
       {
         state.isLoading
-          ? <LoadingSpinner />
+          ? <LoadingSpinner
+            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+            innerClassName="m-5 p-5 text-center"
+          />
           : <div id="Project">
             <HomeNavbar
               initalTransparent={false}

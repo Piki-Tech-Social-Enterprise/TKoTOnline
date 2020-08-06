@@ -22,6 +22,9 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
+import {
+  IwiChairsSection
+} from 'components/Sections/IwiMembers';
 
 const AboutUsView = props => {
   const [state, setState] = useState({
@@ -102,6 +105,7 @@ const AboutUsView = props => {
                   <div
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageDescription)) }}
                   />
+                  <IwiChairsSection />
                 </Col>
               </Row>
             </Container>

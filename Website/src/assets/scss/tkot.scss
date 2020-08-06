@@ -218,6 +218,12 @@ $tkot-page-header-50-vh: 50vh;
   &[filter-color='black'] {
     @include linear-gradient(rgba($tkot-secondary-color-black, 0.61), rgba($tkot-secondary-color-black, 0.61));
   }
+  &[filter-color='blue-alt'] {
+    @include linear-gradient(rgba($tkot-secondary-color-black, 0.20), rgba($tkot-primary-blue, 0.61));
+  }
+  &[filter-color='red'] {
+    @include linear-gradient(rgba($tkot-secondary-color-black, 0.20), rgba($tkot-primary-red, 0.61));
+  }
 }
 
 .tkot-background-image-container {
@@ -438,4 +444,9 @@ $tkot-page-header-50-vh: 50vh;
       background-color: $tkot-bg-color-white !important;
     }
   }
+}
+
+.iwi-chair-image {
+  height: 250px;
+  width: 250px;
 }

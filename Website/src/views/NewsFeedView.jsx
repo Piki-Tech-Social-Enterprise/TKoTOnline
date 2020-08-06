@@ -59,26 +59,29 @@ const NewsFeedView = props => {
     <>
       {
         state.isLoading
-          ? <LoadingSpinner />
-            : <div id="NewsFeed">
-              <HomeNavbar
-                initalTransparent={false}
-                colorOnScrollValue={25}
-              />
-              <HomeHeader
-                pageHeaderImage={state.imageDownloadURL}
-                pageHeaderTitle={state.dbNewsFeed.header}
-                pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
-              />
-              <Container className="bg-warning1 py-3">
-                <Row>
-                  <Col
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbNewsFeed.content)) }}
-                  />
-                </Row>
-              </Container>
-              <HomeFooter />
-            </div>
+          ? <LoadingSpinner
+            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+            innerClassName="m-5 p-5 text-center"
+          />
+          : <div id="NewsFeed">
+            <HomeNavbar
+              initalTransparent={false}
+              colorOnScrollValue={25}
+            />
+            <HomeHeader
+              pageHeaderImage={state.imageDownloadURL}
+              pageHeaderTitle={state.dbNewsFeed.header}
+              pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
+            />
+            <Container className="bg-warning1 py-3">
+              <Row>
+                <Col
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbNewsFeed.content)) }}
+                />
+              </Row>
+            </Container>
+            <HomeFooter />
+          </div>
       }
     </>
   );

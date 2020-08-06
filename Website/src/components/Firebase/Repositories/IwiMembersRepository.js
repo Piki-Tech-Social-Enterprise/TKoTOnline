@@ -30,6 +30,17 @@ class IwiMembersRepository extends BaseRepository {
     }
     return dbIwiMemberAsArray;
   }
+
+  getDbIwiMember = async imid => {
+    return await this.db.ref(`iwiMembers/${imid}`);
+  }
+
+  getDbIwiMemberValue = async imid => {
+    const existingDbIwiMember = await this.getDbIwiMember(imid);
+    const dbIwiMemberRef = await existingDbIwiMember.once('value');
+    const dbIwiMember = await dbIwiMemberRef.val();
+    return dbIwiMember;
+  }
 }
 
 export default IwiMembersRepository;
