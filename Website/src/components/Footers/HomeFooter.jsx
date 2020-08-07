@@ -149,7 +149,10 @@ const HomeFooter = props => {
   };
   return (
     <>
-      <div className="bg-dark text-light">
+      <div className="bg-dark text-light" style={{
+        position: 'relative',
+        top: '3rem'
+      }}>
         <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
           {/* <Container> */}
           <Row className="footer-content px-0 mx-0">
@@ -172,7 +175,8 @@ const HomeFooter = props => {
                               pathname={pathname}
                               hash={hash}
                               items={navItems.filter(navItem => navItem.group === 'left')}
-                              navLinkClassName="text-lg-center py-2"
+                              navItemClassName="left"
+                              navLinkClassName="text-lg-center py-2 ml-0 ml-xl-5 box-social-text"
                             />
                           </Nav>
                         </Col>
@@ -183,7 +187,8 @@ const HomeFooter = props => {
                               pathname={pathname}
                               hash={hash}
                               items={navItems.filter(navItem => navItem.group === 'right')}
-                              navLinkClassName="text-lg-center py-2"
+                              navItemClassName="right"
+                              navLinkClassName="text-lg-center py-2 mr-0 mr-xl-5 box-social-text"
                             />
                           </Nav>
                         </Col>
@@ -280,8 +285,10 @@ const HomeFooter = props => {
           {/* </Container> */}
         </footer>
       </div>
-      <div className="bg-black text-light">
-        <Row className="copyright p-0 m-0 pt-3">
+      <div className="bg-black text-light" style={{
+        maxHeight: '95px'
+      }}>
+        <Row className="copyright p-0 m-0">
           <Col xs={12} lg={6} className="my-auto bg-danger1">
             <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
           </Col>

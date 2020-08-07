@@ -13,6 +13,7 @@ const NavItems = props => {
     pathname,
     hash,
     items,
+    navItemClassName,
     navLinkClassName
   } = props;
   const isActive = (pathname, hash, route) => {
@@ -32,7 +33,7 @@ const NavItems = props => {
             name
           } = item;
           return (
-            <NavItem key={index}>
+            <NavItem className={`${navItemClassName || ''}`} key={index}>
               {
                 useScrollspyNavLinks
                   ? <ScrollspyNavLink name={route.replace('/#', '')}>

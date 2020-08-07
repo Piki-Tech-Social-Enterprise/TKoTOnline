@@ -113,7 +113,9 @@ const HomeView = props => {
                 pageAboutImage={state.homePageAboutImageDownloadUrl}
               />
               {/* Iwi Members */}
-              <IwiMembers />
+              <IwiMembers
+                containerClassName="bg-white"
+              />
               <HomeHeader
                 pageHeaderImage={state.homePageHeaderImageDownloadUrl}
                 showClickScrollDownForMoreLink={false}
@@ -125,6 +127,7 @@ const HomeView = props => {
               </div>
               {/* Projects */}
               <ProjectsSection
+                containerClassName="bg-secondary1"
                 showLearnMoreButton
                 isHomePage
               />
@@ -137,10 +140,12 @@ const HomeView = props => {
               <EventsSection
                 showLearnMoreButton
                 containerClassName="tkot-secondary-color-black-bg-color-61-pc"
+                // containerClassName="bg-success"
                 isHomePage
               />
               {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
               <NewsFeedSection
+                containerClassName="bg-warning1"
                 showLearnMoreButton
                 isHomePage
               />

@@ -11,6 +11,7 @@ const SocialMedia = props => {
 	} = props;
 	const IconAndTextElement = props => {
 		const {
+			textClassName,
 			icon,
 			text
 		} = props;
@@ -20,7 +21,7 @@ const SocialMedia = props => {
 					<i className="fas fa-circle fa-stack-2x" />
 					<i className={`${icon} fa-stack-1x fa-inverse`} />
 				</span>
-				<span className="mx-2 text-uppercase">{text}</span>
+				<span className={`mx-2 text-uppercase ${textClassName || ''}`}>{text}</span>
 			</>
 		);
 	};
@@ -37,11 +38,16 @@ const SocialMedia = props => {
 						<li className={`box-social ${margin}`} key={key}>
 							{
 								href
-									? <a href={href} target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, `Clicked "${text}" link`, href)}>
-										<IconAndTextElement icon={iconFaName} text={text} />
+									? <a
+										className="box-social-text"
+										href={href}
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={() => sendEvent(`${window.location.pathname} page`, `Clicked "${text}" link`, href)}
+									><IconAndTextElement textClassName="box-social-text" icon={iconFaName} text={text} />
 									</a>
 									: <span className="box-social-text">
-										<IconAndTextElement icon={iconFaName} text={text} />
+										<IconAndTextElement textClassName="box-social-text" icon={iconFaName} text={text} />
 									</span>
 							}
 						</li>

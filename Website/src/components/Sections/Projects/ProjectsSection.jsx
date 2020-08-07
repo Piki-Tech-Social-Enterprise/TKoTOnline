@@ -52,11 +52,11 @@ const ProjectsSection = props => {
     }
   }, [props, isLoading, setState]);
   return (
-    <Container className={`tkot-section ${containerClassName || ''}`}>
-      <a id="Projects" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <Row>
-        <Col>
-          <div className="mx-auto text-center">
+    <div className={`tkot-section ${containerClassName || ''}`}>
+      <Container>
+        <a id="Projects" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <Row className="debug-outline">
+          <Col className="mx-auto text-center my-3">
             <h3 className="text-uppercase">Our Projects &amp; Initiatives</h3>
             <Container className="my-3" fluid>
               <Row className="flex-row flex-nowrap cards-row">
@@ -94,7 +94,7 @@ const ProjectsSection = props => {
             </Container>
             {
               showLearnMoreButton
-                ? <div className="mb-5 text-center">
+                ? <div className="mb-4 text-center">
                   <Button href="/Projects" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
@@ -104,10 +104,10 @@ const ProjectsSection = props => {
                 </div>
                 : null
             }
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

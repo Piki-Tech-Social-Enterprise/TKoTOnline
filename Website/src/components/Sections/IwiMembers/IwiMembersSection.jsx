@@ -20,6 +20,7 @@ import {
 
 const IwiMembersSection = props => {
   const {
+    containerClassName,
     showClickScrollDownForMoreLink
   } = props;
   const [state, setState] = useState({
@@ -48,64 +49,64 @@ const IwiMembersSection = props => {
     }
   }, [props, state]);
   return (
-    <Container className="tkot-section bg-secondary1 mb-5 pb-5">
-      <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <Row>
-        <Col className="text-uppercase text-center mt-5 pt-4">
-          <h3>Our Iwi Members</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="text-center bg-danger1">
-          <Row>
+    <div className={`tkot-section ${containerClassName || ''}`}>
+      <Container>
+        <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <Row className="debug-outline">
+          <Col className="mx-auto text-center my-3">
+            <h3 className="text-uppercase">Our Iwi Members</h3>
+            <Container className="my-3">
+              <Row>
+                {
+                  state.isLoading
+                    ? <LoadingSpinner />
+                    : state.iwiMembers.map((iwiMember, index) => {
+                      const {
+                        imid,
+                        iwiMemberImageURL,
+                        iwiMemberName,
+                        iwiMemberURL
+                      } = iwiMember;
+                      return (
+                        <Fragment key={imid}>
+                          {
+                            index > 0 && index % 6 === 0
+                              ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
+                              : null
+                          }
+                          <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
+                            <a
+                              href={iwiMemberURL}
+                              className="text-dark text-decoration-none tkot-primary-blue-color"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName}" Logo`)}
+                            >
+                              <FirebaseImage
+                                className="iwi-member-image mt-3 mb-0"
+                                imageURL={iwiMemberImageURL}
+                                alt={iwiMemberName}
+                              /><br />
+                              <span className="iwi-member-name">{iwiMemberName}</span>
+                            </a>
+                          </Col>
+                        </Fragment>
+                      );
+                    })
+                }
+              </Row>
+            </Container>
             {
-              state.isLoading
-                ? <LoadingSpinner />
-                : state.iwiMembers.map((iwiMember, index) => {
-                  const {
-                    imid,
-                    iwiMemberImageURL,
-                    iwiMemberName,
-                    iwiMemberURL
-                  } = iwiMember;
-                  return (
-                    <Fragment key={imid}>
-                      {
-                        index > 0 && index % 6 === 0
-                          ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
-                          : null
-                      }
-                      <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
-                        <a
-                          href={iwiMemberURL}
-                          className="text-dark text-decoration-none tkot-primary-blue-color"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName}" Logo`)}
-                        >
-                          <FirebaseImage
-                            className="iwi-member-image mx-3 mt-3 mb-0"
-                            imageURL={iwiMemberImageURL}
-                            alt={iwiMemberName}
-                          /><br />
-                          <span className="iwi-member-name">{iwiMemberName}</span>
-                        </a>
-                      </Col>
-                    </Fragment>
-                  );
-                })
+              showClickScrollDownForMoreLink
+                ? <a href={Routes.about} className="text-decoration-none text-dark">
+                  <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+                </a>
+                : null
             }
-          </Row>
-          {
-            showClickScrollDownForMoreLink
-              ? <a href={Routes.about} className="text-decoration-none text-dark">
-                <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-              </a>
-              : null
-          }
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

@@ -50,7 +50,7 @@ const AboutSection = props => {
     }
   }, [props, state]);
   return (
-    <div className="tkot-section pt-4">
+    <div className="tkot-section">
       <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
       <div className="about-image" style={{
         backgroundImage: `linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0)), url(${pageAboutImage})`
@@ -67,8 +67,12 @@ const AboutSection = props => {
                     ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
                     : <>
                       <span>{state.settings.homePageAboutDescription}</span><br />
-                      <Button href={aboutUs} className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3" color="white" onClick={() => sendEvent('Home page', 'Clicked "Learn More..." button')}>
-                        Learn more...
+                      <Button
+                        href={aboutUs}
+                        className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3 mt-lg-5 mb-lg-1"
+                        color="white"
+                        onClick={() => sendEvent('Home page', 'Clicked "Learn More..." button')}
+                      >Learn more...
                       </Button>
                     </>
                 }

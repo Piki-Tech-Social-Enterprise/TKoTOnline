@@ -15,8 +15,8 @@ const HomeHeader = props => {
   } = props;
   return (
     <>
-      <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <div className="page-header clear-filter" filter-color={pageHeaderFilterColour}>
+      {/* <a id="About" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a> */}
+      <div className="page-header clear-filter tkot-section" filter-color={pageHeaderFilterColour}>
         {
           pageHeaderImage
             ? <div className="page-header-image" style={{

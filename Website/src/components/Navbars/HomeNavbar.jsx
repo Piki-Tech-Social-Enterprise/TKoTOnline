@@ -91,9 +91,6 @@ const HomeNavbar = props => {
       <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg" id="HomeNavbar">
         <Container className="pl-0">
           <div className="navbar-translate">
-            {/* <a href="/">
-              <img alt="..." className="n-logo" src={require("assets/img/tkot/tkot-mixed-no-tag-line.png")} width="180" />
-            </a> */}
             <button className="navbar-toggler navbar-toggler" aria-expanded={state.collapseOpen} type="button" onClick={() => {
               document.documentElement.classList.toggle("nav-open");
               setState(s => ({
@@ -107,6 +104,10 @@ const HomeNavbar = props => {
             </button>
           </div>
           <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
+            <a href="/">
+              {/* <img alt="..." className="n-logo" src={require("assets/img/tkot/tkot-mixed-no-tag-line.png")} width="180" /> */}
+              <img alt="..." className="n-logo mx-3 d-none d-lg-inline" src={require("assets/img/tkot/tkot-logo-only-black.png")} width="32" />
+            </a>
             <Nav navbar>
               <NavItems
                 useScrollspyNavLinks={isHomePage}

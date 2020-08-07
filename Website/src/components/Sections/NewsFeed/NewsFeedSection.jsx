@@ -67,11 +67,11 @@ const NewsFeedSection = props => {
     }
   }, [props, isLoading, setState, searchCategory]);
   return (
-    <Container className={`tkot-section ${containerClassName || ''}`}>
-      <a id="NewsFeed" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <Row>
-        <Col>
-          <div className="mx-auto text-center">
+    <div className={`tkot-section ${containerClassName || ''}`}>
+      <Container>
+        <a id="NewsFeed" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <Row className="debug-outline">
+          <Col className="mx-auto text-center my-3">
             <h3 className="text-uppercase">Our Latest News{searchCategory ? `: ${searchCategory}` : null}</h3>
             {/* <NewsFeedCarousel
               searchCategory={searchCategory}
@@ -92,7 +92,7 @@ const NewsFeedSection = props => {
                       const contentAsText = draftToText(content, '');
                       return (
                         <Col xs={12} sm={6} lg={4} key={index}>
-                          <Card className="card-block">
+                          <Card className="card-block news-feed-card">
                             <CardHeader>
                               <CardTitle className="h4 my-3 mx-2 font-weight-bold">{header}</CardTitle>
                             </CardHeader>
@@ -129,17 +129,17 @@ const NewsFeedSection = props => {
             </Container>
             {
               showLearnMoreButton
-                ? <div className="mb-5 text-center">
+                ? <div className="mb-4 text-center">
                   <Button href="/NewsFeeds" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
                 </div>
                 : null
             }
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

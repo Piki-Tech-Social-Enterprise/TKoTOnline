@@ -10,10 +10,16 @@ $tkot-secondary-color-black: #000000;
 $tkot-bg-color: $tkot-primary-blue;
 $tkot-bg-color-transparent: transparent;
 $tkot-bg-color-white: #FFFFFF;
-$tkot-padding-top: 3rem;
+// $tkot-padding-top: 1rem;
 $tkot-page-header-30-vh: 30vh;
 // $tkot-page-header-45-vh: 45vh;
 $tkot-page-header-50-vh: 50vh;
+$tkot-home-footer-x-padding: 1rem;
+
+// .debug-outline {
+//   border: 1px dotted aqua;
+//   background-color: rgba($tkot-primary-red, 0.4);
+// }
 
 .tkot-primary-blue-bg-color {
   background-color: $tkot-primary-blue;
@@ -45,7 +51,8 @@ $tkot-page-header-50-vh: 50vh;
 // }
 
 .tkot-section {
-  padding: $tkot-padding-top 0 0;
+  position: relative;
+  top: 3rem;
 }
 
 /* --- News Feed Carousel --- */
@@ -298,6 +305,11 @@ $tkot-page-header-50-vh: 50vh;
   //   min-height: $tkot-page-header-50-vh;
   //   height: $tkot-page-header-50-vh;
   // }
+  #HomeFooter {
+    .nav-item {
+      padding: 4px 0 !important;
+    }
+  }
 }
 
 #NewsFeed .page-header,
@@ -314,7 +326,7 @@ $tkot-page-header-50-vh: 50vh;
 }
 
 .iwi-member-image {
-  width: 100px;
+  width: 120px;
 }
 
 .about-image {
@@ -324,7 +336,6 @@ $tkot-page-header-50-vh: 50vh;
   height: 100%;
   z-index: 0;
   position: relative;
-  top: 3rem;
 }
 
 .tkot-anchor {
@@ -403,17 +414,20 @@ $tkot-page-header-50-vh: 50vh;
 }
 
 .box-social-text {
-  font-size: 0.8571em;
-  padding: 0.5rem;
+  font-size: 0.75rem !important;
+  padding: 0.5rem !important;
 }
 
 .created-by-logo-image {
-  width: 115px;
+  width: 95px;
 }
 
-.event-card {
+.event-card,
+.news-feed-card {
   border: none !important;
   border-radius: 0.25rem !important;
+}
+.event-card {
   box-shadow: none !important;
   max-width: 350px !important;
 }
@@ -433,9 +447,14 @@ $tkot-page-header-50-vh: 50vh;
 #HomeFooter {
   .nav-item {
     padding: 4px 0;
+    &.left {
+      padding-left: $tkot-home-footer-x-padding;
+    }
+    &.right {
+      padding-right: $tkot-home-footer-x-padding;
+    }
   }
   .nav-link {
-    font-size: 0.8571em !important;
     padding: 0;
   }
   form {
@@ -449,4 +468,8 @@ $tkot-page-header-50-vh: 50vh;
 .iwi-chair-image {
   height: 250px;
   width: 250px;
+}
+
+#HomeNavbar .n-logo {
+  max-width: 32px;
 }
