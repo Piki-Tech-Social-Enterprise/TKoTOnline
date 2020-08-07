@@ -286,7 +286,9 @@ const HomeFooter = props => {
         </footer>
       </div>
       <div className="bg-black text-light" style={{
-        maxHeight: '95px'
+        maxHeight: '95px',
+        position: 'relative',
+        top: '3rem'
       }}>
         <Row className="copyright p-0 m-0">
           <Col xs={12} lg={6} className="my-auto bg-danger1">
