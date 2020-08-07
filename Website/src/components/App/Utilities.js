@@ -82,6 +82,23 @@ const fromCamelcaseToTitlecase = camelCase => (
     .replace(/([A-Z])/g, match => ` ${match}`)
     .replace(/^./, match => match.toUpperCase())
 );
+const getChunkSize = (array, columnCount) => {
+  const {
+    length: arrayLength
+  } = array;
+  const arrayLengthRemainder = arrayLength % columnCount;
+  const arrayChunk = arrayLength - arrayLengthRemainder;
+  const initalSize = arrayChunk / columnCount;
+  const twoColumn = 2;
+  const twoColumnRemainder = (arrayLengthRemainder % twoColumn);
+  const offset = twoColumnRemainder === 0
+    ? arrayLengthRemainder / twoColumn
+    : (arrayLengthRemainder - twoColumnRemainder) / twoColumn;
+  const chunkSize = initalSize + (arrayLengthRemainder <= 1
+    ? arrayLengthRemainder
+    : offset);
+  return chunkSize;
+};
 const intoChunks = (array, size) => {
   let chunks = [];
   const arrayClone = [].concat(array);
@@ -259,6 +276,7 @@ export {
   formatBytes,
   formatInteger,
   fromCamelcaseToTitlecase,
+  getChunkSize,
   intoChunks,
   DATE_MOMENT_FORMAT,
   TIME_MOMENT_FORMAT,

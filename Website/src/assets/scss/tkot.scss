@@ -423,7 +423,8 @@ $tkot-home-footer-x-padding: 1rem;
 }
 
 .event-card,
-.news-feed-card {
+.news-feed-card,
+.iwi-chair-card {
   border: none !important;
   border-radius: 0.25rem !important;
 }
@@ -472,4 +473,43 @@ $tkot-home-footer-x-padding: 1rem;
 
 #HomeNavbar .n-logo {
   max-width: 32px;
+}
+
+.iwi-chairs-carousel {
+  .carousel-inner {
+    box-shadow: none;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    height: 70px;
+    width: 70px;
+    outline: black;
+    background-size: 100%, 100%;
+    background-color: $tkot-bg-color-white;
+    border-radius: 50%;
+    border: 1px dotted $tkot-secondary-color-grey;
+    background-image: none;
+  }
+  .carousel-control-prev-icon:hover,
+  .carousel-control-next-icon:hover {
+    background-color: $tkot-secondary-color-grey;
+  }
+  .carousel-control-next-icon:after,
+  .carousel-control-prev-icon:after {
+    font-size: 42px;
+    font-weight: bolder;
+    color: $tkot-secondary-color-grey;
+  }
+  .carousel-control-next-icon:after {
+    content: '>';
+  }
+  .carousel-control-prev-icon:after {
+    content: '<';
+  }
+  .carousel-control-next-icon:hover:after,
+  .carousel-control-prev-icon:hover:after {
+    color: $tkot-bg-color-white;
+  }
 }
