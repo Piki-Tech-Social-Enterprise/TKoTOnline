@@ -109,8 +109,8 @@ const AuthSettingsView = props => {
         } = homePageAboutImageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
         // eslint-disable-next-line
-        } else if (homePageVideoSourceUrl && !homePageVideoSourceUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
-          displayMessage = 'Home Page Video Source URL is invalid.';
+      } else if (homePageVideoSourceUrl && !homePageVideoSourceUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+        displayMessage = 'Home Page Video Source URL is invalid.';
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
           homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
@@ -188,6 +188,7 @@ const AuthSettingsView = props => {
           homePageAboutDescription,
           homePageVideoSourceUrl,
           aboutPageDescription,
+          aboutPageTKoTBackOfficeStructureDescription,
           sid
         } = dbSettings;
         setSettings(s => ({
@@ -200,7 +201,10 @@ const AuthSettingsView = props => {
           sid,
           aboutPageDescriptionEditorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
             ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageDescription)))
-            : s.aboutPageDescriptionEditorState
+            : s.aboutPageDescriptionEditorState,
+            aboutPageTKoTBackOfficeStructureDescriptionEditorState: aboutPageTKoTBackOfficeStructureDescription && aboutPageTKoTBackOfficeStructureDescription.startsWith('{') && aboutPageTKoTBackOfficeStructureDescription.endsWith('}')
+            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageTKoTBackOfficeStructureDescription)))
+            : s.aboutPageTKoTBackOfficeStructureDescriptionEditorState
         }));
       }
       setIsLoading(false);
