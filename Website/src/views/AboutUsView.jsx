@@ -106,6 +106,10 @@ const AboutUsView = props => {
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageDescription)) }}
                   />
                   <IwiChairsSection />
+                  <div
+                    className="mt-5 pt-5"
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageTKoTBackOfficeStructureDescription || '{}')) }}
+                  />
                 </Col>
               </Row>
             </Container>

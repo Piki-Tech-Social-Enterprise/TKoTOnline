@@ -45,8 +45,10 @@ const INITIAL_STATE = {
   homePageAboutDescription: '',
   homePageVideoSourceUrl: '',
   aboutPageDescription: '',
+  aboutPageTKoTBackOfficeStructureDescription: '',
   sid: null,
-  editorState: EditorState.createEmpty()
+  aboutPageDescriptionEditorState: EditorState.createEmpty(),
+  aboutPageTKoTBackOfficeStructureDescriptionEditorState: EditorState.createEmpty()
 };
 const AuthSettingsView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -85,7 +87,9 @@ const AuthSettingsView = props => {
       homePageAboutDescription,
       homePageVideoSourceUrl,
       aboutPageDescription,
-      editorState
+      aboutPageTKoTBackOfficeStructureDescription,
+      aboutPageDescriptionEditorState,
+      aboutPageTKoTBackOfficeStructureDescriptionEditorState
     } = settings;
     let sid = settings.sid;
     let homePageHeaderImageUrl = settings.homePageHeaderImageUrl;
@@ -94,8 +98,8 @@ const AuthSettingsView = props => {
     let displayTitle = 'Updating Settings Failed';
     let displayMessage = '';
     try {
-      if (!homePageHeaderImageUrl || !homePageAboutImageUrl || !homePageAboutDescription || !aboutPageDescription) {
-        displayMessage = 'The Home Page Header Image, Home Page About Image, Home Page About Description and About Page Description fields are required.';
+      if (!homePageHeaderImageUrl || !homePageAboutImageUrl || !homePageAboutDescription || !aboutPageDescription || !aboutPageTKoTBackOfficeStructureDescription) {
+        displayMessage = 'The Home Page Header Image, Home Page About Image, Home Page About Description, About Page Description, and About Page TKoT Back Office Structure Description fields are required.';
       } else if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.size > maxImageFileSize) {
         const {
           size
@@ -127,7 +131,8 @@ const AuthSettingsView = props => {
           homePageAboutImageUrl: homePageAboutImageUrl,
           homePageAboutDescription: homePageAboutDescription,
           homePageVideoSourceUrl: homePageVideoSourceUrl,
-          aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+          aboutPageDescription: aboutPageDescription,
+          aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription,
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
@@ -195,9 +200,9 @@ const AuthSettingsView = props => {
           homePageVideoSourceUrl,
           aboutPageDescription,
           sid,
-          editorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
+          aboutPageDescriptionEditorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
             ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageDescription)))
-            : s.editorState
+            : s.aboutPageDescriptionEditorState
         }));
       }
       setIsLoading(false);
@@ -278,10 +283,25 @@ const AuthSettingsView = props => {
                           wrapperClassName="wrapper-class"
                           editorClassName="editor-class"
                           toolbarClassName="toolbar-class"
-                          editorState={settings.editorState}
+                          editorState={settings.aboutPageDescriptionEditorState}
                           onEditorStateChange={editorState => setSettings(s => ({
                             ...s,
-                            editorState: editorState
+                            aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                            aboutPageDescriptionEditorState: editorState
+                          }))}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>About Page TKoT Back Office Structure Description</Label>
+                        <Editor
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class"
+                          toolbarClassName="toolbar-class"
+                          editorState={settings.aboutPageTKoTBackOfficeStructureDescriptionEditorState}
+                          onEditorStateChange={editorState => setSettings(s => ({
+                            ...s,
+                            aboutPageTKoTBackOfficeStructureDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                            aboutPageTKoTBackOfficeStructureDescriptionEditorState: editorState
                           }))}
                         />
                       </FormGroup>

@@ -136,13 +136,13 @@ const IwiChairSection = props => {
     }
   }, [props, isLoading, setState]);
   return (
-    <Container className={`tkot-section ${containerClassName || ''}`}>
-      <a id="IwiChair" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
-      <Row>
+    <div className={`tkot-section ${containerClassName || ''}`}>
+      {/* <a id="IwiChair" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a> */}
+      <Row noGutters>
         <Col>
           <div className="mx-auto text-center">
             <h3 className="text-uppercase">Iwi Chairs</h3>
-            <Container className="my-3 iwi-chairs-carousel">
+            <div className="my-3 iwi-chairs-carousel">
               {
                 state.isLoading
                   ? <LoadingSpinner />
@@ -230,11 +230,11 @@ const IwiChairSection = props => {
                     })
                 }
               </Row> */}
-            </Container>
+            </div>
           </div>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 
