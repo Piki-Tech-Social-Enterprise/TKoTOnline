@@ -87,9 +87,7 @@ const AuthSettingsView = props => {
       homePageAboutDescription,
       homePageVideoSourceUrl,
       aboutPageDescription,
-      aboutPageTKoTBackOfficeStructureDescription,
-      aboutPageDescriptionEditorState,
-      aboutPageTKoTBackOfficeStructureDescriptionEditorState
+      aboutPageTKoTBackOfficeStructureDescription
     } = settings;
     let sid = settings.sid;
     let homePageHeaderImageUrl = settings.homePageHeaderImageUrl;
