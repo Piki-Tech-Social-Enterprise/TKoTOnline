@@ -24,7 +24,8 @@ import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
   indexPageClassName,
   sidebarCollapseClassName,
-  defaultPageSetup
+  defaultPageSetup,
+  getSrc
 } from 'components/App/Utilities';
 
 const {
@@ -54,10 +55,10 @@ const HomeView = props => {
         homePageAboutImageUrl
       } = dbSettings;
       const homePageHeaderImageDownloadUrl = homePageHeaderImageUrl.startsWith('/images/')
-        ? await firebase.getStorageFileDownloadURL(homePageHeaderImageUrl)
+        ? getSrc(homePageHeaderImageUrl, null, null, true)
         : homePageHeaderImageUrl;
       const homePageAboutImageDownloadUrl = homePageAboutImageUrl.startsWith('/images/')
-        ? await firebase.getStorageFileDownloadURL(homePageAboutImageUrl)
+        ? getSrc(homePageAboutImageUrl, null, null, true)
         : homePageAboutImageUrl;
       defaultPageSetup({
         isLoading: true,

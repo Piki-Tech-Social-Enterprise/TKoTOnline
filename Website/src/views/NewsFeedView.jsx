@@ -16,6 +16,9 @@ import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
+import {
+  getSrc
+} from 'components/App/Utilities';
 
 const NewsFeedView = props => {
   const [state, setState] = useState({
@@ -41,7 +44,7 @@ const NewsFeedView = props => {
         window.location.href = externalUrl;
       } else {
         const imageDownloadURL = imageUrl.startsWith('/images/')
-          ? await firebase.getStorageFileDownloadURL(imageUrl)
+          ? getSrc(imageUrl, null, null, true)
           : imageUrl
         setState(s => ({
           ...s,

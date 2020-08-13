@@ -15,6 +15,9 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
+import {
+  getSrc
+} from 'components/App/Utilities';
 
 const EventView = props => {
   const [state, setState] = useState({
@@ -40,7 +43,7 @@ const EventView = props => {
         window.location.href = externalUrl;
       } else {
         const imageDownloadURL = imageUrl.startsWith('/images/')
-          ? await firebase.getStorageFileDownloadURL(imageUrl)
+        ? getSrc(imageUrl, null, null, true)
           : imageUrl;
         setState(s => ({
           ...s,

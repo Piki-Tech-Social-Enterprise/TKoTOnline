@@ -15,6 +15,9 @@ import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeHeader from 'components/Headers/HomeHeader';
 import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
+import {
+  getSrc
+} from 'components/App/Utilities';
 
 const ProjectView = props => {
   const [state, setState] = useState({
@@ -36,7 +39,7 @@ const ProjectView = props => {
         imageUrl
       } = dbProject;
       const imageDownloadURL = imageUrl.startsWith('/images/')
-        ? await firebase.getStorageFileDownloadURL(imageUrl)
+        ? getSrc(imageUrl, null, null, true)
         : imageUrl
       setState(s => ({
         ...s,
