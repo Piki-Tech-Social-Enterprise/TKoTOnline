@@ -38,7 +38,10 @@ const EventsView = () => {
               initalTransparent
               colorOnScrollValue={25}
             />
-            <EventsSection containerClassName="mt-5" />
+            <EventsSection
+              containerClassName="mt-5"
+              titleClassName="text-dark"
+            />
             <HomeFooter />
           </>
       }

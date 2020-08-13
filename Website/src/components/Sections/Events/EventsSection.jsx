@@ -29,7 +29,8 @@ const EventsSection = props => {
   const {
     containerClassName,
     showLearnMoreButton,
-    isHomePage
+    isHomePage,
+    titleClassName
   } = props;
   const {
     isLoading,
@@ -57,7 +58,7 @@ const EventsSection = props => {
         <a id="Wananga" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
         <Row className="debug-outline">
           <Col className="mx-auto text-center my-3">
-            <h3 className="text-uppercase text-light">Te Tai Tokerau Events</h3>
+            <h3 className={`text-uppercase ${titleClassName || 'text-light'}`}>Te Tai Tokerau Events</h3>
             <Container className="my-3" fluid>
               <Row className="flex-row flex-nowrap cards-row">
                 {
