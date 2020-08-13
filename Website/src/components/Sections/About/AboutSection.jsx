@@ -58,7 +58,9 @@ const AboutSection = props => {
         <Container className="py-5 text-center">
           <Row>
             <Col xs={12} sm={6} className="bg-danger1">
-              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.png")} width="419" />
+              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.png")} style={{
+                width: 419
+              }} />
             </Col>
             <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
               <div className="my-3">

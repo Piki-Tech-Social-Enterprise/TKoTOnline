@@ -73,7 +73,7 @@ const handleImageTransform = async (req, res) => {
       const sourceSuffix = `?alt=media`;
       const sourceUrl = `${'https://'}${join(sourcePrefix, encodeURIComponent(source.startsWith('/') ? source.substring(1) : source))}${sourceSuffix}`;
       console.log('sourceUrl: ', sourceUrl);
-      return https.get(sourceUrl, res => res.pipe(transform).pipe(responsePipe));
+      https.get(sourceUrl, res => res.pipe(transform).pipe(responsePipe));
     } catch (error) {
       console.log(`handleImageTransform Error: httpResponseCode: ${httpResponseCodes.BadRequest}, error.message: ${error.message}`);
       return res.status(httpResponseCodes.BadRequest).send(error.message);

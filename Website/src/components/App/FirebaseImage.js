@@ -17,41 +17,27 @@ const propTypes = {
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
   imageURL: PropTypes.string.isRequired,
-  isImageLoading: PropTypes.bool,
   loadingIconSize: PropTypes.oneOf([
     '',
     'sm',
     'lg'
   ]),
-  src: PropTypes.string
+  src: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  lossless: PropTypes.bool
 };
 const defaultProps = {
   className: 'firebase-image',
-  loadingIconSize: ''
+  loadingIconSize: '',
+  lossless: true
 };
 const FirebaseImage = props => {
   const [state, setState] = useState({
     isLoading: true,
     src: noImageAvailable,
-    alt: '',
-    isImageLoading: false
+    alt: ''
   });
-  const handleLoad = async e => {
-    e.preventDefault();
-    setState(s => ({
-      ...s,
-      isImageLoading: false
-    }));
-  }
-  const handleError = async e => {
-    e.preventDefault();
-    console.log(`Firebase Image Error: '${state.src}' was not found.`);
-    setState(s => ({
-      ...s,
-      src: noImageAvailable,
-      isImageLoading: false
-    }));
-  };
   const {
     className,
     loadingIconSize
@@ -59,10 +45,9 @@ const FirebaseImage = props => {
   const {
     isLoading,
     alt,
-    src,
-    isImageLoading
+    src
   } = state;
-  !isLoading && console.log('src: ', src);
+  !isLoading && console.log(`src: ${src}`);
   useEffect(() => {
     const retrieveData = () => {
       const {
@@ -78,8 +63,7 @@ const FirebaseImage = props => {
         ...s,
         isLoading: false,
         alt: alt,
-        src: imageSrc,
-        isImageLoading: true
+        src: imageSrc
       }));
     };
     if (state.isLoading) {
@@ -95,12 +79,10 @@ const FirebaseImage = props => {
           : null
       }
       <img
-        className={`${className} ${isLoading || isImageLoading ? 'invisible' : ''}`}
+        className={`${className} ${isLoading ? 'invisible' : ''}`}
         alt={alt}
         src={src}
         title={alt}
-        onLoad={handleLoad}
-        onError={handleError}
         loading="lazy"
       />
     </>
