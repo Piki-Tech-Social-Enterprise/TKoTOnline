@@ -193,30 +193,6 @@ const HomeFooter = props => {
                           </Nav>
                         </Col>
                       </Row>
-                      {/* <Row noGutters>
-                        <Col xs={6}>
-                          <Nav navbar>
-                            <NavItems
-                              useScrollspyNavLinks={isHomePage}
-                              pathname={pathname}
-                              hash={hash}
-                              items={navItems.filter(navItem => navItem.group === 'left')}
-                              navLinkClassName="text-lg-center"
-                            />
-                          </Nav>
-                        </Col>
-                        <Col xs={6}>
-                          <Nav navbar>
-                            <NavItems
-                              useScrollspyNavLinks={isHomePage}
-                              pathname={pathname}
-                              hash={hash}
-                              items={navItems.filter(navItem => navItem.group === 'right')}
-                              navLinkClassName="text-lg-center"
-                            />
-                          </Nav>
-                        </Col>
-                      </Row> */}
                     </Container>
                     <Tooltips
                       items={navItems}
@@ -285,11 +261,7 @@ const HomeFooter = props => {
           {/* </Container> */}
         </footer>
       </div>
-      <div className="bg-black text-light" style={{
-        maxHeight: '95px',
-        position: 'relative',
-        top: '3rem'
-      }}>
+      <div className="bg-black text-light footer-copyright-container">
         <Row className="copyright p-0 m-0">
           <Col xs={12} lg={6} className="my-auto bg-danger1">
             <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>

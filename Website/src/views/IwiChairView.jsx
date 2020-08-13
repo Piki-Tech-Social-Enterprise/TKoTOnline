@@ -20,8 +20,7 @@ import FirebaseImage from 'components/App/FirebaseImage';
 const IwiChairView = props => {
   const [state, setState] = useState({
     isLoading: true,
-    dbIwiMember: null,
-    iwiChairImageDownloadURL: ''
+    dbIwiMember: null
   });
   useEffect(() => {
     const retrieveIwiChairValue = async () => {
@@ -33,17 +32,10 @@ const IwiChairView = props => {
         imid
       } = match.params;
       const dbIwiMember = await firebase.getDbIwiMemberValue(imid);
-      const {
-        iwiChairImageURL
-      } = dbIwiMember;
-      const iwiChairImageDownloadURL = iwiChairImageURL.startsWith('/images/')
-        ? await firebase.getStorageFileDownloadURL(iwiChairImageURL)
-        : iwiChairImageURL
       setState(s => ({
         ...s,
         isLoading: false,
-        dbIwiMember: dbIwiMember,
-        iwiChairImageDownloadURL: iwiChairImageDownloadURL
+        dbIwiMember: dbIwiMember
       }));
     };
     if (state.isLoading) {
@@ -70,6 +62,8 @@ const IwiChairView = props => {
                 <FirebaseImage
                   className="rounded-circle iwi-chair-image"
                   imageURL={state.dbIwiMember.iwiChairImageURL}
+                  width="250"
+                  lossless={true}
                   alt={state.dbIwiMember.iwiChairName}
                   loadingIconSize="lg"
                 />
@@ -77,7 +71,7 @@ const IwiChairView = props => {
               </>)}
               pageHeaderFilterColour="blue-alt"
             />
-            <Container className="bg-warning1 pt-5 pb-3">
+            <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
                   dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbIwiMember.iwiChairProfile)) }}

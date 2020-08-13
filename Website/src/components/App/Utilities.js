@@ -266,6 +266,17 @@ const getNavItems = isHomePage => {
   return navItems;
 };
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const srcPrefix = process.env.NODE_ENV !== 'production'
+  ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
+  : '';
+const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
+const getSrc = (imageURL, width, height, lossless, noImageAvailable) => {
+  return imageURL
+    ? imageURL.startsWith('/images/')
+      ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
+      : imageURL
+    : noImageAvailable;
+};
 
 export default shallowCompare;
 export {
@@ -298,5 +309,8 @@ export {
   tryToConvertValue,
   sortArray,
   getNavItems,
-  sleep
+  sleep,
+  srcPrefix,
+  getQParameter,
+  getSrc
 };

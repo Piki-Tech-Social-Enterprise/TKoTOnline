@@ -19,7 +19,8 @@ const {
   handleDeleteProfile,
   handleDeleteProfileAlt,
   handleIsUnique,
-  handleIsUniqueAlt
+  handleIsUniqueAlt,
+  handleImageTransform
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -182,6 +183,19 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/isUniqueAlt
 */
 exports.isUniqueAlt = handleIsUniqueAlt;
+
+/*
+--- Image Transform ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/imageTransform/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
+http://localhost:5000/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/imageTransform/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
+https://web-dev.tkot.org.nz/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
+*/
+exports.imageTransform = handleImageTransform;
 
 const {
   handleCreateVolunteer

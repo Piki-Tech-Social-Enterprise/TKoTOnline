@@ -166,6 +166,12 @@ $tkot-home-footer-x-padding: 1rem;
   background: $tkot-bg-color;
 }
 
+.footer-copyright-container {
+  max-height: 95px;
+  position: relative;
+  top: 3rem;
+}
+
 @media screen and (max-width: 768px) {
   .footer {
     padding-top: 50px;
@@ -181,6 +187,10 @@ $tkot-home-footer-x-padding: 1rem;
 }
 
 @media screen and (max-width: 991px) {
+  .footer-copyright-container {
+    max-height: inherit;
+    padding: 15px 0;
+  }
   .footer .copyright {
     text-align: center;
     padding-top: 50px;
@@ -327,6 +337,8 @@ $tkot-home-footer-x-padding: 1rem;
 
 .iwi-member-image {
   width: 120px;
+  height: auto;
+  min-height: 120px;
 }
 
 .about-image {

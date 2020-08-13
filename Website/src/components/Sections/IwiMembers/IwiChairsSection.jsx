@@ -166,6 +166,8 @@ const IwiChairSection = props => {
                             <FirebaseImage
                               className="rounded-circle iwi-chair-image"
                               imageURL={iwiChairImageURL}
+                              width="250"
+                              lossless={true}
                               alt={iwiChairName}
                               loadingIconSize="lg"
                             />

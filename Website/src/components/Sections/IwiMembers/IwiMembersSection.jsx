@@ -86,6 +86,8 @@ const IwiMembersSection = props => {
                                 className="iwi-member-image mt-3 mb-0"
                                 imageURL={iwiMemberImageURL}
                                 alt={iwiMemberName}
+                                width="120"
+                                lossless={true}
                               /><br />
                               <span className="iwi-member-name">{iwiMemberName}</span>
                             </a>

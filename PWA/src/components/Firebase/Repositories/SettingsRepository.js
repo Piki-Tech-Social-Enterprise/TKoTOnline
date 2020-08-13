@@ -38,6 +38,7 @@ class SettingsRepository extends BaseRepository {
       homePageVideoSourceUrl,
       aboutPageDescription,
       aboutPageTKoTBackOfficeStructureDescription,
+      aboutPageTKoTBackOfficeStructureImageUrl,
       sid,
       updated,
       updatedBy
@@ -59,6 +60,7 @@ class SettingsRepository extends BaseRepository {
         homePageVideoSourceUrl: homePageVideoSourceUrl || '',
         aboutPageDescription: aboutPageDescription || '',
         aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription || '',
+        aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         sid: await dbSettingsRef.getKey()
@@ -76,6 +78,7 @@ class SettingsRepository extends BaseRepository {
           homePageVideoSourceUrl: homePageVideoSourceUrl || dbSettings.homePageVideoSourceUrl,
           aboutPageDescription: aboutPageDescription || dbSettings.aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription || dbSettings.aboutPageTKoTBackOfficeStructureDescription,
+          aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl || dbSettings.aboutPageTKoTBackOfficeStructureImageUrl,
           sid: sid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbSettings.updatedBy

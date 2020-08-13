@@ -76,6 +76,8 @@ const EventsSection = props => {
                             <FirebaseImage
                               className="card-img-max-height card-img-top"
                               imageURL={imageUrl}
+                              width="340"
+                              lossless={true}
                               alt={header}
                               loadingIconSize="lg"
                             />

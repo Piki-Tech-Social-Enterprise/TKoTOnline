@@ -73,6 +73,8 @@ const ProjectsSection = props => {
                             <FirebaseImage
                               className="card-img-max-height"
                               imageURL={dbProject.imageUrl}
+                              width="260"
+                              lossless={true}
                               alt={dbProject.header}
                               loadingIconSize="lg"
                             />

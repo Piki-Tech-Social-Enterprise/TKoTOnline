@@ -25,6 +25,9 @@ const {
   handleIsUnique,
   handleIsUniqueAlt
 } = require('./handleIsUnique');
+const {
+  handleImageTransform
+} = require('./handleImageTransform');
 
 exports.handleGetServerDateTime = functions
   .https
@@ -56,3 +59,6 @@ exports.handleIsUnique = functions
 exports.handleIsUniqueAlt = functions
   .https
   .onRequest(handleIsUniqueAlt);
+exports.handleImageTransform = functions
+  .https
+  .onRequest(handleImageTransform);

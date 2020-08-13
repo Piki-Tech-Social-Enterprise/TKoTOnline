@@ -99,6 +99,8 @@ const NewsFeedSection = props => {
                             <FirebaseImage
                               className="card-img-max-height"
                               imageURL={imageUrl}
+                              width="340"
+                              lossless={true}
                               alt={header}
                               loadingIconSize="lg"
                             />

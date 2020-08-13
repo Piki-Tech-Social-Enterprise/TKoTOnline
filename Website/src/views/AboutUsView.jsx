@@ -25,6 +25,7 @@ import {
 import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
+import FirebaseImage from 'components/App/FirebaseImage';
 
 const AboutUsView = props => {
   const [state, setState] = useState({
@@ -109,6 +110,14 @@ const AboutUsView = props => {
                   <div
                     className="mt-5 pt-5"
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageTKoTBackOfficeStructureDescription || '{}')) }}
+                  />
+                  <FirebaseImage
+                    className="my-3"
+                    imageURL={state.settings.aboutPageTKoTBackOfficeStructureImageUrl}
+                    width="1074"
+                    lossless={true}
+                    alt="TKoT Back Office Structure"
+                    loadingIconSize="lg"
                   />
                 </Col>
               </Row>

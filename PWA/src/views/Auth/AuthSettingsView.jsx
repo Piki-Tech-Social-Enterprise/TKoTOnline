@@ -48,7 +48,9 @@ const INITIAL_STATE = {
   aboutPageTKoTBackOfficeStructureDescription: '',
   sid: null,
   aboutPageDescriptionEditorState: EditorState.createEmpty(),
-  aboutPageTKoTBackOfficeStructureDescriptionEditorState: EditorState.createEmpty()
+  aboutPageTKoTBackOfficeStructureDescriptionEditorState: EditorState.createEmpty(),
+  aboutPageTKoTBackOfficeStructureImageUrl: '',
+  aboutPageTKoTBackOfficeStructureImageUrlFile: null
 };
 const AuthSettingsView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -87,11 +89,13 @@ const AuthSettingsView = props => {
       homePageAboutDescription,
       homePageVideoSourceUrl,
       aboutPageDescription,
-      aboutPageTKoTBackOfficeStructureDescription
+      aboutPageTKoTBackOfficeStructureDescription,
+      aboutPageTKoTBackOfficeStructureImageUrlFile
     } = settings;
     let sid = settings.sid;
     let homePageHeaderImageUrl = settings.homePageHeaderImageUrl;
     let homePageAboutImageUrl = settings.homePageAboutImageUrl;
+    let aboutPageTKoTBackOfficeStructureImageUrl = settings.aboutPageTKoTBackOfficeStructureImageUrl;
     let displayIcon = 'error';
     let displayTitle = 'Updating Settings Failed';
     let displayMessage = '';
@@ -111,6 +115,11 @@ const AuthSettingsView = props => {
         // eslint-disable-next-line
       } else if (homePageVideoSourceUrl && !homePageVideoSourceUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
         displayMessage = 'Home Page Video Source URL is invalid.';
+      } else if (aboutPageTKoTBackOfficeStructureImageUrlFile && aboutPageTKoTBackOfficeStructureImageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = aboutPageTKoTBackOfficeStructureImageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
           homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
@@ -122,6 +131,11 @@ const AuthSettingsView = props => {
             .replace(settingKeyFormat, sid)
             .replace(settingFilenameFormat, homePageAboutImageUrlFile.name);
         }
+        if (aboutPageTKoTBackOfficeStructureImageUrlFile && aboutPageTKoTBackOfficeStructureImageUrlFile.name) {
+          aboutPageTKoTBackOfficeStructureImageUrl = settingHomePageHeaderImageUrlFormat
+            .replace(settingKeyFormat, sid)
+            .replace(settingFilenameFormat, aboutPageTKoTBackOfficeStructureImageUrlFile.name);
+        }
         await firebase.saveDbSettings({
           created: now.toString(),
           createdBy: uid,
@@ -131,6 +145,7 @@ const AuthSettingsView = props => {
           homePageVideoSourceUrl: homePageVideoSourceUrl,
           aboutPageDescription: aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription,
+          aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl,
           sid: sid,
           updated: now.toString(),
           updatedBy: uid
@@ -140,6 +155,9 @@ const AuthSettingsView = props => {
         }
         if (homePageAboutImageUrlFile) {
           await firebase.saveStorageFile(homePageAboutImageUrl, homePageAboutImageUrlFile);
+        }
+        if (aboutPageTKoTBackOfficeStructureImageUrlFile) {
+          await firebase.saveStorageFile(aboutPageTKoTBackOfficeStructureImageUrl, aboutPageTKoTBackOfficeStructureImageUrlFile);
         }
         displayIcon = 'success';
         displayTitle = 'Updating Settings Successful';
@@ -178,6 +196,16 @@ const AuthSettingsView = props => {
       }));
     }
   };
+  const handleAboutPageTKoTBackOfficeStructureImageUrlChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const aboutPageTKoTBackOfficeStructureImageUrlFile = e.target.files[0];
+      setSettings(s => ({
+        ...s,
+        aboutPageTKoTBackOfficeStructureImageUrlFile: aboutPageTKoTBackOfficeStructureImageUrlFile
+      }));
+    }
+  };
   useEffect(() => {
     const retrieveSettings = async () => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
@@ -189,6 +217,7 @@ const AuthSettingsView = props => {
           homePageVideoSourceUrl,
           aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription,
+          aboutPageTKoTBackOfficeStructureImageUrl,
           sid
         } = dbSettings;
         setSettings(s => ({
@@ -198,13 +227,15 @@ const AuthSettingsView = props => {
           homePageAboutDescription,
           homePageVideoSourceUrl,
           aboutPageDescription,
-          sid,
           aboutPageDescriptionEditorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
             ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageDescription)))
             : s.aboutPageDescriptionEditorState,
-            aboutPageTKoTBackOfficeStructureDescriptionEditorState: aboutPageTKoTBackOfficeStructureDescription && aboutPageTKoTBackOfficeStructureDescription.startsWith('{') && aboutPageTKoTBackOfficeStructureDescription.endsWith('}')
+          aboutPageTKoTBackOfficeStructureDescription,
+          aboutPageTKoTBackOfficeStructureDescriptionEditorState: aboutPageTKoTBackOfficeStructureDescription && aboutPageTKoTBackOfficeStructureDescription.startsWith('{') && aboutPageTKoTBackOfficeStructureDescription.endsWith('}')
             ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageTKoTBackOfficeStructureDescription)))
-            : s.aboutPageTKoTBackOfficeStructureDescriptionEditorState
+            : s.aboutPageTKoTBackOfficeStructureDescriptionEditorState,
+          aboutPageTKoTBackOfficeStructureImageUrl,
+          sid
         }));
       }
       setIsLoading(false);
@@ -305,6 +336,26 @@ const AuthSettingsView = props => {
                             aboutPageTKoTBackOfficeStructureDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
                             aboutPageTKoTBackOfficeStructureDescriptionEditorState: editorState
                           }))}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>About Page TKoT Back Office Structure Image</Label>
+                        <FirebaseInput
+                          value={settings.aboutPageTKoTBackOfficeStructureImageUrl || ''}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'aboutPageTKoTBackOfficeStructureImageUrl',
+                            name: 'aboutPageTKoTBackOfficeStructureImageUrl',
+                            placeholder: 'About Page TKoT Back Office Structure Image',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleAboutPageTKoTBackOfficeStructureImageUrlChange}
+                          downloadURLFormat={settingHomePageHeaderImageUrlFormat}
+                          downloadURLFormatKeyName={settingKeyFormat}
+                          downloadURLFormatKeyValue={settings.sid || ''}
+                          downloadURLFormatFileName={settingFilenameFormat}
+                          imageResize="md"
                         />
                       </FormGroup>
                       <FormGroup>
