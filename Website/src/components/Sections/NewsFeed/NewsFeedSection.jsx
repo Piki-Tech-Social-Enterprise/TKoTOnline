@@ -108,6 +108,7 @@ const NewsFeedSection = props => {
                               <p className="font-weight-bold">
                                 <NewsFeedCaption
                                   newsFeed={dbNewsFeed}
+                                  categoryLinkClassName="text-dark"
                                 />
                               </p>
                               <p className="d-inline-block block-with-text">{contentAsText}</p>
