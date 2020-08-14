@@ -43,9 +43,7 @@ const NewsFeedView = props => {
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
-        const imageDownloadURL = imageUrl.startsWith('/images/')
-          ? getSrc(imageUrl, null, null, true)
-          : imageUrl
+        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
         setState(s => ({
           ...s,
           isLoading: false,

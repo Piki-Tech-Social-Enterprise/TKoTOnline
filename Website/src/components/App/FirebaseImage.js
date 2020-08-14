@@ -6,7 +6,7 @@ import {
   withFirebase
 } from 'components/Firebase';
 import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
-import LoadingIcon from './LoadingIcon';
+// import LoadingIcon from './LoadingIcon';
 import PropTypes from 'prop-types';
 import {
   getSrc
@@ -35,12 +35,13 @@ const defaultProps = {
 const FirebaseImage = props => {
   const [state, setState] = useState({
     isLoading: true,
-    src: noImageAvailable,
+    src: '',
+    // src: noImageAvailable,
     alt: ''
   });
   const {
     className,
-    loadingIconSize
+    // loadingIconSize
   } = props;
   const {
     isLoading,
@@ -49,8 +50,9 @@ const FirebaseImage = props => {
   } = state;
   !isLoading && console.log(`src: ${src}`);
   useEffect(() => {
-    const retrieveData = () => {
+    const retrieveData = async () => {
       const {
+        firebase,
         alt,
         imageURL,
         src,
@@ -58,7 +60,7 @@ const FirebaseImage = props => {
         height,
         lossless
       } = props;
-      const imageSrc = src || getSrc(imageURL, width, height, lossless, noImageAvailable);
+      const imageSrc = src || await getSrc(imageURL, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,
@@ -73,11 +75,11 @@ const FirebaseImage = props => {
   }, [props, state]);
   return (
     <>
-      {
+      {/* {
         isLoading
           ? <LoadingIcon size={loadingIconSize} />
           : null
-      }
+      } */}
       <img
         className={`${className} ${isLoading ? 'invisible' : ''}`}
         alt={alt}

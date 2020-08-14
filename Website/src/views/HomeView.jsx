@@ -54,12 +54,8 @@ const HomeView = props => {
         homePageHeaderImageUrl,
         homePageAboutImageUrl
       } = dbSettings;
-      const homePageHeaderImageDownloadUrl = homePageHeaderImageUrl.startsWith('/images/')
-        ? getSrc(homePageHeaderImageUrl, null, null, true)
-        : homePageHeaderImageUrl;
-      const homePageAboutImageDownloadUrl = homePageAboutImageUrl.startsWith('/images/')
-        ? getSrc(homePageAboutImageUrl, null, null, true)
-        : homePageAboutImageUrl;
+      const homePageHeaderImageDownloadUrl = await getSrc(homePageHeaderImageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+      const homePageAboutImageDownloadUrl = await getSrc(homePageAboutImageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
       defaultPageSetup({
         isLoading: true,
         classNames: [

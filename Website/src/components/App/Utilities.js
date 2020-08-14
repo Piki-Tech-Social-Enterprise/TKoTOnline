@@ -266,14 +266,19 @@ const getNavItems = isHomePage => {
   return navItems;
 };
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const srcPrefix = process.env.NODE_ENV !== 'production' && !Boolean(process.env.REACT_APP_DEBUG_MODE)
+const srcPrefix = process.env.NODE_ENV !== 'production' && Boolean(process.env.REACT_APP_DEBUG_MODE)
   ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
   : '';
 const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
-const getSrc = (imageURL, width, height, lossless, noImageAvailable) => {
+const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getStorageFileDownloadURL) => {
+  const {
+    REACT_APP_USE_IMAGE_CDN
+  } = process.env;
   return imageURL
     ? imageURL.startsWith('/images/')
-      ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
+      ? REACT_APP_USE_IMAGE_CDN
+        ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
+        : (typeof getStorageFileDownloadURL === 'function' && await getStorageFileDownloadURL(imageURL)) || imageURL
       : imageURL
     : noImageAvailable;
 };
