@@ -48,7 +48,7 @@ const FirebaseImage = props => {
     alt,
     src
   } = state;
-  !isLoading && console.log(`src: ${src}`);
+  // !isLoading && console.log(`src: ${src}`);
   useEffect(() => {
     const retrieveData = async () => {
       const {
@@ -61,6 +61,7 @@ const FirebaseImage = props => {
         lossless
       } = props;
       const imageSrc = src || await getSrc(imageURL, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
+      // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);
       setState(s => ({
         ...s,
         isLoading: false,

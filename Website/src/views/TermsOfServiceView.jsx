@@ -46,7 +46,7 @@ const TermsOfServiceView = () => {
               initalTransparent
               colorOnScrollValue={25}
             />
-            <Container className="p-5 mt-5">
+            <Container className="pt-5 px-5 mt-3">
               <Row>
                 <Col className="px-0 mt-5">
                   <h3>TERMS OF USE ("Terms")</h3>
