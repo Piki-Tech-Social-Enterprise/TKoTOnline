@@ -102,7 +102,6 @@ const HomeFooter = props => {
       email,
       message
     } = contact;
-    let cid = contact.cid;
     let displayIcon = 'error';
     let displayTitle = 'Sign Up failed';
     let displayMessage = '';
@@ -112,18 +111,17 @@ const HomeFooter = props => {
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
         displayMessage = 'Email is invalid.';
       } else {
-        cid = await firebase.saveDbContact({});
         await firebase.saveDbContact({
           active: true,
           created: now.toString(),
-          createdBy: firstName,
+          createdBy: email,
           firstName,
           lastName,
           email,
           message,
-          cid: cid,
+          subscribed: true,
           updated: now.toString(),
-          updatedBy: firstName
+          updatedBy: email
         });
         displayIcon = 'success';
         displayTitle = 'Sign Up successful';

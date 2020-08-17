@@ -25,7 +25,7 @@ import {
 
 const AuthContactsView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [ContactsAsArray, setContactsAsArray] = useState([]);
+  const [contactsAsArray, setContactsAsArray] = useState([]);
   useEffect(() => {
     const retrieveContacts = async () => {
       const dbContactsAsArray = await props.firebase.getDbContactsAsArray(true);
@@ -42,20 +42,17 @@ const AuthContactsView = props => {
     };
   }, [props, isLoading, setIsLoading, setContactsAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    sortArray(ContactsAsArray, sortName, sortOrder);
+    sortArray(contactsAsArray, sortName, sortOrder);
   };
-  // const handleContactsRowClick = async row => {
-  //   props.history.push(`/auth/Contacts/${row.cid}`);
-  // };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbContacts = ContactsAsArray.findIndex(dbContacts => dbContacts.cid === updatedChildState.dbId);
+    const indexOfDbContacts = contactsAsArray.findIndex(dbContacts => dbContacts.cid === updatedChildState.dbId);
     if (indexOfDbContacts > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        ContactsAsArray[indexOfDbContacts].active = updatedChildState.dbActive;
+        contactsAsArray[indexOfDbContacts].active = updatedChildState.dbActive;
       }
-      setContactsAsArray(ContactsAsArray);
+      setContactsAsArray(contactsAsArray);
     }
-  }
+  };
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -67,7 +64,7 @@ const AuthContactsView = props => {
                 {
                   isLoading
                     ? <LoadingOverlayModal color="text-info" />
-                    : <BootstrapTable data={ContactsAsArray} version="4" bordered={false} condensed hover
+                    : <BootstrapTable data={contactsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
                       exportCSV csvFileName="contacts-export"
@@ -76,16 +73,17 @@ const AuthContactsView = props => {
                         defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Contacts found.',
-                        onSortChange: handleSortChange,
-                        // onRowClick: handleContactsRowClick
+                        onSortChange: handleSortChange
                       }}>
-                      <TableHeaderColumn dataField="created" dataSort caretRender={renderCaret} width="150px" dataFormat={cell => (
+                      <TableHeaderColumn dataField="created" width="10%" dataSort caretRender={renderCaret} dataFormat={cell => (
                         moment(cell).format(DATE_TIME_MOMENT_FORMAT)
                       )}>Created</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="email" width="30%" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
-                      <TableHeaderColumn dataField="firstName" width="25%" dataSort caretRender={renderCaret}>First Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="lastName" width="25%" dataSort caretRender={renderCaret}>Last Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="email" width="20%" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="firstName" width="15%" dataSort caretRender={renderCaret}>First Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="lastName" width="15%" dataSort caretRender={renderCaret}>Last Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="message" width="30%" dataSort caretRender={renderCaret} hidden={false} export>Message</TableHeaderColumn>
+                      <TableHeaderColumn dataField="subscribed" hidden export>Subscribed</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" width="10%" dataSort caretRender={renderCaret} export={false} dataFormat={(cell, row) => (
                         <ContactStatusBadge
                           dbObjectName="Contact"
                           dbId={row.cid}

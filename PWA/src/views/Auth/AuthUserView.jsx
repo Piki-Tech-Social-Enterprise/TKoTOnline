@@ -430,7 +430,7 @@ const AuthUserView = props => {
                           <Input placeholder="Display Name" name="displayName" value={user.displayName} onChange={handleChange} type="text" />
                         </FormGroup>
                         {
-                          !!user.roles['systemAdminRole'] || !!user.roles['adminRole']
+                          !!props.authUser.roles['systemAdminRole'] || !!props.authUser.roles['adminRole']
                             ? <>
                               <FormGroup className="user-roles">
                                 <Label>Roles</Label><br />

@@ -198,7 +198,8 @@ https://web-dev.tkot.org.nz/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/
 exports.imageTransform = handleImageTransform;
 
 const {
-  handleCreateVolunteer
+  handleCreateVolunteer,
+  handleCreateContact
 } = require('./database');
 /*
 --- Create Volunteer ---
@@ -206,3 +207,8 @@ Usage:
 createVolunteer(snap, context)
 */
 exports.createVolunteer = handleCreateVolunteer;
+/*
+-- Create Contact ---
+Usage: createContact(snap, context)
+*/
+exports.createContact = handleCreateContact;

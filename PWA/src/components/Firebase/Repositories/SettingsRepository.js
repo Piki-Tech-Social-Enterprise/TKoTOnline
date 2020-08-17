@@ -39,6 +39,8 @@ class SettingsRepository extends BaseRepository {
       aboutPageDescription,
       aboutPageTKoTBackOfficeStructureDescription,
       aboutPageTKoTBackOfficeStructureImageUrl,
+      gmailEmail,
+      gmailPassword,
       sid,
       updated,
       updatedBy
@@ -61,6 +63,8 @@ class SettingsRepository extends BaseRepository {
         aboutPageDescription: aboutPageDescription || '',
         aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription || '',
         aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl || '',
+        gmailEmail: gmailEmail || '',
+        gmailPassword: gmailPassword || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         sid: await dbSettingsRef.getKey()
@@ -79,6 +83,8 @@ class SettingsRepository extends BaseRepository {
           aboutPageDescription: aboutPageDescription || dbSettings.aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription || dbSettings.aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl || dbSettings.aboutPageTKoTBackOfficeStructureImageUrl,
+          gmailEmail: gmailEmail || dbSettings.gmailEmail,
+          gmailPassword: gmailPassword || dbSettings.gmailPassword,
           sid: sid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbSettings.updatedBy

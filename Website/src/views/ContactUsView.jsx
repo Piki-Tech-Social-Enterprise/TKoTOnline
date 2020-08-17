@@ -12,7 +12,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
+  CustomInput
 } from 'reactstrap';
 import HomeNavbar from 'components/Navbars/HomeNavbar';
 import HomeFooter from 'components/Footers/HomeFooter';
@@ -31,18 +32,18 @@ const ContactUsView = props => {
     lastName: '',
     email: '',
     message: '',
+    subscribed: false,
     cid: null
   };
   const [contact, setContact] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isNew = true;
   const handleChange = async e => {
     const {
       name,
       value,
       checked
     } = e.target;
-    const checkedNames = ['active'];
+    const checkedNames = ['subscribed'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     console.log(`name: ${name}, value: ${value}`);
     setContact(c => ({
@@ -66,9 +67,9 @@ const ContactUsView = props => {
       firstName,
       lastName,
       email,
-      message
+      message,
+      subscribed
     } = contact;
-    let cid = contact.cid;
     let displayIcon = 'error';
     let displayTitle = 'Contact failed';
     let displayMessage = '';
@@ -78,20 +79,17 @@ const ContactUsView = props => {
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
         displayMessage = 'Email is invalid.';
       } else {
-        if (isNew) {
-          cid = await firebase.saveDbContact({});
-        }
         await firebase.saveDbContact({
           active: true,
           created: now.toString(),
-          createdBy: firstName,
+          createdBy: email,
           firstName,
           lastName,
           email,
           message,
-          cid: cid,
+          subscribed,
           updated: now.toString(),
-          updatedBy: firstName
+          updatedBy: email
         });
         displayIcon = 'success';
         displayTitle = 'Contact successfully sent';
@@ -147,6 +145,16 @@ const ContactUsView = props => {
                         <FormGroup>
                           <Label>Message</Label>
                           <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" className="mh-100" rows={5} />
+                        </FormGroup>
+                        <FormGroup>
+                          <CustomInput
+                            label="Sign up to our newsletter to be informed of upcoming wānanga, events and pānui."
+                            name="subscribed"
+                            checked={contact.subscribed}
+                            onChange={handleChange}
+                            type="switch"
+                            id="contactSubscribed"
+                          />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Send</Button>

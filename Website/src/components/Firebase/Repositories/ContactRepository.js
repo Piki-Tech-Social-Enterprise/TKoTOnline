@@ -44,6 +44,7 @@ class ContactRepository extends BaseRepository {
       lastName,
       email,
       message,
+      subscribed,
       cid,
       updated,
       updatedBy
@@ -54,7 +55,7 @@ class ContactRepository extends BaseRepository {
     let existingDbContacts = await this.getDbContact(cid || '')
     let dbContactsRef = null;
     let dbContacts = null;
-    
+
     if (!cid) {
       dbContactsRef = await existingDbContacts.push();
       contact = {
@@ -62,24 +63,28 @@ class ContactRepository extends BaseRepository {
         created: created || now.toString(),
         createdBy: createdBy || '',
         firstName: firstName || '',
-        lastname: lastName || '',
+        lastName: lastName || '',
         email: email || '',
-        message: message ||'',
+        message: message || '',
+        subscribed: subscribed || false,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         cid: await dbContactsRef.getKey()
       };
       dbContactsRef.set(contact, saveDbContact_completed);
     } else {
-        dbContactsRef = await existingDbContacts.once('value');
+      dbContactsRef = await existingDbContacts.once('value');
       dbContacts = await dbContactsRef.val();
       if (dbContacts) {
         contact = {
           active: active || (typeof active === 'boolean' && active) || false,
+          created: created || dbContacts.created || '',
+          createdBy: createdBy || dbContacts.createdBy || '',
           firstName: firstName || dbContacts.firstName || '',
           lastName: lastName || dbContacts.lastName || '',
           email: email || dbContacts.email || '',
           message: message || dbContacts.message || '',
+          subscribed: subscribed || dbContacts.subscribed || false,
           cid: cid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbContacts.updatedBy
