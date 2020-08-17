@@ -129,9 +129,6 @@ const arrayToObject = (array, keyField) => Object.assign({}, ...array.map(item =
 const {
   StorageBucketHelper
 } = require('./StorageBucketHelper');
-const {
-  UserHelper
-} = require('./UserHelper');
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -152,4 +149,3 @@ exports.objectToArray = objectToArray;
 exports.arrayToObject = arrayToObject;
 exports.StorageBucketHelper = StorageBucketHelper;
 exports.jsonObjectPropertiesToUppercase = jsonObjectPropertiesToUppercase;
-exports.UserHelper = UserHelper;

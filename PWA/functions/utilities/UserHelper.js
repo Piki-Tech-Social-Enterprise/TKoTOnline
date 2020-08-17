@@ -1,15 +1,11 @@
-const functions = require('firebase-functions');
-const jsonObjectPropertiesToUppercase = jsonObject => {
-  const revisedJsonObject = {};
-  Object.keys(jsonObject).map(key => (
-    revisedJsonObject[key.toUpperCase()] = jsonObject[key]
-  ));
-  return revisedJsonObject;
-};
-const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
-  ? functions.config().envcmd
-  : {});
-const config = Object.assign(process.env, envcmd);
+// const functions = require('firebase-functions');
+// const {
+//   jsonObjectPropertiesToUppercase
+// } = require('./index');
+// const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
+//   ? functions.config().envcmd
+//   : {});
+// const config = Object.assign(process.env, envcmd);
 const admin = require('firebase-admin');
 
 class UserHelper {

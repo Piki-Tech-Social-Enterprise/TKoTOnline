@@ -2,11 +2,13 @@ const cors = require('cors')({
   origin: true,
 });
 const {
+  UserHelper
+} = require('../utilities/UserHelper');
+const {
   httpResponseCodes,
   httpRequestMethods,
   isUserValid,
-  FORBIDDEN_TEXT,
-  UserHelper
+  FORBIDDEN_TEXT
 } = require('../utilities');
 const validateRequest = async req => {
   const {

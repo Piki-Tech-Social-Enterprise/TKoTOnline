@@ -3,11 +3,13 @@ const cors = require('cors')({
 });
 const functions = require('firebase-functions');
 const {
+  UserHelper
+} = require('../utilities/UserHelper');
+const {
   httpResponseCodes,
   httpRequestMethods,
   isUserValid,
-  FORBIDDEN_TEXT,
-  UserHelper
+  FORBIDDEN_TEXT
 } = require('../utilities');
 const {
   stringify

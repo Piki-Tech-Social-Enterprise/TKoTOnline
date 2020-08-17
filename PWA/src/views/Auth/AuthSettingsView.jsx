@@ -63,6 +63,7 @@ const AuthSettingsView = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = async e => {
     e.preventDefault();
@@ -224,6 +225,60 @@ const AuthSettingsView = props => {
         ...s,
         aboutPageTKoTBackOfficeStructureImageUrlFile: aboutPageTKoTBackOfficeStructureImageUrlFile
       }));
+    }
+  };
+  const handleSendTestEmailClick = async e => {
+    e.preventDefault();
+    let displayIcon = 'error';
+    let displayTitle = 'Send Test Email Failed';
+    let displayMessage = '';
+    try {
+      setIsSendingTestEmail(true);
+      const {
+        gmailEmail,
+        gmailPassword
+      } = settings;
+      if (gmailEmail && gmailPassword) {
+        const {
+          REACT_APP_PWA_EMAIL
+        } = process.env;
+        const {
+          firebase
+        } = props;
+        const functionsRepositoryOptions = {
+          functionName: 'sendEmail',
+          data: {
+            mailOptions: {
+              from: gmailEmail,
+              to: REACT_APP_PWA_EMAIL,
+              subject: 'Test Email',
+              text: 'Test Message'
+            },
+            authUser: gmailEmail,
+            authPass: gmailPassword
+          }
+        };
+        const result = await firebase.call(functionsRepositoryOptions);
+        console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+        displayIcon = 'success';
+        displayTitle = 'Send Test Email Successful';
+        displayMessage = `A test email was sent to '${REACT_APP_PWA_EMAIL}'.`;
+        return result.data;
+      } else {
+        displayMessage = 'GMail Email and Password are required fields.';
+      }
+    } catch (error) {
+      console.log('handleSendTestEmailClick.error: ', error);
+      displayMessage = error;
+    } finally {
+      setIsSendingTestEmail(false);
+      if (displayMessage) {
+        swal.fire({
+          icon: displayIcon,
+          title: displayTitle,
+          html: displayMessage
+        });
+      }
     }
   };
   useEffect(() => {
@@ -418,14 +473,30 @@ const AuthSettingsView = props => {
                         <TabPane tabId={3}>
                           <h5 className="mt-3">GMail</h5>
                           <hr />
-                          <FormGroup>
-                            <Label>Email</Label>
-                            <Input placeholder="Email" name="gmailEmail" value={settings.gmailEmail || ''} onChange={handleChange} type="email" />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label>Password</Label>
-                            <Input placeholder="Password" name="gmailPassword" value={settings.gmailPassword || ''} onChange={handleChange} type="password" />
-                          </FormGroup>
+                          <Row form>
+                            <Col xs={12} sm={4}>
+                              <FormGroup>
+                                <Label>Email</Label>
+                                <Input placeholder="Email" name="gmailEmail" value={settings.gmailEmail || ''} onChange={handleChange} type="email" />
+                              </FormGroup>
+                            </Col>
+                            <Col xs={12} sm={4}>
+                              <FormGroup>
+                                <Label>Password</Label>
+                                <Input placeholder="Password" name="gmailPassword" value={settings.gmailPassword || ''} onChange={handleChange} type="password" />
+                              </FormGroup>
+                            </Col>
+                            <Col xs={12} sm={4}>
+                              <Button
+                                type="button"
+                                color="success"
+                                outline
+                                className="btn-round mt-0 mt-sm-4"
+                                disabled={isSubmitting || isSendingTestEmail}
+                                onClick={handleSendTestEmailClick}
+                              >Send Test Email</Button>
+                            </Col>
+                          </Row>
                         </TabPane>
                       </TabContent>
                       <FormGroup>

@@ -28,6 +28,10 @@ const {
 const {
   handleImageTransform
 } = require('./handleImageTransform');
+const {
+  handleSendEmail,
+  handleSendEmailAlt
+} = require('./handleSendEmail');
 
 exports.handleGetServerDateTime = functions
   .https
@@ -62,3 +66,9 @@ exports.handleIsUniqueAlt = functions
 exports.handleImageTransform = functions
   .https
   .onRequest(handleImageTransform);
+exports.handleSendEmail = functions
+  .https
+  .onCall(handleSendEmail);
+exports.handleSendEmailAlt = functions
+  .https
+  .onRequest(handleSendEmailAlt);

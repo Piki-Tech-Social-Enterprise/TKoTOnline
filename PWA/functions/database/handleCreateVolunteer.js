@@ -1,7 +1,7 @@
 const {
   UserHelper,
   UNAUTHENTICATED
-} = require('../utilities');
+} = require('../utilities/UserHelper');
 const handleCreateVolunteer = async (snap, context) => {
   let userHelper;
   try {

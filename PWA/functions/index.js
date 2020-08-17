@@ -20,7 +20,9 @@ const {
   handleDeleteProfileAlt,
   handleIsUnique,
   handleIsUniqueAlt,
-  handleImageTransform
+  handleImageTransform,
+  handleSendEmail,
+  handleSendEmailAlt
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -196,6 +198,63 @@ https://us-central1-tkot-online-dev.cloudfunctions.net/imageTransform/cdn/image/
 https://web-dev.tkot.org.nz/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
 */
 exports.imageTransform = handleImageTransform;
+
+/*
+--- Send Email ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/sendEmail
+{
+  data: {
+    mailOptions: {
+      from: '"TKoT Online" <web.portal@tkot.org>',
+      to: 'Dev.Ops@PikiTech.co.nz',
+      subject: 'Test Email',
+      text: 'Test Message'
+    },
+    authUser: 'web.portal@tkot.org',
+    authPass: 'dalfzahbltypocpz',
+    ignoreAuth: false
+  },
+  context: {
+    auth: {
+      uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1'
+    }
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/sendEmail
+*/
+exports.sendEmail = handleSendEmail;
+/*
+--- Send Email Alt ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/sendEmailAlt
+{
+  data: {
+    mailOptions: {
+      from: '"TKoT Online" <web.portal@tkot.org>',
+      to: 'Dev.Ops@PikiTech.co.nz',
+      subject: 'Test Email',
+      text: 'Test Message'
+    },
+    authUser: 'web.portal@tkot.org',
+    authPass: 'dalfzahbltypocpz',
+    ignoreAuth: false
+  },
+  context: {
+    auth: {
+      uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1'
+    }
+  }
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/sendEmailAlt
+*/
+exports.sendEmailAlt = handleSendEmailAlt;
 
 const {
   handleCreateVolunteer,
