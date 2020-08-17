@@ -11,8 +11,8 @@
     "draft-js": "^0.11.6",
     "draftjs-to-html": "^0.9.1",
     "history": "4.10.0",
-    "firebase": "^7.17.2",
-    "googleapis": "^58.0.0",
+    "firebase": "^7.18.0",
+    "googleapis": "^59.0.0",
     "node-sass": "4.14.1",
     "perfect-scrollbar": "1.5.0",
     "react": "16.13.1",
@@ -25,7 +25,7 @@
     "react-notification-alert": "0.0.12",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.3",
     "react-tagsinput-2": "^3.19.8",
     "reactstrap": "8.5.1",
     "sweetalert2": "^9.17.1",
@@ -102,9 +102,9 @@
     "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\""
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.11",
+    "@types/googlemaps": "3.39.13",
     "@types/markerclustererplus": "2.1.33",
-    "@types/react": "16.9.44",
+    "@types/react": "16.9.46",
     "jquery": "3.5.1",
     "typescript": "3.9.7"
   },
