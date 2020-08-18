@@ -129,6 +129,7 @@ const arrayToObject = (array, keyField) => Object.assign({}, ...array.map(item =
 const {
   StorageBucketHelper
 } = require('./StorageBucketHelper');
+const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -149,3 +150,4 @@ exports.objectToArray = objectToArray;
 exports.arrayToObject = arrayToObject;
 exports.StorageBucketHelper = StorageBucketHelper;
 exports.jsonObjectPropertiesToUppercase = jsonObjectPropertiesToUppercase;
+exports.isBoolean = isBoolean;

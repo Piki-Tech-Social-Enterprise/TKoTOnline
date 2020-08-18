@@ -155,7 +155,18 @@ const AuthUserView = props => {
       }
       if (displayMessage === defaultDisplayMesssage) {
         if (isNew) {
-          uid = await firebase.saveDbUser({});
+          uid = await firebase.saveDbUser({
+            active: active,
+            created: now.toString(),
+            createdBy: authUserId,
+            displayName,
+            email,
+            photoURL,
+            providerData,
+            roles,
+            updated: now.toString(),
+            updatedBy: authUserId
+          });
           if (photoURLFile && photoURLFile.name) {
             photoURL = userPhotoUrlFormat
               .replace(userKeyFormat, uid)
@@ -171,16 +182,30 @@ const AuthUserView = props => {
             displayName,
             photoURL
           });
-        } else {
-          const dbUser = {
-            disabled: active,
+          await firebase.saveDbUser({
+            active: active,
             displayName,
             email,
-            // emailVerified: false,
-            password,
-            // phoneNumber,
             photoURL,
-            uid
+            providerData,
+            roles,
+            uid: uid,
+            updated: now.toString(),
+            updatedBy: authUserId
+          });
+        } else {
+          const dbUser = {
+            disabled: !active,
+            displayName,
+            email,
+            password,
+            uid,
+            active: active,
+            photoURL,
+            providerData,
+            roles,
+            updated: now.toString(),
+            updatedBy: authUserId
           };
           const {
             REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
@@ -190,29 +215,13 @@ const AuthUserView = props => {
             functionName: isNew
               ? 'setProfile'
               : 'updateProfile',
-            bodyData: {
-              uid: authUserId,
-              dbUser: dbUser
+            data: {
+              authUser: dbUser
             }
           };
-          const result = isNew
-            ? await firebase.postAsync(functionsRepositoryOptions)
-            : await firebase.putAsync(functionsRepositoryOptions);
+          const result = await firebase.call(functionsRepositoryOptions);
           console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
         }
-        await firebase.saveDbUser({
-          active: active,
-          created: now.toString(),
-          createdBy: authUserId,
-          displayName,
-          email,
-          photoURL,
-          providerData,
-          roles,
-          uid: uid,
-          updated: now.toString(),
-          updatedBy: authUserId
-        });
         if (photoURLFile) {
           await firebase.saveStorageFile(photoURL, photoURLFile);
         }
@@ -240,6 +249,7 @@ const AuthUserView = props => {
     let result = null;
     let displayMessage = null;
     try {
+      let force = false;
       result = await swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -248,9 +258,16 @@ const AuthUserView = props => {
         customClass: {
           confirmButton: 'btn btn-outline-danger',
           cancelButton: 'btn btn-outline-link',
+        },
+        input: 'checkbox',
+        inputValue: 0,
+        inputPlaceholder: '<i>Force? Only check if you are having issues</i>',
+        inputValidator: result => {
+          force = result === 1;
+          return false;
         }
       });
-      if (!!result.value) {
+      if (result.isConfirmed) {
         const {
           firebase,
           match,
@@ -259,10 +276,10 @@ const AuthUserView = props => {
         const {
           uid
         } = match.params;
-        const userPhotoFolderUrl = userPhotoFolderUrlFormat.replace(userKeyFormat, uid);
-        const storageFiles = await firebase.getStorageFiles(userPhotoFolderUrl);
-        storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
         if (isProfile) {
+          const userPhotoFolderUrl = userPhotoFolderUrlFormat.replace(userKeyFormat, uid);
+          const storageFiles = await firebase.getStorageFiles(userPhotoFolderUrl);
+          await Promise.all(storageFiles.items.map(async storageFileItem => await storageFileItem.delete()));
           await firebase.deleteDbUser(uid);
         } else {
           const {
@@ -272,18 +289,12 @@ const AuthUserView = props => {
             baseUrl: GCF_URL,
             functionName: 'deleteProfile',
             data: {
-              uid: uid
+              uid: uid,
+              force: force
             }
-            // bodyData: {
-            //   uid: authUser.uid,
-            //   dbUser: {
-            //     uid
-            //   }
-            // }
           };
+          // console.log('functionsRepositoryOptions: ', JSON.stringify(functionsRepositoryOptions, null, 2));
           const result = await firebase.call(functionsRepositoryOptions);
-          // const result = await firebase.postAsync(functionsRepositoryOptions);
-          // const result = await firebase.deleteAsync(functionsRepositoryOptions);
           console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
         }
         swal.fire({

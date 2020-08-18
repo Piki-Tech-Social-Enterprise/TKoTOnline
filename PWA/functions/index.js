@@ -17,7 +17,6 @@ const {
   handleSetProfile,
   handleUpdateProfile,
   handleDeleteProfile,
-  handleDeleteProfileAlt,
   handleIsUnique,
   handleIsUniqueAlt,
   handleImageTransform,
@@ -34,6 +33,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getServerDateTime
 */
 exports.getServerDateTime = handleGetServerDateTime;
+
 /*
 --- Get Analytics ---
 Usage:
@@ -44,6 +44,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAnalytics?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1&viewId=215256322&startDate=2019-10-12&endDate=2019-10-18&alias=Users&expression=ga:users
 */
 exports.getAnalytics = handleGetAnalytics;
+
 /*
 --- Get Access Token From Service Account ---
 Usage:
@@ -54,6 +55,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAccessTokenFromServiceAccount?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
 exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
+
 /*
 --- Get Data From Firebase ---
 Usage:
@@ -64,6 +66,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getDataFromFirebase?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
 exports.getDataFromFirebase = handleGetDataFromFirebase;
+
 /*
 --- Set Profile ---
 Usage:
@@ -86,6 +89,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/setProfile
 */
 exports.setProfile = handleSetProfile;
+
 /*
 --- Update Profile ---
 Usage:
@@ -101,7 +105,6 @@ http://localhost:5001/tkot-online-dev/us-central1/updateProfile
     password: 'P@$$w0rd',
     phoneNumber: null,
     photoURL: '/images/users/xqHlH4QKJFeMibQKHOWPwUrxLOm1/JohnShortland-450x450.png',
-    uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1'
   }
 }
 
@@ -109,6 +112,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/updateProfile
 */
 exports.updateProfile = handleUpdateProfile;
+
 /*
 --- Delete Profile ---
 Usage:
@@ -125,22 +129,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/deleteProfile
 */
 exports.deleteProfile = handleDeleteProfile;
-/*
---- Delete Profile Alt ---
-Usage:
-Local
-http://localhost:5001/tkot-online-dev/us-central1/deleteProfileAlt
-{
-  uid: 'xqHlH4QKJFeMibQKHOWPwUrxLOm1',
-  dbUser: {
-    uid: '-M7eyOltEQhhBJhG-0TL'
-  }
-}
 
-Remote
-https://us-central1-tkot-online-dev.cloudfunctions.net/deleteProfileAlt
-*/
-exports.deleteProfileAlt = handleDeleteProfileAlt;
 /*
 --- Is Unique ---
 Usage:
@@ -266,6 +255,7 @@ Usage:
 createVolunteer(snap, context)
 */
 exports.createVolunteer = handleCreateVolunteer;
+
 /*
 -- Create Contact ---
 Usage: createContact(snap, context)

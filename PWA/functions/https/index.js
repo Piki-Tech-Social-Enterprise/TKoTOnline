@@ -18,8 +18,7 @@ const {
   handleSetProfile
 } = require('./handleSetProfile');
 const {
-  handleDeleteProfile,
-  handleDeleteProfileAlt
+  handleDeleteProfile
 } = require('./handleDeleteProfile');
 const {
   handleIsUnique,
@@ -47,16 +46,13 @@ exports.handleGetDataFromFirebase = functions
   .onRequest(handleGetDataFromFirebase);
 exports.handleUpdateProfile = functions
   .https
-  .onRequest(handleUpdateProfile);
+  .onCall(handleUpdateProfile);
 exports.handleSetProfile = functions
   .https
-  .onRequest(handleSetProfile);
+  .onCall(handleSetProfile);
 exports.handleDeleteProfile = functions
   .https
   .onCall(handleDeleteProfile);
-exports.handleDeleteProfileAlt = functions
-  .https
-  .onRequest(handleDeleteProfileAlt);
 exports.handleIsUnique = functions
   .https
   .onCall(handleIsUnique);

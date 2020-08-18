@@ -117,7 +117,7 @@ class UserRepository extends BaseRepository {
       console.log('Save Db User Error: ' + errorMessage);
       throw new Error(errorMessage);
     }
-    return user.uid;
+    return preparedUser.uid;
   }
 
   updateUserOnboarding = async uid => {

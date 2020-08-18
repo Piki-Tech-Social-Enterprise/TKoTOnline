@@ -96,7 +96,7 @@ class AuthenticationRepository extends BaseRepository {
           showCancelButton: true,
           footer: 'Need to verify your credentials before continuing...'
         });
-        if (!!result.value) {
+        if (result.isConfirmed) {
           return await this.reauthenticate(result.value);
         }
       }
@@ -283,7 +283,7 @@ class AuthenticationRepository extends BaseRepository {
           cancelButton: 'btn btn-outline-link'
         }
       });
-      if (!!result.value) {
+      if (result.isConfirmed) {
         const user = this.auth.currentUser,
           providerId = user.providerData[0].providerId,
           userCredentials = await this.getUserCredentials(providerId);

@@ -117,7 +117,7 @@ const AuthFacebookLinkView = props => {
           cancelButton: 'btn btn-outline-link',
         }
       });
-      if (!!result.value) {
+      if (result.isConfirmed) {
         const {
           firebase,
           match

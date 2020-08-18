@@ -69,10 +69,10 @@ class FirebaseInput extends Component {
     const {
       value
     } = this.props,
-    {
-      isLoading,
-      downloadURL
-    } = this.state;
+      {
+        isLoading,
+        downloadURL
+      } = this.state;
     if (value !== prevProps.value) {
       this.setState({
         isLoading: false,
@@ -137,33 +137,39 @@ class FirebaseInput extends Component {
   render = () => {
     return (
       <>
-        <InputGroup>
-          <Input
-            value={this.state.downloadURL}
-            onChange={this.handleDownloadURLChange}
-            {...this.props.downloadURLInputProps} />
-          <InputGroupAddon
-            className="clickable"
-            addonType="append"
-            onClick={this.props.downloadURLInputGroupAddonProps.onClick || this.handleDownloadURLFileClick}
-            {...this.props.downloadURLInputGroupAddonProps}>
-            <InputGroupText>
-              <i
-                className={this.props.downloadURLInputGroupAddonIconClassName || 'nc-icon nc-cloud-upload-94'}></i>
-            </InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-        <Input
-          innerRef={this.downloadURLFileInputRef}
-          type="file"
-          onChange={this.handleDownloadURLFileChange}
-          className="d-none"
-          accept={this.props.downloadURLFileInputAcceptProp} />
-        <FirebaseImage
-          imageResize="md"
-          imageURL={this.state.downloadURL}
-          src={this.state.downloadURLSrc}
-          alt={this.state.downloadURLAlt} />
+        {
+          this.state.isLoading
+            ? null
+            : <>
+              <InputGroup>
+                <Input
+                  value={this.state.downloadURL}
+                  onChange={this.handleDownloadURLChange}
+                  {...this.props.downloadURLInputProps} />
+                <InputGroupAddon
+                  className="clickable"
+                  addonType="append"
+                  onClick={this.props.downloadURLInputGroupAddonProps.onClick || this.handleDownloadURLFileClick}
+                  {...this.props.downloadURLInputGroupAddonProps}>
+                  <InputGroupText>
+                    <i
+                      className={this.props.downloadURLInputGroupAddonIconClassName || 'nc-icon nc-cloud-upload-94'}></i>
+                  </InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+              <Input
+                innerRef={this.downloadURLFileInputRef}
+                type="file"
+                onChange={this.handleDownloadURLFileChange}
+                className="d-none"
+                accept={this.props.downloadURLFileInputAcceptProp} />
+              <FirebaseImage
+                imageResize="md"
+                imageURL={this.state.downloadURL}
+                src={this.state.downloadURLSrc}
+                alt={this.state.downloadURLAlt} />
+            </>
+        }
       </>
     );
   }

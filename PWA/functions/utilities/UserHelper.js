@@ -7,6 +7,16 @@
 //   : {});
 // const config = Object.assign(process.env, envcmd);
 const admin = require('firebase-admin');
+const {
+  undefinedRole
+} = require('../utilities/Roles');
+const {
+  parse,
+  stringify
+} = require('flatted');
+const {
+  isBoolean
+} = require('../utilities');
 
 class UserHelper {
   constructor() {
@@ -22,6 +32,7 @@ class UserHelper {
     }
     this.adminAuth = admin.auth();
     this.adminDatabase = admin.database();
+    this.adminStorage = admin.storage();
     this.createAuthUser = this.handleCreateAuthUser
       .bind(this);
     this.updateAuthUser = this.handleUpdateAuthUser
@@ -31,6 +42,12 @@ class UserHelper {
     this.saveDbUser = this.handleSaveDbUser
       .bind(this);
     this.deleteDbUser = this.handleDeleteDbUser
+      .bind(this);
+    this.createUser = this.handleCreateUser
+      .bind(this);
+    this.updateUser = this.handleUpdateUser
+      .bind(this);
+    this.deleteUser = this.handleDeleteUser
       .bind(this);
     return this;
   }
@@ -47,14 +64,14 @@ class UserHelper {
       uid
     } = authUser;
     const createRequest = {
-      disabled: disabled,
-      displayName: displayName,
-      email: email,
-      emailVerified: emailVerified,
-      password: password,
-      phoneNumber: phoneNumber,
-      photoURL: photoURL,
-      uid: uid
+      disabled: disabled || isBoolean(disabled) ? false : undefined,
+      displayName: displayName || undefined,
+      email: email || undefined,
+      emailVerified: emailVerified || isBoolean(emailVerified) ? false : undefined,
+      password: password || undefined,
+      phoneNumber: phoneNumber || undefined,
+      photoURL: photoURL || undefined,
+      uid: uid || undefined
     };
     console.log(`handleCreateAuthUser.createRequest: ${JSON.stringify(createRequest, null, 2)}`);
     const userRecord = await this.adminAuth.createUser(createRequest);
@@ -76,16 +93,16 @@ class UserHelper {
     const existingAuthUser = await this.adminAuth.getUser(uid);
     console.log(`existingAuthUser: ${JSON.stringify(existingAuthUser, null, 2)}`);
     const updateRequest = {
-      disabled: disabled || existingAuthUser.disabled || false,
-      displayName: displayName || existingAuthUser.displayName || null,
-      email: email || existingAuthUser.email || null,
-      emailVerified: emailVerified || existingAuthUser.emailVerified || false,
-      password: password || existingAuthUser.password || null,
-      phoneNumber: phoneNumber || existingAuthUser.phoneNumber || null,
-      photoURL: photoURL || existingAuthUser.phoneNumber || null
+      disabled: disabled || isBoolean(disabled) ? false : existingAuthUser.disabled,
+      displayName: displayName || existingAuthUser.displayName || undefined,
+      email: email || existingAuthUser.email || undefined,
+      emailVerified: emailVerified || isBoolean(emailVerified) ? false : existingAuthUser.emailVerified,
+      password: password || existingAuthUser.password || undefined,
+      phoneNumber: phoneNumber || existingAuthUser.phoneNumber || undefined,
+      photoURL: photoURL || existingAuthUser.phoneNumber || undefined
     };
     console.log(`handleUpdateAuthUser.updateRequest: ${JSON.stringify(updateRequest, null, 2)}`);
-    const userRecord = await this.adminAuth.updateUser(updateRequest);
+    const userRecord = await this.adminAuth.updateUser(uid, updateRequest);
     console.log(`handleUpdateAuthUser.userRecord: ${JSON.stringify(userRecord, null, 2)}`);
     return userRecord;
   }
@@ -174,24 +191,106 @@ class UserHelper {
       }
     }
     if (errorMessage) {
-      console.log('Save Db User Error: ' + errorMessage);
+      console.log('Save Db User Error: ', errorMessage);
       throw new Error(errorMessage);
     }
-    return user.uid;
+    return preparedUser.uid;
   }
 
   async handleDeleteDbUser(uid) {
-      const existingDbUser = await this.getDbUser(uid);
-      let errorMessage = null;
-      if (existingDbUser) {
-        await existingDbUser.remove();
-      } else {
-        errorMessage = 'Delete Db User Error: uid (' + uid + ') not found.';
+    const existingDbUser = await this.getDbUser(uid);
+    let errorMessage = null;
+    if (existingDbUser) {
+      await existingDbUser.remove();
+    } else {
+      errorMessage = 'Delete Db User Error: uid (' + uid + ') not found.';
+    }
+    if (errorMessage) {
+      console.log('Delete Db User Error: ', errorMessage);
+      throw new Error(errorMessage);
+    }
+  }
+
+  async handleCreateUser(authUser) {
+    // console.log(`config: ${stringify(config, null, 2)}`);
+    let errorMessages = [];
+    try {
+      const authUserClone = parse(stringify(authUser));
+      authUserClone.photoURL = undefined;
+      await this.handleCreateAuthUser(authUserClone);
+    } catch (error) {
+      errorMessages.push(`Create User Error (AuthUser): ${error}`);
+    }
+    try {
+      await this.handleSaveDbUser(authUser);
+    } catch (error) {
+      errorMessages.push(`Create User Error (DbUser): ${error}`);
+    }
+    if (errorMessages.length) {
+      const errorMessage = errorMessages.join('\n');
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+    return true;
+  }
+
+  async handleUpdateUser(authUser) {
+    // console.log(`config: ${stringify(config, null, 2)}`);
+    let errorMessages = [];
+    try {
+      const authUserClone = parse(stringify(authUser));
+      authUserClone.photoURL = undefined;
+      await this.handleUpdateAuthUser(authUserClone);
+    } catch (error) {
+      errorMessages.push(`Update User Error (AuthUser): ${error}`);
+    }
+    try {
+      await this.handleSaveDbUser(authUser);
+    } catch (error) {
+      errorMessages.push(`Update User Error (DbUser): ${error}`);
+    }
+    if (errorMessages.length) {
+      const errorMessage = errorMessages.join('\n');
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+    return true;
+  }
+
+  async handleDeleteUser(authUser, force = false) {
+    // console.log(`config: ${JSON.stringify(config, null, 2)}`);
+    const {
+      uid
+    } = authUser;
+    let errorMessages = [];
+    try {
+      await this.handleDeleteAuthUser(authUser);
+    } catch (error) {
+      errorMessages.push(`Delete User Error (AuthUser): ${error}`);
+    }
+    if (errorMessages.length === 0 || force) {
+      try {
+        await this.handleDeleteDbUser(uid);
+      } catch (error) {
+        errorMessages.push(`Delete User Error (DbUser): ${error}`);
       }
-      if (errorMessage) {
-        console.log('Delete Db User Error: ' + errorMessage);
-        throw new Error(errorMessage);
+    }
+    if (errorMessages.length === 0 || force) {
+      try {
+        await this.adminStorage.bucket().deleteFiles({
+          force: true,
+          prefix: `images/users/${uid}/`
+        });
+      } catch (error) {
+        errorMessages.push(`Delete User Error (Files): ${error}`);
       }
+    }
+    if (errorMessages.length && !force) {
+      const errorMessage = errorMessages.join('\n');
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+    return true;
   }
 }
 
