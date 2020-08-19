@@ -67,13 +67,13 @@ class UserRepository extends BaseRepository {
     } = user;
     const now = new Date();
     const preparedUser = {
-      active: active || isBoolean(active) ? false : undefined,
+      active: active || (isBoolean(active) ? false : undefined),
       created: created || now.toString(),
       createdBy: createdBy || '',
       displayName: displayName || '',
       email: email || '',
-      emailVerified: emailVerified || isBoolean(emailVerified) ? false : undefined,
-      photoURL: photoURL || isEmptyString(photoURL) ? '' : undefined,
+      emailVerified: emailVerified || (isBoolean(emailVerified) ? false : undefined),
+      photoURL: photoURL || (isEmptyString(photoURL) ? '' : undefined),
       providerData: providerData || (email && [{
         email: email,
         providerId: 'password',
@@ -101,13 +101,13 @@ class UserRepository extends BaseRepository {
       dbUser = await dbUserRef.val() || {};
       if (dbUser || isNew) {
         existingDbUser.set({
-          active: preparedUser.active || isBoolean(preparedUser.active) ? false : dbUser.active || undefined,
+          active: preparedUser.active || (isBoolean(preparedUser.active) ? false : dbUser.active || undefined),
           created: preparedUser.created || dbUser.created,
           createdBy: preparedUser.createdBy || dbUser.createdBy,
           displayName: preparedUser.displayName || dbUser.displayName || '',
           email: preparedUser.email || dbUser.email,
-          emailVerified: preparedUser.emailVerified || isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined,
-          photoURL: preparedUser.photoURL || isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined,
+          emailVerified: preparedUser.emailVerified || (isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined),
+          photoURL: preparedUser.photoURL || (isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined),
           providerData: preparedUser.providerData || dbUser.providerData || [],
           roles: preparedUser.roles || dbUser.roles || {
             undefinedRole

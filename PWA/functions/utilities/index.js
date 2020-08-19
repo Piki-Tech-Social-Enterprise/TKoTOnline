@@ -130,7 +130,7 @@ const {
   StorageBucketHelper
 } = require('./StorageBucketHelper');
 const isEmptyString = value => value === '';
-const isBoolean = value => (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const isBoolean = value => (typeof value === 'boolean' && (value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false'));
 const {
   join
 } = require('path');
