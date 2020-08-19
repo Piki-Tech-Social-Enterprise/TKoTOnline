@@ -76,6 +76,7 @@
     "firebaseDeployAllDev": "run-p -sn firebaseDeployFunctionsDev firebaseDeployDev firebaseDeployWebsiteDev",
     "firebaseDeployAllTest": "run-p -sn firebaseDeployFunctionsTest firebaseDeployTest firebaseDeployWebsiteTest",
     "firebaseDeployAllProd": "run-p -sn firebaseDeployFunctionsProd firebaseDeployProd firebaseDeployWebsiteProd",
+    "firebaseDeployAll": "run-s -sn firebaseDeployAllDev firebaseDeployAllTest firebaseDeployAllProd",
     "removeNodeModules": "if [[ -d node_modules ]]; then rm -rf node_modules/&&echo \"'node_modules' successfully removed\"; else echo 'node_modules' folder not found; fi",
     "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
     "npmSetProgressOff": "npm set progress=false",
