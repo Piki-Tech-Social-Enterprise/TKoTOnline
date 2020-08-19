@@ -251,6 +251,7 @@ const AuthUserView = props => {
   };
   const handleDeleteClick = async e => {
     e.preventDefault();
+    setIsSubmitting(true);
     const {
       firebase,
       match
@@ -311,6 +312,8 @@ const AuthUserView = props => {
       }
     } catch (error) {
       displayMessage = error.message;
+    } finally {
+      setIsSubmitting(false);
     }
     if (displayMessage) {
       swal.fire({

@@ -169,6 +169,7 @@ const AuthIwiMemberView = props => {
   };
   const handleDeleteClick = async e => {
     e.preventDefault();
+    setIsSubmitting(true);
     let result = null;
     let displayMessage = null;
     try {
@@ -203,6 +204,8 @@ const AuthIwiMemberView = props => {
       }
     } catch (error) {
       displayMessage = error.message;
+    } finally {
+      setIsSubmitting(false);
     }
     if (displayMessage) {
       swal.fire({

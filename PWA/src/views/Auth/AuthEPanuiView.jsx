@@ -128,6 +128,7 @@ const AuthEPanuiView = props => {
   };
   const handleDeleteClick = async e => {
     e.preventDefault();
+    setIsSubmitting(true);
     let result = null;
     let displayMessage = null;
     try {
