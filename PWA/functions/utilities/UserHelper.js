@@ -10,10 +10,10 @@ const admin = require('firebase-admin');
 const {
   undefinedRole
 } = require('../utilities/Roles');
-const {
-  parse,
-  stringify
-} = require('flatted');
+// const {
+//   parse,
+//   stringify
+// } = require('flatted');
 const {
   isBoolean
 } = require('../utilities');
@@ -215,7 +215,7 @@ class UserHelper {
     // console.log(`config: ${stringify(config, null, 2)}`);
     let errorMessages = [];
     try {
-      const authUserClone = parse(stringify(authUser));
+      const authUserClone = JSON.parse(JSON.stringify(authUser));
       authUserClone.photoURL = undefined;
       await this.handleCreateAuthUser(authUserClone);
     } catch (error) {
@@ -238,7 +238,7 @@ class UserHelper {
     // console.log(`config: ${stringify(config, null, 2)}`);
     let errorMessages = [];
     try {
-      const authUserClone = parse(stringify(authUser));
+      const authUserClone = JSON.parse(JSON.stringify(authUser));
       authUserClone.photoURL = undefined;
       await this.handleUpdateAuthUser(authUserClone);
     } catch (error) {
@@ -277,6 +277,10 @@ class UserHelper {
     }
     if (errorMessages.length === 0 || force) {
       try {
+        // const {
+        //   REACT_APP_FIREBASE_STORAGE_BUCKET
+        // } = config;
+        // await this.adminStorage.bucket(REACT_APP_FIREBASE_STORAGE_BUCKET).deleteFiles({
         await this.adminStorage.bucket().deleteFiles({
           force: true,
           prefix: `images/users/${uid}/`
