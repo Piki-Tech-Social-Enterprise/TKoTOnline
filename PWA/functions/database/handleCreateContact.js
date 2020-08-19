@@ -43,7 +43,7 @@ const handleCreateContact = async (snap, context) => {
         : 'subscribed and sent a message'
       : 'sent a message'} on ${moment(created, JS_DATE_TIME_FORMAT).format(DATE_TIME_MOMENT_FORMAT)}`;
     mailOptions = {
-      from: `"TKoT Online" <${gmailEmail}>`,
+      from: 'TKoT Online',
       to: REACT_APP_PWA_EMAIL,
       subject: subject,
       text: message
