@@ -2781,7 +2781,8 @@ Created using IcoMoon - icomoon.io
   src: url("../../fonts/nucleo-outline.eot");
   src: url("../../fonts/nucleo-outline.eot") format("embedded-opentype"), url("../../fonts/nucleo-outline.woff2") format("woff2"), url("../../fonts/nucleo-outline.woff") format("woff"), url("../../fonts/nucleo-outline.ttf") format("truetype");
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+  font-display: swap; }
 
 /*------------------------
 	base class definition
