@@ -32,7 +32,7 @@ class UserHelper {
     }
     this.adminAuth = admin.auth();
     this.adminDatabase = admin.database();
-    this.adminStorage = admin.storage();
+    // this.adminStorage = admin.storage();
     this.createAuthUser = this.handleCreateAuthUser
       .bind(this);
     this.updateAuthUser = this.handleUpdateAuthUser
@@ -275,20 +275,20 @@ class UserHelper {
         errorMessages.push(`Delete User Error (DbUser): ${error}`);
       }
     }
-    if (errorMessages.length === 0 || force) {
-      try {
-        // const {
-        //   REACT_APP_FIREBASE_STORAGE_BUCKET
-        // } = config;
-        // await this.adminStorage.bucket(REACT_APP_FIREBASE_STORAGE_BUCKET).deleteFiles({
-        await this.adminStorage.bucket().deleteFiles({
-          force: true,
-          prefix: `images/users/${uid}/`
-        });
-      } catch (error) {
-        errorMessages.push(`Delete User Error (Files): ${error}`);
-      }
-    }
+    // if (errorMessages.length === 0 || force) {
+    //   try {
+    //     // const {
+    //     //   REACT_APP_FIREBASE_STORAGE_BUCKET
+    //     // } = config;
+    //     // await this.adminStorage.bucket(REACT_APP_FIREBASE_STORAGE_BUCKET).deleteFiles({
+    //     await this.adminStorage.bucket().deleteFiles({
+    //       force: true,
+    //       prefix: `images/users/${uid}/`
+    //     });
+    //   } catch (error) {
+    //     errorMessages.push(`Delete User Error (Files): ${error}`);
+    //   }
+    // }
     if (errorMessages.length && !force) {
       const errorMessage = errorMessages.join('\n');
       console.log(errorMessage);
