@@ -40,6 +40,7 @@ const INITIAL_STATE = {
   confirmPassword: '',
   displayName: '',
   email: '',
+  emailVerified: undefined,
   password: '',
   photoURL: '',
   photoURLFile: null,
@@ -122,6 +123,7 @@ const AuthUserView = props => {
       confirmPassword,
       displayName,
       email,
+      emailVerified,
       password,
       photoURLFile,
       providerData,
@@ -161,6 +163,7 @@ const AuthUserView = props => {
             createdBy: authUserId,
             displayName,
             email,
+            emailVerified,
             photoURL,
             providerData,
             roles,
@@ -186,6 +189,7 @@ const AuthUserView = props => {
             active: active,
             displayName,
             email,
+            emailVerified,
             photoURL,
             providerData,
             roles,
@@ -198,6 +202,7 @@ const AuthUserView = props => {
             disabled: !active,
             displayName,
             email,
+            emailVerified,
             password,
             uid,
             active: active,
@@ -343,6 +348,7 @@ const AuthUserView = props => {
         displayName,
         roles,
         email,
+        emailVerified,
         photoURL,
         providerData,
         uid
@@ -352,6 +358,7 @@ const AuthUserView = props => {
         displayName,
         roles,
         email,
+        emailVerified,
         photoURL,
         providerData,
         uid
@@ -408,6 +415,16 @@ const AuthUserView = props => {
                                 <Input placeholder="Confirm Email" name="confirmEmail" value={user.confirmEmail} onChange={handleChange} type="email" />
                               </FormGroup>
                             </>
+                        }
+                        {
+                          !!props.authUser.roles['systemAdminRole'] || !!props.authUser.roles['adminRole']
+                            ? <>
+                              <FormGroup>
+                                <Label>Email Verified</Label><br />
+                                <CustomInput label="" name="emailVerified" checked={user.emailVerified} onChange={handleChange} type="switch" id="UserEmailVerified" />
+                              </FormGroup>
+                            </>
+                            : null
                         }
                         <FormGroup>
                           <Label>Password</Label>

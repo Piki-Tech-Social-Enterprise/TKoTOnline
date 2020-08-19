@@ -129,6 +129,7 @@ class UserHelper {
       createdBy,
       displayName,
       email,
+      emailVerified,
       isNew,
       photoURL,
       providerData,
@@ -144,6 +145,7 @@ class UserHelper {
       createdBy: createdBy || '',
       displayName: displayName || '',
       email: email || '',
+      emailVerified: emailVerified || false,
       photoURL: photoURL || '',
       providerData: providerData || (email && [{
         email: email,
@@ -177,6 +179,7 @@ class UserHelper {
           createdBy: preparedUser.createdBy || dbUser.createdBy,
           displayName: preparedUser.displayName || dbUser.displayName || '',
           email: preparedUser.email || dbUser.email,
+          emailVerified: preparedUser.emailVerified || dbUser.emailVerified || false,
           photoURL: preparedUser.photoURL || dbUser.photoURL || '',
           providerData: preparedUser.providerData || dbUser.providerData || [],
           roles: preparedUser.roles || dbUser.roles || {

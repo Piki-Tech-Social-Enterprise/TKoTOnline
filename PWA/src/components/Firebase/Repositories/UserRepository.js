@@ -52,6 +52,7 @@ class UserRepository extends BaseRepository {
       createdBy,
       displayName,
       email,
+      emailVerified,
       isNew,
       photoURL,
       providerData,
@@ -67,6 +68,7 @@ class UserRepository extends BaseRepository {
       createdBy: createdBy || '',
       displayName: displayName || '',
       email: email || '',
+      emailVerified: emailVerified || false,
       photoURL: photoURL || '',
       providerData: providerData || (email && [{
         email: email,
@@ -100,6 +102,7 @@ class UserRepository extends BaseRepository {
           createdBy: preparedUser.createdBy || dbUser.createdBy,
           displayName: preparedUser.displayName || dbUser.displayName || '',
           email: preparedUser.email || dbUser.email,
+          emailVerified: preparedUser.emailVerified || dbUser.emailVerified || false,
           photoURL: preparedUser.photoURL || dbUser.photoURL || '',
           providerData: preparedUser.providerData || dbUser.providerData || [],
           roles: preparedUser.roles || dbUser.roles || {
