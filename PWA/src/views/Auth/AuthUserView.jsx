@@ -262,7 +262,7 @@ const AuthUserView = props => {
     let displayMessage = null;
     try {
       if (isProfile) {
-        firebase.deleteAccount(e);
+        await firebase.deleteAccount(e);
       } else {
         let force = false;
         const swalOptions = {
