@@ -104,7 +104,7 @@ class AuthenticationRepository extends BaseRepository {
       errorMessage = error.message;
     }
     if (errorMessage) {
-      console.log('Get User Credentials Error: ' + errorMessage);
+      console.log('Get User Credentials Error: ', errorMessage);
       return errorMessage;
     }
   };
@@ -171,7 +171,7 @@ class AuthenticationRepository extends BaseRepository {
         title: 'Change Email Error',
         html: errorMessage
       });
-      console.log('Change Email Error: ' + errorMessage);
+      console.log('Change Email Error: ', errorMessage);
     }
   };
 
@@ -237,7 +237,7 @@ class AuthenticationRepository extends BaseRepository {
         title: 'Change Password Error',
         html: errorMessage
       });
-      console.log('Change Password Error: ' + errorMessage);
+      console.log('Change Password Error: ', errorMessage);
     }
   };
 
@@ -270,8 +270,8 @@ class AuthenticationRepository extends BaseRepository {
 
   deleteAccount = async e => {
     e.preventDefault();
-    let result = null,
-      errorMessage = null;
+    let result = null;
+    let errorMessage = null;
     try {
       result = await swal.fire({
         icon: 'warning',
@@ -284,98 +284,41 @@ class AuthenticationRepository extends BaseRepository {
         }
       });
       if (result.isConfirmed) {
-        const user = this.auth.currentUser,
-          providerId = user.providerData[0].providerId,
-          userCredentials = await this.getUserCredentials(providerId);
-        let extRemove = null;
-        if (
-          userCredentials &&
-          typeof userCredentials !== 'string' &&
-          userCredentials.user
-        ) {
-          if (providerId === 'password' && userCredentials.user.photoURL) {
-            try {
-              extRemove = userCredentials.user.photoURL
-                .split('.')
-                .slice(0, -1)
-                .join('.');
-              console.log(extRemove);
-              const imageJPG = extRemove + '.jpg',
-                imagePNG = extRemove + '.png',
-                imageWEBP = extRemove + '.webp',
-                imageJPEG = extRemove + '.jpeg',
-                imageTIFF = extRemove + '.tiff',
-                imageBMP = extRemove + '.bmp',
-                imageSVG = extRemove + '.svg',
-                imagePDF = extRemove + '.pdf',
-                imageRAW = extRemove + '.raw',
-                imageTGA = extRemove + '.tga',
-                imageEPS = extRemove + '.eps',
-                imageGIF = extRemove + '.gif';
-              console.log(
-                imageJPG &&
-                imagePNG &&
-                imageWEBP &&
-                imageJPEG &&
-                imageTIFF &&
-                imageBMP &&
-                imageSVG &&
-                imagePDF &&
-                imageRAW &&
-                imageTGA &&
-                imageEPS &&
-                imageGIF
-              );
-              try {
-                var allImagePaths = [
-                  imageJPG,
-                  imagePNG,
-                  imageWEBP,
-                  imageJPEG,
-                  imageTIFF,
-                  imageBMP,
-                  imageSVG,
-                  imagePDF,
-                  imageRAW,
-                  imageTGA,
-                  imageEPS,
-                  imageGIF
-                ],
-                  theArray = [];
-                allImagePaths.map(async string => {
-                  console.log(`Over and Over${string}`);
-                  theArray.push(string);
-                  try {
-                    await this.storageRepository.deleteStorageFile(string);
-                  } catch (error) {
-                    console.log(error.message);
-                  }
-                  return string;
-                });
-              } catch (error) {
-                console.log(`There is an error`);
-              } finally {
-                console.log('Finished removing all images');
-              }
-            } catch (error) {
-              console.log(`Image Removal Process:`);
-            }
+        const {
+          currentUser
+        } = this.auth;
+        const {
+          providerId
+        } = currentUser.providerData[0];
+        const userCredentials = await this.getUserCredentials(providerId);
+        if (typeof userCredentials === 'string') {
+          errorMessage = userCredentials;
+        } else {
+          const {
+            user
+          } = userCredentials;
+          const {
+            photoURL,
+            uid
+          } = user;
+          if (providerId === 'password') {
+            const userPhotoFolderUrl = `/images/users/${uid}`;
+            const storageFiles = await this.storageRepository.getStorageFiles(userPhotoFolderUrl);
+            await Promise.all(storageFiles.items.map(async storageFileItem => await storageFileItem.delete()));
           }
-          await this.userRepository.deleteDbUser(userCredentials.user.uid);
-          await userCredentials.user.delete();
+          await this.userRepository.deleteDbUser(uid);
+          await user.delete();
           await this.signOut();
           swal.fire({
             icon: 'success',
             title: 'Delete Account Successful',
             text: 'Your account has been deleted.'
           });
-        } else {
-          errorMessage = userCredentials;
         }
       }
     } catch (error) {
       errorMessage = error.message;
-      console.log(`Error: ${errorMessage}`);
+      console.log(`Delete Account Error: ${errorMessage}`);
     }
     if (errorMessage) {
       swal.fire({
@@ -383,7 +326,6 @@ class AuthenticationRepository extends BaseRepository {
         title: 'Delete Account Error',
         html: errorMessage
       });
-      console.log('Delete Account Error: ' + errorMessage);
     }
   };
 }

@@ -251,42 +251,42 @@ const AuthUserView = props => {
   };
   const handleDeleteClick = async e => {
     e.preventDefault();
+    const {
+      firebase,
+      match
+    } = props;
     let result = null;
     let displayMessage = null;
     try {
-      let force = false;
-      result = await swal.fire({
-        icon: 'warning',
-        title: 'Are you sure?',
-        text: "You won't be able to undo this!",
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn btn-outline-danger',
-          cancelButton: 'btn btn-outline-link',
-        },
-        input: 'checkbox',
-        inputValue: 0,
-        inputPlaceholder: '<i>Force? Only check if you are having issues</i>',
-        inputValidator: result => {
-          force = result === 1;
-          return false;
+      if (isProfile) {
+        firebase.deleteAccount(e);
+      } else {
+        let force = false;
+        const swalOptions = {
+          icon: 'warning',
+          title: 'Are you sure?',
+          text: "You won't be able to undo this!",
+          showCancelButton: true,
+          customClass: {
+            confirmButton: 'btn btn-outline-danger',
+            cancelButton: 'btn btn-outline-link',
+          }
+        };
+        if (!isProfile) {
+          swalOptions['input'] = 'checkbox';
+          swalOptions['inputValue'] = 0;
+          swalOptions['inputPlaceholder'] = '<i>Force? Only check if you are having issues</i>';
+          swalOptions['inputValidator'] = result => {
+            force = result === 1;
+            return false;
+          };
         }
-      });
-      if (result.isConfirmed) {
-        const {
-          firebase,
-          match,
-          // authUser
-        } = props;
-        const {
-          uid
-        } = match.params;
-        if (isProfile) {
-          const userPhotoFolderUrl = userPhotoFolderUrlFormat.replace(userKeyFormat, uid);
-          const storageFiles = await firebase.getStorageFiles(userPhotoFolderUrl);
-          await Promise.all(storageFiles.items.map(async storageFileItem => await storageFileItem.delete()));
-          await firebase.deleteDbUser(uid);
-        } else {
+        // console.log('swalOptions: ', JSON.stringify(swalOptions, null, 2));
+        result = await swal.fire(swalOptions);
+        if (result.isConfirmed) {
+          const {
+            uid
+          } = match.params;
           const {
             REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL: GCF_URL
           } = process.env;
@@ -301,13 +301,13 @@ const AuthUserView = props => {
           // console.log('functionsRepositoryOptions: ', JSON.stringify(functionsRepositoryOptions, null, 2));
           const result = await firebase.call(functionsRepositoryOptions);
           console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+          swal.fire({
+            icon: 'success',
+            title: `Delete ${userOrProfileText} Successful`,
+            text: `Your ${userOrProfileText} has been deleted.`
+          });
+          handleGotoParentList();
         }
-        swal.fire({
-          icon: 'success',
-          title: `Delete ${userOrProfileText} Successful`,
-          text: `Your ${userOrProfileText} has been deleted.`
-        });
-        handleGotoParentList();
       }
     } catch (error) {
       displayMessage = error.message;
