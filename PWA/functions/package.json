@@ -56,7 +56,7 @@
     "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
     "npmSetProgressOff": "npm set progress=false",
     "npmCacheClean": "npm cache clean --force",
-    "npmInstall": "npm install",
+    "npmInstall": "npm install --prefer-offline --no-audit",
     "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmCacheClean npmInstall",
     "unsetFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js unset",
     "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"

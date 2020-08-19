@@ -3,6 +3,10 @@ import 'firebase/database';
 import {
   undefinedRole
 } from '../../Domains/Roles';
+import {
+  isEmptyString,
+  isBoolean
+} from '../../App/Utilities';
 
 class UserRepository extends BaseRepository {
   constructor(firebaseApp) {
@@ -63,13 +67,13 @@ class UserRepository extends BaseRepository {
     } = user;
     const now = new Date();
     const preparedUser = {
-      active: active || false,
+      active: active || isBoolean(active) ? false : undefined,
       created: created || now.toString(),
       createdBy: createdBy || '',
       displayName: displayName || '',
       email: email || '',
-      emailVerified: emailVerified || false,
-      photoURL: photoURL || '',
+      emailVerified: emailVerified || isBoolean(emailVerified) ? false : undefined,
+      photoURL: photoURL || isEmptyString(photoURL) ? '' : undefined,
       providerData: providerData || (email && [{
         email: email,
         providerId: 'password',
@@ -97,13 +101,13 @@ class UserRepository extends BaseRepository {
       dbUser = await dbUserRef.val() || {};
       if (dbUser || isNew) {
         existingDbUser.set({
-          active: preparedUser.active || dbUser.active || false,
+          active: preparedUser.active || isBoolean(preparedUser.active) ? false : dbUser.active || undefined,
           created: preparedUser.created || dbUser.created,
           createdBy: preparedUser.createdBy || dbUser.createdBy,
           displayName: preparedUser.displayName || dbUser.displayName || '',
           email: preparedUser.email || dbUser.email,
-          emailVerified: preparedUser.emailVerified || dbUser.emailVerified || false,
-          photoURL: preparedUser.photoURL || dbUser.photoURL || '',
+          emailVerified: preparedUser.emailVerified || isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined,
+          photoURL: preparedUser.photoURL || isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined,
           providerData: preparedUser.providerData || dbUser.providerData || [],
           roles: preparedUser.roles || dbUser.roles || {
             undefinedRole

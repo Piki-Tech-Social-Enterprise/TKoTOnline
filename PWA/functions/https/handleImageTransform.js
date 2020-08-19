@@ -4,7 +4,8 @@ const cors = require('cors')({
 const {
   httpResponseCodes,
   httpRequestMethods,
-  FORBIDDEN_TEXT
+  FORBIDDEN_TEXT,
+  getFirebaseStorageURL
 } = require('../utilities');
 const sharp = require('sharp');
 const https = require('https');
@@ -65,13 +66,7 @@ const handleImageTransform = async (req, res) => {
       const responsePipe = res
         .set('Cache-Control', `public, max-age=${cacheMaxAge}`)
         .set('Vary', 'Accept');
-      const {
-        join
-      } = require('path');
-      const projectId = process.env.GCLOUD_PROJECT;
-      const sourcePrefix = `firebasestorage.googleapis.com/v0/b/${projectId}.appspot.com/o/`;
-      const sourceSuffix = `?alt=media`;
-      const sourceUrl = `${'https://'}${join(sourcePrefix, encodeURIComponent(source.startsWith('/') ? source.substring(1) : source))}${sourceSuffix}`;
+      const sourceUrl = getFirebaseStorageURL(process.env.GCLOUD_PROJECT, source);
       console.log('sourceUrl: ', sourceUrl);
       return https.get(sourceUrl, res => res.pipe(transform).pipe(responsePipe));
     } catch (error) {

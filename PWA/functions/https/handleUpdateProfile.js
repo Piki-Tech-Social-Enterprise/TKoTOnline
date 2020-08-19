@@ -52,6 +52,7 @@ const handleUpdateProfile = async (data, context, source = 'handleUpdateProfile'
         authUser
       } = data;
       const userHelper = new UserHelper();
+      console.log('handleUpdateProfile.authUser: ', JSON.stringify(authUser, null, 2));
       profileCreated = await userHelper.updateUser(authUser);
     }
   } catch (error) {

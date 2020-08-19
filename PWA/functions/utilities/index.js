@@ -129,7 +129,20 @@ const arrayToObject = (array, keyField) => Object.assign({}, ...array.map(item =
 const {
   StorageBucketHelper
 } = require('./StorageBucketHelper');
+const isEmptyString = value => value === '';
 const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const {
+  join
+} = require('path');
+const getFirebaseStorageURL = (projectId, source) => {
+  const sourcePrefix = `firebasestorage.googleapis.com/v0/b/${projectId}.appspot.com/o/`;
+  const sourceSuffix = `?alt=media`;
+  const revisedSource = join(sourcePrefix, encodeURIComponent(source.startsWith('/')
+    ? source.substring(1)
+    : source));
+  const firebaseStorageURL = `${'https://'}${revisedSource}${sourceSuffix}`;
+  return firebaseStorageURL;
+};
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -150,4 +163,6 @@ exports.objectToArray = objectToArray;
 exports.arrayToObject = arrayToObject;
 exports.StorageBucketHelper = StorageBucketHelper;
 exports.jsonObjectPropertiesToUppercase = jsonObjectPropertiesToUppercase;
+exports.isEmptyString = isEmptyString;
 exports.isBoolean = isBoolean;
+exports.getFirebaseStorageURL = getFirebaseStorageURL;

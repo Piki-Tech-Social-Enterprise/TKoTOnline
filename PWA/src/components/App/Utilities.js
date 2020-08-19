@@ -198,6 +198,7 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
+const isEmptyString = value => value === '';
 const isNumber = value => value && !isNaN(value);
 const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
 const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
@@ -277,6 +278,7 @@ export {
   isJson,
   stripHtml,
   draftToText,
+  isEmptyString,
   isNumber,
   isBoolean,
   isDate,

@@ -15,7 +15,9 @@ const {
 //   stringify
 // } = require('flatted');
 const {
-  isBoolean
+  isEmptyString,
+  isBoolean,
+  getFirebaseStorageURL
 } = require('../utilities');
 
 class UserHelper {
@@ -64,13 +66,13 @@ class UserHelper {
       uid
     } = authUser;
     const createRequest = {
-      disabled: disabled || isBoolean(disabled) ? false : undefined,
+      disabled: disabled || (isBoolean(disabled) ? false : undefined),
       displayName: displayName || undefined,
       email: email || undefined,
-      emailVerified: emailVerified || isBoolean(emailVerified) ? false : undefined,
+      emailVerified: emailVerified || (isBoolean(emailVerified) ? false : undefined),
       password: password || undefined,
       phoneNumber: phoneNumber || undefined,
-      photoURL: photoURL || undefined,
+      photoURL: photoURL || (isEmptyString(photoURL) ? '' : undefined),
       uid: uid || undefined
     };
     console.log(`handleCreateAuthUser.createRequest: ${JSON.stringify(createRequest, null, 2)}`);
@@ -90,16 +92,17 @@ class UserHelper {
       photoURL,
       uid
     } = authUser;
+    console.log(`handleUpdateAuthUser.authUser: ${JSON.stringify(authUser, null, 2)}`);
     const existingAuthUser = await this.adminAuth.getUser(uid);
-    console.log(`existingAuthUser: ${JSON.stringify(existingAuthUser, null, 2)}`);
+    console.log(`handleUpdateAuthUser.existingAuthUser: ${JSON.stringify(existingAuthUser, null, 2)}`);
     const updateRequest = {
-      disabled: disabled || isBoolean(disabled) ? false : existingAuthUser.disabled,
+      disabled: disabled || (isBoolean(disabled) ? false : existingAuthUser.disabled),
       displayName: displayName || existingAuthUser.displayName || undefined,
       email: email || existingAuthUser.email || undefined,
-      emailVerified: emailVerified || isBoolean(emailVerified) ? false : existingAuthUser.emailVerified,
+      emailVerified: emailVerified || (isBoolean(emailVerified) ? false : existingAuthUser.emailVerified),
       password: password || existingAuthUser.password || undefined,
       phoneNumber: phoneNumber || existingAuthUser.phoneNumber || undefined,
-      photoURL: photoURL || existingAuthUser.phoneNumber || undefined
+      photoURL: photoURL || (isEmptyString(photoURL) ? '' : existingAuthUser.photoURL || undefined)
     };
     console.log(`handleUpdateAuthUser.updateRequest: ${JSON.stringify(updateRequest, null, 2)}`);
     const userRecord = await this.adminAuth.updateUser(uid, updateRequest);
@@ -138,20 +141,21 @@ class UserHelper {
       updated,
       updatedBy
     } = user;
+    console.log('handleSaveDbUser.user: ', JSON.stringify(user, null, 2));
     const now = new Date();
     const preparedUser = {
-      active: active || false,
+      active: active || (isBoolean(active) ? false : undefined),
       created: created || now.toString(),
       createdBy: createdBy || '',
       displayName: displayName || '',
       email: email || '',
-      emailVerified: emailVerified || false,
-      photoURL: photoURL || '',
-      providerData: providerData || (email && [{
+      emailVerified: emailVerified || (isBoolean(emailVerified) ? false : undefined),
+      photoURL: photoURL || (isEmptyString(photoURL) ? '' : undefined),
+      providerData: providerData || (email ? [{
         email: email,
         providerId: 'password',
         uid: uid
-      }]) || {},
+      }] : []) || [],
       roles: roles || {
         undefinedRole
       },
@@ -159,6 +163,7 @@ class UserHelper {
       updated: updated || now.toString(),
       updatedBy: updatedBy || ''
     };
+    console.log('handleSaveDbUser.preparedUser: ', JSON.stringify(preparedUser, null, 2));
     let errorMessage = null;
     let existingDbUser = await this.getDbUser(uid || '')
     let dbUserRef = null;
@@ -173,14 +178,14 @@ class UserHelper {
       dbUserRef = await existingDbUser.once('value');
       dbUser = await dbUserRef.val() || {};
       if (dbUser || isNew) {
-        existingDbUser.set({
-          active: preparedUser.active || dbUser.active || false,
+        dbUser = {
+          active: preparedUser.active || (isBoolean(preparedUser.active) ? false : dbUser.active || undefined),
           created: preparedUser.created || dbUser.created,
           createdBy: preparedUser.createdBy || dbUser.createdBy,
           displayName: preparedUser.displayName || dbUser.displayName || '',
           email: preparedUser.email || dbUser.email,
-          emailVerified: preparedUser.emailVerified || dbUser.emailVerified || false,
-          photoURL: preparedUser.photoURL || dbUser.photoURL || '',
+          emailVerified: preparedUser.emailVerified || (isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined),
+          photoURL: preparedUser.photoURL || (isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined),
           providerData: preparedUser.providerData || dbUser.providerData || [],
           roles: preparedUser.roles || dbUser.roles || {
             undefinedRole
@@ -188,7 +193,9 @@ class UserHelper {
           uid: preparedUser.uid || dbUser.uid,
           updated: preparedUser.updated || now.toString(),
           updatedBy: preparedUser.updatedBy || ''
-        }, saveDbUser_completed);
+        };
+        console.log('handleSaveDbUser.dbUser: ', JSON.stringify(dbUser, null, 2));
+        existingDbUser.set(dbUser, saveDbUser_completed);
       } else {
         errorMessage = 'Save Db User Error: uid (' + uid + ') not found.';
       }
@@ -214,17 +221,26 @@ class UserHelper {
     }
   }
 
+  createAuthUserClone(authUser) {
+    const authUserClone = Object.assign({}, authUser);
+    authUserClone.photoURL = getFirebaseStorageURL(process.env.GCLOUD_PROJECT, authUser.photoURL);
+    console.log(`handleCreateUser.authUserClone: ${JSON.stringify(authUserClone, null, 2)}`);
+    return authUserClone;
+  }
+
   async handleCreateUser(authUser) {
     // console.log(`config: ${stringify(config, null, 2)}`);
+    console.log(`handleCreateUser.authUser: ${JSON.stringify(authUser, null, 2)}`);
     let errorMessages = [];
     try {
-      const authUserClone = JSON.parse(JSON.stringify(authUser));
-      authUserClone.photoURL = undefined;
-      await this.handleCreateAuthUser(authUserClone);
+      await this.handleCreateAuthUser(authUser.photoURL.startsWith('/images/')
+        ? this.createAuthUserClone(authUser)
+        : authUser);
     } catch (error) {
       errorMessages.push(`Create User Error (AuthUser): ${error}`);
     }
     try {
+      console.log(`handleCreateUser.authUser--2: ${JSON.stringify(authUser, null, 2)}`);
       await this.handleSaveDbUser(authUser);
     } catch (error) {
       errorMessages.push(`Create User Error (DbUser): ${error}`);
@@ -239,15 +255,17 @@ class UserHelper {
 
   async handleUpdateUser(authUser) {
     // console.log(`config: ${stringify(config, null, 2)}`);
+    console.log(`handleUpdateUser.authUser: ${JSON.stringify(authUser, null, 2)}`);
     let errorMessages = [];
     try {
-      const authUserClone = JSON.parse(JSON.stringify(authUser));
-      authUserClone.photoURL = undefined;
-      await this.handleUpdateAuthUser(authUserClone);
+      await this.handleUpdateAuthUser(authUser.photoURL.startsWith('/images/')
+        ? this.createAuthUserClone(authUser)
+        : authUser);
     } catch (error) {
       errorMessages.push(`Update User Error (AuthUser): ${error}`);
     }
     try {
+      console.log(`handleUpdateUser.authUser--2: ${JSON.stringify(authUser, null, 2)}`);
       await this.handleSaveDbUser(authUser);
     } catch (error) {
       errorMessages.push(`Update User Error (DbUser): ${error}`);

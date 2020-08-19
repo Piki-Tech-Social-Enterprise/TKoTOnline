@@ -74,7 +74,7 @@ const AuthUserView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['active'];
+    const checkedNames = ['active', 'emailVerified'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     const roles = Object.keys(Roles);
     const isRole = roles.findIndex(role => role === name) > -1;
@@ -147,8 +147,8 @@ const AuthUserView = props => {
         } else if (!password.match(/(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,15}/)) {
           displayMessage = 'Password is too weak. Needs to be 6 characters or more. It can be any combination of letters, numbers, and symbols (ASCII characters).';
         }
-      } else if (!photoURL || !email || !displayName || !roles) {
-        displayMessage = 'The Photo, Email, Display Name, and Roles are required fields.';
+      } else if (!email || !displayName || !roles) {
+        displayMessage = 'The Email, Display Name, and Roles are required fields.';
       } else if (photoURLFile && photoURLFile.size > maxImageFileSize) {
         const {
           size
