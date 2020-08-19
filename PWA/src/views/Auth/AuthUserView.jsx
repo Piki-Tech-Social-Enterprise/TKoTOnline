@@ -131,8 +131,8 @@ const AuthUserView = props => {
     } = user;
     let uid = user.uid;
     let photoURL = user.photoURL;
-    let displayIcon = 'success';
-    let displayTitle = `Update ${userOrProfileText} Successful`;
+    let displayIcon = 'error';
+    let displayTitle = `Save ${userOrProfileText} Failed`;
     let displayMessage = defaultDisplayMesssage;
     try {
       if (isNew) {
@@ -230,6 +230,8 @@ const AuthUserView = props => {
         if (photoURLFile) {
           await firebase.saveStorageFile(photoURL, photoURLFile);
         }
+        displayIcon = 'success';
+        displayTitle = `Save ${userOrProfileText} Successful`;
         if (isNew) {
           handleGotoParentList();
         }
