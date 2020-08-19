@@ -200,7 +200,7 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
 };
 const isEmptyString = value => value === '';
 const isNumber = value => value && !isNaN(value);
-const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const isBoolean = value => (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
 const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
 const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
 const tryToConvertValue = value => {

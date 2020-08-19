@@ -298,7 +298,6 @@ class AuthenticationRepository extends BaseRepository {
             user
           } = userCredentials;
           const {
-            photoURL,
             uid
           } = user;
           if (providerId === 'password') {
