@@ -72,7 +72,7 @@ class UserHelper {
       emailVerified: emailVerified || (isBoolean(emailVerified) ? false : undefined),
       password: password || undefined,
       phoneNumber: phoneNumber || undefined,
-      photoURL: photoURL || (isEmptyString(photoURL) ? '' : undefined),
+      photoURL: photoURL || undefined,
       uid: uid || undefined
     };
     console.log(`handleCreateAuthUser.createRequest: ${JSON.stringify(createRequest, null, 2)}`);
@@ -102,7 +102,7 @@ class UserHelper {
       emailVerified: emailVerified || (isBoolean(emailVerified) ? false : existingAuthUser.emailVerified),
       password: password || existingAuthUser.password || undefined,
       phoneNumber: phoneNumber || existingAuthUser.phoneNumber || undefined,
-      photoURL: photoURL || (isEmptyString(photoURL) ? '' : existingAuthUser.photoURL || undefined)
+      photoURL: photoURL || undefined
     };
     console.log(`handleUpdateAuthUser.updateRequest: ${JSON.stringify(updateRequest, null, 2)}`);
     const userRecord = await this.adminAuth.updateUser(uid, updateRequest);
