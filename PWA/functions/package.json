@@ -22,7 +22,7 @@
     "serveAll": "firebase emulators:start",
     "serve": "firebase emulators:start --only functions",
     "shell": "export GOOGLE_APPLICATION_CREDENTIALS=\"$REACT_APP_GAC\"&&firebase functions:shell --port 5001",
-    "start": "npm run shell",
+    "start": "pnpm run shell",
     "deploy": "firebase deploy -m \"\"\"$REACT_APP_PWA_NAME v$REACT_APP_PWA_BUILD_VERSION\"\"\" --only functions",
     "logs": "firebase functions:log",
     "firebaseUseDev": "firebase use \"tkot-online-dev\"",
@@ -54,12 +54,12 @@
     "deployCleanInstallProd": "run-s -sn firebaseUseProd \"envCmdProd cleanInstall applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
     "removeNodeModules": "if [[ -d node_modules ]]; then rm -rf node_modules/&&echo \"'node_modules' successfully removed\"; else echo 'node_modules' folder not found; fi",
     "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
-    "npmSetProgressOff": "npm set progress=false",
-    "npmCacheClean": "npm cache clean --force",
-    "npmInstall": "npm install --prefer-offline --no-audit",
-    "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmCacheClean npmInstall",
+    "npmSetProgressOff": "pnpm set progress=false",
+    "npmInstall": "pnpm install",
+    "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmInstall",
     "unsetFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js unset",
-    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"
+    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set",
+    "preinstall": "npx only-allow pnpm"
   },
   "engines": {
     "node": "8"
