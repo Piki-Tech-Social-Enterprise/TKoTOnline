@@ -1,9 +1,6 @@
 import BaseRepository from './BaseRepository';
 import 'firebase/database';
 import {
-  undefinedRole
-} from '../../Domains/Roles';
-import {
   isEmptyString,
   isBoolean
 } from '../../App/Utilities';
@@ -78,10 +75,8 @@ class UserRepository extends BaseRepository {
         email: email,
         providerId: 'password',
         uid: uid
-      }]) || {},
-      roles: roles || {
-        undefinedRole
-      },
+      }]) || undefined,
+      roles: roles || undefined,
       uid: uid,
       updated: updated || now.toString(),
       updatedBy: updatedBy || ''
@@ -109,9 +104,7 @@ class UserRepository extends BaseRepository {
           emailVerified: preparedUser.emailVerified || (isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined),
           photoURL: preparedUser.photoURL || (isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined),
           providerData: preparedUser.providerData || dbUser.providerData || [],
-          roles: preparedUser.roles || dbUser.roles || {
-            undefinedRole
-          },
+          roles: preparedUser.roles || dbUser.roles || undefined,
           uid: preparedUser.uid || dbUser.uid,
           updated: preparedUser.updated || now.toString(),
           updatedBy: preparedUser.updatedBy || ''

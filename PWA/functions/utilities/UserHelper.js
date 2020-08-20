@@ -155,10 +155,8 @@ class UserHelper {
         email: email,
         providerId: 'password',
         uid: uid
-      }] : []) || [],
-      roles: roles || {
-        undefinedRole
-      },
+      }] : undefined) || undefined,
+      roles: roles || undefined,
       uid: uid,
       updated: updated || now.toString(),
       updatedBy: updatedBy || ''
@@ -186,10 +184,8 @@ class UserHelper {
           email: preparedUser.email || dbUser.email,
           emailVerified: preparedUser.emailVerified || (isBoolean(preparedUser.emailVerified) ? false : dbUser.emailVerified || undefined),
           photoURL: preparedUser.photoURL || (isEmptyString(preparedUser.photoURL) ? '' : dbUser.photoURL || undefined),
-          providerData: preparedUser.providerData || dbUser.providerData || [],
-          roles: preparedUser.roles || dbUser.roles || {
-            undefinedRole
-          },
+          providerData: preparedUser.providerData || dbUser.providerData || undefined,
+          roles: preparedUser.roles || dbUser.roles || undefined,
           uid: preparedUser.uid || dbUser.uid,
           updated: preparedUser.updated || now.toString(),
           updatedBy: preparedUser.updatedBy || ''
