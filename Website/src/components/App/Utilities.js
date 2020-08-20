@@ -151,13 +151,13 @@ const defaultPageSetup = async (init = defaultInit) => {
     classList: bodyClassNames
   } = body;
   const navOpenClassName = 'nav-open';
-  const initIsBoolean = isBoolean(init) && init;
+  const initIsBoolean = isBoolean(init, true);
   const {
     isLoading,
     classNames
   } = initIsBoolean
-    ? defaultInit
-    : init;
+      ? defaultInit
+      : init;
   if (isLoading || initIsBoolean) {
     classNames && classNames.map(className => bodyClassNames.add(className));
     document.documentElement.classList.remove(navOpenClassName);
@@ -169,7 +169,16 @@ const defaultPageSetup = async (init = defaultInit) => {
   }
 };
 const isNumber = value => value && !isNaN(value);
-const isBoolean = value => value && (typeof value === 'boolean' || value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false');
+const isEmptyString = value => value === '';
+const isNullOrEmpty = value => value == null || isEmptyString(value);
+const isTrueOrFalse = value => {
+  const valueAsLowercaseString = (value || '').toString().toLowerCase();
+  return valueAsLowercaseString === 'true' || valueAsLowercaseString === 'false';
+};
+const isBoolean = (value, expectedValue = undefined) =>
+  !isNullOrEmpty(value) &&
+  (typeof value === 'boolean' || isTrueOrFalse(value)) &&
+  (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase());
 const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
 const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
 const tryToConvertValue = value => {
@@ -266,7 +275,7 @@ const getNavItems = isHomePage => {
   return navItems;
 };
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const srcPrefix = process.env.NODE_ENV !== 'production' && process.env.REACT_APP_DEBUG_MODE === true
+const srcPrefix = process.env.NODE_ENV !== 'production' || isBoolean(process.env.REACT_APP_DEBUG_MODE, true)
   ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
   : '';
 const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
@@ -276,10 +285,32 @@ const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getSt
     // REACT_APP_DEBUG_MODE,
     REACT_APP_USE_IMAGE_CDN
   } = process.env;
-  // console.log('getSrc::debug: ', { NODE_ENV, REACT_APP_DEBUG_MODE, REACT_APP_USE_IMAGE_CDN, srcPrefix, imageURL });
+  // console.group('getSrc');
+  // console.log('VARS: ', { NODE_ENV, REACT_APP_DEBUG_MODE, REACT_APP_USE_IMAGE_CDN, srcPrefix, imageURL });
+  // const value = REACT_APP_USE_IMAGE_CDN;
+  // const expectedValue = true;
+  // console.log({
+  //   'isBoolean(REACT_APP_USE_IMAGE_CDN, true)': {
+  //     'value': value,
+  //     'expectedValue': expectedValue,
+  //     'result': isBoolean(REACT_APP_USE_IMAGE_CDN, true),
+  //     '!isNullOrEmpty(value)': !isNullOrEmpty(value),
+  //     '(typeof value === \'boolean\' || isTrueOrFalse(value))': {
+  //       'result': (typeof value === 'boolean' || isTrueOrFalse(value)),
+  //       'typeof value === \'boolean\'': typeof value === 'boolean',
+  //       'isTrueOrFalse(value)': isTrueOrFalse(value)
+  //     },
+  //     '(isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue)': {
+  //       'result': (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase()),
+  //       'isNullOrEmpty(expectedValue)': isNullOrEmpty(expectedValue),
+  //       'value.toString().toLowerCase() === expectedValue': value.toString().toLowerCase() === expectedValue.toString().toLowerCase()
+  //     }
+  //   }
+  // });
+  // console.groupEnd();
   return imageURL
     ? imageURL.startsWith('/images/')
-      ? REACT_APP_USE_IMAGE_CDN === true
+      ? isBoolean(REACT_APP_USE_IMAGE_CDN, true)
         ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
         : (typeof getStorageFileDownloadURL === 'function' && await getStorageFileDownloadURL(imageURL)) || imageURL
       : imageURL
@@ -311,6 +342,9 @@ export {
   tkotBackgroundImage,
   defaultPageSetup,
   isNumber,
+  isEmptyString,
+  isNullOrEmpty,
+  isTrueOrFalse,
   isBoolean,
   isDate,
   toDate,

@@ -86,7 +86,6 @@ const FirebaseImage = props => {
         alt={alt}
         src={src}
         title={alt}
-        loading="lazy"
       />
     </>
   );

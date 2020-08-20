@@ -198,9 +198,17 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsText = stripHtml(draftAsHtml);
   return draftAsText;
 };
-const isEmptyString = value => value === '';
 const isNumber = value => value && !isNaN(value);
-const isBoolean = value => (typeof value === 'boolean' && (value.toString().toLowerCase() === 'true' || value.toString().toLowerCase() === 'false'))
+const isEmptyString = value => value === '';
+const isNullOrEmpty = value => value == null || isEmptyString(value);
+const isTrueOrFalse = value => {
+  const valueAsLowercaseString = (value || '').toString().toLowerCase();
+  return valueAsLowercaseString === 'true' || valueAsLowercaseString === 'false';
+};
+const isBoolean = (value, expectedValue = undefined) =>
+  !isNullOrEmpty(value) &&
+  (typeof value === 'boolean' || isTrueOrFalse(value)) &&
+  (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase());
 const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
 const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
 const tryToConvertValue = value => {
@@ -278,8 +286,10 @@ export {
   isJson,
   stripHtml,
   draftToText,
-  isEmptyString,
   isNumber,
+  isEmptyString,
+  isNullOrEmpty,
+  isTrueOrFalse,
   isBoolean,
   isDate,
   toDate,
