@@ -23,8 +23,8 @@ import * as Roles from '../components/Domains/VolunteerRoles';
 import {
   withFirebase
 } from 'components/Firebase';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeFooter from 'components/Footers/HomeFooter';
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
 
 const Volunteer = props => {
   const INITIAL_STATE = {

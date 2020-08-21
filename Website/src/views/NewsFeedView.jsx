@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
 import {
   Container,
@@ -10,16 +11,16 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeHeader from 'components/Headers/HomeHeader';
-import HomeFooter from 'components/Footers/HomeFooter';
 import draftToHtml from 'draftjs-to-html';
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
   getSrc
 } from 'components/App/Utilities';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
 const NewsFeedView = props => {
   const [state, setState] = useState({
     isLoading: true,

@@ -5,7 +5,8 @@ const {
   httpResponseCodes,
   httpRequestMethods,
   FORBIDDEN_TEXT,
-  getFirebaseStorageURL
+  getFirebaseStorageURL,
+  YEAR_AS_SECONDS
 } = require('../utilities');
 const sharp = require('sharp');
 const https = require('https');
@@ -62,7 +63,7 @@ const handleImageTransform = async (req, res) => {
           force: webpAccepted,
           lossless: lossless === 1
         });
-      const cacheMaxAge = 5 * 60;
+      const cacheMaxAge = YEAR_AS_SECONDS;
       const responsePipe = res
         .set('Cache-Control', `public, max-age=${cacheMaxAge}`)
         .set('Vary', 'Accept');

@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  lazy
 } from 'react';
 import {
   Container,
@@ -11,12 +12,12 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
 const {
   aboutUs,
   projects
@@ -58,7 +59,7 @@ const AboutSection = props => {
         <Container className="py-5 text-center">
           <Row>
             <Col xs={12} sm={6} className="bg-danger1">
-              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.png")} style={{
+              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.webp")} style={{
                 width: 419
               }} />
             </Col>

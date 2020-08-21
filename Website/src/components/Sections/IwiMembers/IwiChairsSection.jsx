@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  lazy
 } from 'react';
 import {
   // Container,
@@ -16,8 +17,6 @@ import {
   CarouselItem,
   CarouselControl
 } from 'reactstrap';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -30,6 +29,8 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const getIwiMembersAsChunks = (iwiMembers, columnCount) => {
   const iwiMembersMegaMenuItems = {};
   // const chunks = intoChunks(iwiMembers, getChunkSize(iwiMembers, columnCount));

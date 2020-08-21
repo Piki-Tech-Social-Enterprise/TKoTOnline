@@ -1,18 +1,19 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeFooter from 'components/Footers/HomeFooter';
 import {
   withFirebase
 } from 'components/Firebase';
-import ProjectsSection from 'components/Sections/Projects';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const ProjectsSection = lazy(() => import('components/Sections/Projects'));
 const ProjectsView = () => {
   const [state, setState] = useState({
     isLoading: true

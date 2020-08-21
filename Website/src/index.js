@@ -15,7 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {
+  lazy
+} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch /*, Redirect */ } from "react-router-dom";
 
@@ -35,31 +37,32 @@ import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
-import GoogleAnalytics from 'components/App/GoogleAnalytics';
 
-const HomeView = React.lazy(() => import('views/HomeView'));
-// import Volunteer = React.lazy(() => import('views/Volunteer'));
-const PrivacyPolicyView = React.lazy(() => import('views/PrivacyPolicyView'));
-const TermsOfServiceView = React.lazy(() => import('views/TermsOfServiceView'));
-const AboutUsView = React.lazy(() => import('views/AboutUsView'));
-const ContactUsView = React.lazy(() => import('views/ContactUsView'));
-// const FacebookLinksView = React.lazy(() => import('views/FacebookLinksView'));
-// const FacebookLinkView = React.lazy(() => import('views/FacebookLinkView'));
-const ProjectsView = React.lazy(() => import('views/ProjectsView'));
-const ProjectView = React.lazy(() => import('views/ProjectView'));
-const NewsFeedsView = React.lazy(() => import('views/NewsFeedsView'));
-const NewsFeedView = React.lazy(() => import('views/NewsFeedView'));
-const EventsView = React.lazy(() => import('views/EventsView'));
-const EventView = React.lazy(() => import('views/EventView'));
-const IwiChairView = React.lazy(() => import('views/IwiChairView'));
+// const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner').then(m => m.default));
+const GoogleAnalytics = lazy(() => import('components/App/GoogleAnalytics'));
+const HomeView = lazy(() => import('views/HomeView'));
+// import Volunteer = lazy(() => import('views/Volunteer'));
+const PrivacyPolicyView = lazy(() => import('views/PrivacyPolicyView'));
+const TermsOfServiceView = lazy(() => import('views/TermsOfServiceView'));
+const AboutUsView = lazy(() => import('views/AboutUsView'));
+const ContactUsView = lazy(() => import('views/ContactUsView'));
+// const FacebookLinksView = lazy(() => import('views/FacebookLinksView'));
+// const FacebookLinkView = lazy(() => import('views/FacebookLinkView'));
+const ProjectsView = lazy(() => import('views/ProjectsView'));
+const ProjectView = lazy(() => import('views/ProjectView'));
+const NewsFeedsView = lazy(() => import('views/NewsFeedsView'));
+const NewsFeedView = lazy(() => import('views/NewsFeedView'));
+const EventsView = lazy(() => import('views/EventsView'));
+const EventView = lazy(() => import('views/EventView'));
+const IwiChairView = lazy(() => import('views/IwiChairView'));
 
 ReactDOM.render(
-  <FirebaseContext.Provider value={new Firebase()}>
-    <BrowserRouter>
-      <React.Suspense fallback={<LoadingSpinner
-        outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
-        innerClassName="m-5 p-5 text-center"
-      />}>
+  <React.Suspense fallback={<LoadingSpinner
+    outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+    innerClassName="m-5 p-5 text-center"
+  />}>
+    <FirebaseContext.Provider value={new Firebase()}>
+      <BrowserRouter>
         <Switch>
           <Route path="/" render={props => (
             <HomeView {...props} />
@@ -148,9 +151,9 @@ ReactDOM.render(
             exact
           />
         </Switch>
-      </React.Suspense>
-      <GoogleAnalytics />
-    </BrowserRouter>
-  </FirebaseContext.Provider>,
+        <GoogleAnalytics />
+      </BrowserRouter>
+    </FirebaseContext.Provider>
+  </React.Suspense>,
   document.getElementById("root")
 );

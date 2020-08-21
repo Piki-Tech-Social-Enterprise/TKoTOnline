@@ -1,6 +1,7 @@
 import React, {
   useState,
   useEffect,
+  lazy,
   Fragment
 } from 'react';
 import {
@@ -11,13 +12,13 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import FirebaseImage from 'components/App/FirebaseImage';
 import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const IwiMembersSection = props => {
   const {
     containerClassName,

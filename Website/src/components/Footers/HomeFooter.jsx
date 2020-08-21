@@ -156,7 +156,7 @@ const HomeFooter = props => {
           <Row className="footer-content px-0 mx-0">
             <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
               <a href="/">
-                <img alt="..." className="n-logo py-3" width="289" src={require("assets/img/tkot/tkot-logo-white.png")} />
+                <img alt="..." className="n-logo py-3" width="289" src={require("assets/img/tkot/tkot-logo-white.webp")} />
               </a>
             </Col>
             <Col xs={12} lg={3} className="bg-light1 text-dark1">
@@ -270,7 +270,7 @@ const HomeFooter = props => {
             <img className="ml-0 ml-sm-3 created-by-logo-image" alt="Making Everything Achievable Limited" src={require('assets/img/tkot/mea-logo-165x165.png')} />
             {/* </a> */}
             <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
-              <img className="ml-3 created-by-logo-image" alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.png')} />
+              <img className="ml-3 created-by-logo-image" alt="Piki Tech Limited" src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp')} />
             </a>
           </Col>
         </Row>

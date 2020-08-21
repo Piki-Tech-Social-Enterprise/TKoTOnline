@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useState,
+  lazy,
   useRef,
   useCallback
 } from 'react';
@@ -9,12 +10,9 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeFooter from 'components/Footers/HomeFooter';
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import draftToHtml from 'draftjs-to-html';
 import {
   defaultPageSetup
@@ -25,8 +23,11 @@ import {
 import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
-import FirebaseImage from 'components/App/FirebaseImage';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const AboutUsView = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -50,7 +51,7 @@ const AboutUsView = props => {
         isLoading: false,
         settings: dbSettings
       }));
-    }
+    };
     const handleIFrameBlur = () => {
       if (
         document.activeElement &&
@@ -61,7 +62,7 @@ const AboutUsView = props => {
       }
     };
     defaultPageSetup(true);
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveSettingValues();
       window.addEventListener('blur', handleIFrameBlur);
     }

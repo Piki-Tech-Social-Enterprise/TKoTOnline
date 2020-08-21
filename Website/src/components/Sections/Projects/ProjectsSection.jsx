@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  lazy
 } from 'react';
 import {
   Container,
@@ -11,8 +12,6 @@ import {
   CardBody,
   CardTitle
 } from 'reactstrap';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -21,6 +20,8 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const ProjectsSection = props => {
   const [state, setState] = useState({
     isLoading: true,

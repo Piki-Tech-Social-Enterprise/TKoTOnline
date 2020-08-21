@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
 import {
   Container,
@@ -15,8 +16,6 @@ import {
   Button,
   CustomInput
 } from 'reactstrap';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeFooter from 'components/Footers/HomeFooter';
 import swal from 'sweetalert2';
 import {
   withFirebase
@@ -25,6 +24,8 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
 const ContactUsView = props => {
   const INITIAL_STATE = {
     active: true,

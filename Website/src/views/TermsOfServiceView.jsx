@@ -1,19 +1,20 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
 import {
   Container,
   Row,
   Col
 } from 'reactstrap';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeFooter from 'components/Footers/HomeFooter';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
 const TermsOfServiceView = () => {
   const [state, setState] = useState({
     isLoading: true

@@ -16,7 +16,7 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
 import {
   getChunkSize,
   intoChunks

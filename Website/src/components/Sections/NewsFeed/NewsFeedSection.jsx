@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  lazy
 } from 'react';
 import {
   Container,
@@ -14,8 +15,6 @@ import {
 } from 'reactstrap';
 // import NewsFeedCarousel from './NewsFeedCarousel';
 import queryString from 'query-string';
-import LoadingSpinner from 'components/App/LoadingSpinner';
-import FirebaseImage from 'components/App/FirebaseImage';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -28,6 +27,8 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,

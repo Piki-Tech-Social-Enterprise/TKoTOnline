@@ -1,18 +1,8 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
-import HomeNavbar from 'components/Navbars/HomeNavbar';
-import HomeHeader from 'components/Headers/HomeHeader';
-import HomeFooter from 'components/Footers/HomeFooter';
-import AboutSection from 'components/Sections/About';
-import NewsFeedSection from 'components/Sections/NewsFeed';
-// import InteractiveMapSection from 'components/Sections/InteractiveMap';
-// import VolunteersSection from 'components/Sections/Volunteers';
-import IwiMembers from 'components/Sections/IwiMembers';
-// import CommuintyLinksSection from 'components/Sections/CommunityLinks';
-import EventsSection from 'components/Sections/Events';
-import ProjectsSection from 'components/Sections/Projects';
 import {
   Scrollspy
 } from 'reactstrap-scrollspy';
@@ -20,14 +10,25 @@ import Routes from 'components/Routes/routes';
 import {
   withFirebase
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
 import {
   indexPageClassName,
   sidebarCollapseClassName,
   defaultPageSetup,
   getSrc
 } from 'components/App/Utilities';
+// import InteractiveMapSection from 'components/Sections/InteractiveMap';
+// import VolunteersSection from 'components/Sections/Volunteers';
+// import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
+const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
+const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const AboutSection = lazy(() => import('components/Sections/About'));
+const NewsFeedSection = lazy(() => import('components/Sections/NewsFeed'));
+const IwiMembers = lazy(() => import('components/Sections/IwiMembers'));
+const EventsSection = lazy(() => import('components/Sections/Events'));
+const ProjectsSection = lazy(() => import('components/Sections/Projects'));
 const {
   home,
   iwiMembers,

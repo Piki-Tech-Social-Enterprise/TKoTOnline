@@ -152,6 +152,7 @@ const getFirebaseStorageURL = (projectId, source) => {
   const firebaseStorageURL = `${'https://'}${revisedSource}${sourceSuffix}`;
   return firebaseStorageURL;
 };
+const YEAR_AS_SECONDS = 31536000;
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -177,3 +178,4 @@ exports.isNullOrEmpty = isNullOrEmpty;
 exports.isTrueOrFalse = isTrueOrFalse;  
 exports.isBoolean = isBoolean;
 exports.getFirebaseStorageURL = getFirebaseStorageURL;
+exports.YEAR_AS_SECONDS = YEAR_AS_SECONDS;
