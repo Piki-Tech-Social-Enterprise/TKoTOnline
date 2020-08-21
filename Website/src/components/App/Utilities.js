@@ -121,7 +121,7 @@ const isJson = value => {
   );
 };
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
-const draftToText = (draftRaw, defaultValue = undefined) => {
+const draftToText = (draftRaw, defaultValue = undefined, maxLength = undefined) => {
   if (!isJson(draftRaw)) {
     return defaultValue !== undefined
       ? defaultValue
@@ -130,7 +130,9 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsJson = JSON.parse(draftRaw);
   const draftAsHtml = draftToHtml(draftAsJson);
   const draftAsText = stripHtml(draftAsHtml);
-  return draftAsText;
+  return isNumber(maxLength)
+    ? getFirstCharacters(draftAsText, maxLength, false)
+    : draftAsText;
 };
 const indexPageClassName = 'index-page';
 const sidebarCollapseClassName = 'sidebar-collapse';
@@ -277,7 +279,7 @@ const getNavItems = isHomePage => {
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const srcPrefix = process.env.NODE_ENV !== 'production' || isBoolean(process.env.REACT_APP_DEBUG_MODE, true)
   ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
-  : '';
+  : process.env.REACT_APP_WEB_BASE_URL;
 const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
 const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getStorageFileDownloadURL) => {
   const {
@@ -315,6 +317,11 @@ const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getSt
         : (typeof getStorageFileDownloadURL === 'function' && await getStorageFileDownloadURL(imageURL)) || imageURL
       : imageURL
     : noImageAvailable;
+};
+const getFirstCharacters = (value, length, excludeEllipse = false) => {
+  return value && value.length > length
+    ? `${value.substring(0, length - (excludeEllipse ? 0 : 3))}${!excludeEllipse && '...'}`
+    : value;
 };
 
 export default shallowCompare;
@@ -354,5 +361,6 @@ export {
   sleep,
   srcPrefix,
   getQParameter,
-  getSrc
+  getSrc,
+  getFirstCharacters
 };

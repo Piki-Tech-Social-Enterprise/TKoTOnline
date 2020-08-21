@@ -13,10 +13,12 @@ import {
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
 import {
+  draftToText,
   getSrc
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
@@ -65,6 +67,12 @@ const EventView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <div id="Event">
+            <TKoTHelmet
+              name={state.dbEvent.header}
+              path={`/Wananga/${state.dbEvent.evid}`}
+              description={draftToText(state.dbEvent.content, '')}
+              image={`${state.imageDownloadURL}`}
+            />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}

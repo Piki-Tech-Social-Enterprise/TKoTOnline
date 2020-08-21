@@ -15,7 +15,8 @@ import {
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
 import {
-  defaultPageSetup
+  defaultPageSetup,
+  draftToText
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -25,6 +26,7 @@ import {
 } from 'components/Sections/IwiMembers';
 
 const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
 const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
@@ -72,7 +74,10 @@ const AboutUsView = props => {
         defaultPageSetup();
       }
     };
-  }, [props, state])
+  }, [props, state]);
+  const {
+    REACT_APP_WEB_BASE_URL
+  } = process.env;
   return (
     <>
       {
@@ -82,6 +87,12 @@ const AboutUsView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <>
+            <TKoTHelmet
+              name="About Us"
+              path="/AboutUs"
+              description={draftToText(state.settings.aboutPageDescription, '')}
+              image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
+            />
             <HomeNavbar
               initalTransparent
               colorOnScrollValue={25}

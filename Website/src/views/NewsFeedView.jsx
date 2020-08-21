@@ -12,15 +12,17 @@ import {
   withFirebase
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
-import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
+  draftToText,
   getSrc
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const NewsFeedCaption = lazy(() => import('components/App/NewsFeedCaption'));
 const NewsFeedView = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -66,6 +68,12 @@ const NewsFeedView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <div id="NewsFeed">
+            <TKoTHelmet
+              name={state.dbNewsFeed.header}
+              path={`/NewsFeeds/${state.dbNewsFeed.nfid}`}
+              description={draftToText(state.dbNewsFeed.content, '')}
+              image={`${state.imageDownloadURL}`}
+            />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}

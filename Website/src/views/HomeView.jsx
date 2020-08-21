@@ -21,6 +21,7 @@ import {
 // import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
 const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
@@ -78,6 +79,9 @@ const HomeView = props => {
     return defaultPageSetup;
   }, [props, state]);
   const scrollspyTopOffset = '10%';
+  const {
+    REACT_APP_WEB_BASE_URL
+  } = process.env;
   return (
     <>
       {
@@ -87,6 +91,12 @@ const HomeView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <>
+            <TKoTHelmet
+              name=""
+              path="/"
+              description={state.dbSettings.homePageAboutDescription}
+              image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
+            />
             <Scrollspy
               names={[
                 'HomeNavbar',

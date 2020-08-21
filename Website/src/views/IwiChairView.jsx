@@ -12,12 +12,17 @@ import {
   withFirebase
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
-const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
+import {
+  draftToText,
+  getSrc
+} from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
 const IwiChairView = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -33,10 +38,15 @@ const IwiChairView = props => {
         imid
       } = match.params;
       const dbIwiMember = await firebase.getDbIwiMemberValue(imid);
+      const {
+        iwiChairImageURL
+      } = dbIwiMember;
+      const iwiChairImageDownloadURL = await getSrc(iwiChairImageURL, 250, null, true, null, firebase.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,
-        dbIwiMember: dbIwiMember
+        dbIwiMember: dbIwiMember,
+        iwiChairImageDownloadURL: iwiChairImageDownloadURL
       }));
     };
     if (state.isLoading) {
@@ -52,6 +62,12 @@ const IwiChairView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <div id="IwiChair">
+            <TKoTHelmet
+              name={state.dbIwiMember.iwiChairName}
+              path={`/AboutUs/${state.dbIwiMember.imid}`}
+              description={draftToText(state.dbIwiMember.iwiChairProfile, '')}
+              image={`${state.iwiChairImageDownloadURL}`}
+            />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}
@@ -62,7 +78,7 @@ const IwiChairView = props => {
               pageHeaderCaption={() => (<>
                 <FirebaseImage
                   className="rounded-circle iwi-chair-image"
-                  imageURL={state.dbIwiMember.iwiChairImageURL}
+                  imageURL={state.iwiChairImageDownloadURL}
                   width="250"
                   lossless={true}
                   alt={state.dbIwiMember.iwiChairName}

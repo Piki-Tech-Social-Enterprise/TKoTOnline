@@ -14,6 +14,7 @@ dependencies:
   react-datetime: 2.16.3_d06876d2a0885ddf9862abcf8e44f5fa
   react-dom: 16.13.1_react@16.13.1
   react-ga: 3.1.2_prop-types@15.7.2+react@16.13.1
+  react-helmet: 6.1.0_react@16.13.1
   react-router: 5.2.0_react@16.13.1
   react-router-dom: 5.2.0_react@16.13.1
   react-scripts: 3.4.3_5bef26289a0d9b265b919ddb2259fc0d
@@ -10688,6 +10689,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
+  /react-fast-compare/3.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
   /react-ga/3.1.2_prop-types@15.7.2+react@16.13.1:
     dependencies:
       prop-types: 15.7.2
@@ -10698,6 +10703,18 @@ packages:
       react: ^15.6.2 || ^16.0
     resolution:
       integrity: sha512-OJrMqaHEHbodm+XsnjA6ISBEHTwvpFrxco65mctzl/v3CASMSLSyUkFqz9yYrPDKGBUfNQzKCjuMJwctjlWBbw==
+  /react-helmet/6.1.0_react@16.13.1:
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      react: 16.13.1
+      react-fast-compare: 3.2.0
+      react-side-effect: 2.1.0_react@16.13.1
+    dev: false
+    peerDependencies:
+      react: '>=16.3.0'
+    resolution:
+      integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==
   /react-is/16.13.1:
     dev: false
     resolution:
@@ -10844,6 +10861,14 @@ packages:
         optional: true
     resolution:
       integrity: sha512-oSnoWmii/iKdeQiwaO6map1lUaZLmG0xIUyb/HwCVFLT7gNbj8JZ9RmpvMCZ4fB98ZUMRfNmp/ft8uy/xD1RLA==
+  /react-side-effect/2.1.0_react@16.13.1:
+    dependencies:
+      react: 16.13.1
+    dev: false
+    peerDependencies:
+      react: ^16.3.0
+    resolution:
+      integrity: sha512-IgmcegOSi5SNX+2Snh1vqmF0Vg/CbkycU9XZbOHJlZ6kMzTmi3yc254oB1WCkgA7OQtIAoLmcSFuHTc/tlcqXg==
   /react-transition-group/2.9.0_react-dom@16.13.1+react@16.13.1:
     dependencies:
       dom-helpers: 3.4.0
@@ -13375,6 +13400,7 @@ specifiers:
   react-datetime: 2.16.3
   react-dom: 16.13.1
   react-ga: ^3.1.2
+  react-helmet: ^6.1.0
   react-router: 5.2.0
   react-router-dom: 5.2.0
   react-router-sitemap: ^1.2.0
