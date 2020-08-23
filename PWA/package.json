@@ -5,12 +5,12 @@
   "license": "MIT",
   "version": "1.0.0",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "bootstrap": "4.5.2",
     "chart.js": "2.9.3",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^7.18.0",
+    "firebase": "^7.19.0",
     "googleapis": "^59.0.0",
     "history": "4.10.0",
     "moment": "^2.27.0",
@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && pnpm install && pnpm run downloadDevSupportFiles && pnpm start",
+    "install:clean": "shx rm -rf node_modules/ && shx rm -rf package-lock.json && pnpm install && pnpm run downloadDevSupportFiles && pnpm start",
     "process-sass": "run-s -sn compile-sass map-sass minify-sass",
     "compile-sass": "run-p -sn now-ui-dashboard-compile-sass tkot-compile-sass",
     "minify-sass": "run-p -sn now-ui-dashboard-minify-sass tkot-minify-sass",
@@ -80,12 +80,12 @@
     "firebaseDeployAllTest": "run-p -sn firebaseDeployFunctionsTest firebaseDeployTest firebaseDeployWebsiteTest",
     "firebaseDeployAllProd": "run-p -sn firebaseDeployFunctionsProd firebaseDeployProd firebaseDeployWebsiteProd",
     "firebaseDeployAll": "run-s -sn firebaseDeployAllDev firebaseDeployAllTest firebaseDeployAllProd",
-    "removeNodeModules": "if [[ -d node_modules ]]; then rm -rf node_modules/&&echo \"'node_modules' successfully removed\"; else echo 'node_modules' folder not found; fi",
-    "removePackageLockJsonFile": "if [[ -e package-lock.json ]]; then rm -rf package-lock.json&&echo \"'package-lock.json' successfully removed\"; else echo 'build' folder not found; fi",
+    "removeNodeModules": "shx test -e ./node_modules && shx rm -rf ./node_modules && echo \"'node_modules' successfully removed\" || echo \"'node_modules' folder not found\"",
+    "removePackageLockJsonFile": "shx test -e ./package-lock.json && shx rm -rf package-lock.json && echo \"'package-lock.json' file successfully removed\" || echo \"'package-lock.json' file not found\"",
     "npmSetProgressOff": "pnpm set progress=false",
     "npmInstall": "pnpm install",
     "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmInstall",
-    "removeBuild": "if [[ -d build ]]; then rm -rf build/&&echo \"'build' successfully removed\"; else echo 'build' not found; fi",
+    "removeBuild": "shx test -e ./build && shx rm -rf ./build && echo \"'build' folder successfully removed\" || echo \"'build' folder not found\"",
     "cleanBuild": "run-s -sn removeBuild cleanInstall build",
     "uploadDevSupportFiles": "babel-node ./buildUtilities/uploadDevSupportFiles.js",
     "downloadDevSupportFiles": "babel-node ./buildUtilities/downloadDevSupportFiles.js",
@@ -119,7 +119,7 @@
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.9.46",
     "jquery": "3.5.1",
-    "typescript": "3.9.7"
+    "typescript": "4.0.2"
   },
   "browserslist": {
     "production": [

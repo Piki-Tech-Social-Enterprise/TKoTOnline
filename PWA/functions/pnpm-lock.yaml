@@ -1,8 +1,8 @@
 dependencies:
   '@google-cloud/storage': 5.2.0
   cors: 2.8.5
-  firebase-admin: 9.1.0
-  firebase-functions: 3.9.1_firebase-admin@9.1.0
+  firebase-admin: 9.1.1
+  firebase-functions: 3.11.0_firebase-admin@9.1.1
   flatted: 3.0.4
   fs-extra: 8.1.0
   googleapis: 59.0.0
@@ -16,10 +16,11 @@ devDependencies:
   babel-register: 6.26.0
   chai: 4.2.0
   chalk: 4.1.0
+  cross-env: 7.0.2
   env-cmd: 10.1.0
   eslint: 7.7.0
   eslint-plugin-promise: 4.2.1
-  firebase-functions-test: 0.2.1_54cd04314c6a58a2e89d593385203819
+  firebase-functions-test: 0.2.1_08ae22dd2d13a0012ca9d7bd6820b0d3
   mocha: 8.1.1
   npm-run-all: 4.1.5
   sinon: 9.0.3
@@ -1594,6 +1595,17 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+  /cross-env/7.0.2:
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: true
+    engines:
+      node: '>=10.14'
+      npm: '>=6'
+      yarn: '>=1'
+    hasBin: true
+    resolution:
+      integrity: sha512-KZP/bMEOJEDCkDQAyRhu3RL2ZO/SUVrxQVI0G3YEQ+OLbRA3c6zgixe8Mq8a/z7+HKlNEjo8oiLUs8iRijY2Rw==
   /cross-spawn/6.0.5:
     dependencies:
       nice-try: 1.0.5
@@ -2281,7 +2293,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase-admin/9.1.0:
+  /firebase-admin/9.1.1:
     dependencies:
       '@firebase/database': 0.6.11
       '@firebase/database-types': 0.5.2
@@ -2296,12 +2308,12 @@ packages:
       '@google-cloud/firestore': 4.2.0
       '@google-cloud/storage': 5.2.0
     resolution:
-      integrity: sha512-tGGREJpoRM/mbV/5bs/q9SQRZkVhxMMq1HIJEzSEh3mtz5hC9VtaCkuLt6chuAsqHMBoc1pvnrGTOC5nOme9VQ==
-  /firebase-functions-test/0.2.1_54cd04314c6a58a2e89d593385203819:
+      integrity: sha512-HkzY9yN/kOe1EQgjheURAQ4pFBerI54TBL0+nj1fwzKnAnGCpcI73Bbwx99Pk3u2x4rj6bDcsZfz9bA8y7DWtQ==
+  /firebase-functions-test/0.2.1_08ae22dd2d13a0012ca9d7bd6820b0d3:
     dependencies:
       '@types/lodash': 4.14.159
-      firebase-admin: 9.1.0
-      firebase-functions: 3.9.1_firebase-admin@9.1.0
+      firebase-admin: 9.1.1
+      firebase-functions: 3.11.0_firebase-admin@9.1.1
       lodash: 4.17.20
     dev: true
     engines:
@@ -2311,12 +2323,12 @@ packages:
       firebase-functions: '>=2.0.0'
     resolution:
       integrity: sha512-+ZaNrDoRVy0ar4NGtrYbqVTsnitL3/Ud5yC7ElZUkX3956j+AzPCcrsCfa+5GJnpnVODXkMKpw9AySFJ/12nvA==
-  /firebase-functions/3.9.1_firebase-admin@9.1.0:
+  /firebase-functions/3.11.0_firebase-admin@9.1.1:
     dependencies:
       '@types/express': 4.17.3
       cors: 2.8.5
       express: 4.17.1
-      firebase-admin: 9.1.0
+      firebase-admin: 9.1.1
       lodash: 4.17.20
     dev: false
     engines:
@@ -2324,7 +2336,7 @@ packages:
     peerDependencies:
       firebase-admin: ^8.0.0 || ^9.0.0
     resolution:
-      integrity: sha512-LnQQ5EJp8RaSvNZSOz/Ulp9ZQbKUXme/8sa5bLAmcKMc1o/cLu6IMB4GmWJXoi/4O5IFqSrWI9vNqb14LpfSIQ==
+      integrity: sha512-i1uMhZ/M6i5SCI3ulKo7EWX0/LD+I5o6N+sk0HbOWfzyWfOl0iJTvQkR3BVDcjrlhPVC4xG1bDTLxd+DTkLqaw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -5457,11 +5469,12 @@ specifiers:
   chai: ^4.2.0
   chalk: ^4.1.0
   cors: ^2.8.5
+  cross-env: ^7.0.2
   env-cmd: ^10.1.0
   eslint: ^7.7.0
   eslint-plugin-promise: ^4.2.1
-  firebase-admin: ^9.1.0
-  firebase-functions: ^3.9.1
+  firebase-admin: ^9.1.1
+  firebase-functions: ^3.11.0
   firebase-functions-test: ^0.2.1
   flatted: ^3.0.4
   fs-extra: ^8.1.0
