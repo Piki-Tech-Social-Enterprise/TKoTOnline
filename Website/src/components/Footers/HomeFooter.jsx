@@ -1,5 +1,6 @@
 import React, {
-  useState
+  useState,
+  lazy
 } from 'react';
 import {
   Link
@@ -15,13 +16,10 @@ import {
   Nav
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import SocialMedia from './SocialMedia';
 import {
   withFirebase
 } from 'components/Firebase';
 import swal from 'sweetalert2';
-import NavItems from 'components/App/NavItems';
-import Tooltips from 'components/App/Tooltips';
 import {
   getNavItems
 } from 'components/App/Utilities';
@@ -29,6 +27,9 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const NavItems = lazy(() => import('components/App/NavItems'));
+const Tooltips = lazy(() => import('components/App/Tooltips'));
+const SocialMedia = lazy(() => import('./SocialMedia'));
 const HomeFooterLink = props => {
   const {
     to,

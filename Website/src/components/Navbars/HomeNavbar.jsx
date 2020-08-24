@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  lazy
 } from 'react';
 import {
   Collapse,
@@ -11,12 +12,12 @@ import {
 } from 'reactstrap';
 // import Routes from '../Routes/routes';
 import PropTypes from 'prop-types';
-import NavItems from 'components/App/NavItems';
-import Tooltips from 'components/App/Tooltips';
 import {
   getNavItems
 } from 'components/App/Utilities';
 
+const NavItems = lazy(() => import('components/App/NavItems'));
+const Tooltips = lazy(() => import('components/App/Tooltips'));
 // const {
 //   home,
 //   homePage,

@@ -232,43 +232,43 @@ const getNavItems = isHomePage => {
     contactUs
   } = Routes;
   const navItems = [{
-    id: 'homeNavItem',
+    id: `homeNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? home : homePage,
     name: 'Home',
     tooltip: 'Kāinga',
     group: 'left'
   }, {
-    id: 'iwiMembersNavItem',
+    id: `iwiMembersNavItem${(!isHomePage && '_alt') || ''}`,
     route: iwiMembers,
     name: 'Iwi',
     tooltip: 'Iwi',
     group: 'left'
   }, {
-    id: 'aboutNavItem',
+    id: `aboutNavItem${(!isHomePage && '_alt') || ''}`,
     route: aboutUs,
     name: 'About',
     tooltip: 'Ko wai mātau',
     group: 'left'
   }, {
-    id: 'projectsNavItem',
+    id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? projects : projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
     group: 'right'
   }, {
-    id: 'eventsNavItem',
+    id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? events : eventsPage,
     name: 'Wānanga',
     tooltip: 'Wānanga',
     group: 'right'
   }, {
-    id: 'newsFeedNavItem',
+    id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? newsFeed : newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
     group: 'right'
   }, {
-    id: 'contactUsNavItem',
+    id: `contactUsNavItem${(!isHomePage && '_alt') || ''}`,
     route: contactUs,
     name: 'Contact',
     tooltip: 'Hono Mai',
