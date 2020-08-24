@@ -4,7 +4,8 @@ require('babel-register')({
 
 const chalk = require('chalk');
 const {
-  resolve
+  resolve,
+  join
 } = require('path');
 const devSupportFiles = require('../devSupportFiles.json');
 const fs = require('fs');
@@ -16,8 +17,14 @@ devSupportFiles.map(devSupportFile => {
     destination
   } = devSupportFile;
   const resolvedSource = resolve(source);
-  const resolvedDestination = resolve(destination);
+  const resolvedDestination = destination.startsWith('~')
+    ? join(process.env.HOME, destination.slice(1))
+    : resolve(destination);
   if (fs.existsSync(resolvedDestination)) {
+    // console.log('resolved: ', JSON.stringify({
+    //   resolvedSource,
+    //   resolvedDestination
+    // }, null, 2));
     fs.copyFileSync(resolvedDestination, resolvedSource);
     console.log(`${chalk.yellow.italic(name)} Dev Support File was successfully downloaded.`);
   } else {
