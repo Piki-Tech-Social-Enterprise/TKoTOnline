@@ -29,12 +29,35 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
   <title>%REACT_APP_WEB_NAME%</title>
+  <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous"
+    href="%PUBLIC_URL%/static/fonts/OpenSans/OpenSans-Regular.ttf">
+  <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous"
+    href="%PUBLIC_URL%/static/fonts/RobotoCondensed/RobotoCondensed-Regular.ttf">
+  <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous"
+    href="%PUBLIC_URL%/static/fonts/nucleo-outline.woff2">
+  <link rel="preconnect" as="fetch" type="application/json" crossorigin="anonymous"
+    href="%REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL%">
+  <link rel="dns-prefetch" as="fetch" type="application/json" crossorigin="anonymous"
+    href="%REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL%">
+  <link rel="preconnect" as="fetch" type="application/json" crossorigin="anonymous"
+    href="https://www.google-analytics.com">
+  <link rel="dns-prefetch" as="fetch" type="application/json" crossorigin="anonymous"
+    href="https://www.google-analytics.com">
+  <link rel="stylesheet" as="style" type="text/css" crossorigin="anonymous"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T">
+  <!-- <link rel="preload" as="script" type="application/javascript" crossorigin="anonymous"
+    href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"> -->
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <script src="https://kit.fontawesome.com/db7d4937bb.js" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

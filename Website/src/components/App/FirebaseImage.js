@@ -46,7 +46,9 @@ const FirebaseImage = props => {
   const {
     isLoading,
     alt,
-    src
+    src,
+    width,
+    height
   } = state;
   // !isLoading && console.log(`src: ${src}`);
   useEffect(() => {
@@ -66,7 +68,9 @@ const FirebaseImage = props => {
         ...s,
         isLoading: false,
         alt: alt,
-        src: imageSrc
+        src: imageSrc,
+        width,
+        height
       }));
     };
     if (state.isLoading) {
@@ -86,6 +90,8 @@ const FirebaseImage = props => {
         alt={alt}
         src={src}
         title={alt}
+        width={width}
+        height={height}
       />
     </>
   );
