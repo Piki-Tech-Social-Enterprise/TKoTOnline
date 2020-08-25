@@ -17,7 +17,7 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const {
   aboutUs,
   projects

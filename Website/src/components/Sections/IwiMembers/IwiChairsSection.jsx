@@ -21,7 +21,6 @@ import {
   withFirebase
 } from 'components/Firebase';
 import {
-  // getChunkSize,
   intoChunks,
   draftToText
 } from 'components/App/Utilities';
@@ -29,11 +28,10 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const getIwiMembersAsChunks = (iwiMembers, columnCount) => {
   const iwiMembersMegaMenuItems = {};
-  // const chunks = intoChunks(iwiMembers, getChunkSize(iwiMembers, columnCount));
   const chunks = intoChunks(iwiMembers, columnCount);
   chunks.map((chunk, index) => {
     iwiMembersMegaMenuItems[`column${index + 1}Items`] = chunk;

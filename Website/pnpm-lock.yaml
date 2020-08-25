@@ -3,7 +3,7 @@ dependencies:
   chart.js: 2.9.3
   draftjs-to-html: 0.9.1
   firebase: 7.19.0
-  moment: 2.27.0
+  moment-mini: 2.24.0
   node-sass: 4.14.1
   nouislider: 14.6.1
   prop-types: 15.7.2
@@ -11,7 +11,7 @@ dependencies:
   react: 16.13.1
   react-bootstrap-switch: 15.5.3_eb0d650be231ffd0ace4a30b38162117
   react-chartjs-2: 2.10.0_993042a9951b76ec634148f49ee6c836
-  react-datetime: 2.16.3_d06876d2a0885ddf9862abcf8e44f5fa
+  react-datetime: 2.16.3_react-dom@16.13.1+react@16.13.1
   react-dom: 16.13.1_react@16.13.1
   react-ga: 3.1.2_prop-types@15.7.2+react@16.13.1
   react-helmet: 6.1.0_react@16.13.1
@@ -8589,6 +8589,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
+  /moment-mini/2.24.0:
+    dev: false
+    resolution:
+      integrity: sha512-9ARkWHBs+6YJIvrIp0Ik5tyTTtP9PoV0Ssu2Ocq5y9v8+NOOpWiRshAp8c4rZVWTOe+157on/5G+zj5pwIQFEQ==
   /moment/2.27.0:
     dev: false
     resolution:
@@ -10612,10 +10616,9 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0-beta || ^16.0.0
     resolution:
       integrity: sha512-1MjWEkUn8LLFf6GVyYUOrruJTW3yVU5hlEJOwGj3MiokuC+jH/BahjWVGAMonbe9UYbEIUbd2Rn36iVlC0Hb7w==
-  /react-datetime/2.16.3_d06876d2a0885ddf9862abcf8e44f5fa:
+  /react-datetime/2.16.3_react-dom@16.13.1+react@16.13.1:
     dependencies:
       create-react-class: 15.6.3
-      moment: 2.27.0
       object-assign: 3.0.0
       prop-types: 15.7.2
       react: 16.13.1
@@ -13374,7 +13377,7 @@ specifiers:
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
   firebase: ^7.19.0
-  moment: 2.27.0
+  moment-mini: ^2.24.0
   node-sass: 4.14.1
   nouislider: 14.6.1
   npm-run-all: ^4.1.5

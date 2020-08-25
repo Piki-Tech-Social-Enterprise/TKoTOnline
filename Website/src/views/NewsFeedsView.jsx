@@ -10,10 +10,10 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const NewsFeedSection = lazy(() => import('components/Sections/NewsFeed'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
 const NewsFeedsView = () => {
   const [state, setState] = useState({
     isLoading: true

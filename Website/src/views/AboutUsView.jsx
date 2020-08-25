@@ -16,7 +16,8 @@ import {
 import draftToHtml from 'draftjs-to-html';
 import {
   defaultPageSetup,
-  draftToText
+  draftToText,
+  useWindowEvent
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -25,11 +26,11 @@ import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const AboutUsView = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -39,6 +40,16 @@ const AboutUsView = props => {
   const iframeRefCallback = useCallback(node => {
     iframeRef.current = node;
   }, []);
+  const handleIFrameBlur = () => {
+    if (
+      document.activeElement &&
+      iframeRef.current &&
+      iframeRef.current === document.activeElement
+    ) {
+      sendEvent('About Us page', 'Clicked TKoT video');
+    }
+  };
+  useWindowEvent('blur', handleIFrameBlur);
   useEffect(() => {
     const {
       isLoading
@@ -54,23 +65,23 @@ const AboutUsView = props => {
         settings: dbSettings
       }));
     };
-    const handleIFrameBlur = () => {
-      if (
-        document.activeElement &&
-        iframeRef.current &&
-        iframeRef.current === document.activeElement
-      ) {
-        sendEvent('About Us page', 'Clicked TKoT video');
-      }
-    };
+    // const handleIFrameBlur = () => {
+    //   if (
+    //     document.activeElement &&
+    //     iframeRef.current &&
+    //     iframeRef.current === document.activeElement
+    //   ) {
+    //     sendEvent('About Us page', 'Clicked TKoT video');
+    //   }
+    // };
     defaultPageSetup(true);
     if (isLoading) {
       retrieveSettingValues();
-      window.addEventListener('blur', handleIFrameBlur);
+      // window.addEventListener('blur', handleIFrameBlur);
     }
     return () => {
       if (!isLoading) {
-        window.removeEventListener('blur', handleIFrameBlur);
+        // window.removeEventListener('blur', handleIFrameBlur);
         defaultPageSetup();
       }
     };

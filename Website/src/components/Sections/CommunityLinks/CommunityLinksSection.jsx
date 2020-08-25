@@ -16,15 +16,14 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 import {
-  getChunkSize,
   intoChunks
 } from 'components/App/Utilities';
 
 const getCommunityLinksMegaMenuItems = (communityLinks, columnCount) => {
   const communityLinksMegaMenuItems = {};
-  const chunks = intoChunks(communityLinks, getChunkSize(communityLinks, columnCount));
+  const chunks = intoChunks(communityLinks, columnCount);
   chunks.map((chunk, index) => {
     communityLinksMegaMenuItems[`column${index + 1}Items`] = chunk;
     return null;

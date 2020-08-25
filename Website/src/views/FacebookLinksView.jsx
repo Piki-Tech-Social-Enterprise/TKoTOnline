@@ -7,12 +7,12 @@ import {
   Row,
   Col
 } from 'reactstrap';
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 import {
   withFirebase
 } from 'components/Firebase';
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 
 const FacebookLink = props => {
   const {

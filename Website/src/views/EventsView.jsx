@@ -10,10 +10,10 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const EventsSection = lazy(() => import('components/Sections/Events'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const EventsSection = lazy(async () => await import('components/Sections/Events'));
 const EventsView = () => {
   const [state, setState] = useState({
     isLoading: true

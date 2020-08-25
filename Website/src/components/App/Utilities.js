@@ -2,7 +2,7 @@ import {
   useEffect
 } from 'react';
 import draftToHtml from 'draftjs-to-html';
-import moment from 'moment';
+import moment from 'moment-mini';
 import Routes from 'components/Routes/routes';
 
 const useWindowEvent = (event, callback) => {
@@ -10,94 +10,6 @@ const useWindowEvent = (event, callback) => {
     window.addEventListener(event, callback);
     return () => window.removeEventListener(event, callback);
   }, [event, callback]);
-};
-const shallowCompare = (instance, nextProps, nextState, consoleLogResults) => {
-  return (
-    !shallowEqual(instance.props, nextProps, consoleLogResults, true) ||
-    !shallowEqual(instance.state, nextState, consoleLogResults)
-  );
-};
-const shallowEqual = (objA, objB, consoleLogResults, isProps) => {
-  const isPropsText = isProps ? 'props' : 'state';
-  if (objA === objB) {
-    if (consoleLogResults) console.log(`${isPropsText} :: objA === objB: true`);
-    return true;
-  }
-  if (typeof objA !== 'object' || objA === null ||
-    typeof objB !== 'object' || objB === null) {
-    if (consoleLogResults) console.log(`${isPropsText} :: typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null: ${typeof objA !== 'object'} || ${objA === null} || ${typeof objB !== 'object'} || ${objB === null}`);
-    return false;
-  }
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-  if (keysA.length !== keysB.length) {
-    if (consoleLogResults) console.log(`${isPropsText} :: keysA.length !== keysB.length: ${keysA.length} !== ${keysB.length}`);
-    return false;
-  }
-  var bHasOwnProperty = hasOwnProperty.bind(objB);
-  for (var i = 0; i < keysA.length; i++) {
-    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-      if (consoleLogResults) {
-        console.log(`${isPropsText} :: !bHasOwnProperty('${keysA[i]}') || objA['${keysA[i]}'] !== objB['${keysA[i]}']: ${!bHasOwnProperty(keysA[i])} || ${objA[keysA[i]] !== objB[keysA[i]]}`);
-      }
-      return false;
-    }
-  }
-  if (consoleLogResults) console.log(`${isPropsText} :: shallowEqual: true`);
-  return true;
-};
-const isEmptyObject = (object) => {
-  return !object || (Object.entries(object).length === 0 && object.constructor === Object);
-};
-const handleLoadBlob = (blob, handleLoadBlobComplete) => {
-  const handleFileReaderLoadEnd = e => {
-    e.preventDefault();
-    handleLoadBlobComplete(e.target.result);
-  };
-  if (blob) {
-    const fileReader = new FileReader();
-    fileReader.onloadend = handleFileReaderLoadEnd;
-    fileReader.readAsDataURL(blob);
-  }
-};
-const formatBytes = (bytes, dp = 2) => {
-  if (bytes === 0) {
-    return '0 Bytes';
-  }
-  const oneKiloByte = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(oneKiloByte));
-  const fractionDigits = dp < 0
-    ? 0
-    : dp;
-  const refactoredBytes = parseFloat((bytes / Math.pow(oneKiloByte, i)).toFixed(fractionDigits));
-  const formattedBytes = `${refactoredBytes} ${sizes[i]}`;
-  return formattedBytes;
-};
-const formatInteger = (integer) => (
-  integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-);
-const fromCamelcaseToTitlecase = camelCase => (
-  camelCase
-    .replace(/([A-Z])/g, match => ` ${match}`)
-    .replace(/^./, match => match.toUpperCase())
-);
-const getChunkSize = (array, columnCount) => {
-  const {
-    length: arrayLength
-  } = array;
-  const arrayLengthRemainder = arrayLength % columnCount;
-  const arrayChunk = arrayLength - arrayLengthRemainder;
-  const initalSize = arrayChunk / columnCount;
-  const twoColumn = 2;
-  const twoColumnRemainder = (arrayLengthRemainder % twoColumn);
-  const offset = twoColumnRemainder === 0
-    ? arrayLengthRemainder / twoColumn
-    : (arrayLengthRemainder - twoColumnRemainder) / twoColumn;
-  const chunkSize = initalSize + (arrayLengthRemainder <= 1
-    ? arrayLengthRemainder
-    : offset);
-  return chunkSize;
 };
 const intoChunks = (array, size) => {
   let chunks = [];
@@ -109,8 +21,6 @@ const intoChunks = (array, size) => {
 };
 const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
 const TIME_MOMENT_FORMAT = 'HH:mm:ss';
-const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
-const ISO8601_DATE_FORMAT = 'YYYY-MM-DD';
 const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
 const TAG_SEPARATOR = ', ';
 const isJson = value => {
@@ -276,43 +186,14 @@ const getNavItems = isHomePage => {
   }];
   return navItems;
 };
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const srcPrefix = process.env.NODE_ENV !== 'production' || isBoolean(process.env.REACT_APP_DEBUG_MODE, true)
   ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
   : process.env.REACT_APP_WEB_BASE_URL;
 const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
 const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getStorageFileDownloadURL) => {
-  const {
-    // NODE_ENV,
-    // REACT_APP_DEBUG_MODE,
-    REACT_APP_USE_IMAGE_CDN
-  } = process.env;
-  // console.group('getSrc');
-  // console.log('VARS: ', { NODE_ENV, REACT_APP_DEBUG_MODE, REACT_APP_USE_IMAGE_CDN, srcPrefix, imageURL });
-  // const value = REACT_APP_USE_IMAGE_CDN;
-  // const expectedValue = true;
-  // console.log({
-  //   'isBoolean(REACT_APP_USE_IMAGE_CDN, true)': {
-  //     'value': value,
-  //     'expectedValue': expectedValue,
-  //     'result': isBoolean(REACT_APP_USE_IMAGE_CDN, true),
-  //     '!isNullOrEmpty(value)': !isNullOrEmpty(value),
-  //     '(typeof value === \'boolean\' || isTrueOrFalse(value))': {
-  //       'result': (typeof value === 'boolean' || isTrueOrFalse(value)),
-  //       'typeof value === \'boolean\'': typeof value === 'boolean',
-  //       'isTrueOrFalse(value)': isTrueOrFalse(value)
-  //     },
-  //     '(isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue)': {
-  //       'result': (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase()),
-  //       'isNullOrEmpty(expectedValue)': isNullOrEmpty(expectedValue),
-  //       'value.toString().toLowerCase() === expectedValue': value.toString().toLowerCase() === expectedValue.toString().toLowerCase()
-  //     }
-  //   }
-  // });
-  // console.groupEnd();
   return imageURL
     ? imageURL.startsWith('/images/')
-      ? isBoolean(REACT_APP_USE_IMAGE_CDN, true)
+      ? isBoolean(process.env.REACT_APP_USE_IMAGE_CDN, true)
         ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
         : (typeof getStorageFileDownloadURL === 'function' && await getStorageFileDownloadURL(imageURL)) || imageURL
       : imageURL
@@ -324,21 +205,11 @@ const getFirstCharacters = (value, length, excludeEllipse = false) => {
     : value;
 };
 
-export default shallowCompare;
 export {
   useWindowEvent,
-  shallowEqual,
-  isEmptyObject,
-  handleLoadBlob,
-  formatBytes,
-  formatInteger,
-  fromCamelcaseToTitlecase,
-  getChunkSize,
   intoChunks,
   DATE_MOMENT_FORMAT,
   TIME_MOMENT_FORMAT,
-  DATE_TIME_MOMENT_FORMAT,
-  ISO8601_DATE_FORMAT,
   NEWSFEED_DATE_MOMENT_FORMAT,
   TAG_SEPARATOR,
   isJson,
@@ -358,7 +229,6 @@ export {
   tryToConvertValue,
   sortArray,
   getNavItems,
-  sleep,
   srcPrefix,
   getQParameter,
   getSrc,

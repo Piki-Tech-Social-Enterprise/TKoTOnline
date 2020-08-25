@@ -21,8 +21,8 @@ import {
   CardTitle,
   CardLink
 } from 'reactstrap';
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 import {
   withFirebase
 } from 'components/Firebase';

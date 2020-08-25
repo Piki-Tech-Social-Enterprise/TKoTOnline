@@ -17,12 +17,12 @@ import {
   getSrc
 } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const NewsFeedCaption = lazy(() => import('components/App/NewsFeedCaption'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const NewsFeedCaption = lazy(async () => await import('components/App/NewsFeedCaption'));
 const NewsFeedView = props => {
   const [state, setState] = useState({
     isLoading: true,

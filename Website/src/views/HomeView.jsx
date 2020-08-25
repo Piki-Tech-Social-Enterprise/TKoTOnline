@@ -20,16 +20,16 @@ import {
 // import VolunteersSection from 'components/Sections/Volunteers';
 // import CommuintyLinksSection from 'components/Sections/CommunityLinks';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const TKoTHelmet = lazy(() => import('components/App/TKoTHelmet'));
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(() => import('components/Headers/HomeHeader'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const AboutSection = lazy(() => import('components/Sections/About'));
-const NewsFeedSection = lazy(() => import('components/Sections/NewsFeed'));
-const IwiMembers = lazy(() => import('components/Sections/IwiMembers'));
-const EventsSection = lazy(() => import('components/Sections/Events'));
-const ProjectsSection = lazy(() => import('components/Sections/Projects'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const AboutSection = lazy(async () => await import('components/Sections/About'));
+const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
+const IwiMembers = lazy(async () => await import('components/Sections/IwiMembers'));
+const EventsSection = lazy(async () => await import('components/Sections/Events'));
+const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
 const {
   home,
   iwiMembers,

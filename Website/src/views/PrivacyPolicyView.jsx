@@ -12,9 +12,9 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const PrivacyPolicyView = () => {
   const [state, setState] = useState({
     isLoading: true

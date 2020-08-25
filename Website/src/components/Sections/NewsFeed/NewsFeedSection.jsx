@@ -27,8 +27,8 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
-const FirebaseImage = lazy(() => import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,

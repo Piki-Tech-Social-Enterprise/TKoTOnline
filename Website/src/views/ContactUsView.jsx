@@ -24,8 +24,8 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const ContactUsView = props => {
   const INITIAL_STATE = {
     active: true,

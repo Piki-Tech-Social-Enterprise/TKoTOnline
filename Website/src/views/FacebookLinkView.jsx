@@ -5,7 +5,7 @@ import React, {
 import {
   withFirebase
 } from 'components/Firebase';
-const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 // import useScript from 'components/App/useScript';
 
 const FacebookLinkView = props => {

@@ -27,9 +27,9 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
-const NavItems = lazy(() => import('components/App/NavItems'));
-const Tooltips = lazy(() => import('components/App/Tooltips'));
-const SocialMedia = lazy(() => import('./SocialMedia'));
+const NavItems = lazy(async () => await import('components/App/NavItems'));
+const Tooltips = lazy(async () => await import('components/App/Tooltips'));
+const SocialMedia = lazy(async () => await import('./SocialMedia'));
 const HomeFooterLink = props => {
   const {
     to,

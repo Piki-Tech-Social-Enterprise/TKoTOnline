@@ -31,7 +31,7 @@ const TKoTHelmet = props => {
     siteNameContent: ''
   });
   const {
-    isLoading,
+    // isLoading,
     title,
     canonicalHref,
     robotsContent,
@@ -93,26 +93,20 @@ const TKoTHelmet = props => {
   }, [props, state]);
   return (
     <>
-      {
-        isLoading
-          ? null
-          : <>
-            <Helmet>
-              <title>{title}</title>
-              <link rel="canonical" href={canonicalHref} />
-              <meta name="robots" content={robotsContent} />
-              <meta name="description" content={descriptionContent} />
-              <meta name="subject" content={subjectContent} />
-              <meta name="keywords" content={keywordsContent} />
-              <meta property="og:description" content={descriptionContent} />
-              <meta property="og:image" content={imageContent} />
-              <meta property="og:image:type" content={imageTypeContent} />
-              <meta property="og:site_name" content={siteNameContent} />
-              <meta property="og:title" content={title} />
-              <meta property="og:url" content={canonicalHref} />
-            </Helmet>
-          </>
-      }
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalHref} />
+        <meta name="robots" content={robotsContent} />
+        <meta name="description" content={descriptionContent} />
+        <meta name="subject" content={subjectContent} />
+        <meta name="keywords" content={keywordsContent} />
+        <meta property="og:description" content={descriptionContent} />
+        <meta property="og:image" content={imageContent} />
+        <meta property="og:image:type" content={imageTypeContent} />
+        <meta property="og:site_name" content={siteNameContent} />
+        <meta property="og:title" content={title} />
+        <meta property="og:url" content={canonicalHref} />
+      </Helmet>
     </>
   );
 };

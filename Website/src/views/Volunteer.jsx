@@ -16,15 +16,12 @@ import {
   Button
 } from 'reactstrap';
 import swal from 'sweetalert2';
-import {
-  fromCamelcaseToTitlecase
-} from 'components/App/Utilities';
 import * as Roles from '../components/Domains/VolunteerRoles';
 import {
   withFirebase
 } from 'components/Firebase';
-const HomeNavbar = lazy(() => import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(() => import('components/Footers/HomeFooter'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 
 const Volunteer = props => {
   const INITIAL_STATE = {
@@ -237,15 +234,6 @@ const Volunteer = props => {
                         <InputGroup>
                           <Input placeholder="Phone Number" name="phoneNumber" value={volunteer.phoneNumber} onChange={handleChange} type="text" />
                         </InputGroup>
-                      </FormGroup>
-                      <FormGroup className="volunteer-roles">
-                        <Label>Roles</Label><br />
-                        {
-                          Object.keys(Roles).map(role => {
-                            if (role === 'undefinedRole') return null;
-                            return <CustomInput label={fromCamelcaseToTitlecase(role.replace('Role', ''))} id={role} name={role} checked={!!volunteer.roles[role]} onChange={handleChange} key={role} type="switch" />
-                          })
-                        }
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="warning" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Regitster</Button>

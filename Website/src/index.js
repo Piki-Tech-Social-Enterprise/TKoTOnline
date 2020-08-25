@@ -38,23 +38,25 @@ import Firebase, {
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 
-// const LoadingSpinner = lazy(() => import('components/App/LoadingSpinner').then(m => m.default));
-const GoogleAnalytics = lazy(() => import('components/App/GoogleAnalytics'));
-const HomeView = lazy(() => import('views/HomeView'));
-// import Volunteer = lazy(() => import('views/Volunteer'));
-const PrivacyPolicyView = lazy(() => import('views/PrivacyPolicyView'));
-const TermsOfServiceView = lazy(() => import('views/TermsOfServiceView'));
-const AboutUsView = lazy(() => import('views/AboutUsView'));
-const ContactUsView = lazy(() => import('views/ContactUsView'));
-// const FacebookLinksView = lazy(() => import('views/FacebookLinksView'));
-// const FacebookLinkView = lazy(() => import('views/FacebookLinkView'));
-const ProjectsView = lazy(() => import('views/ProjectsView'));
-const ProjectView = lazy(() => import('views/ProjectView'));
-const NewsFeedsView = lazy(() => import('views/NewsFeedsView'));
-const NewsFeedView = lazy(() => import('views/NewsFeedView'));
-const EventsView = lazy(() => import('views/EventsView'));
-const EventView = lazy(() => import('views/EventView'));
-const IwiChairView = lazy(() => import('views/IwiChairView'));
+// const Firebase = lazy(async () => await import('components/Firebase').then(m => m.default));
+// const FirebaseContext = lazy(async () => await import('components/Firebase').then(m => m.FirebaseContext));
+// const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner').then(m => m.default));
+const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
+const HomeView = lazy(async () => await import('views/HomeView'));
+// import Volunteer = lazy(async () => await import('views/Volunteer'));
+const PrivacyPolicyView = lazy(async () => await import('views/PrivacyPolicyView'));
+const TermsOfServiceView = lazy(async () => await import('views/TermsOfServiceView'));
+const AboutUsView = lazy(async () => await import('views/AboutUsView'));
+const ContactUsView = lazy(async () => await import('views/ContactUsView'));
+// const FacebookLinksView = lazy(async () => await import('views/FacebookLinksView'));
+// const FacebookLinkView = lazy(async () => await import('views/FacebookLinkView'));
+const ProjectsView = lazy(async () => await import('views/ProjectsView'));
+const ProjectView = lazy(async () => await import('views/ProjectView'));
+const NewsFeedsView = lazy(async () => await import('views/NewsFeedsView'));
+const NewsFeedView = lazy(async () => await import('views/NewsFeedView'));
+const EventsView = lazy(async () => await import('views/EventsView'));
+const EventView = lazy(async () => await import('views/EventView'));
+const IwiChairView = lazy(async () => await import('views/IwiChairView'));
 
 ReactDOM.render(
   <React.Suspense fallback={<LoadingSpinner
