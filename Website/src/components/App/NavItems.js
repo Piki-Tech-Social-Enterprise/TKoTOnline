@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+  lazy
+} from 'react';
 import {
   NavItem,
   NavLink
@@ -7,6 +11,7 @@ import {
   ScrollspyNavLink
 } from 'reactstrap-scrollspy';
 
+const Tooltips = lazy(async () => await import('components/App/Tooltips'));
 const NavItems = props => {
   const {
     useScrollspyNavLinks,
@@ -14,8 +19,12 @@ const NavItems = props => {
     hash,
     items,
     navItemClassName,
-    navLinkClassName
+    navLinkClassName,
+    includeTooltips
   } = props;
+  const [state, setState] = useState({
+    isLoading: true
+  });
   const isActive = (pathname, hash, route) => {
     const parameterIsActive = hash
       ? route.endsWith(hash) || (pathname === '/' && !hash && route === '/#Home')
@@ -23,38 +32,69 @@ const NavItems = props => {
     // console.log(`pathname: ${pathname}, hash: ${hash}, route: ${route}, parameterIsActive: ${parameterIsActive}`);
     return parameterIsActive;
   };
+  const {
+    isLoading
+  } = state;
+  useEffect(() => {
+    if (state.isLoading) {
+      setState(s => ({
+        ...s,
+        isLoading: false
+      }));
+    }
+    return () => { };
+  }, [props, state]);
   return (
     <>
       {
-        items.map((item, index) => {
-          const {
-            id,
-            route,
-            name
-          } = item;
-          return (
-            <NavItem className={`${navItemClassName || ''}`} key={index}>
-              {
-                useScrollspyNavLinks
-                  ? <ScrollspyNavLink name={route.replace('/#', '')}>
+        isLoading
+          ? null
+          : <>
+            {
+              items.map((item, index) => {
+                const ItemAsNavLink = props => {
+                  const {
+                    item
+                  } = props;
+                  const {
+                    id,
+                    route,
+                    name
+                  } = item;
+                  return (
                     <NavLink
                       id={id}
                       href={route}
                       active={isActive(pathname, hash, route)}
                       className={navLinkClassName || ''}
                     >{name}</NavLink>
-                  </ScrollspyNavLink>
-                  : <NavLink
-                    id={id}
-                    href={route}
-                    active={isActive(pathname, hash, route)}
-                    className={navLinkClassName || ''}
-                  >{name}</NavLink>
-              }
-            </NavItem>
-          );
-        }
-        )
+                  );
+                };
+                return (
+                  <NavItem className={`${navItemClassName || ''}`} key={index}>
+                    {
+                      useScrollspyNavLinks
+                        ? <ScrollspyNavLink name={item.route.replace('/#', '')}>
+                          <ItemAsNavLink
+                            item={item}
+                          />
+                        </ScrollspyNavLink>
+                        : <ItemAsNavLink
+                          item={item}
+                        />
+                    }
+                  </NavItem>
+                );
+              })
+            }
+            {
+              includeTooltips
+                ? <Tooltips
+                  items={items}
+                />
+                : null
+            }
+          </>
       }
     </>
   );

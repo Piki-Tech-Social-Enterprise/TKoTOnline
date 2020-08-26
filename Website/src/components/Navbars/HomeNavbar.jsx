@@ -15,7 +15,6 @@ import {
 } from 'components/App/Utilities';
 
 const NavItems = lazy(async () => await import('components/App/NavItems'));
-const Tooltips = lazy(async () => await import('components/App/Tooltips'));
 const HomeNavbar = props => {
   const {
     initalTransparent,
@@ -86,11 +85,9 @@ const HomeNavbar = props => {
                 pathname={pathname}
                 hash={hash}
                 items={navItems}
+                includeTooltips={true}
               />
             </Nav>
-            <Tooltips
-              items={navItems}
-            />
           </Collapse>
         </Container>
       </Navbar>

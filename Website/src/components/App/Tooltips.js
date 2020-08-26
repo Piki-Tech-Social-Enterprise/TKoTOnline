@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import {
   UncontrolledTooltip
 } from 'reactstrap';
@@ -7,6 +10,9 @@ const Tooltips = props => {
   const {
     items
   } = props;
+  const [state, setState] = useState({
+    isLoading: true
+  });
   const Tooltip = props => {
     const {
       id,
@@ -21,21 +27,39 @@ const Tooltips = props => {
       >{text}</UncontrolledTooltip>
     );
   };
+  const {
+    isLoading
+  } = state;
+  useEffect(() => {
+    if (state.isLoading) {
+      setState(s => ({
+        ...s,
+        isLoading: false
+      }));
+    }
+    return () => { };
+  }, [props, state]);
   return (
     <>
       {
-        items.map((item, index) => {
-          const {
-            id,
-            tooltip
-          } = item;
-          return (
-            <Tooltip
-              id={id}
-              text={tooltip}
-              key={index}
-            />);
-        })
+        isLoading
+          ? null
+          : <>
+            {
+              items.map((item, index) => {
+                const {
+                  id,
+                  tooltip
+                } = item;
+                return (
+                  <Tooltip
+                    id={id}
+                    text={tooltip}
+                    key={index}
+                  />);
+              })
+            }
+          </>
       }
     </>
   );

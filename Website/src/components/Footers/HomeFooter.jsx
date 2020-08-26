@@ -176,6 +176,7 @@ const HomeFooter = props => {
                               items={navItems.filter(navItem => navItem.group === 'left')}
                               navItemClassName="left"
                               navLinkClassName="text-lg-center py-2 ml-0 ml-xl-5 box-social-text"
+                              includeTooltips={true}
                             />
                           </Nav>
                         </Col>
@@ -188,6 +189,7 @@ const HomeFooter = props => {
                               items={navItems.filter(navItem => navItem.group === 'right')}
                               navItemClassName="right"
                               navLinkClassName="text-lg-center py-2 mr-0 mr-xl-5 box-social-text"
+                              includeTooltips={true}
                             />
                           </Nav>
                         </Col>
