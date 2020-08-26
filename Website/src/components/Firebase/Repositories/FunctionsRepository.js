@@ -1,5 +1,4 @@
 import BaseRepository from './BaseRepository';
-import 'firebase/auth';
 import 'firebase/functions';
 import axios from 'axios';
 
@@ -10,7 +9,6 @@ class FunctionsRepository extends BaseRepository {
       REACT_APP_ENV_NAME,
       REACT_APP_FIREBASE_FUNCTIONS_EMULATOR_URL: FFE_URL
     } = process.env;
-    this.auth = firebaseApp.auth();
     this.functions = firebaseApp.functions();
     if (REACT_APP_ENV_NAME === 'local' && FFE_URL) {
       this.functions.useFunctionsEmulator(FFE_URL);
