@@ -22,19 +22,21 @@ const handleResizeImage = async objectMetadata => {
   const downloadOptions = {
     destination: tmpFilePath
   };
-  const functions = require('firebase-functions');
-  const {
-    jsonObjectPropertiesToUppercase
-  } = require('../utilities');
-  const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
-    ? functions.config().envcmd
-    : {});
-  const config = Object.assign(process.env, envcmd);
-  // console.log(`config: ${JSON.stringify(JSON.stringify(config, null, 2))}`);
+  // const functions = require('firebase-functions');
+  // const {
+  //   jsonObjectPropertiesToUppercase
+  // } = require('../utilities');
+  // const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
+  //   ? functions.config().envcmd
+  //   : {});
+  // const config = Object.assign(process.env, envcmd);
+  // console.log(`config: ${JSON.stringify(config, null, 2)}`);
   if (admin.apps.length === 0) {
     admin.initializeApp();
   }
   const storage = admin.storage();
+  // console.log(`require.resolve('@google-cloud/storage'): ${require.resolve('@google-cloud/storage')}`);
+  // const storage = new require('@google-cloud/storage').Storage();
   const bucket = storage
     .bucket(objectMetadata.bucket);
   if (!isValid()) {
