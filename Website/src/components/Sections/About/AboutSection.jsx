@@ -59,7 +59,7 @@ const AboutSection = props => {
         <Container className="py-5 text-center">
           <Row>
             <Col xs={12} sm={6} className="bg-danger1">
-              <img alt="..." className="n-logo pt-2 my-1" src={require("assets/img/tkot/tkot-white-logo.webp")} style={{
+              <img alt="..." className="n-logo pt-2 my-1 lazyload" data-src={require("assets/img/tkot/tkot-white-logo.webp")} style={{
                 width: 419
               }} />
             </Col>

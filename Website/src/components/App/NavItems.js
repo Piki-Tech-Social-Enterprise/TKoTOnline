@@ -1,17 +1,16 @@
 import React, {
   useState,
-  useEffect,
-  lazy
+  useEffect
 } from 'react';
 import {
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledTooltip
 } from 'reactstrap';
 import {
   ScrollspyNavLink
 } from 'reactstrap-scrollspy';
 
-const Tooltips = lazy(async () => await import('components/App/Tooltips'));
 const NavItems = props => {
   const {
     useScrollspyNavLinks,
@@ -59,15 +58,27 @@ const NavItems = props => {
                   const {
                     id,
                     route,
-                    name
+                    name,
+                    tooltip
                   } = item;
                   return (
-                    <NavLink
-                      id={id}
-                      href={route}
-                      active={isActive(pathname, hash, route)}
-                      className={navLinkClassName || ''}
-                    >{name}</NavLink>
+                    <>
+                      <NavLink
+                        id={id}
+                        href={route}
+                        active={isActive(pathname, hash, route)}
+                        className={navLinkClassName || ''}
+                      >{name}</NavLink>
+                      {
+                        includeTooltips
+                          ? <UncontrolledTooltip
+                            innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
+                            placement="top"
+                            target={`${id}`}
+                          >{tooltip}</UncontrolledTooltip>
+                          : null
+                      }
+                    </>
                   );
                 };
                 return (
@@ -86,13 +97,6 @@ const NavItems = props => {
                   </NavItem>
                 );
               })
-            }
-            {
-              includeTooltips
-                ? <Tooltips
-                  items={items}
-                />
-                : null
             }
           </>
       }

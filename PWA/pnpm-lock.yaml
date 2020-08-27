@@ -17,7 +17,7 @@ dependencies:
   react-datetime: 2.16.3_d06876d2a0885ddf9862abcf8e44f5fa
   react-dom: 16.13.1_react@16.13.1
   react-draft-wysiwyg: 1.14.5_883ad373d05dcecea6c0c3fc2719d86d
-  react-google-maps: 9.4.5_4449876b92cfa5b20bf91b88b4c998ff
+  react-google-maps: 9.4.5_ee47778d5867e118a98181a093e64641
   react-notification-alert: 0.0.12_react@16.13.1+reactstrap@8.5.1
   react-router: 5.2.0_react@16.13.1
   react-router-dom: 5.2.0_react@16.13.1
@@ -40,7 +40,7 @@ lockfileVersion: 5.1
 optionalDependencies:
   '@types/googlemaps': 3.39.13
   '@types/markerclustererplus': 2.1.33
-  '@types/react': 16.9.47
+  '@types/react': 16.9.48
   jquery: 3.5.1
   typescript: 4.0.2
 packages:
@@ -2107,14 +2107,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
-  /@types/react/16.9.47:
+  /@types/react/16.9.48:
     dependencies:
       '@types/prop-types': 15.7.3
       csstype: 3.0.2
     dev: false
     optional: true
     resolution:
-      integrity: sha512-dAJO4VbrjYqTUwFiQqAKjLyHHl4RSTNnRyPdX3p16MPbDKvow51wxATUPxoe2QsiXNMEYrOjc2S6s92VjG+1VQ==
+      integrity: sha512-4ykBVswgYitPGMXFRxJCHkxJDU2rjfU3/zw67f8+dB7sNdVJXsrwqoYxz/stkAucymnEEbRPFmX7Ce5Mc/kJCw==
   /@types/stack-utils/1.0.1:
     dev: false
     resolution:
@@ -11024,11 +11024,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
-  /react-google-maps/9.4.5_4449876b92cfa5b20bf91b88b4c998ff:
+  /react-google-maps/9.4.5_ee47778d5867e118a98181a093e64641:
     dependencies:
       '@types/googlemaps': 3.39.13
       '@types/markerclustererplus': 2.1.33
-      '@types/react': 16.9.47
+      '@types/react': 16.9.48
       babel-runtime: 6.26.0
       can-use-dom: 0.1.0
       google-maps-infobox: 2.0.0
@@ -13794,7 +13794,7 @@ packages:
 specifiers:
   '@types/googlemaps': 3.39.13
   '@types/markerclustererplus': 2.1.33
-  '@types/react': 16.9.47
+  '@types/react': 16.9.48
   axios: ^0.20.0
   babel-cli: ^6.26.0
   babel-preset-env: ^1.7.0

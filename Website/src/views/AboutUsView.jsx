@@ -123,6 +123,7 @@ const AboutUsView = props => {
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         ref={iframeRefCallback}
+                        className="lazyload"
                       />
                       : null
                   }
