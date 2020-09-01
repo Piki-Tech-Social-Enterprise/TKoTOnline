@@ -372,26 +372,6 @@ const AuthSettingsView = props => {
                       >
                         <TabPane tabId={1}>
                           <FormGroup>
-                            <Label>Home Page Header Image</Label>
-                            <FirebaseInput
-                              value={settings.homePageHeaderImageUrl || ''}
-                              onChange={handleChange}
-                              downloadURLInputProps={{
-                                id: 'homePageHeaderImageUrl',
-                                name: 'homePageHeaderImageUrl',
-                                placeholder: 'Home Page Header Image',
-                                type: 'text'
-                              }}
-                              downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                              downloadURLFileInputOnChange={handleHomePageHeaderImageUrlFileChange}
-                              downloadURLFormat={settingHomePageHeaderImageUrlFormat}
-                              downloadURLFormatKeyName={settingKeyFormat}
-                              downloadURLFormatKeyValue={settings.sid || ''}
-                              downloadURLFormatFileName={settingFilenameFormat}
-                              imageResize="md"
-                            />
-                          </FormGroup>
-                          <FormGroup>
                             <Label>Home Page About Image</Label>
                             <FirebaseInput
                               value={settings.homePageAboutImageUrl || ''}
@@ -416,11 +396,31 @@ const AuthSettingsView = props => {
                             <Input placeholder="Home Page About Description" name="homePageAboutDescription" value={settings.homePageAboutDescription} onChange={handleChange} type="textarea" />
                           </FormGroup>
                           <FormGroup>
-                            <Label>Home Page Video Source URL</Label>
-                            <Input placeholder="Home Page Video Source URL" name="homePageVideoSourceUrl" value={settings.homePageVideoSourceUrl} onChange={handleChange} type="url" />
+                            <Label>Home Page Header Image</Label>
+                            <FirebaseInput
+                              value={settings.homePageHeaderImageUrl || ''}
+                              onChange={handleChange}
+                              downloadURLInputProps={{
+                                id: 'homePageHeaderImageUrl',
+                                name: 'homePageHeaderImageUrl',
+                                placeholder: 'Home Page Header Image',
+                                type: 'text'
+                              }}
+                              downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                              downloadURLFileInputOnChange={handleHomePageHeaderImageUrlFileChange}
+                              downloadURLFormat={settingHomePageHeaderImageUrlFormat}
+                              downloadURLFormatKeyName={settingKeyFormat}
+                              downloadURLFormatKeyValue={settings.sid || ''}
+                              downloadURLFormatFileName={settingFilenameFormat}
+                              imageResize="md"
+                            />
                           </FormGroup>
                         </TabPane>
                         <TabPane tabId={2}>
+                          <FormGroup>
+                            <Label>About Page Video Source URL</Label>
+                            <Input placeholder="About Page Video Source URL" name="homePageVideoSourceUrl" value={settings.homePageVideoSourceUrl} onChange={handleChange} type="url" />
+                          </FormGroup>
                           <FormGroup>
                             <Label>About Page Description</Label>
                             <Editor
