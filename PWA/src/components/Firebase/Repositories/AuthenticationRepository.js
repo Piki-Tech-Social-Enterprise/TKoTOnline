@@ -38,6 +38,7 @@ class AuthenticationRepository extends BaseRepository {
       createdBy: uid,
       displayName: displayName || '',
       email: email,
+      emailVerified: false,
       isNew: true,
       photoURL: '',
       providerData: providerData,
@@ -254,14 +255,23 @@ class AuthenticationRepository extends BaseRepository {
             undefinedRole
           };
         }
-        authUser = {
+        // console.log(`{ dbUser, authUser }: ${JSON.stringify({ dbUser, authUser }, null, 2)}`);
+        const {
+          uid: dbUserUid,
+          email: dbUserEmail,
+          emailVerified: dbUserEmailVerified,
+          providerData: dbUserProviderData,
+          ...dbUserRest
+        } = dbUser;
+        const combinedUser = {
           uid: authUser.uid,
           email: authUser.email,
           emailVerified: authUser.emailVerified,
           providerData: authUser.providerData,
-          ...dbUser
+          ...dbUserRest
         };
-        next(authUser);
+        // console.log(`combinedUser: ${JSON.stringify(combinedUser, null, 2)}`);
+        next(combinedUser);
       } else {
         fallback();
       }

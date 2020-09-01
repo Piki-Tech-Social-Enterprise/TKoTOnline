@@ -45,7 +45,7 @@ const hasRoles = (roles, rolesToCheck) => {
 const ApplyRedirect = props => {
   const fromRoute = getAuthRouteByName('Home');
   const adminDefaultRoute = getAuthRouteByName('Iwi');
-  const basicDefaultRoute = getAuthRouteByName('Resource Drive');
+  const basicDefaultRoute = getAuthRouteByName('E-Panui List');
   const {
     authUser
   } = props;

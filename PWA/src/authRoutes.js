@@ -259,7 +259,7 @@ const authRoutes = [
     exact: true,
     iconLibrary: 'now-ui-icons',
     icon: 'ui-1_email-85',
-    roles: adminRoleUp,
+    roles: basicRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
   },
@@ -271,7 +271,7 @@ const authRoutes = [
     exact: true,
     iconLibrary: null,
     icon: null,
-    roles: adminRoleUp,
+    roles: basicRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
   },
@@ -283,7 +283,7 @@ const authRoutes = [
     exact: true,
     iconLibrary: 'now-ui-icons',
     icon: 'ui-1_send',
-    roles: adminRoleUp,
+    roles: basicRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: false
   },
@@ -295,7 +295,7 @@ const authRoutes = [
     exact: true,
     iconLibrary: null,
     icon: null,
-    roles: adminRoleUp,
+    roles: basicRoleUp,
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
   },
