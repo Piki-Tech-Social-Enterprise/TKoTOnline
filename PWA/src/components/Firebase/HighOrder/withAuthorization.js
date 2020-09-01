@@ -33,7 +33,6 @@ const withAuthorization = condition => Component => {
     } = process.env;
     useEffect(() => {
       let listener = null;
-      setIsLoading(true);
       (async function useEffectAsync() {
         listener = await props.firebase.authUserListener(authUser => {
           if (!authUser || !condition(authUser)) {
@@ -42,12 +41,15 @@ const withAuthorization = condition => Component => {
         }, () => {
           props.history.push('/public/Login');
         });
+        setIsLoading(false);
       })();
-      setIsLoading(false);
       return () => {
-        listener && listener();
+        if (!isLoading && typeof listener === 'function') {
+          listener();
+          listener = null;
+        }
       };
-    }, [props]);
+    }, [props, isLoading]);
     return (
       <AuthUserContext.Consumer>
         {

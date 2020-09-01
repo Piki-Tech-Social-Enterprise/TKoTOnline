@@ -22,13 +22,16 @@ const withAuthentication = Component => {
         }, () => {
           localStorage.removeItem(localStorageItemId);
           setAuthUser(null);
-        })
+        });
+        setIsLoading(false);
       })();
-      setIsLoading(false);
       return () => {
-        listener && listener();
+        if (!isLoading && typeof listener === 'function') {
+          listener();
+          listener = null;
+        }
       };
-    }, [props, setAuthUser]);
+    }, [props, isLoading]);
     return (
       <>
         {

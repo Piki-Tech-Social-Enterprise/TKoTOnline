@@ -39,10 +39,11 @@ const GoogleAnalytics = props => {
         ...s,
         isLoading: false
       }));
-    }
+    };
     return () => {
-      if (!state.isLoading) {
-        listener && listener();
+      if (!state.isLoading && typeof listener === 'function') {
+        listener();
+        listener = null;
       }
     };
   }, [props, state]);

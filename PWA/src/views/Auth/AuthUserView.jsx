@@ -40,7 +40,7 @@ const INITIAL_STATE = {
   confirmPassword: '',
   displayName: '',
   email: '',
-  emailVerified: undefined,
+  emailVerified: false,
   password: '',
   photoURL: '',
   photoURLFile: null,
