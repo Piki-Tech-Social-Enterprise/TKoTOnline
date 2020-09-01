@@ -101,7 +101,7 @@ const AuthIwiMemberView = props => {
     let displayMessage = 'Changes saved';
     try {
       if (!iwiMemberImageURL || !iwiMemberName || !iwiMemberURL) {
-        displayMessage = 'The Iwi Member Image URL, Iwi Member Name, and Iwi Member URL fields are required.';
+        displayMessage = 'The Iwi Member Image, Iwi Member Name, and Iwi Member URL fields are required.';
       } else if (iwiChairImageURLFile && iwiChairImageURLFile.size > maxImageFileSize) {
         const {
           size
@@ -332,14 +332,14 @@ const AuthIwiMemberView = props => {
                         <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Iwi Member Image URL</Label>
+                        <Label>Iwi Member Image</Label>
                         <FirebaseInput
                           value={iwiMember.iwiMemberImageURL}
                           onChange={handleChange}
                           downloadURLInputProps={{
                             id: 'iwiMemberImageURL',
                             name: 'iwiMemberImageURL',
-                            placeholder: 'Iwi Member Image URL',
+                            placeholder: 'Iwi Member Image',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
@@ -351,14 +351,14 @@ const AuthIwiMemberView = props => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Iwi Chair Image URL</Label>
+                        <Label>Iwi Chair Image</Label>
                         <FirebaseInput
                           value={iwiMember.iwiChairImageURL || ''}
                           onChange={handleChange}
                           downloadURLInputProps={{
                             id: 'iwiChairImageURL',
                             name: 'iwiChairImageURL',
-                            placeholder: 'Iwi Chair Image URL',
+                            placeholder: 'Iwi Chair Image',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"

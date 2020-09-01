@@ -28,6 +28,7 @@ import {
   adminRole,
   systemAdminRole
 } from 'components/Domains/Roles';
+import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 
 const hasRole = (roles, role) => {
   return roles && !!roles[role];

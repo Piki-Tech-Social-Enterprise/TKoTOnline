@@ -197,4 +197,7 @@ $tkot-bg-color-white: #FFFFFF;
 .react-bootstrap-table-caret {
   margin: 10px 0px 10px 5px;
   color: rgb(204, 204, 204);
+  &.header {
+    margin-bottom: 10px;
+  }
 }
