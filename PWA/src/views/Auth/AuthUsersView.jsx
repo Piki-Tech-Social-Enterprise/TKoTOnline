@@ -93,7 +93,7 @@ const AuthUsersView = props => {
                     : <BootstrapTable data={usersAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="users-table-export"
+                      insertRow exportCSV csvFileName="users-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'email',
                         defaultSortOrder: 'asc',

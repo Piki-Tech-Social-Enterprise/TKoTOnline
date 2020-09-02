@@ -78,7 +78,7 @@ const AuthNewsFeedsView = props => {
                     : <BootstrapTable data={newsFeedsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      insertRow exportCSV csvFileName="news-feeds-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'date',
                         defaultSortOrder: 'asc',

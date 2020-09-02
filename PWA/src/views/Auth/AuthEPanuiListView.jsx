@@ -66,7 +66,7 @@ const AuthEPanuiListView = props => {
                     : <BootstrapTable data={ePanuiListAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="ePanuiList-table-export"
+                      insertRow exportCSV csvFileName="ePanuiList-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'date',
                         defaultSortOrder: 'asc',

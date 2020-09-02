@@ -86,7 +86,7 @@ const AuthFacebookLinksView = props => {
                     : <BootstrapTable data={FacebookLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      insertRow exportCSV csvFileName="facebookLinks-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'name',
                         defaultSortOrder: 'asc',

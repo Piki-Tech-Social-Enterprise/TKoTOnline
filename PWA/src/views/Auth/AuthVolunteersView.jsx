@@ -92,7 +92,7 @@ const AuthVolunteersView = props => {
                     : <BootstrapTable data={volunteersAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="volunteers-table-export"
+                      insertRow exportCSV csvFileName="volunteers-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'email',
                         defaultSortOrder: 'asc',

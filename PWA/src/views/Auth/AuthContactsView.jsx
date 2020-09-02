@@ -67,7 +67,7 @@ const AuthContactsView = props => {
                     : <BootstrapTable data={contactsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      exportCSV csvFileName="contacts-export"
+                      exportCSV csvFileName="contacts-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'created',
                         defaultSortOrder: 'asc',

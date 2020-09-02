@@ -77,7 +77,7 @@ const AuthIwiMembersView = props => {
                     : <BootstrapTable data={IwiMembersAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="iwi-members-table-export"
+                      insertRow exportCSV csvFileName="iwi-members-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'iwiMemberName',
                         defaultSortOrder: 'asc',

@@ -78,7 +78,7 @@ const AuthEventsView = props => {
                     : <BootstrapTable data={eventsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      insertRow exportCSV csvFileName="events-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'header',
                         defaultSortOrder: 'asc',

@@ -78,7 +78,7 @@ const AuthProjectsView = props => {
                     : <BootstrapTable data={projectsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export"
+                      insertRow exportCSV csvFileName="projects-table-export.csv"
                       search pagination options={{
                         defaultSortName: 'header',
                         defaultSortOrder: 'asc',
