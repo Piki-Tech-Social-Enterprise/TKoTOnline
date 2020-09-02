@@ -392,6 +392,11 @@ const AuthUserView = props => {
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
                   <Col md={8}>
+                    {
+                      isSubmitting
+                        ? <LoadingOverlayModal text="Saving..." />
+                        : null
+                    }
                     <Card>
                       <CardBody>
                         <FormGroup>

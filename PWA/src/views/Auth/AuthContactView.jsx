@@ -199,6 +199,11 @@ const AuthContactView = props => {
                   isLoading
                     ? <LoadingOverlayModal color="text-light" />
                     : <Form noValidate onSubmit={handleSubmit}>
+                      {
+                        isSubmitting
+                          ? <LoadingOverlayModal text="Saving..." />
+                          : null
+                      }
                       <FormGroup>
                         <Label>First Name</Label>
                         <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" disabled />

@@ -100,7 +100,7 @@ const AuthEventView = props => {
           size
         } = imageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
-      // eslint-disable-next-line
+        // eslint-disable-next-line
       } else if (externalUrl && !externalUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
         displayMessage = 'External URL is invalid.';
       } else {
@@ -262,6 +262,11 @@ const AuthEventView = props => {
               <Row>
                 <Col xs={12} sm={8}>
                   <Card>
+                    {
+                      isSubmitting
+                        ? <LoadingOverlayModal text="Saving..." />
+                        : null
+                    }
                     <CardBody>
                       <FormGroup>
                         <Label>External URL</Label>

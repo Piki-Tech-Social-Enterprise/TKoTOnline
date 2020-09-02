@@ -223,6 +223,11 @@ const AuthEPanuiView = props => {
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
                   <Col xs={12} sm={6}>
+                    {
+                      isSubmitting
+                        ? <LoadingOverlayModal text="Saving..." />
+                        : null
+                    }
                     <Card>
                       <CardBody>
                         <FormGroup>

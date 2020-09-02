@@ -334,8 +334,12 @@ const AuthSettingsView = props => {
       <Container className="content">
         <Row>
           <Col>
+            {
+              isSubmitting
+                ? <LoadingOverlayModal text="Saving..." />
+                : null
+            }
             <Card>
-              {/* <h3>Setting</h3> */}
               <CardBody>
                 {
                   isLoading

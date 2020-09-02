@@ -289,6 +289,11 @@ const AuthIwiMemberView = props => {
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs={12} sm={8}>
+                  {
+                    isSubmitting
+                      ? <LoadingOverlayModal text="Saving..." />
+                      : null
+                  }
                   <Card>
                     <CardBody>
                       <FormGroup>

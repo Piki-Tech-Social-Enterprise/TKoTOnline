@@ -18,6 +18,7 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
+
 const INITIAL_STATE = {
   active: true,
   link: '',
@@ -192,6 +193,11 @@ const AuthCommunityLinkView = props => {
                   isLoading
                     ? <LoadingOverlayModal color="text-light" />
                     : <Form noValidate onSubmit={handleSubmit}>
+                      {
+                        isSubmitting
+                          ? <LoadingOverlayModal text="Saving..." />
+                          : null
+                      }
                       <FormGroup>
                         <Label>Link Name</Label>
                         <Input placeholder="Link name" name="linkName" value={communityLink.linkName} onChange={handleChange} type="text" />

@@ -185,8 +185,12 @@ const AuthFacebookLinkView = props => {
       <Container className="content">
         <Row>
           <Col xs={12} sm={6}>
+            {
+              isSubmitting
+                ? <LoadingOverlayModal text="Saving..." />
+                : null
+            }
             <Card>
-              {/* <h3>Facebook Link</h3> */}
               <CardBody>
                 {
                   isLoading

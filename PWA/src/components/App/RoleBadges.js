@@ -30,6 +30,7 @@ import LoadingIcon from './LoadingIcon';
 import {
   fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
+import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 
 const propTypes = {
   availableRoles: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -165,6 +166,11 @@ const RoleBadges = props => {
           <PopoverBody>
             <Row>
               <Col md="12">
+                {
+                  state.isSubmitting
+                    ? <LoadingOverlayModal text="Saving..." />
+                    : null
+                }
                 <Form noValidate onSubmit={handleSubmit}>
                   {
                     Object.keys(props.availableRoles).map((availableRole, key) => {
@@ -172,8 +178,8 @@ const RoleBadges = props => {
                         <FormGroup check className="text-left" key={key}>
                           <Label check>
                             <Input id={`${activeRolesId}_activeRoles[${availableRole}]`} name={`${activeRolesId}_activeRoles[${availableRole}]`} type="checkbox" checked={!!activeRoles[availableRole]} onChange={handleRoleChange} />{' '}
-                              {fromCamelcaseToTitlecase(availableRole.replace('Role', ''))}
-                              <span className="form-check-sign">
+                            {fromCamelcaseToTitlecase(availableRole.replace('Role', ''))}
+                            <span className="form-check-sign">
                               <span className="check"></span>
                             </span>
                           </Label>
