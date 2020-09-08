@@ -20,6 +20,7 @@ import {
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
+import FirebaseImage from 'components/App/FirebaseImage';
 
 const AuthEPanuiListView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,8 +77,11 @@ const AuthEPanuiListView = props => {
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEPanuiRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="date" dataSort caretRender={renderCaret} width="20%">Date</TableHeaderColumn>
+                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.name} imageURL={cell} />
+                      )}>Image</TableHeaderColumn>
                       <TableHeaderColumn dataField="name" dataSort caretRender={renderCaret} width="40%">Name</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="date" dataSort caretRender={renderCaret} width="20%">Date</TableHeaderColumn>
                       <TableHeaderColumn dataField="url" dataSort caretRender={renderCaret}>URL</TableHeaderColumn>
                     </BootstrapTable>
                 }
