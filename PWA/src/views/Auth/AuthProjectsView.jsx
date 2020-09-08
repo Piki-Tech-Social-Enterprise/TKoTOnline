@@ -30,6 +30,7 @@ const AuthProjectsView = props => {
   useEffect(() => {
     const retrieveProjects = async () => {
       const dbProjectsAsArray = await props.firebase.getDbProjectsAsArray(true);
+      sortArray(dbProjectsAsArray, 'header', 'asc');
       setProjectsAsArray(dbProjectsAsArray);
       setIsLoading(false);
     };
@@ -80,8 +81,6 @@ const AuthProjectsView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="projects-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'header',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Projects found.',
                         onSortChange: handleSortChange,

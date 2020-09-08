@@ -29,6 +29,7 @@ const AuthContactsView = props => {
   useEffect(() => {
     const retrieveContacts = async () => {
       const dbContactsAsArray = await props.firebase.getDbContactsAsArray(true);
+      sortArray(dbContactsAsArray, 'created', 'asc');
       setContactsAsArray(dbContactsAsArray);
       setIsLoading(false);
     };
@@ -69,8 +70,6 @@ const AuthContactsView = props => {
                       tableHeaderClass="text-primary"
                       exportCSV csvFileName="contacts-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'created',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Contacts found.',
                         onSortChange: handleSortChange

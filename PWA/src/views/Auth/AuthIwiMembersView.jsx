@@ -29,6 +29,7 @@ const AuthIwiMembersView = props => {
   useEffect(() => {
     const retrieveIwiMembers = async () => {
       const dbIwiMembersAsArray = await props.firebase.getDbIwiMembersAsArray(true);
+      sortArray(dbIwiMembersAsArray, 'iwiMemberName', 'asc');
       setIwiMembersAsArray(dbIwiMembersAsArray);
       setIsLoading(false);
     };
@@ -79,8 +80,6 @@ const AuthIwiMembersView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="iwi-members-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'iwiMemberName',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Iwi Members found.',
                         onSortChange: handleSortChange,

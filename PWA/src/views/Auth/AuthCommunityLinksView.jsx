@@ -28,6 +28,7 @@ const AuthCommunityLinksView = props => {
   useEffect(() => {
     const retrieveCommunityLinks = async () => {
       const dbCommunityLinksAsArray = await props.firebase.getDbCommunityLinksAsArray(true);
+      sortArray(dbCommunityLinksAsArray, 'linkName', 'asc');
       setCommunityLinksAsArray(dbCommunityLinksAsArray);
       setIsLoading(false);
     };
@@ -78,8 +79,6 @@ const AuthCommunityLinksView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="community-links-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'linkName',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Community Links found.',
                         onSortChange: handleSortChange,

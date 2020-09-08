@@ -42,6 +42,7 @@ const AuthUsersView = props => {
   useEffect(() => {
     const retrieveUsers = async () => {
       const dbUsersAsArray = await props.firebase.getDbUsersAsArray(true);
+      sortArray(dbUsersAsArray, 'email', 'asc');
       setUsersAsArray(dbUsersAsArray);
       setIsLoading(false);
     };
@@ -95,8 +96,6 @@ const AuthUsersView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="users-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'email',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Users found.',
                         onSortChange: handleSortChange,

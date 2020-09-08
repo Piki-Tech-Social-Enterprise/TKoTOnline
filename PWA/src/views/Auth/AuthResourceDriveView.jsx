@@ -104,6 +104,7 @@ const AuthResourceDriveView = () => {
             photoURL: docImage
           }
         ];
+      sortArray(fileArray, 'googleDriveFileName', 'asc');
       setFileArray(fileArray);
       setIsLoading(false);
   },[]);
@@ -296,8 +297,6 @@ const AuthResourceDriveView = () => {
                           exportCSV csvFileName="file-table-export.csv"
                           selectRow={ selectRowProp }
                           search pagination options={{
-                            defaultSortName: 'googleDriveFileName',
-                            defaultSortOrder: 'asc',
                             hideSizePerPage: true,
                             noDataText: 'No Files found.',
                             onSortChange: handleSortChange

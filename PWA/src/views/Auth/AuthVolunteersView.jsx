@@ -41,6 +41,7 @@ const AuthVolunteersView = props => {
   useEffect(() => {
     const retrieveVolunteers = async () => {
       const dbVolunteersAsArray = await props.firebase.getDbVolunteersAsArray(true);
+      sortArray(dbVolunteersAsArray, 'email', 'asc');
       setVolunteersAsArray(dbVolunteersAsArray);
       setIsLoading(false);
     };

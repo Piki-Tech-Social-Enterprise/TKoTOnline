@@ -30,6 +30,7 @@ const AuthNewsFeedsView = props => {
   useEffect(() => {
     const retrieveNewsFeeds = async () => {
       const dbNewsFeedsAsArray = await props.firebase.getDbNewsFeedsAsArray(true);
+      sortArray(dbNewsFeedsAsArray, 'date', 'asc');
       setNewsFeedsAsArray(dbNewsFeedsAsArray);
       setIsLoading(false);
     };
@@ -80,8 +81,6 @@ const AuthNewsFeedsView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="news-feeds-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'date',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No News Feeds found.',
                         onSortChange: handleSortChange,

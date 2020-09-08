@@ -28,6 +28,7 @@ const AuthEPanuiListView = props => {
   useEffect(() => {
     const retrieveEPanuiList = async () => {
       const dbEPanuiListAsArray = await props.firebase.getDbEPanuiListAsArray(true);
+      sortArray(dbEPanuiListAsArray, 'date', 'asc');
       setEPanuiListAsArray(dbEPanuiListAsArray);
       setIsLoading(false);
     };
@@ -69,8 +70,6 @@ const AuthEPanuiListView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="ePanuiList-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'date',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No E-Pānui found.',
                         onSortChange: handleSortChange,

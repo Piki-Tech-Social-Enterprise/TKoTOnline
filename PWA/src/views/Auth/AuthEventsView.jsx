@@ -30,6 +30,7 @@ const AuthEventsView = props => {
   useEffect(() => {
     const retrieveEvents = async () => {
       const dbEventsAsArray = await props.firebase.getDbEventsAsArray(true);
+      sortArray(dbEventsAsArray, 'header', 'asc');
       setEventsAsArray(dbEventsAsArray);
       setIsLoading(false);
     };
@@ -80,8 +81,6 @@ const AuthEventsView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="events-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'header',
-                        defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Wananga found.',
                         onSortChange: handleSortChange,
