@@ -31,19 +31,19 @@ class EPanuiListRepository extends BaseRepository {
     return dbEPanuiListAsArray;
   }
 
-  getDbEPanui = async vid => {
-    return await this.db.ref(`ePanuiList/${vid}`);
+  getDbEPanui = async eid => {
+    return await this.db.ref(`ePanuiList/${eid}`);
   }
 
-  getDbEPanuiValue = async vid => {
-    const existingDbEPanui = await this.getDbEPanui(vid),
+  getDbEPanuiValue = async eid => {
+    const existingDbEPanui = await this.getDbEPanui(eid),
       snapshot = await existingDbEPanui.once('value'),
       dbEPanui = await snapshot.val();
     return dbEPanui;
   }
 
-  addDbEPanuiDetails = async (vid, details) => {
-    const existingDbEPanui = await this.getDbEPanui(vid);
+  addDbEPanuiDetails = async (eid, details) => {
+    const existingDbEPanui = await this.getDbEPanui(eid);
     existingDbEPanui.update({details});
   }
 
@@ -52,8 +52,11 @@ class EPanuiListRepository extends BaseRepository {
       active,
       created,
       createdBy,
+      category,
+      content,
       eid,
       date,
+      imageUrl,
       name,
       url,
       updated,
@@ -71,8 +74,11 @@ class EPanuiListRepository extends BaseRepository {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
+        category: category || '',
+        content: content || '',
         eid: newEid,
         date,
+        imageUrl: imageUrl || '',
         name,
         url,
         updated: updated || now.toString(),
@@ -85,8 +91,11 @@ class EPanuiListRepository extends BaseRepository {
       if (dbEPanui) {
         ePanui = {
           active: active || (typeof active === 'boolean' && active) || false,
+          category: category || dbEPanui.category || '',
+          content: content || dbEPanui.content || '',
           eid: eid,
           date: date || dbEPanui.date,
+          imageUrl: imageUrl || dbEPanui.imageUrl || '',
           name: name || dbEPanui.name,
           url: url || dbEPanui.url,
           updated: updated || now.toString(),
@@ -101,16 +110,16 @@ class EPanuiListRepository extends BaseRepository {
       console.log('Save Db EPanui Error: ' + errorMessage);
       throw new Error(errorMessage);
     }
-    return ePanui.vid;
+    return ePanui.eid;
   }
 
-  deleteDbEPanui = async vid => {
-    const existingDbEPanui = await this.getDbEPanui(vid);
+  deleteDbEPanui = async eid => {
+    const existingDbEPanui = await this.getDbEPanui(eid);
     let errorMessage = null;
     if (existingDbEPanui) {
       await existingDbEPanui.remove();
     } else {
-      errorMessage = 'Delete Db EPanui Error: vid (' + vid + ') not found.';
+      errorMessage = 'Delete Db EPanui Error: eid (' + eid + ') not found.';
     }
     if (errorMessage) {
       console.log('Delete Db EPanui Error: ' + errorMessage);

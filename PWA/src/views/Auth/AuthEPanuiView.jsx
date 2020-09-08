@@ -18,17 +18,45 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import InputDateTime from 'components/App/InputDateTime';
+import FirebaseInput from 'components/FirebaseInput';
 import {
-  DATE_MOMENT_FORMAT
+  formatBytes,
+  formatInteger,
+  DATE_MOMENT_FORMAT,
+  TAG_SEPARATOR
 } from 'components/App/Utilities';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw
+} from 'draft-js';
+import {
+  Editor
+} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import InputDateTime from 'components/App/InputDateTime';
+import TagsInput from 'react-tagsinput-2';
+import 'react-tagsinput-2/react-tagsinput.css';
 
+const ePanuiListRef = '/images/ePanuiList';
+const ePanuiKeyFormat = '{eid}';
+const ePanuiFilenameFormat = '{filename}';
+const ePanuiImageFolderUrlFormat = `${ePanuiListRef}/${ePanuiKeyFormat}/`;
+const ePanuiImageUrlFormat = `${ePanuiImageFolderUrlFormat}${ePanuiFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
+  category: '',
+  categoryTags: [
+    'E-Pānui'
+  ],
+  content: '',
   date: '',
+  imageUrl: '',
+  imageUrlFile: null,
   name: '',
   url: '',
-  eid: null
+  eid: null,
+  editorState: EditorState.createEmpty()
 };
 const AuthEPanuiView = props => {
   const isNew = props.match.params.eid === 'New';
@@ -53,6 +81,7 @@ const AuthEPanuiView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
+    const maxImageFileSize = 2097152;
     const defaultDisplayMesssage = 'Changes saved';
     const now = new Date();
     const {
@@ -64,23 +93,29 @@ const AuthEPanuiView = props => {
     } = authUser;
     const {
       active,
+      categoryTags,
+      content,
       date,
+      imageUrlFile,
       name,
-      url,
-      details
+      url
     } = ePanui;
     let eid = ePanui.eid;
+    let imageUrl = ePanui.imageUrl;
     let displayIcon = 'success';
-    let displayTitle = `Update E-Panui Successful`;
+    let displayTitle = `Update E-Pānui Successful`;
     let displayMessage = defaultDisplayMesssage;
     try {
-      if (isNew) {
-        if (!url || !name || !date) {
-          displayMessage = 'Date, Name, and URL are required fields.';
-          // eslint-disable-next-line
-        } else if (!url.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
-          displayMessage = 'URL is invalid.';
-        }
+      if (!url || !name || !date || !imageUrl || !content) {
+        displayMessage = 'Date, Name, Image, and URL/Content are required fields.';
+      } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = imageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+        // eslint-disable-next-line
+      } else if (!url.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+        displayMessage = 'URL is invalid.';
       }
       if (displayMessage === defaultDisplayMesssage) {
         if (isNew) {
@@ -88,32 +123,45 @@ const AuthEPanuiView = props => {
             active,
             created: now.toString(),
             createdBy: uid,
+            category: categoryTags.join(TAG_SEPARATOR),
+            content: content,
             date,
             name,
             url,
             updated: now.toString(),
             updatedBy: uid
           });
+          if (imageUrlFile && imageUrlFile.name) {
+            imageUrl = ePanuiImageUrlFormat
+              .replace(ePanuiKeyFormat, eid)
+              .replace(ePanuiFilenameFormat, imageUrlFile.name);
+          }
+        }
+        await firebase.saveDbEPanui({
+          active,
+          category: categoryTags.join(TAG_SEPARATOR),
+          content: content,
+          date,
+          imageUrl,
+          name,
+          url,
+          updated: now.toString(),
+          updatedBy: uid,
+          eid: eid
+        });
+        if (imageUrlFile) {
+          await firebase.saveStorageFile(imageUrl, imageUrlFile);
+        }
+        if (isNew) {
           handleGotoParentList();
-        } else {
-          await firebase.saveDbEPanui({
-            active,
-            date,
-            name,
-            url,
-            details,
-            updated: now.toString(),
-            updatedBy: uid,
-            eid: eid
-          });
         }
       } else {
         displayIcon = 'error';
-        displayTitle = `Update E-Panui Failed`;
+        displayTitle = `Update E-Pānui Failed`;
       }
     } catch (error) {
       displayIcon = 'error';
-      displayTitle = `Update E-Panui Failed`;
+      displayTitle = `Update E-Pānui Failed`;
       displayMessage = `${error.message}`;
     } finally {
       setIsSubmitting(false);
@@ -153,8 +201,8 @@ const AuthEPanuiView = props => {
         await firebase.deleteDbEPanui(eid);
         swal.fire({
           icon: 'success',
-          title: `Delete E-Panui Successful`,
-          text: `Your E-Panui has been deleted.`
+          title: `Delete E-Pānui Successful`,
+          text: `Your E-Pānui has been deleted.`
         });
         handleGotoParentList();
       }
@@ -166,13 +214,23 @@ const AuthEPanuiView = props => {
     if (displayMessage) {
       swal.fire({
         icon: 'error',
-        title: `Delete E-Panui Error`,
+        title: `Delete E-Pānui Error`,
         html: displayMessage
       });
     }
   };
   const handleGotoParentList = () => {
     props.history.push('/auth/EPanui');
+  };
+  const handleImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const imageUrlFile = e.target.files[0];
+      setEPanui(ep => ({
+        ...ep,
+        imageUrlFile: imageUrlFile
+      }));
+    }
   };
   useEffect(() => {
     const {
@@ -183,20 +241,31 @@ const AuthEPanuiView = props => {
       const dbEPanui = await firebase.getDbEPanuiValue(match.params.eid);
       const {
         active,
+        category,
+        content,
         date,
+        imageUrl,
         name,
         url,
-        eid,
-        details
+        eid
       } = dbEPanui;
-      setEPanui({
+      setEPanui(ep => ({
+        ...ep,
         active,
+        category,
+        categoryTags: category && category.length
+          ? category.split(TAG_SEPARATOR)
+          : ep.categoryTags,
+        content,
         date,
+        imageUrl,
         name,
         url,
         eid,
-        details: details || INITIAL_STATE.details
-      });
+        editorState: content && content.startsWith('{') && content.endsWith('}')
+          ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
+          : ep.editorState
+      }));
       setIsLoading(false);
     };
     if (isLoading) {
@@ -255,6 +324,51 @@ const AuthEPanuiView = props => {
                         <FormGroup>
                           <Label>URL</Label>
                           <Input placeholder="URL" name="url" value={ePanui.url} onChange={handleChange} type="url" />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Category</Label>
+                          <TagsInput
+                            value={ePanui.categoryTags}
+                            onChange={tags => handleChange({
+                              target: {
+                                name: 'categoryTags',
+                                value: tags
+                              }
+                            })}
+                          />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Image</Label>
+                          <FirebaseInput
+                            value={ePanui.imageUrl || ''}
+                            onChange={handleChange}
+                            downloadURLInputProps={{
+                              id: 'imageUrl',
+                              name: 'imageUrl',
+                              placeholder: 'Image',
+                              type: 'text'
+                            }}
+                            downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                            downloadURLFileInputOnChange={handleImageUrlFileChange}
+                            downloadURLFormat={ePanuiImageUrlFormat}
+                            downloadURLFormatKeyName={ePanuiKeyFormat}
+                            downloadURLFormatKeyValue={props.match.params.epid}
+                            downloadURLFormatFileName={ePanuiFilenameFormat}
+                          />
+                        </FormGroup>
+                        <FormGroup>
+                          <Label>Content</Label>
+                          <Editor
+                            wrapperClassName="wrapper-class"
+                            editorClassName="editor-class"
+                            toolbarClassName="toolbar-class"
+                            editorState={ePanui.editorState}
+                            onEditorStateChange={editorState => setEPanui(ep => ({
+                              ...ep,
+                              content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                              editorState: editorState
+                            }))}
+                          />
                         </FormGroup>
                         <FormGroup>
                           <Label>Active</Label><br />

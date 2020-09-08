@@ -278,7 +278,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/EPanui',
-    name: 'E-Panui List',
+    name: 'E-Pānui List',
     component: lazy(async () => await import('views/Auth/AuthEPanuiListView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
@@ -290,7 +290,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/EPanui/:eid',
-    name: 'E-Panui',
+    name: 'E-Pānui',
     component: lazy(async () => await import('views/Auth/AuthEPanuiView')),
     exact: true,
     iconLibrary: null,

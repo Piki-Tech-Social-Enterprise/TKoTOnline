@@ -71,7 +71,7 @@ const AuthEPanuiListView = props => {
                         defaultSortName: 'date',
                         defaultSortOrder: 'asc',
                         hideSizePerPage: true,
-                        noDataText: 'No E-Panui found.',
+                        noDataText: 'No E-Pānui found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEPanuiRowClick

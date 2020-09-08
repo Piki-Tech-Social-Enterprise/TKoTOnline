@@ -10,7 +10,8 @@ import {
   FacebookLinksRepository,
   EventsRepository,
   ProjectsRepository,
-  IwiMembersRepository
+  IwiMembersRepository,
+  EPanuiListRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -31,6 +32,7 @@ class Firebase {
     this.eventsRepository = new EventsRepository(firebaseApp);
     this.projectsRepository = new ProjectsRepository(firebaseApp);
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
+    this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -67,13 +69,15 @@ class Firebase {
   getDbEvents = async () => await this.eventsRepository.getDbEvents();
   getDbEventsAsArray = async includeInactive => await this.eventsRepository.getDbEventsAsArray(includeInactive);
   getDbEventValue = async evid => await this.eventsRepository.getDbEventValue(evid);
-  getDbEvents = async () => await this.eventsRepository.getDbEvents();
   getDbProjectsAsArray = async includeInactive => await this.projectsRepository.getDbProjectsAsArray(includeInactive);
   getDbProjectValue = async pid => await this.projectsRepository.getDbProjectValue(pid);
   getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
   getDbIwiMembersAsArray = async includeInactive => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive);
   getDbIwiMember = async imid => await this.iwiMembersRepository.getDbIwiMember(imid);
   getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
+  getDbEPanui = async () => await this.ePanuiListRepository.getDbEPanui();
+  getDbEPanuiListAsArray = async includeInactive => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive);
+  getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
 }
 
 export default Firebase;

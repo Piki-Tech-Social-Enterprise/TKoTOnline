@@ -56,11 +56,16 @@ const NewsFeedSection = props => {
       const filteredDbNewsFeeds = searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbNewsFeeds;
-      sortArray(filteredDbNewsFeeds, 'date', 'asc');
+      const dbEPanui = await firebase.getDbEPanuiListAsArray();
+      const filteredDbEPanui = searchCategory
+        ? dbEPanui.filter(dbep => dbep.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
+        : dbEPanui;
+      const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds.concat(filteredDbEPanui);
+      sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'asc');
       setState(s => ({
         ...s,
         isLoading: false,
-        dbNewsFeeds: filteredDbNewsFeeds
+        dbNewsFeeds: filteredDbNewsFeedsAndEPanui
       }));
     };
     if (isLoading) {
@@ -88,21 +93,29 @@ const NewsFeedSection = props => {
                         header,
                         imageUrl,
                         externalUrl,
-                        nfid
+                        nfid,
+                        name,
+                        url
                       } = dbNewsFeed;
+                      const displayName = header || name || '';
+                      const isExternalLink = (externalUrl || url || '').length > 0;
+                      const externalLink = isExternalLink
+                        ? externalUrl || url
+                        : '';
+                      const internalLink = `/NewsFeeds/${nfid}`;
                       const contentAsText = draftToText(content, '');
                       return (
                         <Col xs={12} sm={6} lg={4} key={index}>
                           <Card className="card-block news-feed-card">
                             <CardHeader>
-                              <CardTitle className="h4 my-3 mx-2 font-weight-bold">{header}</CardTitle>
+                              <CardTitle className="h4 my-3 mx-2 font-weight-bold">{displayName}</CardTitle>
                             </CardHeader>
                             <FirebaseImage
                               className="card-img-max-height"
-                              imageURL={imageUrl}
+                              imageURL={imageUrl || ''}
                               width="340"
                               lossless={true}
-                              alt={header}
+                              alt={displayName}
                               loadingIconSize="lg"
                             />
                             <CardBody className="text-left bg-white">
@@ -115,12 +128,12 @@ const NewsFeedSection = props => {
                               <p className="d-inline-block block-with-text">{contentAsText}</p>
                               <div className="text-center">
                                 <Button
-                                  href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
-                                  target={externalUrl ? '_blank' : '_self'}
-                                  rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
+                                  href={isExternalLink ? externalLink : internalLink}
+                                  target={isExternalLink ? '_blank' : '_self'}
+                                  rel={isExternalLink ? 'noopener noreferrer' : 'alternate'}
                                   className="tkot-primary-red-bg-color btn-outline-dark"
                                   color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/NewsFeeds/${nfid}`)}
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', displayName, isExternalLink ? externalLink : internalLink)}
                                 >Read more...</Button>
                               </div>
                             </CardBody>
