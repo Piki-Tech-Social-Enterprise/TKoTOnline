@@ -1,7 +1,7 @@
 dependencies:
   axios: 0.20.0
   draftjs-to-html: 0.9.1
-  firebase: 7.19.0
+  firebase: 7.19.1
   lazysizes: 5.2.2
   moment-mini: 2.24.0
   prop-types: 15.7.2
@@ -14,7 +14,7 @@ dependencies:
   react-router-dom: 5.2.0_react@16.13.1
   reactstrap: 8.5.1_react-dom@16.13.1+react@16.13.1
   reactstrap-scrollspy: 0.1.1_39e24c0727163e37125bbea707407a42
-  sweetalert2: 9.17.1
+  sweetalert2: 10.0.1
 devDependencies:
   babel-cli: 6.26.0
   babel-preset-env: 1.7.0
@@ -1410,20 +1410,20 @@ packages:
       '@firebase/app-types': '*'
     resolution:
       integrity: sha512-QOHhB7+CdjVhEXG9CyX0roA9ARJcEuwbozz0Bix+ULuZqjQ58KUFHMH1apW6EEiUP22d/mYD7dNXsUGshjL9PA==
-  /@firebase/firestore-types/1.12.0_@firebase+app-types@0.6.1:
+  /@firebase/firestore-types/1.12.1_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-OqNxVb63wPZdUc7YnpacAW1WNIMSKERSewCRi+unCQ0YI0KNfrDSypyGCyel+S3GdOtKMk9KnvDknaGbnaFX4g==
-  /@firebase/firestore/1.16.5_f74fbce5100d3991230a70bf33a7bf32:
+      integrity: sha512-CpWcDriYnGDoAl0D9DcSuwX0b/fXqi7qOwuuTI1M0SYxau48G8cqhVjzjqPDgEM3kDGYJTnPN3ALS0Z4cnwERQ==
+  /@firebase/firestore/1.16.6_f74fbce5100d3991230a70bf33a7bf32:
     dependencies:
       '@firebase/app': 0.6.10
       '@firebase/app-types': 0.6.1
       '@firebase/component': 0.1.18
-      '@firebase/firestore-types': 1.12.0_@firebase+app-types@0.6.1
+      '@firebase/firestore-types': 1.12.1_@firebase+app-types@0.6.1
       '@firebase/logger': 0.2.6
       '@firebase/util': 0.3.1
       '@firebase/webchannel-wrapper': 0.3.0
@@ -1438,7 +1438,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-GjCL4Ngy46qSdXAg9obXBuIKG2m/7a21dQktqRPaPH9xpHnymq8LxUK7sdUfyY8FBIQp6Si6O61e9fko4FjSMw==
+      integrity: sha512-w04ZS0i8xclGNvwpxt7Q3M9nhUq6pL0G73ZpDizPKB+peTuY/bcks+zrfNKZwDEaM+i0/lg9UZKREr0HtZOJsw==
   /@firebase/functions-types/0.3.17:
     dev: false
     resolution:
@@ -5962,14 +5962,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/7.19.0:
+  /firebase/7.19.1:
     dependencies:
       '@firebase/analytics': 0.4.2_f74fbce5100d3991230a70bf33a7bf32
       '@firebase/app': 0.6.10
       '@firebase/app-types': 0.6.1
       '@firebase/auth': 0.14.9_09c9e27784d6fc892e67f6f2badb8926
       '@firebase/database': 0.6.11_@firebase+app-types@0.6.1
-      '@firebase/firestore': 1.16.5_f74fbce5100d3991230a70bf33a7bf32
+      '@firebase/firestore': 1.16.6_f74fbce5100d3991230a70bf33a7bf32
       '@firebase/functions': 0.4.50_f74fbce5100d3991230a70bf33a7bf32
       '@firebase/installations': 0.4.16_f74fbce5100d3991230a70bf33a7bf32
       '@firebase/messaging': 0.7.0_f74fbce5100d3991230a70bf33a7bf32
@@ -5982,7 +5982,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-gS0nFagMfDLEucgcMD/tCfpLH+crnTurpyMsh6JEvith7GA8cRA4S3T3300xPL6dSZliI7EiGsCNBXBil6sAUw==
+      integrity: sha512-kZUbxN4amrKZc2pkmAMqQtWNkb608rCZLL61NC0X/UXI1euWhIFXdCGQNBlEdOlUwDLBGwNpyTBhQtL4UYHEZw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -12347,10 +12347,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
-  /sweetalert2/9.17.1:
+  /sweetalert2/10.0.1:
     dev: false
     resolution:
-      integrity: sha512-D/VE2lT/bKd64/RBglLUtQ+3nsftzjzIiP2iqN6zPzPwf+2djIY+4k8Bg430zxRUn4DkZzyIuU58q3n0J43lvw==
+      integrity: sha512-U7haMP/twW4atNBCBnKSt7r+TdBA/WOdjLtFyyRNPecHjk/wqp12AiPwGoYpJmdMoT/g2DLwvUSyNcPRHQq7SQ==
   /symbol-tree/3.2.4:
     dev: true
     resolution:
@@ -13454,7 +13454,7 @@ specifiers:
   chalk: ^4.1.0
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^7.19.0
+  firebase: ^7.19.1
   lazysizes: ^5.2.2
   moment-mini: ^2.24.0
   node-sass: ^4.14.1
@@ -13471,5 +13471,5 @@ specifiers:
   react-scripts: ^3.4.3
   reactstrap: 8.5.1
   reactstrap-scrollspy: ^0.1.1
-  sweetalert2: ^9.17.1
+  sweetalert2: ^10.0.1
   typescript: 4.0.2

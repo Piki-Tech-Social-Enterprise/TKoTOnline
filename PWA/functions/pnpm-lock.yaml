@@ -18,10 +18,10 @@ devDependencies:
   chalk: 4.1.0
   cross-env: 7.0.2
   env-cmd: 10.1.0
-  eslint: 7.7.0
+  eslint: 7.8.1
   eslint-plugin-promise: 4.2.1
-  firebase-functions-test: 0.2.1_08ae22dd2d13a0012ca9d7bd6820b0d3
-  mocha: 8.1.2
+  firebase-functions-test: 0.2.2_08ae22dd2d13a0012ca9d7bd6820b0d3
+  mocha: 8.1.3
   npm-run-all: 4.1.5
   sinon: 9.0.3
   sinon-chai: 3.5.0_chai@4.2.0+sinon@9.0.3
@@ -45,6 +45,23 @@ packages:
     dev: true
     resolution:
       integrity: sha512-i6rgnR/YgPEQzZZnbTHHuZdlE8qyoBNalD6F+q4vAFlcMEcqmkoG+mPqJYJCo63qPf74+Y1UZsl3l6f7/RIkmA==
+  /@eslint/eslintrc/0.1.3:
+    dependencies:
+      ajv: 6.12.4
+      debug: 4.1.1
+      espree: 7.3.0
+      globals: 12.4.0
+      ignore: 4.0.6
+      import-fresh: 3.2.1
+      js-yaml: 3.14.0
+      lodash: 4.17.20
+      minimatch: 3.0.4
+      strip-json-comments: 3.1.1
+    dev: true
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    resolution:
+      integrity: sha512-4YVwPkANLeNtRjMekzux1ci8hIaH5eGKktGqR0d3LWsKNn5B2X/1Z6Trxy7jQXl9EBGE6Yj02O+t09FMeRllaA==
   /@firebase/app-types/0.6.1:
     dev: false
     resolution:
@@ -1977,9 +1994,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
-  /eslint/7.7.0:
+  /eslint/7.8.1:
     dependencies:
       '@babel/code-frame': 7.10.4
+      '@eslint/eslintrc': 0.1.3
       ajv: 6.12.4
       chalk: 4.1.0
       cross-spawn: 7.0.3
@@ -1989,7 +2007,7 @@ packages:
       eslint-scope: 5.1.0
       eslint-utils: 2.1.0
       eslint-visitor-keys: 1.3.0
-      espree: 7.2.0
+      espree: 7.3.0
       esquery: 1.3.1
       esutils: 2.0.3
       file-entry-cache: 5.0.1
@@ -2020,8 +2038,8 @@ packages:
       node: ^10.12.0 || >=12.0.0
     hasBin: true
     resolution:
-      integrity: sha512-1KUxLzos0ZVsyL81PnRN335nDtQ8/vZUD6uMtWbF+5zDtjKcsklIi78XoE0MVL93QvWTu+E5y44VyyCsOMBrIg==
-  /espree/7.2.0:
+      integrity: sha512-/2rX2pfhyUG0y+A123d0ccXtMm7DV7sH1m3lk9nk2DZ2LReq39FXHueR9xZwshE5MdfSf0xunSaMWRqyIA6M1w==
+  /espree/7.3.0:
     dependencies:
       acorn: 7.4.0
       acorn-jsx: 5.2.0_acorn@7.4.0
@@ -2030,7 +2048,7 @@ packages:
     engines:
       node: ^10.12.0 || >=12.0.0
     resolution:
-      integrity: sha512-H+cQ3+3JYRMEIOl87e7QdHX70ocly5iW4+dttuR8iYSPr/hXKFb+7dBsZ7+u1adC4VrnPlTkv0+OwuPnDop19g==
+      integrity: sha512-dksIWsvKCixn1yrEXO8UosNSxaDoSYpq9reEjZSbHLpT5hpaCAKTLBwq0RHtLrIr+c0ByiYzWT8KTMRzoRCNlw==
   /esprima/4.0.1:
     dev: true
     engines:
@@ -2331,7 +2349,7 @@ packages:
       '@google-cloud/storage': 5.2.0
     resolution:
       integrity: sha512-HkzY9yN/kOe1EQgjheURAQ4pFBerI54TBL0+nj1fwzKnAnGCpcI73Bbwx99Pk3u2x4rj6bDcsZfz9bA8y7DWtQ==
-  /firebase-functions-test/0.2.1_08ae22dd2d13a0012ca9d7bd6820b0d3:
+  /firebase-functions-test/0.2.2_08ae22dd2d13a0012ca9d7bd6820b0d3:
     dependencies:
       '@types/lodash': 4.14.159
       firebase-admin: 9.1.1
@@ -2344,7 +2362,7 @@ packages:
       firebase-admin: '>=6.0.0'
       firebase-functions: '>=2.0.0'
     resolution:
-      integrity: sha512-+ZaNrDoRVy0ar4NGtrYbqVTsnitL3/Ud5yC7ElZUkX3956j+AzPCcrsCfa+5GJnpnVODXkMKpw9AySFJ/12nvA==
+      integrity: sha512-SlHLnpKRn5nMsg4Y0CUTGs/R8NatghJCYZGw3fHzaS/5xDqwWPWuxmdHHc+MSuxrSrUROEwOrDTwrbjmRaSNjw==
   /firebase-functions/3.11.0_firebase-admin@9.1.1:
     dependencies:
       '@types/express': 4.17.3
@@ -3701,7 +3719,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-  /mocha/8.1.2:
+  /mocha/8.1.3:
     dependencies:
       ansi-colors: 4.1.1
       browser-stdout: 1.3.1
@@ -3733,7 +3751,7 @@ packages:
       node: '>= 10.12.0'
     hasBin: true
     resolution:
-      integrity: sha512-I8FRAcuACNMLQn3lS4qeWLxXqLvGf6r2CaLstDpZmMUUSmvW6Cnm1AuHxgbc7ctZVRcfwspCRbDHymPsi3dkJw==
+      integrity: sha512-ZbaYib4hT4PpF4bdSO2DohooKXIn4lDeiYqB+vTmCdr6l2woW0b6H3pf5x4sM5nwQMru9RvjjHYWVGltR50ZBw==
   /moment/2.27.0:
     dev: false
     resolution:
@@ -5467,15 +5485,15 @@ specifiers:
   cors: ^2.8.5
   cross-env: ^7.0.2
   env-cmd: ^10.1.0
-  eslint: ^7.7.0
+  eslint: ^7.8.1
   eslint-plugin-promise: ^4.2.1
   firebase-admin: ^9.1.1
   firebase-functions: ^3.11.0
-  firebase-functions-test: ^0.2.1
+  firebase-functions-test: ^0.2.2
   flatted: ^3.0.4
   fs-extra: ^8.1.0
   googleapis: ^59.0.0
-  mocha: ^8.1.2
+  mocha: ^8.1.3
   moment: ^2.27.0
   nodemailer: ^6.4.11
   npm-run-all: ^4.1.5
