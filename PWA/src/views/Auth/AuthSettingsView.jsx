@@ -56,6 +56,7 @@ const INITIAL_STATE = {
   aboutPageTKoTBackOfficeStructureDescriptionEditorState: EditorState.createEmpty(),
   aboutPageTKoTBackOfficeStructureImageUrl: '',
   aboutPageTKoTBackOfficeStructureImageUrlFile: null,
+  aboutPageExtraDescription: '',
   gmailEmail: '',
   gmailPassword: ''
 };
@@ -104,6 +105,7 @@ const AuthSettingsView = props => {
       aboutPageDescription,
       aboutPageTKoTBackOfficeStructureDescription,
       aboutPageTKoTBackOfficeStructureImageUrlFile,
+      aboutPageExtraDescription,
       gmailEmail,
       gmailPassword
     } = settings;
@@ -165,6 +167,7 @@ const AuthSettingsView = props => {
           aboutPageDescription: aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl,
+          aboutPageExtraDescription: aboutPageExtraDescription,
           gmailEmail: gmailEmail,
           gmailPassword: gmailPassword,
           sid: sid,
@@ -293,6 +296,7 @@ const AuthSettingsView = props => {
           aboutPageDescription,
           aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl,
+          aboutPageExtraDescription,
           gmailEmail,
           gmailPassword,
           sid
@@ -312,6 +316,10 @@ const AuthSettingsView = props => {
             ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageTKoTBackOfficeStructureDescription)))
             : s.aboutPageTKoTBackOfficeStructureDescriptionEditorState,
           aboutPageTKoTBackOfficeStructureImageUrl,
+          aboutPageExtraDescription,
+          aboutPageExtraDescriptionEditorState: aboutPageExtraDescription && aboutPageExtraDescription.startsWith('{') && aboutPageExtraDescription.endsWith('}')
+            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageExtraDescription)))
+            : s.aboutPageExtraDescriptionEditorState,
           gmailEmail,
           gmailPassword,
           sid
@@ -471,6 +479,20 @@ const AuthSettingsView = props => {
                               downloadURLFormatKeyValue={settings.sid || ''}
                               downloadURLFormatFileName={settingFilenameFormat}
                               imageResize="md"
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>About Page Extra Description</Label>
+                            <Editor
+                              wrapperClassName="wrapper-class"
+                              editorClassName="editor-class"
+                              toolbarClassName="toolbar-class"
+                              editorState={settings.aboutPageExtraDescriptionEditorState}
+                              onEditorStateChange={editorState => setSettings(s => ({
+                                ...s,
+                                aboutPageExtraDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                                aboutPageExtraDescriptionEditorState: editorState
+                              }))}
                             />
                           </FormGroup>
                         </TabPane>

@@ -45,6 +45,10 @@ const NewsFeedView = lazy(async () => await import('views/NewsFeedView'));
 const EventsView = lazy(async () => await import('views/EventsView'));
 const EventView = lazy(async () => await import('views/EventView'));
 const IwiChairView = lazy(async () => await import('views/IwiChairView'));
+
+if (process.env.NODE_ENV === 'production') {
+  window['console']['log'] = () => { };
+}
 ReactDOM.render(
   <React.Suspense fallback={<LoadingSpinner
     outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"

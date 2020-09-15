@@ -143,6 +143,9 @@ const AboutUsView = props => {
                     alt="TKoT Back Office Structure"
                     loadingIconSize="lg"
                   />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageExtraDescription)) }}
+                  />
                 </Col>
               </Row>
             </Container>
