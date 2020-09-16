@@ -21,7 +21,7 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
   formatInteger,

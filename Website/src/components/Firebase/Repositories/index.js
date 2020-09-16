@@ -11,6 +11,7 @@ import EventsRepository from './EventsRepository';
 import ProjectsRepository from './ProjectsRepository';
 import IwiMembersRepository from './IwiMembersRepository';
 import EPanuiListRepository from './EPanuiListRepository';
+import ResourcesRepository from './ResourcesRepository';
 
 export default BaseRepository;
 export {
@@ -25,5 +26,6 @@ export {
   EventsRepository,
   ProjectsRepository,
   IwiMembersRepository,
-  EPanuiListRepository
+  EPanuiListRepository,
+  ResourcesRepository
 };

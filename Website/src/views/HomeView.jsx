@@ -30,13 +30,15 @@ const NewsFeedSection = lazy(async () => await import('components/Sections/NewsF
 const IwiMembers = lazy(async () => await import('components/Sections/IwiMembers'));
 const EventsSection = lazy(async () => await import('components/Sections/Events'));
 const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
+const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
 const {
   home,
   iwiMembers,
   about,
   projects,
   events,
-  newsFeed
+  newsFeed,
+  resources
 } = Routes;
 const HomeView = props => {
   const [state, setState] = useState({
@@ -107,6 +109,7 @@ const HomeView = props => {
                 projects.replace('/#', ''),
                 events.replace('/#', ''),
                 newsFeed.replace('/#', ''),
+                resources.replace('/#', ''),
                 'HomeFooter'
               ]}
               homeIndex={1}
@@ -154,6 +157,11 @@ const HomeView = props => {
               {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
               <NewsFeedSection
                 containerClassName="bg-warning1"
+                showLearnMoreButton
+                isHomePage
+              />
+              <ResourcesSection
+                containerClassName="bg-secondary1"
                 showLearnMoreButton
                 isHomePage
               />

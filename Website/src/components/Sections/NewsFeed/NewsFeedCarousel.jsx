@@ -271,7 +271,7 @@ const NewsFeedCarousel = props => {
             : null
         }
         <Container className="my-3" fluid>
-          <Row className="flex-row flex-nowrap cards-row">
+          <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
             {
               cardItems.map((cardItem, index) => {
                 const {

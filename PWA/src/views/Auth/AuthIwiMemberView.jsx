@@ -18,20 +18,14 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  getImageUrl,
+  uploadFileToStorage
 } from 'components/App/Utilities';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw
-} from 'draft-js';
-import {
-  Editor
-} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import DraftEditor from 'components/DraftEditor';
 
 const iwiMembersRef = '/images/iwiMembers';
 const iwiMemberKeyFormat = '{imid}';
@@ -49,8 +43,7 @@ const INITIAL_STATE = {
   iwiMemberImageURLFile: null,
   iwiMemberName: '',
   iwiMemberURL: '',
-  imid: null,
-  editorState: EditorState.createEmpty()
+  imid: null
 };
 const AuthIwiMemberView = props => {
   const isNew = props.match.params.imid === 'New';
@@ -71,6 +64,10 @@ const AuthIwiMemberView = props => {
         ? checked
         : value
     }));
+  };
+  const handleUploadCallback = async file => {
+    const imageUrl = getImageUrl(iwiMemberImageUrlFormat, iwiMemberKeyFormat, props.match.params.imid, iwiMemberFilenameFormat, file.name);
+    return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -118,14 +115,10 @@ const AuthIwiMemberView = props => {
         if (isNew) {
           imid = await firebase.saveDbIwiMember({});
           if (iwiChairImageURLFile && iwiChairImageURLFile.name) {
-            iwiChairImageURL = iwiChairImageUrlFormat
-              .replace(iwiMemberKeyFormat, imid)
-              .replace(iwiMemberFilenameFormat, iwiChairImageURLFile.name);
+            iwiChairImageURL = getImageUrl(iwiMemberImageUrlFormat, iwiMemberKeyFormat, imid, iwiMemberFilenameFormat, iwiChairImageURLFile.name, '');
           }
           if (iwiMemberImageURLFile && iwiMemberImageURLFile.name) {
-            iwiMemberImageURL = iwiMemberImageUrlFormat
-              .replace(iwiMemberKeyFormat, imid)
-              .replace(iwiMemberFilenameFormat, iwiMemberImageURLFile.name);
+            iwiMemberImageURL = getImageUrl(iwiMemberImageUrlFormat, iwiMemberKeyFormat, imid, iwiMemberFilenameFormat, iwiChairImageURLFile.name, '');
           }
         }
         await firebase.saveDbIwiMember({
@@ -261,10 +254,7 @@ const AuthIwiMemberView = props => {
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
-        imid,
-        editorState: iwiChairProfile && iwiChairProfile.startsWith('{') && iwiChairProfile.endsWith('}')
-          ? EditorState.createWithContent(convertFromRaw(JSON.parse(iwiChairProfile)))
-          : im.editorState
+        imid
       }));
       setIsLoading(false);
     };
@@ -306,16 +296,10 @@ const AuthIwiMemberView = props => {
                       </FormGroup>
                       <FormGroup>
                         <Label>Iwi Chair Profile</Label>
-                        <Editor
-                          wrapperClassName="wrapper-class"
-                          editorClassName="editor-class"
-                          toolbarClassName="toolbar-class"
-                          editorState={iwiMember.editorState}
-                          onEditorStateChange={editorState => setIwiMember(im => ({
-                            ...im,
-                            iwiChairProfile: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                            editorState: editorState
-                          }))}
+                        <DraftEditor
+                          content={iwiMember.content}
+                          onChange={handleChange}
+                          uploadCallback={handleUploadCallback}
                         />
                       </FormGroup>
                       <FormGroup>

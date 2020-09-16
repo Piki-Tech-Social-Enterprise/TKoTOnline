@@ -13,7 +13,8 @@ import {
   FacebookLinksRepository,
   EventsRepository,
   ProjectsRepository,
-  IwiMembersRepository
+  IwiMembersRepository,
+  ResourcesRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -37,6 +38,7 @@ class Firebase {
     this.eventsRepository = new EventsRepository(firebaseApp);
     this.projectsRepository = new ProjectsRepository(firebaseApp);
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
+    this.resourcesRepository = new ResourcesRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -138,6 +140,13 @@ class Firebase {
   getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
   saveDbIwiMember = async (iwiMember, saveDbIwiMember_completed) => await this.iwiMembersRepository.saveDbIwiMember(iwiMember, saveDbIwiMember_completed);
   deleteDbIwiMember = async imid => await this.iwiMembersRepository.deleteDbIwiMember(imid);
+
+  getDbResources = async () => await this.resourcesRepository.getDbResources();
+  getDbResourcesAsArray = async includeInactive => await this.resourcesRepository.getDbResourcesAsArray(includeInactive);
+  getDbResource = async rid => await this.resourcesRepository.getDbResources(rid);
+  getDbResourceValue = async rid => await this.resourcesRepository.getDbResourceValue(rid);
+  saveDbResource = async (resource, saveDbResource_completed) => await this.resourcesRepository.saveDbResource(resource, saveDbResource_completed);
+  deleteDbResource = async rid => await this.resourcesRepository.deleteDbResource(rid);
 }
 
 export default Firebase;

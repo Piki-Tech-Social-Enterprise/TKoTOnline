@@ -18,20 +18,14 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  getImageUrl,
+  uploadFileToStorage
 } from 'components/App/Utilities';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw
-} from 'draft-js';
-import {
-  Editor
-} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import DraftEditor from 'components/DraftEditor';
 
 const eventsRef = '/images/events';
 const eventKeyFormat = '{evid}';
@@ -45,8 +39,7 @@ const INITIAL_STATE = {
   header: '',
   imageUrl: '',
   imageUrlFile: null,
-  evid: null,
-  editorState: EditorState.createEmpty()
+  evid: null
 };
 const AuthEventView = props => {
   const isNew = props.match.params.evid === 'New';
@@ -67,6 +60,10 @@ const AuthEventView = props => {
         ? checked
         : value
     }));
+  };
+  const handleUploadCallback = async file => {
+    const imageUrl = getImageUrl(eventImageUrlFormat, eventKeyFormat, props.match.params.evid, eventFilenameFormat, file.name);
+    return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -107,9 +104,7 @@ const AuthEventView = props => {
         if (isNew) {
           evid = await firebase.saveDbEvent({});
           if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = eventImageUrlFormat
-              .replace(eventKeyFormat, evid)
-              .replace(eventFilenameFormat, imageUrlFile.name);
+            imageUrl = getImageUrl(eventImageUrlFormat, eventKeyFormat, evid, eventFilenameFormat, imageUrlFile.name, '');
           }
         }
         await firebase.saveDbEvent({
@@ -233,10 +228,7 @@ const AuthEventView = props => {
         externalUrl,
         header,
         imageUrl,
-        evid,
-        editorState: content && content.startsWith('{') && content.endsWith('}')
-          ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
-          : p.editorState
+        evid
       }));
       setIsLoading(false);
     };
@@ -274,16 +266,10 @@ const AuthEventView = props => {
                       </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>
-                        <Editor
-                          wrapperClassName="wrapper-class"
-                          editorClassName="editor-class"
-                          toolbarClassName="toolbar-class"
-                          editorState={event.editorState}
-                          onEditorStateChange={editorState => setEvent(p => ({
-                            ...p,
-                            content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                            editorState: editorState
-                          }))}
+                        <DraftEditor
+                          content={event.content}
+                          onChange={handleChange}
+                          uploadCallback={handleUploadCallback}
                         />
                       </FormGroup>
                       <FormGroup>

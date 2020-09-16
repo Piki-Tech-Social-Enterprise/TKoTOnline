@@ -18,20 +18,14 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  getImageUrl,
+  uploadFileToStorage
 } from 'components/App/Utilities';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw
-} from 'draft-js';
-import {
-  Editor
-} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import DraftEditor from 'components/DraftEditor';
 
 const projectsRef = '/images/projects';
 const projectKeyFormat = '{pid}';
@@ -44,8 +38,7 @@ const INITIAL_STATE = {
   header: '',
   imageUrl: '',
   imageUrlFile: null,
-  pid: null,
-  editorState: EditorState.createEmpty()
+  pid: null
 };
 const AuthProjectView = props => {
   const isNew = props.match.params.pid === 'New';
@@ -66,6 +59,10 @@ const AuthProjectView = props => {
         ? checked
         : value
     }));
+  };
+  const handleUploadCallback = async file => {
+    const imageUrl = getImageUrl(projectImageUrlFormat, projectKeyFormat, props.match.params.pid, projectFilenameFormat, file.name);
+    return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -102,9 +99,7 @@ const AuthProjectView = props => {
         if (isNew) {
           pid = await firebase.saveDbProject({});
           if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = projectImageUrlFormat
-              .replace(projectKeyFormat, pid)
-              .replace(projectFilenameFormat, imageUrlFile.name);
+            imageUrl = getImageUrl(projectImageUrlFormat, projectKeyFormat, pid, projectFilenameFormat, imageUrlFile.name, '');
           }
         }
         await firebase.saveDbProject({
@@ -225,10 +220,7 @@ const AuthProjectView = props => {
         content,
         header,
         imageUrl,
-        pid,
-        editorState: content && content.startsWith('{') && content.endsWith('}')
-          ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
-          : p.editorState
+        pid
       }));
       setIsLoading(false);
     };
@@ -262,16 +254,10 @@ const AuthProjectView = props => {
                     <CardBody>
                       <FormGroup>
                         <Label>Content</Label>
-                        <Editor
-                          wrapperClassName="wrapper-class"
-                          editorClassName="editor-class"
-                          toolbarClassName="toolbar-class"
-                          editorState={project.editorState}
-                          onEditorStateChange={editorState => setProject(p => ({
-                            ...p,
-                            content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                            editorState: editorState
-                          }))}
+                        <DraftEditor
+                          content={project.content}
+                          onChange={handleChange}
+                          uploadCallback={handleUploadCallback}
                         />
                       </FormGroup>
                       <FormGroup>

@@ -260,6 +260,24 @@ const renderCaret = (direction, fieldName) => {
     <i className={`react-bootstrap-table-caret ${fieldName} fas ${iconName}`} />
   );
 };
+const getImageUrl = (urlFormat, keyFormat, key, filenameFormat, fileName, fileNamePrefix = 'embedded_') => {
+  const imageUrl = urlFormat
+    .replace(keyFormat, key)
+    .replace(filenameFormat, `${fileNamePrefix}${fileName}`);
+  return imageUrl;
+};
+const uploadFileToStorage = async (file, firebase, imageUrl) => {
+  await firebase.saveStorageFile(imageUrl, file);
+  const imageDownloadUrl = await firebase.getStorageFileDownloadURL(imageUrl);
+  const resolveValue = {
+    data: {
+      link: imageDownloadUrl
+    }
+  };
+  return new Promise(resolve => {
+    resolve(resolveValue);
+  });
+};
 
 export default shallowCompare;
 export {
@@ -295,5 +313,7 @@ export {
   toDate,
   tryToConvertValue,
   sortArray,
-  renderCaret
+  renderCaret,
+  getImageUrl,
+  uploadFileToStorage
 };

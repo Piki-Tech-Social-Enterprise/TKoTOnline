@@ -87,7 +87,7 @@ const AuthIwiMembersView = props => {
                         onRowClick: handleIwiMembersRowClick
                       }}>
                       <TableHeaderColumn dataField="iwiMemberImageURL" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.iwiMemberName} imageURL={cell} />
+                        <FirebaseImage loadingIconSize="sm" alt={row.iwiMemberName} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="iwiMemberName" dataSort caretRender={renderCaret}>Iwi Member Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="iwiMemberURL" dataSort caretRender={renderCaret}>Iwi Member URL</TableHeaderColumn>

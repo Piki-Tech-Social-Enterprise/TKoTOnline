@@ -203,6 +203,30 @@ const authRoutes = [
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
   },
+  {
+    layout: '/auth',
+    path: '/Resources',
+    name: 'Resources',
+    component: lazy(async () => await import('views/Auth/AuthResourcesView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'ui-2_favourite-28',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/Resources/:rid',
+    name: 'Resource',
+    component: lazy(async () => await import('views/Auth/AuthResourceView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
   // {
   //   layout: '/auth',
   //   path: '/Volunteers',

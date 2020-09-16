@@ -11,7 +11,8 @@ import {
   EventsRepository,
   ProjectsRepository,
   IwiMembersRepository,
-  EPanuiListRepository
+  EPanuiListRepository,
+  ResourcesRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -33,6 +34,7 @@ class Firebase {
     this.projectsRepository = new ProjectsRepository(firebaseApp);
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
+    this.resourcesRepository = new ResourcesRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -78,6 +80,8 @@ class Firebase {
   getDbEPanui = async () => await this.ePanuiListRepository.getDbEPanui();
   getDbEPanuiListAsArray = async includeInactive => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive);
   getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
+  getDbResourcesAsArray = async includeInactive => await this.resourcesRepository.getDbResourcesAsArray(includeInactive);
+  getDbResourceValue = async rid => await this.resourcesRepository.getDbResourceValue(rid);
 }
 
 export default Firebase;

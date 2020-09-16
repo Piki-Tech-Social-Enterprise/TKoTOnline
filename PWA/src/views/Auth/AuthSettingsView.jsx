@@ -22,20 +22,14 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw
-} from 'draft-js';
-import {
-  Editor
-} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import DraftEditor from 'components/DraftEditor';
 import {
   formatBytes,
-  formatInteger
+  formatInteger,
+  getImageUrl,
+  uploadFileToStorage
 } from 'components/App/Utilities';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 
 const settingsRef = '/images/settings';
 const settingKeyFormat = '{sid}';
@@ -52,8 +46,6 @@ const INITIAL_STATE = {
   aboutPageDescription: '',
   aboutPageTKoTBackOfficeStructureDescription: '',
   sid: null,
-  aboutPageDescriptionEditorState: EditorState.createEmpty(),
-  aboutPageTKoTBackOfficeStructureDescriptionEditorState: EditorState.createEmpty(),
   aboutPageTKoTBackOfficeStructureImageUrl: '',
   aboutPageTKoTBackOfficeStructureImageUrlFile: null,
   aboutPageExtraDescription: '',
@@ -84,6 +76,11 @@ const AuthSettingsView = props => {
         ? checked
         : value
     }));
+  };
+  const handleUploadCallback = async file => {
+    const dbSettings = await props.firebase.getDbSettingsValues(true);
+    const imageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, dbSettings.sid, settingFilenameFormat, file.name);
+    return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -143,19 +140,13 @@ const AuthSettingsView = props => {
         displayMessage = 'When GMail Email is defined, GMail Password field is required.';
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
-          homePageHeaderImageUrl = settingHomePageHeaderImageUrlFormat
-            .replace(settingKeyFormat, sid)
-            .replace(settingFilenameFormat, homePageHeaderImageUrlFile.name);
+          homePageHeaderImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, homePageHeaderImageUrlFile.name, '');
         }
         if (homePageAboutImageUrlFile && homePageAboutImageUrlFile.name) {
-          homePageAboutImageUrl = settingHomePageHeaderImageUrlFormat
-            .replace(settingKeyFormat, sid)
-            .replace(settingFilenameFormat, homePageAboutImageUrlFile.name);
+          homePageAboutImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, homePageAboutImageUrlFile.name, '');
         }
         if (aboutPageTKoTBackOfficeStructureImageUrlFile && aboutPageTKoTBackOfficeStructureImageUrlFile.name) {
-          aboutPageTKoTBackOfficeStructureImageUrl = settingHomePageHeaderImageUrlFormat
-            .replace(settingKeyFormat, sid)
-            .replace(settingFilenameFormat, aboutPageTKoTBackOfficeStructureImageUrlFile.name);
+          aboutPageTKoTBackOfficeStructureImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, aboutPageTKoTBackOfficeStructureImageUrlFile.name, '');
         }
         await firebase.saveDbSettings({
           created: now.toString(),
@@ -308,18 +299,9 @@ const AuthSettingsView = props => {
           homePageAboutDescription,
           homePageVideoSourceUrl,
           aboutPageDescription,
-          aboutPageDescriptionEditorState: aboutPageDescription && aboutPageDescription.startsWith('{') && aboutPageDescription.endsWith('}')
-            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageDescription)))
-            : s.aboutPageDescriptionEditorState,
           aboutPageTKoTBackOfficeStructureDescription,
-          aboutPageTKoTBackOfficeStructureDescriptionEditorState: aboutPageTKoTBackOfficeStructureDescription && aboutPageTKoTBackOfficeStructureDescription.startsWith('{') && aboutPageTKoTBackOfficeStructureDescription.endsWith('}')
-            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageTKoTBackOfficeStructureDescription)))
-            : s.aboutPageTKoTBackOfficeStructureDescriptionEditorState,
           aboutPageTKoTBackOfficeStructureImageUrl,
           aboutPageExtraDescription,
-          aboutPageExtraDescriptionEditorState: aboutPageExtraDescription && aboutPageExtraDescription.startsWith('{') && aboutPageExtraDescription.endsWith('}')
-            ? EditorState.createWithContent(convertFromRaw(JSON.parse(aboutPageExtraDescription)))
-            : s.aboutPageExtraDescriptionEditorState,
           gmailEmail,
           gmailPassword,
           sid
@@ -435,30 +417,20 @@ const AuthSettingsView = props => {
                           </FormGroup>
                           <FormGroup>
                             <Label>About Page Description</Label>
-                            <Editor
-                              wrapperClassName="wrapper-class"
-                              editorClassName="editor-class"
-                              toolbarClassName="toolbar-class"
-                              editorState={settings.aboutPageDescriptionEditorState}
-                              onEditorStateChange={editorState => setSettings(s => ({
-                                ...s,
-                                aboutPageDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                                aboutPageDescriptionEditorState: editorState
-                              }))}
+                            <DraftEditor
+                              content={settings.aboutPageDescription}
+                              onChange={handleChange}
+                              uploadCallback={handleUploadCallback}
+                              contentFieldName="aboutPageDescription"
                             />
                           </FormGroup>
                           <FormGroup>
                             <Label>About Page TKoT Back Office Structure Description</Label>
-                            <Editor
-                              wrapperClassName="wrapper-class"
-                              editorClassName="editor-class"
-                              toolbarClassName="toolbar-class"
-                              editorState={settings.aboutPageTKoTBackOfficeStructureDescriptionEditorState}
-                              onEditorStateChange={editorState => setSettings(s => ({
-                                ...s,
-                                aboutPageTKoTBackOfficeStructureDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                                aboutPageTKoTBackOfficeStructureDescriptionEditorState: editorState
-                              }))}
+                            <DraftEditor
+                              content={settings.aboutPageTKoTBackOfficeStructureDescription}
+                              onChange={handleChange}
+                              uploadCallback={handleUploadCallback}
+                              contentFieldName="aboutPageTKoTBackOfficeStructureDescription"
                             />
                           </FormGroup>
                           <FormGroup>
@@ -483,16 +455,11 @@ const AuthSettingsView = props => {
                           </FormGroup>
                           <FormGroup>
                             <Label>About Page Extra Description</Label>
-                            <Editor
-                              wrapperClassName="wrapper-class"
-                              editorClassName="editor-class"
-                              toolbarClassName="toolbar-class"
-                              editorState={settings.aboutPageExtraDescriptionEditorState}
-                              onEditorStateChange={editorState => setSettings(s => ({
-                                ...s,
-                                aboutPageExtraDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                                aboutPageExtraDescriptionEditorState: editorState
-                              }))}
+                            <DraftEditor
+                              content={settings.aboutPageExtraDescription}
+                              onChange={handleChange}
+                              uploadCallback={handleUploadCallback}
+                              contentFieldName="aboutPageExtraDescription"
                             />
                           </FormGroup>
                         </TabPane>

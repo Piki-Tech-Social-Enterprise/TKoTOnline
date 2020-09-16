@@ -139,6 +139,8 @@ const getNavItems = isHomePage => {
     eventsPage,
     projects,
     projectsPage,
+    resources,
+    resourcesPage,
     contactUs
   } = Routes;
   const navItems = [{
@@ -164,7 +166,7 @@ const getNavItems = isHomePage => {
     route: isHomePage ? projects : projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
-    group: 'right'
+    group: 'left'
   }, {
     id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? events : eventsPage,
@@ -176,6 +178,12 @@ const getNavItems = isHomePage => {
     route: isHomePage ? newsFeed : newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
+    group: 'right'
+  }, {
+    id: `resourcesNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? resources : resourcesPage,
+    name: 'Resources',
+    tooltip: 'Rauemi Ipurangi',
     group: 'right'
   }, {
     id: `contactUsNavItem${(!isHomePage && '_alt') || ''}`,

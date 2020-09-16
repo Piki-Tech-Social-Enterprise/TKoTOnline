@@ -18,22 +18,16 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import swal from 'sweetalert2';
-import FirebaseInput from 'components/FirebaseInput';
+import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
   formatInteger,
   DATE_MOMENT_FORMAT,
-  TAG_SEPARATOR
+  TAG_SEPARATOR,
+  getImageUrl,
+  uploadFileToStorage
 } from 'components/App/Utilities';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw
-} from 'draft-js';
-import {
-  Editor
-} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import DraftEditor from 'components/DraftEditor';
 import InputDateTime from 'components/App/InputDateTime';
 import TagsInput from 'react-tagsinput-2';
 import 'react-tagsinput-2/react-tagsinput.css';
@@ -55,8 +49,7 @@ const INITIAL_STATE = {
   imageUrlFile: null,
   name: '',
   url: '',
-  eid: null,
-  editorState: EditorState.createEmpty()
+  eid: null
 };
 const AuthEPanuiView = props => {
   const isNew = props.match.params.eid === 'New';
@@ -77,6 +70,10 @@ const AuthEPanuiView = props => {
         ? checked
         : value
     }));
+  };
+  const handleUploadCallback = async file => {
+    const imageUrl = getImageUrl(ePanuiImageUrlFormat, ePanuiKeyFormat, props.match.params.eid, ePanuiFilenameFormat, file.name);
+    return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -132,9 +129,7 @@ const AuthEPanuiView = props => {
             updatedBy: uid
           });
           if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = ePanuiImageUrlFormat
-              .replace(ePanuiKeyFormat, eid)
-              .replace(ePanuiFilenameFormat, imageUrlFile.name);
+            imageUrl = getImageUrl(ePanuiImageUrlFormat, ePanuiKeyFormat, eid, ePanuiFilenameFormat, imageUrlFile.name, '');
           }
         }
         await firebase.saveDbEPanui({
@@ -261,10 +256,7 @@ const AuthEPanuiView = props => {
         imageUrl,
         name,
         url,
-        eid,
-        editorState: content && content.startsWith('{') && content.endsWith('}')
-          ? EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
-          : ep.editorState
+        eid
       }));
       setIsLoading(false);
     };
@@ -352,22 +344,16 @@ const AuthEPanuiView = props => {
                             downloadURLFileInputOnChange={handleImageUrlFileChange}
                             downloadURLFormat={ePanuiImageUrlFormat}
                             downloadURLFormatKeyName={ePanuiKeyFormat}
-                            downloadURLFormatKeyValue={props.match.params.epid}
+                            downloadURLFormatKeyValue={props.match.params.eid}
                             downloadURLFormatFileName={ePanuiFilenameFormat}
                           />
                         </FormGroup>
                         <FormGroup>
                           <Label>Content</Label>
-                          <Editor
-                            wrapperClassName="wrapper-class"
-                            editorClassName="editor-class"
-                            toolbarClassName="toolbar-class"
-                            editorState={ePanui.editorState}
-                            onEditorStateChange={editorState => setEPanui(ep => ({
-                              ...ep,
-                              content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-                              editorState: editorState
-                            }))}
+                          <DraftEditor
+                            content={ePanui.content}
+                            onChange={handleChange}
+                            uploadCallback={handleUploadCallback}
                           />
                         </FormGroup>
                         <FormGroup>

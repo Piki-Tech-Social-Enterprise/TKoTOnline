@@ -18,7 +18,9 @@ const Routes = {
   events: '/#Wananga',
   eventsPage: '/Wananga',
   projects: '/#Projects',
-  projectsPage: '/Projects'
+  projectsPage: '/Projects',
+  resources: '/#Resources',
+  resourcesPage: '/Resources'
 };
 
 export default Routes;

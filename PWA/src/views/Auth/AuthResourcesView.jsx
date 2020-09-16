@@ -14,7 +14,6 @@ import {
   TableHeaderColumn,
   InsertButton
 } from 'react-bootstrap-table';
-import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
@@ -24,45 +23,45 @@ import {
   renderCaret
 } from 'components/App/Utilities';
 
-const AuthNewsFeedsView = props => {
+const AuthResourcesView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [newsFeedsAsArray, setNewsFeedsAsArray] = useState([]);
+  const [resourcesAsArray, setResourcesAsArray] = useState([]);
   useEffect(() => {
-    const retrieveNewsFeeds = async () => {
-      const dbNewsFeedsAsArray = await props.firebase.getDbNewsFeedsAsArray(true);
-      sortArray(dbNewsFeedsAsArray, 'date', 'asc');
-      setNewsFeedsAsArray(dbNewsFeedsAsArray);
+    const retrieveResources = async () => {
+      const dbResourcesAsArray = await props.firebase.getDbResourcesAsArray(true);
+      sortArray(dbResourcesAsArray, 'header', 'asc');
+      setResourcesAsArray(dbResourcesAsArray);
       setIsLoading(false);
     };
     if (isLoading) {
-      retrieveNewsFeeds();
+      retrieveResources();
     }
     return () => {
       if (isLoading) {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setNewsFeedsAsArray]);
+  }, [props, isLoading, setIsLoading, setResourcesAsArray]);
   const handleSortChange = async (sortName, sortOrder) => {
-    sortArray(newsFeedsAsArray, sortName, sortOrder);
+    sortArray(resourcesAsArray, sortName, sortOrder);
   };
   const createCustomInsertButton = onClick => (
-    <InsertButton btnText="Add New" onClick={() => handleAddNewsFeedClick(onClick)} />
+    <InsertButton btnText="Add New" onClick={() => handleAddResourceClick(onClick)} />
   );
-  const handleAddNewsFeedClick = async onClick => {
-    props.history.push(`/auth/NewsFeeds/New`);
+  const handleAddResourceClick = async onClick => {
+    props.history.push(`/auth/Resources/New`);
     onClick();
   };
-  const handleNewsFeedRowClick = async row => {
-    props.history.push(`/auth/NewsFeeds/${row.nfid}`);
+  const handleResourceRowClick = async row => {
+    props.history.push(`/auth/Resources/${row.rid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbNewsFeed = newsFeedsAsArray.findIndex(dbNewsFeed => dbNewsFeed.nfid === updatedChildState.dbId);
-    if (indexOfDbNewsFeed > -1) {
+    const indexOfDbResource = resourcesAsArray.findIndex(dbResource => dbResource.rid === updatedChildState.dbId);
+    if (indexOfDbResource > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        newsFeedsAsArray[indexOfDbNewsFeed].active = updatedChildState.dbActive;
+        resourcesAsArray[indexOfDbResource].active = updatedChildState.dbActive;
       }
-      setNewsFeedsAsArray(newsFeedsAsArray);
+      setResourcesAsArray(resourcesAsArray);
     }
   }
   return (
@@ -76,44 +75,34 @@ const AuthNewsFeedsView = props => {
                 {
                   isLoading
                     ? <LoadingOverlayModal color="text-dark" />
-                    : <BootstrapTable data={newsFeedsAsArray} version="4" bordered={false} condensed hover
+                    : <BootstrapTable data={resourcesAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
-                      insertRow exportCSV csvFileName="news-feeds-table-export.csv"
+                      insertRow exportCSV csvFileName="resources-table-export.csv"
                       search pagination options={{
                         hideSizePerPage: true,
-                        noDataText: 'No News Feeds found.',
+                        noDataText: 'No Resources found.',
                         onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
-                        onRowClick: handleNewsFeedRowClick
+                        onRowClick: handleResourceRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
-                      )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="date" dataSort caretRender={renderCaret} width="100px">Date</TableHeaderColumn>
-                      {/* <TableHeaderColumn dataField="category" dataSort caretRender={renderCaret}>Category</TableHeaderColumn> */}
                       <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell, row) => {
-                        const {
-                          externalUrl
-                        } = row;
-                        const contentAsText = externalUrl
-                          ? externalUrl
-                          : draftToText(cell, '');
+                      }} dataFormat={(cell) => {
+                        const contentAsText = draftToText(cell, '');
                         return (
                           <span>{contentAsText}</span>
                         );
                       }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
-                          dbObjectName="News Feed"
-                          dbId={row.nfid}
-                          dbIdName="nfid"
+                          dbObjectName="Resource"
+                          dbId={row.rid}
+                          dbIdName="rid"
                           dbActive={cell}
                           authUserUid={props.authUser.uid}
-                          onSaveDbObject={props.firebase.saveDbNewsFeed}
+                          onSaveDbObject={props.firebase.saveDbResource}
                           onChildUpdate={handleChildUpdate}
                         />
                       )}>Status</TableHeaderColumn>
@@ -130,4 +119,4 @@ const AuthNewsFeedsView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthNewsFeedsView);
+export default withAuthorization(condition)(AuthResourcesView);

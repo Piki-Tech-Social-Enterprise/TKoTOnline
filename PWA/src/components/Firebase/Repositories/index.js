@@ -13,6 +13,7 @@ import FacebookLinksRepository from './FacebookLinksRepository';
 import EventsRepository from './EventsRepository';
 import ProjectsRepository from './ProjectsRepository';
 import IwiMembersRepository from './IwiMembersRepository';
+import ResourcesRepository from './ResourcesRepository';
 
 export default BaseRepository;
 export {
@@ -29,5 +30,6 @@ export {
   FacebookLinksRepository,
   EventsRepository,
   ProjectsRepository,
-  IwiMembersRepository
+  IwiMembersRepository,
+  ResourcesRepository
 };

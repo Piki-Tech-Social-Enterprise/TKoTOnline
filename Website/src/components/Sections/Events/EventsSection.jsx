@@ -61,7 +61,7 @@ const EventsSection = props => {
           <Col className="mx-auto text-center my-3">
             <h3 className={`text-uppercase ${titleClassName || 'text-light'}`}>Te Tai Tokerau Events</h3>
             <Container className="my-3" fluid>
-              <Row className="flex-row flex-nowrap cards-row">
+              <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
                 {
                   isLoading
                     ? <LoadingSpinner />

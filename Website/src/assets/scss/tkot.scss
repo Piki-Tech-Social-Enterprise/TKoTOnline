@@ -436,7 +436,8 @@ $tkot-home-footer-x-padding: 1rem;
 
 .event-card,
 .news-feed-card,
-.iwi-chair-card {
+.iwi-chair-card,
+.resource-card {
   border: none !important;
   border-radius: 0.25rem !important;
 }
@@ -524,4 +525,8 @@ $tkot-home-footer-x-padding: 1rem;
   .carousel-control-prev-icon:hover:after {
     color: $tkot-bg-color-white;
   }
+}
+
+.clickable {
+  cursor: pointer;
 }

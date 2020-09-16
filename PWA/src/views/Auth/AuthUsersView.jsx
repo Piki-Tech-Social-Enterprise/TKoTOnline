@@ -103,7 +103,7 @@ const AuthUsersView = props => {
                         onRowClick: handleUserRowClick
                       }}>
                       <TableHeaderColumn dataField="photoURL" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage imageResize="sm" loadingIconSize="sm" alt={row.displayName} imageURL={cell} />
+                        <FirebaseImage loadingIconSize="sm" alt={row.displayName} imageURL={cell} />
                       )}>Photo</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="email" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
                       <TableHeaderColumn dataField="displayName" dataSort caretRender={renderCaret}>Display Name</TableHeaderColumn>
