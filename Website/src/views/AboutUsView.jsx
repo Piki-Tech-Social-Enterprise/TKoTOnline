@@ -65,23 +65,12 @@ const AboutUsView = props => {
         settings: dbSettings
       }));
     };
-    // const handleIFrameBlur = () => {
-    //   if (
-    //     document.activeElement &&
-    //     iframeRef.current &&
-    //     iframeRef.current === document.activeElement
-    //   ) {
-    //     sendEvent('About Us page', 'Clicked TKoT video');
-    //   }
-    // };
     defaultPageSetup(true);
     if (isLoading) {
       retrieveSettingValues();
-      // window.addEventListener('blur', handleIFrameBlur);
     }
     return () => {
       if (!isLoading) {
-        // window.removeEventListener('blur', handleIFrameBlur);
         defaultPageSetup();
       }
     };

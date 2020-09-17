@@ -80,7 +80,15 @@ const DraftEditor = props => {
               toolbar={{
                 image: {
                   previewImage: true,
-                  uploadCallback: uploadCallback
+                  uploadCallback: uploadCallback,
+                  alt: {
+                    present: true,
+                    mandatory: true
+                  },
+                  defaultSize: {
+                    height: '100%',
+                    width: '100%',
+                  }
                 }
               }}
             />
