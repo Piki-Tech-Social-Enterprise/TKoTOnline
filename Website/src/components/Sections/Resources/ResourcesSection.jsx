@@ -88,7 +88,7 @@ const ResourcesSection = props => {
                                   e.target.closest('div.resource-content').classList.toggle('block-with-text');
                                 }}
                               />
-                              <div className="text-center">
+                              <div className="text-center mt-3">
                                 <Button
                                   download={dbResource.resourceUrl.split('/').pop()}
                                   href={dbResource.resourceDownloadUrl}

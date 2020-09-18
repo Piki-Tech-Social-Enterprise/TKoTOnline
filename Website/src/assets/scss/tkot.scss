@@ -530,3 +530,12 @@ $tkot-home-footer-x-padding: 1rem;
 .clickable {
   cursor: pointer;
 }
+
+.videoHeader {
+  width: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+  & video {
+    width: 100%;
+  }
+}
