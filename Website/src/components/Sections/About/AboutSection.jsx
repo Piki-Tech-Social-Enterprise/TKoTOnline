@@ -64,7 +64,7 @@ const AboutSection = props => {
                 width: 419
               }} /> */}
               <div className="videoHeader">
-                <video playsInline autoPlay loop>
+                <video playsInline autoPlay loop muted>
                   <source
                     type="video/mp4"
                     src={tkotVideo}
