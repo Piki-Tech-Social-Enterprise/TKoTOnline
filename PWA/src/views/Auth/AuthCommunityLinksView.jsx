@@ -18,6 +18,7 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 import {
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -81,13 +82,12 @@ const AuthCommunityLinksView = props => {
                       search pagination options={{
                         hideSizePerPage: true,
                         noDataText: 'No Community Links found.',
-                        onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleCommunityLinksRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="linkName" dataSort caretRender={renderCaret}>Link Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="link" dataSort caretRender={renderCaret}>Link</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="linkName" dataSort sortFunc={handleSort} caretRender={renderCaret}>Link Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="link" dataSort sortFunc={handleSort} caretRender={renderCaret}>Link</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Community Link"
                           dbId={row.clid}

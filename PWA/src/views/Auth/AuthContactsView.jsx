@@ -19,6 +19,7 @@ import ContactStatusBadge from 'components/App/ContactStatusBadge';
 import moment from 'moment';
 import {
   DATE_TIME_MOMENT_FORMAT,
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -74,15 +75,15 @@ const AuthContactsView = props => {
                         noDataText: 'No Contacts found.',
                         onSortChange: handleSortChange
                       }}>
-                      <TableHeaderColumn dataField="created" width="10%" dataSort caretRender={renderCaret} dataFormat={cell => (
+                      <TableHeaderColumn dataField="created" width="10%" dataSort sortFunc={handleSort} caretRender={renderCaret} dataFormat={cell => (
                         moment(cell).format(DATE_TIME_MOMENT_FORMAT)
                       )}>Created</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="email" width="20%" dataSort caretRender={renderCaret}>Email</TableHeaderColumn>
-                      <TableHeaderColumn dataField="firstName" width="15%" dataSort caretRender={renderCaret}>First Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="lastName" width="15%" dataSort caretRender={renderCaret}>Last Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="message" width="30%" dataSort caretRender={renderCaret} hidden={false} export>Message</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="email" width="20%" dataSort sortFunc={handleSort} caretRender={renderCaret}>Email</TableHeaderColumn>
+                      <TableHeaderColumn dataField="firstName" width="15%" dataSort sortFunc={handleSort} caretRender={renderCaret}>First Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="lastName" width="15%" dataSort sortFunc={handleSort} caretRender={renderCaret}>Last Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="message" width="30%" dataSort sortFunc={handleSort} caretRender={renderCaret} hidden={false} export>Message</TableHeaderColumn>
                       <TableHeaderColumn dataField="subscribed" hidden export>Subscribed</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" width="10%" dataSort caretRender={renderCaret} export={false} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" width="10%" dataSort sortFunc={handleSort} caretRender={renderCaret} export={false} dataFormat={(cell, row) => (
                         <ContactStatusBadge
                           dbObjectName="Contact"
                           dbId={row.cid}

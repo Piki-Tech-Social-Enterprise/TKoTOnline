@@ -187,7 +187,12 @@ const isJson = value => {
   );
 };
 const stripHtml = html => html.replace(/(<([^>]+)>)/ig, '');
-const draftToText = (draftRaw, defaultValue = undefined) => {
+const getFirstCharacters = (value, length, excludeEllipse = false) => {
+  return value && value.length > length
+    ? `${value.substring(0, length - (excludeEllipse ? 0 : 3))}${!excludeEllipse && '...'}`
+    : value;
+};
+const draftToText = (draftRaw, defaultValue = undefined, maxLength = undefined) => {
   if (!isJson(draftRaw)) {
     return defaultValue !== undefined
       ? defaultValue
@@ -196,7 +201,9 @@ const draftToText = (draftRaw, defaultValue = undefined) => {
   const draftAsJson = JSON.parse(draftRaw);
   const draftAsHtml = draftToHtml(draftAsJson);
   const draftAsText = stripHtml(draftAsHtml);
-  return draftAsText;
+  return isNumber(maxLength)
+    ? getFirstCharacters(draftAsText, maxLength, false)
+    : draftAsText;
 };
 const isNumber = value => value && !isNaN(value);
 const isEmptyString = value => value === '';
@@ -224,47 +231,45 @@ const tryToConvertValue = value => {
     convertedValue = value;
   }
   convertedValueType = typeof convertedValue;
-  // console.log(`${JSON.stringify({ value, convertedValue, convertedValueType })}`);
   return {
     convertedValue,
     convertedValueType
   };
 };
+const handleSort = (a, b, sortOrder = 'asc', sortName = undefined) => {
+  const {
+    convertedValue: aValue,
+    convertedValueType: aValueType
+  } = tryToConvertValue(sortName
+    ? a[sortName]
+    : a);
+  const {
+    convertedValue: bValue,
+    convertedValueType: bValueType
+  } = tryToConvertValue(sortName
+    ? b[sortName]
+    : b);
+  const result = sortOrder === 'asc'
+    ? aValueType === 'number' && bValueType === 'number'
+      ? bValue - aValue
+      : aValue > bValue
+        ? 1
+        : aValue < bValue
+          ? -1
+          : 0
+    : aValueType === 'number' && bValueType === 'number'
+      ? aValue - bValue
+      : bValue > aValue
+        ? 1
+        : bValue < aValue
+          ? -1
+          : 0;
+  console.log(`${JSON.stringify({ sortName, sortOrder, aValue, aValueType, bValue, bValueType, result })}`);
+  return result;
+};
 const sortArray = (array, sortName, sortOrder) => {
   console.log('array-before: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
-  array.sort((a, b) => {
-    const {
-      convertedValue: aValue,
-      convertedValueType: aValueType
-    } = tryToConvertValue(sortName
-      ? a[sortName]
-      : a);
-    const {
-      convertedValue: bValue,
-      convertedValueType: bValueType
-    } = tryToConvertValue(sortName
-      ? b[sortName]
-      : b);
-    const result = sortOrder === 'asc'
-      ? aValueType === 'number' && bValueType === 'number'
-        ? bValue - aValue
-        : aValue > bValue
-          ? 1
-          : aValue < bValue
-            ? -1
-            : 0
-      : aValueType === 'number' && bValueType === 'number'
-        ? aValue - bValue
-        : bValue > aValue
-          ? 1
-          : bValue < aValue
-            ? -1
-            : 0;
-    // console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
-    console.log(`${JSON.stringify({ sortName, sortOrder, aValue, aValueType, bValue, bValueType, result })}`);
-    // sortName: date, sortOrder: desc, aValue: Tue Apr 07 2020, bValue: Mon Apr 06 2020, result: -1
-    return result;
-  });
+  array.sort((a, b) => handleSort(a, b, sortOrder, sortName));
   console.log('array-after: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
 };
 const renderCaret = (direction, fieldName) => {
@@ -335,6 +340,7 @@ export {
   isDate,
   toDate,
   tryToConvertValue,
+  handleSort,
   sortArray,
   renderCaret,
   getImageUrl,

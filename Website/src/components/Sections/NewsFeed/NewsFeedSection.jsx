@@ -61,7 +61,7 @@ const NewsFeedSection = props => {
         ? dbEPanui.filter(dbep => dbep.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbEPanui;
       const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds.concat(filteredDbEPanui);
-      sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'asc');
+      sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'desc');
       setState(s => ({
         ...s,
         isLoading: false,

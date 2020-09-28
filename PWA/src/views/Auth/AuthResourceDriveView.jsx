@@ -23,6 +23,7 @@ import powerpointImage from "../../assets/img/tkot/File Type Images/powerpoint-i
 import txtImage from "../../assets/img/tkot/File Type Images/txt-image.png";
 import videoImage from "../../assets/img/tkot/File Type Images/video-image.jpg";
 import {
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -301,19 +302,19 @@ const AuthResourceDriveView = () => {
                             noDataText: 'No Files found.',
                             onSortChange: handleSortChange
                           }}>
-                          <TableHeaderColumn dataField="photoURL" dataSort caretRender={renderCaret} width="45px" dataFormat={(cell, row) => (
+                          <TableHeaderColumn dataField="photoURL" dataSort sortFunc={handleSort} caretRender={renderCaret} width="45px" dataFormat={(cell, row) => (
                             <FirebaseImage
                               loadingIconSize="sm"
                               alt= 'File Image'
                               imageURL={cell}
                             />
                           )}>{' '}</TableHeaderColumn>
-                          <TableHeaderColumn isKey dataField="googleDriveFileName" dataSort caretRender={renderCaret} width="327px">Name</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileType" dataSort caretRender={renderCaret} width="327px">Type</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileSize" dataSort caretRender={renderCaret} width="327px">Size</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileOwner" dataSort caretRender={renderCaret} width="327px">Owner</TableHeaderColumn>
-                          <TableHeaderColumn dataField="googleDriveFileLastModified" dataSort caretRender={renderCaret} width="327px">Last Modified</TableHeaderColumn>
-                          <TableHeaderColumn hidden dataField="rid" dataSort caretRender={renderCaret}>rid</TableHeaderColumn>
+                          <TableHeaderColumn isKey dataField="googleDriveFileName" dataSort sortFunc={handleSort} caretRender={renderCaret} width="327px">Name</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileType" dataSort sortFunc={handleSort} caretRender={renderCaret} width="327px">Type</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileSize" dataSort sortFunc={handleSort} caretRender={renderCaret} width="327px">Size</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileOwner" dataSort sortFunc={handleSort} caretRender={renderCaret} width="327px">Owner</TableHeaderColumn>
+                          <TableHeaderColumn dataField="googleDriveFileLastModified" dataSort sortFunc={handleSort} caretRender={renderCaret} width="327px">Last Modified</TableHeaderColumn>
+                          <TableHeaderColumn hidden dataField="rid" dataSort sortFunc={handleSort} caretRender={renderCaret}>rid</TableHeaderColumn>
                         </BootstrapTable>
                   }
               </CardBody>

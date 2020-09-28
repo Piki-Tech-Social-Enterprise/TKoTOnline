@@ -20,6 +20,7 @@ import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 import {
   draftToText,
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -52,9 +53,6 @@ const AuthEventsView = props => {
       }
     };
   }, [props, isLoading, setIsLoading, setEventsAsArray]);
-  const handleSortChange = async (sortName, sortOrder) => {
-    sortArray(eventsAsArray, sortName, sortOrder);
-  };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddEventClick(onClick)} />
   );
@@ -92,18 +90,17 @@ const AuthEventsView = props => {
                       search pagination options={{
                         hideSizePerPage: true,
                         noDataText: 'No Wananga found.',
-                        onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEventRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="contentAsText" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn isKey dataField="header" dataSort sortFunc={handleSort} caretRender={renderCaret}>Header</TableHeaderColumn>
+                      <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Event"
                           dbId={row.evid}

@@ -92,13 +92,12 @@ const AuthFacebookLinksView = props => {
                         defaultSortOrder: 'asc',
                         hideSizePerPage: true,
                         noDataText: 'No Facebook Links found.',
-                        onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleFacebookLinksRowClick
                       }}>
-                      <TableHeaderColumn isKey dataField="name" dataSort caretRender={renderCaret}>Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="url" dataSort caretRender={renderCaret}>URL</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="name" dataSort sortFunc={handleSort} caretRender={renderCaret}>Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="url" dataSort sortFunc={handleSort} caretRender={renderCaret}>URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Facebook Link"
                           dbId={row.fid}

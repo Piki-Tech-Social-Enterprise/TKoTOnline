@@ -17,6 +17,7 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import {
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -41,9 +42,6 @@ const AuthEPanuiListView = props => {
       }
     };
   }, [props, isLoading, setIsLoading, setEPanuiListAsArray]);
-  const handleSortChange = async (sortName, sortOrder) => {
-    sortArray(ePanuiListAsArray, sortName, sortOrder);
-  };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddEPanuiClick(onClick)} />
   );
@@ -72,16 +70,15 @@ const AuthEPanuiListView = props => {
                       search pagination options={{
                         hideSizePerPage: true,
                         noDataText: 'No E-Pānui found.',
-                        onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEPanuiRowClick
                       }}>
-                      <TableHeaderColumn dataField="imageUrl" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage loadingIconSize="sm" alt={row.name} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn dataField="name" dataSort caretRender={renderCaret} width="40%">Name</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="date" dataSort caretRender={renderCaret} width="20%">Date</TableHeaderColumn>
-                      <TableHeaderColumn dataField="url" dataSort caretRender={renderCaret}>URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="name" dataSort sortFunc={handleSort} caretRender={renderCaret} width="40%">Name</TableHeaderColumn>
+                      <TableHeaderColumn isKey dataField="date" dataSort sortFunc={handleSort} caretRender={renderCaret} width="20%">Date</TableHeaderColumn>
+                      <TableHeaderColumn dataField="url" dataSort sortFunc={handleSort} caretRender={renderCaret}>URL</TableHeaderColumn>
                     </BootstrapTable>
                 }
               </CardBody>

@@ -41,7 +41,7 @@ const INITIAL_STATE = {
   active: true,
   category: '',
   categoryTags: [
-    'Uncategorized'
+    'Uncategorised'
   ],
   content: '',
   date: '',

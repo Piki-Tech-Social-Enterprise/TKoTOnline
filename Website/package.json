@@ -8,20 +8,20 @@
   "dependencies": {
     "axios": "^0.20.0",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^7.20.0",
+    "firebase": "^7.21.1",
     "lazysizes": "^5.2.2",
     "moment-mini": "^2.24.0",
     "prop-types": "^15.7.2",
-    "query-string": "^6.13.2",
+    "query-string": "^6.13.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-ga": "^3.1.2",
     "react-helmet": "^6.1.0",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "reactstrap": "8.5.1",
+    "reactstrap": "8.6.0",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.0.2"
+    "sweetalert2": "^10.3.5"
   },
   "scripts": {
     "start": "pnpm run startLocal-p",
@@ -109,7 +109,7 @@
     ]
   },
   "optionalDependencies": {
-    "typescript": "4.0.2"
+    "typescript": "4.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

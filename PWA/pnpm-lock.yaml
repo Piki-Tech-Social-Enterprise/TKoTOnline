@@ -4,28 +4,28 @@ dependencies:
   chart.js: 2.9.3
   draft-js: 0.11.7_react-dom@16.13.1+react@16.13.1
   draftjs-to-html: 0.9.1
-  firebase: 7.20.0
-  googleapis: 59.0.0
+  firebase: 7.21.1
+  googleapis: 60.0.1
   history: 4.10.0
-  moment: 2.28.0
+  moment: 2.29.0
   node-sass: 4.14.1
   perfect-scrollbar: 1.5.0
   prop-types: 15.7.2
   react: 16.13.1
   react-bootstrap-table: 4.3.1_react-dom@16.13.1+react@16.13.1
   react-chartjs-2: 2.10.0_993042a9951b76ec634148f49ee6c836
-  react-datetime: 2.16.3_98f1014017f17bf1cd63e294d5abe3c3
+  react-datetime: 3.0.4_moment@2.29.0+react@16.13.1
   react-dom: 16.13.1_react@16.13.1
   react-draft-wysiwyg: 1.14.5_883ad373d05dcecea6c0c3fc2719d86d
   react-google-maps: 9.4.5_7e90ebc9359381e7bce4b5c592f2ebc2
-  react-notification-alert: 0.0.12_react@16.13.1+reactstrap@8.5.1
+  react-notification-alert: 0.0.12_react@16.13.1+reactstrap@8.6.0
   react-router: 5.2.0_react@16.13.1
   react-router-dom: 5.2.0_react@16.13.1
-  react-scripts: 3.4.3_62ff2f00603c4cbc6685e8c89b79aeac
+  react-scripts: 3.4.3_85057db3d9353a802b4cff706e3330d2
   react-tagsinput-2: 3.19.8_react@16.13.1
-  reactstrap: 8.5.1_react-dom@16.13.1+react@16.13.1
+  reactstrap: 8.6.0_react-dom@16.13.1+react@16.13.1
   recompose: 0.30.0_react@16.13.1
-  sweetalert2: 10.0.2
+  sweetalert2: 10.3.5
   sweetalert2-react: 0.8.3_react-dom@16.13.1+react@16.13.1
 devDependencies:
   babel-cli: 6.26.0
@@ -42,7 +42,7 @@ optionalDependencies:
   '@types/markerclustererplus': 2.1.33
   '@types/react': 16.9.49
   jquery: 3.5.1
-  typescript: 4.0.2
+  typescript: 4.0.3
 packages:
   /@babel/code-frame/7.10.4:
     dependencies:
@@ -1413,7 +1413,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ap2WQOS3LKmGuVFKUghFft7RxXTyZTDr0Xd8y2aqmWsbJVjgozi0huL/EUMgTjGFrATAjcf2A7aNs8AKKZ2a8g==
-  /@firebase/database/0.6.12_@firebase+app-types@0.6.1:
+  /@firebase/database/0.6.13_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/auth-interop-types': 0.1.5_5cc9c61dffbee8f03f0e6d8f4a182f2c
       '@firebase/component': 0.1.19
@@ -1426,27 +1426,27 @@ packages:
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-OLUxp8TkXiML4X5LWM5IACsSDvo3fcf4mTbTe5RF+N6TRFv0Svzlet5OgGIa3ET1dQvNiisrMX7zzRa0OTLs7Q==
-  /@firebase/firestore-types/1.12.1_@firebase+app-types@0.6.1:
+      integrity: sha512-NommVkAPzU7CKd1gyehmi3lz0K78q0KOfiex7Nfy7MBMwknLm7oNqKovXSgQV1PCLvKXvvAplDSFhDhzIf9obA==
+  /@firebase/firestore-types/1.13.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-CpWcDriYnGDoAl0D9DcSuwX0b/fXqi7qOwuuTI1M0SYxau48G8cqhVjzjqPDgEM3kDGYJTnPN3ALS0Z4cnwERQ==
-  /@firebase/firestore/1.16.7_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+      integrity: sha512-QF5CAuYOHE6Zbsn1uEg6wkl836iP+i6C0C/Zs3kF60eebxZvTWp8JSZk19Ar+jj4w+ye8/7H5olu5CqDNjWpEA==
+  /@firebase/firestore/1.17.1_3086e2db7fbd23d77dbe2a1ae46c8b4b:
     dependencies:
       '@firebase/app': 0.6.11
       '@firebase/app-types': 0.6.1
       '@firebase/component': 0.1.19
-      '@firebase/firestore-types': 1.12.1_@firebase+app-types@0.6.1
+      '@firebase/firestore-types': 1.13.0_@firebase+app-types@0.6.1
       '@firebase/logger': 0.2.6
       '@firebase/util': 0.3.2
       '@firebase/webchannel-wrapper': 0.3.0
       '@grpc/grpc-js': 1.1.4
       '@grpc/proto-loader': 0.5.5
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
       tslib: 1.13.0
     dev: false
     engines:
@@ -1455,7 +1455,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-MrX7te1eUib2pUzD3dLWdRuM7EPcCxtPwO4M9og3IFYr1U3XlxybD7kxyYswltHcUm6+kba3VKL1rvkqZ1sn2g==
+      integrity: sha512-FJlNmFIBr9wrkA5g9JBPJWPmxYIzUhBDfsJGHNTUCxMbwm12pz/1Y6CW56kvZOgl6l+iPNlF911iduUDFzNUqw==
   /@firebase/functions-types/0.3.17:
     dev: false
     resolution:
@@ -2129,15 +2129,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MU10TSgzNABgdzKvQVW1nuuT+sgBMWeXNc3XOs5YXV5SDAK+PPja2eUuBNB9iqElu03xyEDqlnGw0jgl4nbqGQ==
-  /@typescript-eslint/eslint-plugin/2.34.0_36572c4037d6636e12fdb87a6bbfa4a5:
+  /@typescript-eslint/eslint-plugin/2.34.0_7b4bd3cb2bb8840c27da3f93640083dc:
     dependencies:
-      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.2
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.2
+      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.3
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
       eslint: 6.8.0
       functional-red-black-tree: 1.0.1
       regexpp: 3.1.0
-      tsutils: 3.17.1_typescript@4.0.2
-      typescript: 4.0.2
+      tsutils: 3.17.1_typescript@4.0.3
+      typescript: 4.0.3
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -2150,10 +2150,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-4zY3Z88rEE99+CNvTbXSyovv2z9PNOVffTWD2W8QF5s2prBQtwN2zadqERcrHpcR7O/+KMI3fcTAmUUhK/iQcQ==
-  /@typescript-eslint/experimental-utils/2.34.0_eslint@6.8.0+typescript@4.0.2:
+  /@typescript-eslint/experimental-utils/2.34.0_eslint@6.8.0+typescript@4.0.3:
     dependencies:
       '@types/json-schema': 7.0.5
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.2
+      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.3
       eslint: 6.8.0
       eslint-scope: 5.1.0
       eslint-utils: 2.1.0
@@ -2165,14 +2165,14 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-eS6FTkq+wuMJ+sgtuNTtcqavWXqsflWcfBnlYhg/nS4aZ1leewkXGbvBhaapn1q6qf4M71bsR1tez5JTRMuqwA==
-  /@typescript-eslint/parser/2.34.0_eslint@6.8.0+typescript@4.0.2:
+  /@typescript-eslint/parser/2.34.0_eslint@6.8.0+typescript@4.0.3:
     dependencies:
       '@types/eslint-visitor-keys': 1.0.0
-      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.2
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.2
+      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.3
+      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.3
       eslint: 6.8.0
       eslint-visitor-keys: 1.3.0
-      typescript: 4.0.2
+      typescript: 4.0.3
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -2184,7 +2184,7 @@ packages:
         optional: true
     resolution:
       integrity: sha512-03ilO0ucSD0EPTw2X4PntSIRFtDPWjrVq7C3/Z3VQHRC7+13YB55rcJI3Jt+YgeHbjUdJPcPa7b23rXCBokuyA==
-  /@typescript-eslint/typescript-estree/2.34.0_typescript@4.0.2:
+  /@typescript-eslint/typescript-estree/2.34.0_typescript@4.0.3:
     dependencies:
       debug: 4.1.1
       eslint-visitor-keys: 1.3.0
@@ -2192,8 +2192,8 @@ packages:
       is-glob: 4.0.1
       lodash: 4.17.20
       semver: 7.3.2
-      tsutils: 3.17.1_typescript@4.0.2
-      typescript: 4.0.2
+      tsutils: 3.17.1_typescript@4.0.3
+      typescript: 4.0.3
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -4472,14 +4472,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
-  /create-react-class/15.6.3:
-    dependencies:
-      fbjs: 0.8.17
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-    dev: false
-    resolution:
-      integrity: sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
   /create-react-context/0.3.0_prop-types@15.7.2+react@16.13.1:
     dependencies:
       gud: 1.0.0
@@ -5367,8 +5359,8 @@ packages:
       integrity: sha512-qFcX0XJkdg+PB3xjZZG/wKSuT1PnQWx57+TVSjIMmILd2yC/6ByYElPwJnslDsuWuSAp4AwJGumarAAmJch5Kw==
   /eslint-config-react-app/5.2.1_f8f91f27f800428497667fb337aaf85d:
     dependencies:
-      '@typescript-eslint/eslint-plugin': 2.34.0_36572c4037d6636e12fdb87a6bbfa4a5
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.2
+      '@typescript-eslint/eslint-plugin': 2.34.0_7b4bd3cb2bb8840c27da3f93640083dc
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
       babel-eslint: 10.1.0_eslint@6.8.0
       confusing-browser-globals: 1.0.9
       eslint: 6.8.0
@@ -6090,14 +6082,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/7.20.0:
+  /firebase/7.21.1:
     dependencies:
       '@firebase/analytics': 0.5.0_3086e2db7fbd23d77dbe2a1ae46c8b4b
       '@firebase/app': 0.6.11
       '@firebase/app-types': 0.6.1
       '@firebase/auth': 0.14.9_1c75c98b925b123d45eb2d7af28bd300
-      '@firebase/database': 0.6.12_@firebase+app-types@0.6.1
-      '@firebase/firestore': 1.16.7_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/database': 0.6.13_@firebase+app-types@0.6.1
+      '@firebase/firestore': 1.17.1_3086e2db7fbd23d77dbe2a1ae46c8b4b
       '@firebase/functions': 0.4.51_3086e2db7fbd23d77dbe2a1ae46c8b4b
       '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
       '@firebase/messaging': 0.7.1_3086e2db7fbd23d77dbe2a1ae46c8b4b
@@ -6110,7 +6102,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-ijgiUPB93UGWw2P2kgUQgghu5WOn/WR2J8C/V6ZSeI1PQqiEwsfn0kvw4iMJeqLQpA/FVeZz/+p0ubE5kzqhBA==
+      integrity: sha512-ogqWUXIP2/1BTee112QJiAjgch/Ig7pzlAw2mfWOhl9E0IUX46OKv0hypLX62MBgaAKwPHfICIwsWOCxlQ9dZQ==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -6553,7 +6545,7 @@ packages:
       node: '>=10.10.0'
     resolution:
       integrity: sha512-Bgrs8/1OZQFFIfVuX38L9t48rPAkVUXttZy6NzhhXxFOEMSHgfFIjxou7RIXOkBHxmx2pVwct9WjKkbnqMYImQ==
-  /googleapis/59.0.0:
+  /googleapis/60.0.1:
     dependencies:
       google-auth-library: 6.0.6
       googleapis-common: 4.4.0
@@ -6561,7 +6553,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-GV/E4KRN89a4GxSk7D7cwUfRYgcJHR05sOgm/WGdwc/u8dxNXG5lWmz9gF5ZwFGk2yKtVxL4VZNn4zBuZ6rmGg==
+      integrity: sha512-r/7pDeIMAm/FepbAl2iM+uRQURf2manjOaOVR0j7v2fDPU8QEme44z6N6qGroqJtne0JO5BM0FUz4LuskcwGeQ==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -8917,10 +8909,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
-  /moment/2.28.0:
+  /moment/2.29.0:
     dev: false
     resolution:
-      integrity: sha512-Z5KOjYmnHyd/ukynmFd/WwyXHd7L4J9vTI/nn5Ap9AVUgaAE15VvQ9MOGmJJygEUklupqIrFnor/tjTwRU+tQw==
+      integrity: sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
   /mousetrap/1.6.5:
     dev: false
     resolution:
@@ -9024,6 +9016,12 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  /node-fetch/2.6.1:
+    dev: false
+    engines:
+      node: 4.x || >=6.0.0
+    resolution:
+      integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
   /node-forge/0.9.0:
     dev: false
     engines:
@@ -9243,12 +9241,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
-  /object-assign/3.0.0:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-m+3VygiXlJvKR+f/QIBi1Un1h/I=
   /object-assign/4.1.1:
     engines:
       node: '>=0.10.0'
@@ -9876,9 +9868,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
-  /pnp-webpack-plugin/1.6.4_typescript@4.0.2:
+  /pnp-webpack-plugin/1.6.4_typescript@4.0.3:
     dependencies:
-      ts-pnp: 1.1.6_typescript@4.0.2
+      ts-pnp: 1.1.6_typescript@4.0.3
     dev: false
     engines:
       node: '>=6'
@@ -10947,22 +10939,17 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0-beta || ^16.0.0
     resolution:
       integrity: sha512-1MjWEkUn8LLFf6GVyYUOrruJTW3yVU5hlEJOwGj3MiokuC+jH/BahjWVGAMonbe9UYbEIUbd2Rn36iVlC0Hb7w==
-  /react-datetime/2.16.3_98f1014017f17bf1cd63e294d5abe3c3:
+  /react-datetime/3.0.4_moment@2.29.0+react@16.13.1:
     dependencies:
-      create-react-class: 15.6.3
-      moment: 2.28.0
-      object-assign: 3.0.0
+      moment: 2.29.0
       prop-types: 15.7.2
       react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-      react-onclickoutside: 6.9.0_react-dom@16.13.1+react@16.13.1
     dev: false
     peerDependencies:
-      moment: '>=2.16.0'
-      react: '>=0.13'
-      react-dom: '>=0.13'
+      moment: ^2.16.0
+      react: ^16.5.0
     resolution:
-      integrity: sha512-amWfb5iGEiyqjLmqCLlPpu2oN415jK8wX1qoTq7qn6EYiU7qQgbNHglww014PT4O/3G5eo/3kbJu/M/IxxTyGw==
+      integrity: sha512-v6MVwCve+DRaLN2f22LTO5TlrPpkUXumPkp1zfrbhaFtSYGl2grZ2JtwJfLxRj/T4ACyePAV4srCR6cMSiQ/Iw==
   /react-dev-utils/10.2.1:
     dependencies:
       '@babel/code-frame': 7.8.3
@@ -11077,26 +11064,16 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16
     resolution:
       integrity: sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
-  /react-notification-alert/0.0.12_react@16.13.1+reactstrap@8.5.1:
+  /react-notification-alert/0.0.12_react@16.13.1+reactstrap@8.6.0:
     dependencies:
       react: 16.13.1
-      reactstrap: 8.5.1_react-dom@16.13.1+react@16.13.1
+      reactstrap: 8.6.0_react-dom@16.13.1+react@16.13.1
     dev: false
     peerDependencies:
       react: 16.x.x
       reactstrap: 8.x.x
     resolution:
       integrity: sha512-6GBpWe45zWEflV8c98l82HRl67iku2ARJ2FTbJh5kWiU/NyNb71l7CPKifkmDAdipDj0mouTxw8/3sRSVOMdvQ==
-  /react-onclickoutside/6.9.0_react-dom@16.13.1+react@16.13.1:
-    dependencies:
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-    dev: false
-    peerDependencies:
-      react: ^15.5.x || ^16.x
-      react-dom: ^15.5.x || ^16.x
-    resolution:
-      integrity: sha512-8ltIY3bC7oGhj2nPAvWOGi+xGFybPNhJM0V1H8hY/whNcXgmDeaeoCMPPd8VatrpTsUWjb/vGzrmu6SrXVty3A==
   /react-popper/1.3.7_react@16.13.1:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -11170,12 +11147,12 @@ packages:
       react-dom: ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-+cSpVPe6YeGklhlo7zbVlB0Z6jdiU9HPmEVzp5nIhNm9lvdL7rVO2Jx09pCwT99GmODyoN0iNhbQku6r7six8A==
-  /react-scripts/3.4.3_62ff2f00603c4cbc6685e8c89b79aeac:
+  /react-scripts/3.4.3_85057db3d9353a802b4cff706e3330d2:
     dependencies:
       '@babel/core': 7.9.0
       '@svgr/webpack': 4.3.3
-      '@typescript-eslint/eslint-plugin': 2.34.0_36572c4037d6636e12fdb87a6bbfa4a5
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.2
+      '@typescript-eslint/eslint-plugin': 2.34.0_7b4bd3cb2bb8840c27da3f93640083dc
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
       babel-eslint: 10.1.0_eslint@6.8.0
       babel-jest: 24.9.0_@babel+core@7.9.0
       babel-loader: 8.1.0_@babel+core@7.9.0+webpack@4.42.0
@@ -11204,7 +11181,7 @@ packages:
       jest-watch-typeahead: 0.4.2
       mini-css-extract-plugin: 0.9.0_webpack@4.42.0
       optimize-css-assets-webpack-plugin: 5.0.3_webpack@4.42.0
-      pnp-webpack-plugin: 1.6.4_typescript@4.0.2
+      pnp-webpack-plugin: 1.6.4_typescript@4.0.3
       postcss-flexbugs-fixes: 4.1.0
       postcss-loader: 3.0.0
       postcss-normalize: 8.0.1
@@ -11218,8 +11195,8 @@ packages:
       semver: 6.3.0
       style-loader: 0.23.1
       terser-webpack-plugin: 2.3.8_webpack@4.42.0
-      ts-pnp: 1.1.6_typescript@4.0.2
-      typescript: 4.0.2
+      ts-pnp: 1.1.6_typescript@4.0.3
+      typescript: 4.0.3
       url-loader: 2.3.0_file-loader@4.3.0+webpack@4.42.0
       webpack: 4.42.0_webpack@4.42.0
       webpack-dev-server: 3.11.0_webpack@4.42.0
@@ -11271,7 +11248,7 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
-  /reactstrap/8.5.1_react-dom@16.13.1+react@16.13.1:
+  /reactstrap/8.6.0_react-dom@16.13.1+react@16.13.1:
     dependencies:
       '@babel/runtime': 7.11.2
       classnames: 2.2.6
@@ -11285,7 +11262,7 @@ packages:
       react: ^16.3.0
       react-dom: ^16.3.0
     resolution:
-      integrity: sha512-igpdw8DiW48ZtwGOo2unwlsILFlF7deiqFUAqc3wrsX/0H0OkvmezJdkjJx2X9jaHfjGdPpm0vu5VN/kk7tv+A==
+      integrity: sha512-03/UMbLPR6MhVStVUfCLuKh8xh4JOtNVkRxDB9/uHixN+cEQPOpSYa0K69YyK1/2YdZBs2qS6y0cQkK8NQKBHA==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -12672,10 +12649,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.0.2:
+  /sweetalert2/10.3.5:
     dev: false
     resolution:
-      integrity: sha512-norIgpVW16EAD+wgAnw86PTQn4WgBTXwSJUOUrWP0cd+gVjQKxYXyMNJWAcb1bBAMr9dL2dyS4LztbyErRZ/BA==
+      integrity: sha512-8XBQvW2frWVn0Xs80qyraRXcb3Mg/aKG+9sdVPlzViDIYJfLhMeda3pRuyGzyvrPXbBQ3KRjs+66xKH3kz8/og==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -12918,9 +12895,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-m6s2OdQe5wgpFMC+pAJ+q9djG82O2jcHPOI6RNg1yy9rCYR+WD6Nbpl32fDpfC56nirdRy+opFa/Vk7HYhqaew==
-  /ts-pnp/1.1.6_typescript@4.0.2:
+  /ts-pnp/1.1.6_typescript@4.0.3:
     dependencies:
-      typescript: 4.0.2
+      typescript: 4.0.3
     dev: false
     engines:
       node: '>=6'
@@ -12935,10 +12912,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
-  /tsutils/3.17.1_typescript@4.0.2:
+  /tsutils/3.17.1_typescript@4.0.3:
     dependencies:
       tslib: 1.13.0
-      typescript: 4.0.2
+      typescript: 4.0.3
     dev: false
     engines:
       node: '>= 6'
@@ -13005,14 +12982,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript/4.0.2:
+  /typescript/4.0.3:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     optional: true
     resolution:
-      integrity: sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
+      integrity: sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
   /ua-parser-js/0.7.21:
     dev: false
     resolution:
@@ -13810,11 +13787,11 @@ specifiers:
   draft-js: ^0.11.7
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^7.20.0
-  googleapis: ^59.0.0
+  firebase: ^7.21.1
+  googleapis: ^60.0.1
   history: 4.10.0
   jquery: 3.5.1
-  moment: ^2.28.0
+  moment: ^2.29.0
   node-sass: 4.14.1
   npm-run-all: ^4.1.5
   perfect-scrollbar: 1.5.0
@@ -13822,7 +13799,7 @@ specifiers:
   react: 16.13.1
   react-bootstrap-table: ^4.3.1
   react-chartjs-2: 2.10.0
-  react-datetime: ^2.16.3
+  react-datetime: ^3.0.4
   react-dom: 16.13.1
   react-draft-wysiwyg: ^1.14.5
   react-google-maps: 9.4.5
@@ -13832,8 +13809,8 @@ specifiers:
   react-router-sitemap: ^1.2.0
   react-scripts: 3.4.3
   react-tagsinput-2: ^3.19.8
-  reactstrap: 8.5.1
+  reactstrap: 8.6.0
   recompose: ^0.30.0
-  sweetalert2: ^10.0.2
+  sweetalert2: ^10.3.5
   sweetalert2-react: ^0.8.3
-  typescript: 4.0.2
+  typescript: 4.0.3

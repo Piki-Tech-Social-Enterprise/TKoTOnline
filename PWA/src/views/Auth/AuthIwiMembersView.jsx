@@ -19,6 +19,7 @@ import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
 import {
+  handleSort,
   sortArray,
   renderCaret
 } from 'components/App/Utilities';
@@ -42,9 +43,6 @@ const AuthIwiMembersView = props => {
       }
     };
   }, [props, isLoading, setIsLoading, setIwiMembersAsArray]);
-  const handleSortChange = async (sortName, sortOrder) => {
-    sortArray(IwiMembersAsArray, sortName, sortOrder);
-  };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddIwiMembersClick(onClick)} />
   );
@@ -82,16 +80,15 @@ const AuthIwiMembersView = props => {
                       search pagination options={{
                         hideSizePerPage: true,
                         noDataText: 'No Iwi Members found.',
-                        onSortChange: handleSortChange,
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleIwiMembersRowClick
                       }}>
-                      <TableHeaderColumn dataField="iwiMemberImageURL" dataSort caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                      <TableHeaderColumn dataField="iwiMemberImageURL" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
                         <FirebaseImage loadingIconSize="sm" alt={row.iwiMemberName} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
-                      <TableHeaderColumn isKey dataField="iwiMemberName" dataSort caretRender={renderCaret}>Iwi Member Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="iwiMemberURL" dataSort caretRender={renderCaret}>Iwi Member URL</TableHeaderColumn>
-                      <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                      <TableHeaderColumn isKey dataField="iwiMemberName" dataSort sortFunc={handleSort} caretRender={renderCaret}>Iwi Member Name</TableHeaderColumn>
+                      <TableHeaderColumn dataField="iwiMemberURL" dataSort sortFunc={handleSort} caretRender={renderCaret}>Iwi Member URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Iwi Member"
                           dbId={row.imid}
