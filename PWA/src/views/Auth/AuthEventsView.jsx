@@ -30,6 +30,15 @@ const AuthEventsView = props => {
   useEffect(() => {
     const retrieveEvents = async () => {
       const dbEventsAsArray = await props.firebase.getDbEventsAsArray(true);
+      dbEventsAsArray.map(dbEvent => {
+        const {
+          externalUrl
+        } = dbEvent;
+        dbEvent.contentAsText = externalUrl
+          ? externalUrl
+          : draftToText(dbEvent.content, '');
+        return null;
+      });
       sortArray(dbEventsAsArray, 'header', 'asc');
       setEventsAsArray(dbEventsAsArray);
       setIsLoading(false);
@@ -91,18 +100,8 @@ const AuthEventsView = props => {
                         <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn dataField="contentAsText" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell, row) => {
-                        const {
-                          externalUrl
-                        } = row;
-                        const contentAsText = externalUrl
-                          ? externalUrl
-                          : draftToText(cell, '');
-                        return (
-                          <span>{contentAsText}</span>
-                        );
                       }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge

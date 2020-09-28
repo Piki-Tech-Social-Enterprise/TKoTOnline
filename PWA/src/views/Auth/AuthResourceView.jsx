@@ -22,10 +22,13 @@ import FirebaseInput from 'components/Firebase/FirebaseInput';
 import {
   formatBytes,
   formatInteger,
+  TAG_SEPARATOR,
   getImageUrl,
   uploadFileToStorage
 } from 'components/App/Utilities';
 import DraftEditor from 'components/DraftEditor';
+import TagsInput from 'react-tagsinput-2';
+import 'react-tagsinput-2/react-tagsinput.css';
 
 const resourcesRef = '/resources';
 const resourceKeyFormat = '{rid}';
@@ -39,6 +42,10 @@ const resourceImageFolderUrlFormat = `${resourceImagesRef}/${resourceImageKeyFor
 const resourceImageUrlFormat = `${resourceImageFolderUrlFormat}${resourceImageFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
+  category: '',
+  categoryTags: [
+    'Uncategorized'
+  ],
   content: '',
   header: '',
   resourceUrl: '',
@@ -83,6 +90,7 @@ const AuthResourceView = props => {
     } = authUser;
     const {
       active,
+      categoryTags,
       content,
       header,
       resourceUrlFile
@@ -113,6 +121,7 @@ const AuthResourceView = props => {
           active: active,
           created: now.toString(),
           createdBy: uid,
+          category: categoryTags.join(TAG_SEPARATOR),
           content: content,
           header,
           resourceUrl,
@@ -213,6 +222,7 @@ const AuthResourceView = props => {
       const dbResource = await firebase.getDbResourceValue(match.params.rid);
       const {
         active,
+        category,
         content,
         header,
         resourceUrl,
@@ -224,6 +234,10 @@ const AuthResourceView = props => {
       setResource(p => ({
         ...p,
         active,
+        category,
+        categoryTags: category && category.length
+          ? category.split(TAG_SEPARATOR)
+          : p.categoryTags,
         content,
         header,
         resourceUrl,
@@ -260,6 +274,18 @@ const AuthResourceView = props => {
                   }
                   <Card>
                     <CardBody>
+                      <FormGroup>
+                        <Label>Category</Label>
+                        <TagsInput
+                          value={resource.categoryTags}
+                          onChange={tags => handleChange({
+                            target: {
+                              name: 'categoryTags',
+                              value: tags
+                            }
+                          })}
+                        />
+                      </FormGroup>
                       <FormGroup>
                         <Label className="d-inline">Resource&nbsp;
                           {

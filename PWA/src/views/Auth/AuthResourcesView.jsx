@@ -29,6 +29,10 @@ const AuthResourcesView = props => {
   useEffect(() => {
     const retrieveResources = async () => {
       const dbResourcesAsArray = await props.firebase.getDbResourcesAsArray(true);
+      dbResourcesAsArray.map(dbResource => {
+        dbResource.contentAsText = draftToText(dbResource.content, '');
+        return null;
+      });
       sortArray(dbResourcesAsArray, 'header', 'asc');
       setResourcesAsArray(dbResourcesAsArray);
       setIsLoading(false);
@@ -87,13 +91,9 @@ const AuthResourcesView = props => {
                         onRowClick: handleResourceRowClick
                       }}>
                       <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn dataField="category" dataSort caretRender={renderCaret}>Catgory</TableHeaderColumn>
+                      <TableHeaderColumn dataField="contentAsText" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell) => {
-                        const contentAsText = draftToText(cell, '');
-                        return (
-                          <span>{contentAsText}</span>
-                        );
                       }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge

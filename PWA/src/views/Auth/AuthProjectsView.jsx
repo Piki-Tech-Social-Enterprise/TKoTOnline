@@ -30,6 +30,10 @@ const AuthProjectsView = props => {
   useEffect(() => {
     const retrieveProjects = async () => {
       const dbProjectsAsArray = await props.firebase.getDbProjectsAsArray(true);
+      dbProjectsAsArray.map(dbProject => {
+        dbProject.contentAsText = draftToText(dbProject.content, '');
+        return null;
+      });
       sortArray(dbProjectsAsArray, 'header', 'asc');
       setProjectsAsArray(dbProjectsAsArray);
       setIsLoading(false);
@@ -91,13 +95,8 @@ const AuthProjectsView = props => {
                         <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn dataField="contentAsText" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell) => {
-                        const contentAsText = draftToText(cell, '');
-                        return (
-                          <span>{contentAsText}</span>
-                        );
                       }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge

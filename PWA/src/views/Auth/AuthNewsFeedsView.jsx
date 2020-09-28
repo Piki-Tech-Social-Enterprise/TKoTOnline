@@ -30,6 +30,15 @@ const AuthNewsFeedsView = props => {
   useEffect(() => {
     const retrieveNewsFeeds = async () => {
       const dbNewsFeedsAsArray = await props.firebase.getDbNewsFeedsAsArray(true);
+      dbNewsFeedsAsArray.map(dbNewsFeed => {
+        const {
+          externalUrl
+        } = dbNewsFeed;
+        dbNewsFeed.contentAsText = externalUrl
+          ? externalUrl
+          : draftToText(dbNewsFeed.content, '');
+        return null;
+      });
       sortArray(dbNewsFeedsAsArray, 'date', 'asc');
       setNewsFeedsAsArray(dbNewsFeedsAsArray);
       setIsLoading(false);
@@ -93,18 +102,8 @@ const AuthNewsFeedsView = props => {
                       <TableHeaderColumn isKey dataField="header" dataSort caretRender={renderCaret}>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="date" dataSort caretRender={renderCaret} width="100px">Date</TableHeaderColumn>
                       {/* <TableHeaderColumn dataField="category" dataSort caretRender={renderCaret}>Category</TableHeaderColumn> */}
-                      <TableHeaderColumn dataField="content" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
+                      <TableHeaderColumn dataField="contentAsText" dataSort caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
-                      }} dataFormat={(cell, row) => {
-                        const {
-                          externalUrl
-                        } = row;
-                        const contentAsText = externalUrl
-                          ? externalUrl
-                          : draftToText(cell, '');
-                        return (
-                          <span>{contentAsText}</span>
-                        );
                       }}>Content</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge

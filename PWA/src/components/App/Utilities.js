@@ -213,32 +213,55 @@ const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).is
 const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
 const tryToConvertValue = value => {
   let convertedValue = undefined;
-  // let valueType = undefined;
+  let convertedValueType = undefined;
   if (isNumber(value)) {
-    // valueType = 'number';
     convertedValue = Number(value);
   } else if (isBoolean(value)) {
-    // valueType = 'boolean';
     convertedValue = Boolean(value);
   } else if (isDate(value)) {
-    // valueType = 'date';
     convertedValue = toDate(value);
   } else {
-    // valueType = 'unknown';
     convertedValue = value;
   }
-  // console.log(`value: ${value}, valueType: ${valueType}, convertedValue: ${convertedValue}`);
-  return convertedValue;
+  convertedValueType = typeof convertedValue;
+  // console.log(`${JSON.stringify({ value, convertedValue, convertedValueType })}`);
+  return {
+    convertedValue,
+    convertedValueType
+  };
 };
 const sortArray = (array, sortName, sortOrder) => {
   console.log('array-before: ', JSON.stringify(array.map(item => `${sortName}: ${item[sortName]}`), null, 2));
   array.sort((a, b) => {
-    const aValue = tryToConvertValue(a[sortName]);
-    const bValue = tryToConvertValue(b[sortName]);
+    const {
+      convertedValue: aValue,
+      convertedValueType: aValueType
+    } = tryToConvertValue(sortName
+      ? a[sortName]
+      : a);
+    const {
+      convertedValue: bValue,
+      convertedValueType: bValueType
+    } = tryToConvertValue(sortName
+      ? b[sortName]
+      : b);
     const result = sortOrder === 'asc'
-      ? bValue - aValue
-      : aValue - bValue;
-    console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
+      ? aValueType === 'number' && bValueType === 'number'
+        ? bValue - aValue
+        : aValue > bValue
+          ? 1
+          : aValue < bValue
+            ? -1
+            : 0
+      : aValueType === 'number' && bValueType === 'number'
+        ? aValue - bValue
+        : bValue > aValue
+          ? 1
+          : bValue < aValue
+            ? -1
+            : 0;
+    // console.log(`sortName: ${sortName}, sortOrder: ${sortOrder}, aValue: ${aValue}, bValue: ${bValue}, result: ${result}`);
+    console.log(`${JSON.stringify({ sortName, sortOrder, aValue, aValueType, bValue, bValueType, result })}`);
     // sortName: date, sortOrder: desc, aValue: Tue Apr 07 2020, bValue: Mon Apr 06 2020, result: -1
     return result;
   });

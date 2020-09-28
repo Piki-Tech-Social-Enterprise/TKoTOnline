@@ -47,6 +47,7 @@ class ResourcesRepository extends BaseRepository {
       active,
       created,
       createdBy,
+      category,
       content,
       header,
       resourceUrl,
@@ -65,6 +66,7 @@ class ResourcesRepository extends BaseRepository {
         active: active || false,
         created: created || now.toString(),
         createdBy: createdBy || '',
+        category: category || '',
         content: content || '',
         header: header || '',
         resourceUrl: resourceUrl || '',
@@ -79,6 +81,7 @@ class ResourcesRepository extends BaseRepository {
       if (dbResource) {
         resource = {
           active: active || (typeof active === 'boolean' && active) || false,
+          category: category || dbResource.category || '',
           content: content || dbResource.content || '',
           header: header || dbResource.header || '',
           resourceUrl: resourceUrl || dbResource.resourceUrl || '',
