@@ -91,7 +91,7 @@ const ResourcesSection = props => {
                           <Fragment key={dbCategorisedResourceKey}>
                             <h4 className="text-uppercase">{dbCategorisedResourceKey}</h4>
                             <Container className="my-3" fluid>
-                              <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
+                              <Row className="cards-row flex-row flex-nowrap">
                                 {
                                   dbCategorisedResource.map((dbResource, index) => (
                                     <Col xs={12} sm={6} lg={4} key={index}>
@@ -116,8 +116,8 @@ const ResourcesSection = props => {
                                               rel="noopener noreferrer"
                                               className="tkot-primary-red-bg-color btn-outline-dark"
                                               color="white"
-                                              onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Resources'} page`, 'Clicked "Download" button', dbResource.header)}
-                                            >Download</Button>
+                                              onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Resources'} page`, 'Clicked "Click Here" button', dbResource.header)}
+                                            >Click Here</Button>
                                           </div>
                                         </CardBody>
                                       </Card>
