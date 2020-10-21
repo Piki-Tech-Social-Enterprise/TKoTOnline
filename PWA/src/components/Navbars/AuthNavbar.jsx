@@ -21,6 +21,7 @@ import {
 import {
   useWindowEvent
 } from 'components/App/Utilities';
+import authRoutes from '../../authRoutes';
 
 const AuthNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,58 +42,25 @@ const AuthNavbar = props => {
     e.preventDefault();
     setDropdownOpen(!dropdownOpen);
   };
-  const getBrand = () => {
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].path === props.match.path) {
-        return routes[i].name;
+  const getBrand = () => { debugger;
+    const {
+      pathname
+    } = window.location;
+    const pathnameParts = pathname.split('/');
+    const pathnameId = pathnameParts.pop();
+    let brand = 'Admin Dashboard';
+    authRoutes.map(authRoute => {
+      const authRoutePathId = authRoute.path.split('/').pop();
+      const authRoutePath = pathnameParts.length === 2
+        ? authRoute.path
+        : authRoute.path.replace(authRoutePathId, pathnameId);
+      const routePathName = `/auth${authRoutePath}`
+      if (routePathName === pathname) {
+        brand = authRoute.name;
       }
-    }
-    return "Admin Dashboard";
-    // const {
-    //   routes,
-    //   location,
-    //   match
-    // } = props;
-    // const {
-    //   pathname
-    // } = location;
-    // const isMatch = (routeLayout, routePath, pathName) => {
-    //   console.log(`routeLayout: ${routeLayout}, routePath: ${routePath}, pathname: ${pathname}`);
-    //   let fullRoutePath = `${routeLayout}${routePath}`;
-    //   if (fullRoutePath === pathName) {
-    //     return true;
-    //   }
-    //   const {
-    //     params
-    //   } = match;
-    //   console.log(`params: ${JSON.stringify(params, null, 2)}`);
-    //   let isParamAMatch = false;
-    //   Object.keys(params).map(paramKey => {
-    //     const param = params[paramKey];
-    //     console.log(`routeLayout: ${routeLayout}, paramKey: ${paramKey}, param: ${param}, pathname: ${pathname}`);
-    //     fullRoutePath = `${routeLayout}${routePath.replace(paramKey, param)}`;
-    //     if (!isParamAMatch && fullRoutePath === pathName) {
-    //       isParamAMatch = true;
-    //     }
-    //     return null;
-    //   });
-    //   return isParamAMatch;
-    // };
-    // let name = null;
-    // routes.map(route => {
-    //   if (route.collapse) {
-    //     route.views.map(view => {
-    //       if (view.path === pathname) {
-    //         name = view.name;
-    //       }
-    //       return null;
-    //     });
-    //   } else if (isMatch(route.layout, route.path, pathname)) {
-    //     name = route.name;
-    //   }
-    //   return null;
-    // });
-    // return name;
+      return null;
+    });
+    return brand;
   };
   const openSidebar = () => {
     document.documentElement.classList.toggle('nav-open');
