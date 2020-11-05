@@ -172,15 +172,15 @@ const IwiChairSection = props => {
                               loadingIconSize="lg"
                             />
                             <CardBody className="text-left bg-white">
-                              <p className="h4 mt-0 font-weight-bold text-center">{iwiMemberName}</p>
+                              <p className="h4 mt-0 font-weight-bold text-center card-iwi-member-name">{iwiMemberName}</p>
                               <p className="d-inline-block block-with-text">{contentAsText}</p>
                               <div className="text-center">
                                 <Button
                                   href={`/AboutUs/${imid}`}
                                   className="tkot-primary-red-bg-color btn-outline-dark"
                                   color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'IwiChairs'} page`, 'Clicked "Read More..." button', iwiChairName, `/AboutUs/${imid}`)}
-                                >Read more...</Button>
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Iwi Chairs section`, 'Clicked "Pānui Mai..." button', iwiChairName, `/AboutUs/${imid}`)}
+                                >Pānui Mai...</Button>
                               </div>
                             </CardBody>
                           </Card>
@@ -222,8 +222,8 @@ const IwiChairSection = props => {
                                   href={`/AboutUs/${imid}`}
                                   className="tkot-primary-red-bg-color btn-outline-dark"
                                   color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'IwiChairs'} page`, 'Clicked "Read More..." button', iwiChairName, `/AboutUs/${imid}`)}
-                                >Read more...</Button>
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'IwiChairs'} page`, 'Clicked "Pānui Mai..." button', iwiChairName, `/AboutUs/${imid}`)}
+                                >Pānui Mai...</Button>
                               </div>
                             </CardBody>
                           </Card>

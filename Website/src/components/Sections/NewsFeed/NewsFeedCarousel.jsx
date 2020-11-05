@@ -303,7 +303,7 @@ const NewsFeedCarousel = props => {
                           rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
                           style={{
                             color: 'inherit'
-                          }}>Read more...</CardLink>
+                          }}>Pānui Mai...</CardLink>
                       </CardBody>
                     </Card>
                   </Col>

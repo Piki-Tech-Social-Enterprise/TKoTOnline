@@ -147,8 +147,8 @@ const NewsFeedSection = props => {
                                   rel={isExternalLink ? 'noopener noreferrer' : 'alternate'}
                                   className="tkot-primary-red-bg-color btn-outline-dark"
                                   color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home' : 'NewsFeeds'} page`, 'Clicked "Read More..." button', displayName, isExternalLink ? externalLink : internalLink)}
-                                >Read more...</Button>
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} News page`, 'Clicked "Pānui Mai..." button', displayName, isExternalLink ? externalLink : internalLink)}
+                                >Pānui Mai...</Button>
                               </div>
                             </CardBody>
                           </Card>

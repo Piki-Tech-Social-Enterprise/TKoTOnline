@@ -129,7 +129,7 @@ const ResourcesSection = props => {
                                               rel="noopener noreferrer"
                                               className="tkot-primary-red-bg-color btn-outline-dark"
                                               color="white"
-                                              onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Resources'} page`, 'Clicked "Pā Mai" button', dbResource.header)}
+                                              onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Resources page`, 'Clicked "Pā Mai" button', dbResource.header)}
                                             >Pā Mai</Button>
                                           </div>
                                         </CardBody>

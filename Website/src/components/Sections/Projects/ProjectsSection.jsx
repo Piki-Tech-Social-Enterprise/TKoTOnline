@@ -85,8 +85,8 @@ const ProjectsSection = props => {
                                 href={`/Projects/${dbProject.pid}`}
                                 className="tkot-primary-red-bg-color btn-outline-dark"
                                 color="white"
-                                onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Projects'} page`, 'Clicked "Read More..." button', dbProject.header)}
-                              >Read more...</Button>
+                                onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Projects page`, 'Clicked "Pānui Mai..." button', dbProject.header)}
+                              >Pānui Mai...</Button>
                             </CardBody>
                           </Card>
                         </Col>

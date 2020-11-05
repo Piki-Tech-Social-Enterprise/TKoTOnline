@@ -446,6 +446,14 @@ $tkot-home-footer-x-padding: 1rem;
   box-shadow: none !important;
   max-width: 350px !important;
 }
+.iwi-chair-card {
+  .card-header {
+    min-height: 4.0625rem;
+  }
+  .card-iwi-member-name {
+    min-height: 3.75rem;
+  }
+}
 
 .iwi-member-col {
   max-width: 0;

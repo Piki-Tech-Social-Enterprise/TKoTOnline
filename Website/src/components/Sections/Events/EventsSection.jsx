@@ -91,8 +91,8 @@ const EventsSection = props => {
                                 rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
                                 className="tkot-primary-red-bg-color"
                                 color="white"
-                                onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Wānanga'} page`, 'Clicked "Read More..." button', header, externalUrl ? externalUrl : `/Wananga/${evid}`)}
-                              >Read more...</Button>
+                                onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Wānanga page`, 'Clicked "Pānui Mai..." button', header, externalUrl ? externalUrl : `/Wananga/${evid}`)}
+                              >Pānui Mai...</Button>
                             </CardBody>
                           </Card>
                         </Col>
