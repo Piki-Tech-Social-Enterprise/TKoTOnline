@@ -22,7 +22,7 @@ const Routes = {
   iwiChair: '/AboutUs/:imid',
   projectsAnchor: '/#Projects',
   projectsPage: '/Projects',
-  projectPage: '/Project/:pid',
+  projectPage: '/Projects/:pid',
   resourcesAnchor: '/#Resources',
   resourcesPage: '/Resources'
 };
