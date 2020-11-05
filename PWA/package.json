@@ -10,7 +10,7 @@
     "chart.js": "2.9.4",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
-    "history": "5.0.0",
+    "history": "4.10.0",
     "firebase": "^8.0.0",
     "googleapis": "^63.0.0",
     "moment": "^2.29.1",
@@ -35,7 +35,7 @@
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
-    "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",
+    "updateDependencies": "ncu -x react-scripts,node-sass,history -u && pnpm i",
     "start": "pnpm run startLocal",
     "start:og": "react-scripts start",
     "build": "react-scripts build",
