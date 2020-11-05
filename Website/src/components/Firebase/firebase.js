@@ -1,4 +1,4 @@
-import * as firebaseApp from 'firebase/app';
+import firebaseApp from 'firebase/app';
 import {
   StorageRepository,
   NewsFeedRepository,

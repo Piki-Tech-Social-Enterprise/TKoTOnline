@@ -1,32 +1,32 @@
 dependencies:
-  axios: 0.20.0
-  bootstrap: 4.5.2_jquery@3.5.1
-  chart.js: 2.9.3
-  draft-js: 0.11.7_react-dom@16.13.1+react@16.13.1
+  axios: 0.21.0
+  bootstrap: 4.5.3_jquery@3.5.1
+  chart.js: 2.9.4
+  draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
   draftjs-to-html: 0.9.1
-  firebase: 7.21.1
-  googleapis: 60.0.1
-  history: 4.10.0
-  moment: 2.29.0
+  firebase: 8.0.0
+  googleapis: 63.0.0
+  history: 5.0.0
+  moment: 2.29.1
   node-sass: 4.14.1
   perfect-scrollbar: 1.5.0
   prop-types: 15.7.2
-  react: 16.13.1
-  react-bootstrap-table: 4.3.1_react-dom@16.13.1+react@16.13.1
-  react-chartjs-2: 2.10.0_993042a9951b76ec634148f49ee6c836
-  react-datetime: 3.0.4_moment@2.29.0+react@16.13.1
-  react-dom: 16.13.1_react@16.13.1
-  react-draft-wysiwyg: 1.14.5_883ad373d05dcecea6c0c3fc2719d86d
-  react-google-maps: 9.4.5_7e90ebc9359381e7bce4b5c592f2ebc2
-  react-notification-alert: 0.0.12_react@16.13.1+reactstrap@8.6.0
-  react-router: 5.2.0_react@16.13.1
-  react-router-dom: 5.2.0_react@16.13.1
-  react-scripts: 3.4.3_85057db3d9353a802b4cff706e3330d2
-  react-tagsinput-2: 3.19.8_react@16.13.1
-  reactstrap: 8.6.0_react-dom@16.13.1+react@16.13.1
-  recompose: 0.30.0_react@16.13.1
-  sweetalert2: 10.3.5
-  sweetalert2-react: 0.8.3_react-dom@16.13.1+react@16.13.1
+  react: 17.0.1
+  react-bootstrap-table: 4.3.1_react-dom@17.0.1+react@17.0.1
+  react-chartjs-2: 2.10.0_6c446a34f83b2a92e3214f8b711c141a
+  react-datetime: 3.0.4_moment@2.29.1+react@17.0.1
+  react-dom: 17.0.1_react@17.0.1
+  react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
+  react-google-maps: 9.4.5_00e53ae13adf1b7edad2696018908d80
+  react-notification-alert: 0.0.12_react@17.0.1+reactstrap@8.7.1
+  react-router: 5.2.0_react@17.0.1
+  react-router-dom: 5.2.0_react@17.0.1
+  react-scripts: 3.4.3_25cdfeca2612d82db237d04dbdcb46c9
+  react-tagsinput-2: 3.19.8_react@17.0.1
+  reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
+  recompose: 0.30.0_react@17.0.1
+  sweetalert2: 10.9.0
+  sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
 devDependencies:
   babel-cli: 6.26.0
   babel-preset-env: 1.7.0
@@ -35,14 +35,14 @@ devDependencies:
   chalk: 4.1.0
   env-cmd: 10.1.0
   npm-run-all: 4.1.5
-  react-router-sitemap: 1.2.0_react-router@5.2.0+react@16.13.1
-lockfileVersion: 5.1
+  react-router-sitemap: 1.2.0_react-router@5.2.0+react@17.0.1
+lockfileVersion: 5.2
 optionalDependencies:
-  '@types/googlemaps': 3.39.13
+  '@types/googlemaps': 3.40.3
   '@types/markerclustererplus': 2.1.33
-  '@types/react': 16.9.49
+  '@types/react': 16.9.55
   jquery: 3.5.1
-  typescript: 4.0.3
+  typescript: 4.0.5
 packages:
   /@babel/code-frame/7.10.4:
     dependencies:
@@ -1337,113 +1337,113 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Jj2xW+8+8XPfWGkv9HPv/uR+Qrmq37NPYT352wf7MvE9LrstpLVmFg3LqG6MCRr5miLAom5sen2gZ+iOhVDeRA==
-  /@firebase/analytics/0.5.0_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/analytics/0.6.1_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
       '@firebase/analytics-types': 0.4.0
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/component': 0.1.20
+      '@firebase/installations': 0.4.18_32425dc7c4dd1a9597c15795efe57fba
       '@firebase/logger': 0.2.6
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-WyQ8BT6JSoXpg4q7SV9Yg5EPXbGbG8FkkXAIhV/AnslCglhpxegO1FU33qbuT4Grzc525hZJA97oqtQS8tm4Wg==
+      integrity: sha512-Pn7KPkH/M2JXoyoDHfdSjTBHTlnqe6rHo/vjsSvveA46dUP/GfDpcKWGfy/OBXKrIvKUVP7ZhyZo0Gb6jKB0cw==
   /@firebase/app-types/0.6.1:
     dev: false
     resolution:
       integrity: sha512-L/ZnJRAq7F++utfuoTKX4CLBG5YR7tFO3PLzG1/oXXKEezJ0kRL3CMRoueBEmTCzVb/6SIs2Qlaw++uDgi5Xyg==
-  /@firebase/app/0.6.11:
+  /@firebase/app/0.6.12:
     dependencies:
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
+      '@firebase/component': 0.1.20
       '@firebase/logger': 0.2.6
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       dom-storage: 2.1.0
       tslib: 1.13.0
       xmlhttprequest: 1.8.0
     dev: false
     resolution:
-      integrity: sha512-FH++PaoyTzfTAVuJ0gITNYEIcjT5G+D0671La27MU8Vvr6MTko+5YUZ4xS9QItyotSeRF4rMJ1KR7G8LSyySiA==
-  /@firebase/auth-interop-types/0.1.5_5cc9c61dffbee8f03f0e6d8f4a182f2c:
+      integrity: sha512-gko1NxRLJn+BMqDK6GBhcCDApD5rX5zhNfS7frl/uic8us9GnAuo6NtHuO0Q+AAjYB1Sv3YtPLXI7ckQEO9Wew==
+  /@firebase/auth-interop-types/0.1.5_60b0dedd179759d6955754202cfd53ad:
     dependencies:
       '@firebase/app-types': 0.6.1
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-88h74TMQ6wXChPA6h9Q3E1Jg6TkTHep2+k63OWg3s0ozyGVMeY+TTOti7PFPzq5RhszQPQOoCi59es4MaRvgCw==
-  /@firebase/auth-types/0.10.1_5cc9c61dffbee8f03f0e6d8f4a182f2c:
+  /@firebase/auth-types/0.10.1_60b0dedd179759d6955754202cfd53ad:
     dependencies:
       '@firebase/app-types': 0.6.1
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-/+gBHb1O9x/YlG7inXfxff/6X3BPZt4zgBv4kql6HEmdzNQCodIRlEYnI+/da+lN+dha7PjaFH7C7ewMmfV7rw==
-  /@firebase/auth/0.14.9_1c75c98b925b123d45eb2d7af28bd300:
+  /@firebase/auth/0.15.1_de2357c027bda58296a44a448a452d69:
     dependencies:
-      '@firebase/app': 0.6.11
-      '@firebase/auth-types': 0.10.1_5cc9c61dffbee8f03f0e6d8f4a182f2c
+      '@firebase/app': 0.6.12
+      '@firebase/auth-types': 0.10.1_60b0dedd179759d6955754202cfd53ad
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': '*'
       '@firebase/util': '*'
     resolution:
-      integrity: sha512-PxYa2r5qUEdheXTvqROFrMstK8W4uPiP7NVfp+2Bec+AjY5PxZapCx/YFDLkU0D7YBI82H74PtZrzdJZw7TJ4w==
-  /@firebase/component/0.1.19:
+      integrity: sha512-qVJTmq/6l3/o6V93nAD+n1ExTywbKEFYbuuI1TZIUryy5KSXOFnxilmZI4yJeQSZ3ee06YiJsIRYRaYUeg6JQQ==
+  /@firebase/component/0.1.20:
     dependencies:
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       tslib: 1.13.0
     dev: false
     resolution:
-      integrity: sha512-L0S3g8eqaerg8y0zox3oOHSTwn/FE8RbcRHiurnbESvDViZtP5S5WnhuAPd7FnFxa8ElWK0z1Tr3ikzWDv1xdQ==
-  /@firebase/database-types/0.5.2:
+      integrity: sha512-UF9kBCco3U5AMJVNrup8kzOjksvmjmwL88vr/cL3BQ7DeTZWMf15iBOmBf+9HnhtPboN8Cw+84VT21aXGHBgNQ==
+  /@firebase/database-types/0.6.0:
     dependencies:
       '@firebase/app-types': 0.6.1
     dev: false
     resolution:
-      integrity: sha512-ap2WQOS3LKmGuVFKUghFft7RxXTyZTDr0Xd8y2aqmWsbJVjgozi0huL/EUMgTjGFrATAjcf2A7aNs8AKKZ2a8g==
-  /@firebase/database/0.6.13_@firebase+app-types@0.6.1:
+      integrity: sha512-ljpU7/uboCGqFSe9CNgwd3+Xu5N8YCunzfPpeueuj2vjnmmypUi4QWxgC3UKtGbuv1q+crjeudZGLxnUoO0h7w==
+  /@firebase/database/0.7.0_@firebase+app-types@0.6.1:
     dependencies:
-      '@firebase/auth-interop-types': 0.1.5_5cc9c61dffbee8f03f0e6d8f4a182f2c
-      '@firebase/component': 0.1.19
-      '@firebase/database-types': 0.5.2
+      '@firebase/auth-interop-types': 0.1.5_60b0dedd179759d6955754202cfd53ad
+      '@firebase/component': 0.1.20
+      '@firebase/database-types': 0.6.0
       '@firebase/logger': 0.2.6
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       faye-websocket: 0.11.3
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-NommVkAPzU7CKd1gyehmi3lz0K78q0KOfiex7Nfy7MBMwknLm7oNqKovXSgQV1PCLvKXvvAplDSFhDhzIf9obA==
-  /@firebase/firestore-types/1.13.0_@firebase+app-types@0.6.1:
+      integrity: sha512-pVio41uGhy6HNSk1uBHq9wTzO83bg2Jb527XFILIk4p/KFBbuQwKnQn+65SfnsDlElC1HjHBerTaonHLYevJqA==
+  /@firebase/firestore-types/2.0.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-QF5CAuYOHE6Zbsn1uEg6wkl836iP+i6C0C/Zs3kF60eebxZvTWp8JSZk19Ar+jj4w+ye8/7H5olu5CqDNjWpEA==
-  /@firebase/firestore/1.17.1_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+      integrity: sha512-ZGb7p1SSQJP0Z+kc9GAUi+Fx5rJatFddBrS1ikkayW+QHfSIz0omU23OgSHcBGTxe8dJCeKiKA2Yf+tkDKO/LA==
+  /@firebase/firestore/2.0.0_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/firestore-types': 1.13.0_@firebase+app-types@0.6.1
+      '@firebase/component': 0.1.20
+      '@firebase/firestore-types': 2.0.0_@firebase+app-types@0.6.1
       '@firebase/logger': 0.2.6
-      '@firebase/util': 0.3.2
-      '@firebase/webchannel-wrapper': 0.3.0
+      '@firebase/util': 0.3.3
+      '@firebase/webchannel-wrapper': 0.4.0
       '@grpc/grpc-js': 1.1.4
       '@grpc/proto-loader': 0.5.5
       node-fetch: 2.6.1
@@ -1455,26 +1455,26 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-FJlNmFIBr9wrkA5g9JBPJWPmxYIzUhBDfsJGHNTUCxMbwm12pz/1Y6CW56kvZOgl6l+iPNlF911iduUDFzNUqw==
-  /@firebase/functions-types/0.3.17:
+      integrity: sha512-KHp5/yRmdQkpfGg8zotTJlUweXVsTe6Ip68iruc51VhYjWgmIb5QorelE1N5+O3kFqiDTOfBfeCXaO14bXk4wA==
+  /@firebase/functions-types/0.4.0:
     dev: false
     resolution:
-      integrity: sha512-DGR4i3VI55KnYk4IxrIw7+VG7Q3gA65azHnZxo98Il8IvYLr2UTBlSh72dTLlDf25NW51HqvJgYJDKvSaAeyHQ==
-  /@firebase/functions/0.4.51_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+      integrity: sha512-3KElyO3887HNxtxNF1ytGFrNmqD+hheqjwmT3sI09FaDCuaxGbOnsXAXH2eQ049XRXw9YQpHMgYws/aUNgXVyQ==
+  /@firebase/functions/0.6.0_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/functions-types': 0.3.17
+      '@firebase/component': 0.1.20
+      '@firebase/functions-types': 0.4.0
       '@firebase/messaging-types': 0.5.0_@firebase+app-types@0.6.1
-      isomorphic-fetch: 2.2.1
+      node-fetch: 2.6.1
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-PPx8eZcr4eoU9BITOUGUVurs4WZu8Thj3uCWx766dU3mV1W/7kRgtiptmW0XJUB18FZ1PT3+Hadd6V6vjtLgYw==
+      integrity: sha512-XDVyDLBJwGCqI/agGxRrPYfit7HTcOSXTrjlC8NJr5+h3zzUuAB/+VEfaa8mSEZR+0AjY67B1cPed0WuXsU48g==
   /@firebase/installations-types/0.3.4_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -1483,13 +1483,13 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-RfePJFovmdIXb6rYwtngyxuEcWnOrzdZd9m7xAW0gRxDIjBT20n3BOhjpmgRWXo/DAxRmS7bRjWAyTHY9cqN7Q==
-  /@firebase/installations/0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/installations/0.4.18_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
+      '@firebase/component': 0.1.20
       '@firebase/installations-types': 0.3.4_@firebase+app-types@0.6.1
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       idb: 3.0.2
       tslib: 1.13.0
     dev: false
@@ -1497,7 +1497,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-AE/TyzIpwkC4UayRJD419xTqZkKzxwk0FLht3Dci8WI2OEKHSwoZG9xv4hOBZebe+fDzoV2EzfatQY8c/6Avig==
+      integrity: sha512-el1PvpVbsNb6uXIoSKzI0A52K+h8yeLvI1tjMqdjnp+0xZQr2pwRJcBMvzt6aLrgBT06jMVB3R+fxfxxqgoO2g==
   /@firebase/logger/0.2.6:
     dev: false
     resolution:
@@ -1510,14 +1510,14 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-QaaBswrU6umJYb/ZYvjR5JDSslCGOH6D9P136PhabFAHLTR4TWjsaACvbBXuvwrfCXu10DtcjMxqfhdNIB1Xfg==
-  /@firebase/messaging/0.7.1_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/messaging/0.7.2_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/component': 0.1.20
+      '@firebase/installations': 0.4.18_32425dc7c4dd1a9597c15795efe57fba
       '@firebase/messaging-types': 0.5.0_@firebase+app-types@0.6.1
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       idb: 3.0.2
       tslib: 1.13.0
     dev: false
@@ -1525,27 +1525,27 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-iev/ST9v0xd/8YpGYrZtDcqdD9J6ZWzSuceRn8EKy5vIgQvW/rk2eTQc8axzvDpQ36ZfphMYuhW6XuNrR3Pd2Q==
+      integrity: sha512-5FzxklNgZS5S03p0eKvhsj6mLGG06qgnaLEbLluKeuDJ5STR/+gWySuCdP9BhcJCsTGN77Qwa06MLK/d46R0rQ==
   /@firebase/performance-types/0.0.13:
     dev: false
     resolution:
       integrity: sha512-6fZfIGjQpwo9S5OzMpPyqgYAUZcFzZxHFqOyNtorDIgNXq33nlldTL/vtaUZA8iT9TT5cJlCrF/jthKU7X21EA==
-  /@firebase/performance/0.4.1_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/performance/0.4.3_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/component': 0.1.20
+      '@firebase/installations': 0.4.18_32425dc7c4dd1a9597c15795efe57fba
       '@firebase/logger': 0.2.6
       '@firebase/performance-types': 0.0.13
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-eAqS3/456xnUwuTg4w58x2fYbvTtQpgt67lpBUX3DuhOqwiM8+JELRte52nDgum2lTaTZWiu5de9mPuAYx2WDg==
+      integrity: sha512-oP7EvI8qvlAJgVGY25ZabXl/Xb82ykxKyYP+xNDs0Imdg+8GBOfzqQiGpM+BqovhTTdGPcpJmry7JYwpWMZ8bg==
   /@firebase/polyfill/0.3.36:
     dependencies:
       core-js: 3.6.5
@@ -1558,56 +1558,56 @@ packages:
     dev: false
     resolution:
       integrity: sha512-G96qnF3RYGbZsTRut7NBX0sxyczxt1uyCgXQuH/eAfUCngxjEGcZQnBdy6mvSdqdJh5mC31rWPO4v9/s7HwtzA==
-  /@firebase/remote-config/0.1.28_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/remote-config/0.1.29_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/component': 0.1.20
+      '@firebase/installations': 0.4.18_32425dc7c4dd1a9597c15795efe57fba
       '@firebase/logger': 0.2.6
       '@firebase/remote-config-types': 0.1.9
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-4zSdyxpt94jAnFhO8toNjG8oMKBD+xTuBIcK+Nw8BdQWeJhEamgXlupdBARUk1uf3AvYICngHH32+Si/dMVTbw==
-  /@firebase/storage-types/0.3.13_5cc9c61dffbee8f03f0e6d8f4a182f2c:
+      integrity: sha512-VuKoubiE/kEfp5FXx7Nxw5c1TRYApBey7zdwTu/+U7qZFofHnUGDZs1vu82xTRnwbPtxh228FOwpZZ0iTrpVtA==
+  /@firebase/storage-types/0.3.13_60b0dedd179759d6955754202cfd53ad:
     dependencies:
       '@firebase/app-types': 0.6.1
-      '@firebase/util': 0.3.2
+      '@firebase/util': 0.3.3
     dev: false
     peerDependencies:
       '@firebase/app-types': 0.x
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-pL7b8d5kMNCCL0w9hF7pr16POyKkb3imOW7w0qYrhBnbyJTdVxMWZhb0HxCFyQWC0w3EiIFFmxoz8NTFZDEFog==
-  /@firebase/storage/0.3.43_3086e2db7fbd23d77dbe2a1ae46c8b4b:
+  /@firebase/storage/0.4.0_32425dc7c4dd1a9597c15795efe57fba:
     dependencies:
-      '@firebase/app': 0.6.11
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/component': 0.1.19
-      '@firebase/storage-types': 0.3.13_5cc9c61dffbee8f03f0e6d8f4a182f2c
-      '@firebase/util': 0.3.2
+      '@firebase/component': 0.1.20
+      '@firebase/storage-types': 0.3.13_60b0dedd179759d6955754202cfd53ad
+      '@firebase/util': 0.3.3
       tslib: 1.13.0
     dev: false
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-Jp54jcuyimLxPhZHFVAhNbQmgTu3Sda7vXjXrNpPEhlvvMSq4yuZBR6RrZxe/OrNVprLHh/6lTCjwjOVSo3bWA==
-  /@firebase/util/0.3.2:
+      integrity: sha512-6AG1g2WbbVxscf40rHar+IAk6ocvg8IOM5NmlXHxcXt9KENSQYGNiHsGEROm+W7FOx2izuHTEfqPUr8Qh5EwNA==
+  /@firebase/util/0.3.3:
     dependencies:
       tslib: 1.13.0
     dev: false
     resolution:
-      integrity: sha512-Dqs00++c8rwKky6KCKLLY2T1qYO4Q+X5t+lF7DInXDNF4ae1Oau35bkD+OpJ9u7l1pEv7KHowP6CUKuySCOc8g==
-  /@firebase/webchannel-wrapper/0.3.0:
+      integrity: sha512-VBuyR+6QAvrumzEtp3hMTRYkDnvsWuDMzqObca2Phn30RJTEV24P1RSMG5fw8LbSE+KkD9WiiiMJN++YoeyFaA==
+  /@firebase/webchannel-wrapper/0.4.0:
     dev: false
     resolution:
-      integrity: sha512-VniCGPIgSGNEgOkh5phb3iKmSGIzcwrccy3IomMFRWPCMiCk2y98UQNJEoDs1yIHtZMstVjYWKYxnunIGzC5UQ==
+      integrity: sha512-8cUA/mg0S+BxIZ72TdZRsXKBP5n5uRcE3k29TZhZw6oIiHBt9JA7CTb/4pE1uKtE/q5NeTY2tBDcagoZ+1zjXQ==
   /@grpc/grpc-js/1.1.4:
     dependencies:
       '@types/node': 12.12.54
@@ -1684,7 +1684,7 @@ packages:
       jest-haste-map: 24.9.0
       jest-message-util: 24.9.0
       jest-regex-util: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-resolve-dependencies: 24.9.0
       jest-runner: 24.9.0
       jest-runtime: 24.9.0
@@ -1739,7 +1739,7 @@ packages:
       istanbul-lib-source-maps: 3.0.6
       istanbul-reports: 2.2.7
       jest-haste-map: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-runtime: 24.9.0
       jest-util: 24.9.0
       jest-worker: 24.9.0
@@ -2046,6 +2046,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==
+  /@types/googlemaps/3.40.3:
+    dev: false
+    optional: true
+    resolution:
+      integrity: sha512-ivlG5S0LlnQgpgPnQCUNAs7kjBtO367ZwDmuK+ggsQfW+w4N0RyWbxWZ6vPwegDe50Du3Xbb5+QVwJuB/U1XpA==
   /@types/istanbul-lib-coverage/2.0.3:
     dev: false
     resolution:
@@ -2107,14 +2112,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
-  /@types/react/16.9.49:
+  /@types/react/16.9.55:
     dependencies:
       '@types/prop-types': 15.7.3
       csstype: 3.0.2
     dev: false
     optional: true
     resolution:
-      integrity: sha512-DtLFjSj0OYAdVLBbyjhuV9CdGVHCkHn2R+xr3XkBvK2rS1Y1tkc14XSGjYgm5Fjjr90AxH9tiSzc1pCFMGO06g==
+      integrity: sha512-6KLe6lkILeRwyyy7yG9rULKJ0sXplUsl98MGoCfpteXf9sPWFWWMknDcsvubcpaTdBuxtsLF6HDUwdApZL/xIg==
   /@types/stack-utils/1.0.1:
     dev: false
     resolution:
@@ -2129,15 +2134,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MU10TSgzNABgdzKvQVW1nuuT+sgBMWeXNc3XOs5YXV5SDAK+PPja2eUuBNB9iqElu03xyEDqlnGw0jgl4nbqGQ==
-  /@typescript-eslint/eslint-plugin/2.34.0_7b4bd3cb2bb8840c27da3f93640083dc:
+  /@typescript-eslint/eslint-plugin/2.34.0_78facdc1add3c1bc871f73c35e084619:
     dependencies:
-      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.3
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
+      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.5
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.5
       eslint: 6.8.0
       functional-red-black-tree: 1.0.1
       regexpp: 3.1.0
-      tsutils: 3.17.1_typescript@4.0.3
-      typescript: 4.0.3
+      tsutils: 3.17.1_typescript@4.0.5
+      typescript: 4.0.5
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -2150,10 +2155,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-4zY3Z88rEE99+CNvTbXSyovv2z9PNOVffTWD2W8QF5s2prBQtwN2zadqERcrHpcR7O/+KMI3fcTAmUUhK/iQcQ==
-  /@typescript-eslint/experimental-utils/2.34.0_eslint@6.8.0+typescript@4.0.3:
+  /@typescript-eslint/experimental-utils/2.34.0_eslint@6.8.0+typescript@4.0.5:
     dependencies:
       '@types/json-schema': 7.0.5
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.3
+      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.5
       eslint: 6.8.0
       eslint-scope: 5.1.0
       eslint-utils: 2.1.0
@@ -2165,14 +2170,14 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-eS6FTkq+wuMJ+sgtuNTtcqavWXqsflWcfBnlYhg/nS4aZ1leewkXGbvBhaapn1q6qf4M71bsR1tez5JTRMuqwA==
-  /@typescript-eslint/parser/2.34.0_eslint@6.8.0+typescript@4.0.3:
+  /@typescript-eslint/parser/2.34.0_eslint@6.8.0+typescript@4.0.5:
     dependencies:
       '@types/eslint-visitor-keys': 1.0.0
-      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.3
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.3
+      '@typescript-eslint/experimental-utils': 2.34.0_eslint@6.8.0+typescript@4.0.5
+      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.5
       eslint: 6.8.0
       eslint-visitor-keys: 1.3.0
-      typescript: 4.0.3
+      typescript: 4.0.5
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -2184,7 +2189,7 @@ packages:
         optional: true
     resolution:
       integrity: sha512-03ilO0ucSD0EPTw2X4PntSIRFtDPWjrVq7C3/Z3VQHRC7+13YB55rcJI3Jt+YgeHbjUdJPcPa7b23rXCBokuyA==
-  /@typescript-eslint/typescript-estree/2.34.0_typescript@4.0.3:
+  /@typescript-eslint/typescript-estree/2.34.0_typescript@4.0.5:
     dependencies:
       debug: 4.1.1
       eslint-visitor-keys: 1.3.0
@@ -2192,8 +2197,8 @@ packages:
       is-glob: 4.0.1
       lodash: 4.17.20
       semver: 7.3.2
-      tsutils: 3.17.1_typescript@4.0.3
-      typescript: 4.0.3
+      tsutils: 3.17.1_typescript@4.0.5
+      typescript: 4.0.5
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -2797,12 +2802,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-zg7Hz2k5lI8kb7U32998pRRFin7zJlkfezGJjUc2heaD4Pw2wObakCDVzkKztTm/Ln7eiVvYsjqak0Ed4LkMDA==
-  /axios/0.20.0:
+  /axios/0.21.0:
     dependencies:
       follow-redirects: 1.13.0
     dev: false
     resolution:
-      integrity: sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+      integrity: sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
   /axobject-query/2.2.0:
     dev: false
     resolution:
@@ -3031,7 +3036,7 @@ packages:
       mkdirp: 0.5.5
       pify: 4.0.1
       schema-utils: 2.7.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 6.9'
@@ -3614,7 +3619,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=
-  /bootstrap/4.5.2_jquery@3.5.1:
+  /bootstrap/4.5.3_jquery@3.5.1:
     dependencies:
       jquery: 3.5.1
     dev: false
@@ -3622,7 +3627,7 @@ packages:
       jquery: 1.9.1 - 3
       popper.js: ^1.16.1
     resolution:
-      integrity: sha512-vlGn0bcySYl/iV+BGA544JkkZP5LB3jsmkeKLFQakCOwCM3AOk7VkldBz4jrzSe+Z0Ezn99NVXa1o45cQY4R6A==
+      integrity: sha512-o9ppKQioXGqhw8Z7mah6KdTYpNQY//tipnkxppWhPbiSWdD+1raYsnhwEZjkTHYbGee4cVQ0Rx65EhOY/HNLcQ==
   /brace-expansion/1.1.11:
     dependencies:
       balanced-match: 1.0.0
@@ -4005,13 +4010,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
-  /chart.js/2.9.3:
+  /chart.js/2.9.4:
     dependencies:
       chartjs-color: 2.4.1
-      moment: 2.27.0
+      moment: 2.29.1
     dev: false
     resolution:
-      integrity: sha512-+2jlOobSk52c1VU6fzkh3UwqHMdSlgH1xFv9FKMqHiNCpXsGPQa/+81AFa+i3jZ253Mq9aAycPwDjnn1XbRNNw==
+      integrity: sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A==
   /chartjs-color-string/0.6.0:
     dependencies:
       color-name: 1.1.4
@@ -4472,11 +4477,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
-  /create-react-context/0.3.0_prop-types@15.7.2+react@16.13.1:
+  /create-react-context/0.3.0_prop-types@15.7.2+react@17.0.1:
     dependencies:
       gud: 1.0.0
       prop-types: 15.7.2
-      react: 16.13.1
+      react: 17.0.1
       warning: 4.0.3
     dev: false
     peerDependencies:
@@ -4590,7 +4595,7 @@ packages:
       postcss-modules-values: 3.0.0
       postcss-value-parser: 4.1.0
       schema-utils: 2.7.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -5124,13 +5129,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
-  /draft-js/0.11.7_react-dom@16.13.1+react@16.13.1:
+  /draft-js/0.11.7_react-dom@17.0.1+react@17.0.1:
     dependencies:
       fbjs: 2.0.0
       immutable: 3.7.6
       object-assign: 4.1.1
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
     dev: false
     peerDependencies:
       react: '>=0.14.0'
@@ -5143,7 +5148,7 @@ packages:
       integrity: sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==
   /draftjs-utils/0.10.2_draft-js@0.11.7:
     dependencies:
-      draft-js: 0.11.7_react-dom@16.13.1+react@16.13.1
+      draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       draft-js: ^0.11.x
@@ -5359,8 +5364,8 @@ packages:
       integrity: sha512-qFcX0XJkdg+PB3xjZZG/wKSuT1PnQWx57+TVSjIMmILd2yC/6ByYElPwJnslDsuWuSAp4AwJGumarAAmJch5Kw==
   /eslint-config-react-app/5.2.1_f8f91f27f800428497667fb337aaf85d:
     dependencies:
-      '@typescript-eslint/eslint-plugin': 2.34.0_7b4bd3cb2bb8840c27da3f93640083dc
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
+      '@typescript-eslint/eslint-plugin': 2.34.0_78facdc1add3c1bc871f73c35e084619
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.5
       babel-eslint: 10.1.0_eslint@6.8.0
       confusing-browser-globals: 1.0.9
       eslint: 6.8.0
@@ -5397,7 +5402,7 @@ packages:
       loader-utils: 1.4.0
       object-hash: 2.0.3
       schema-utils: 2.7.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -5948,7 +5953,7 @@ packages:
     dependencies:
       loader-utils: 1.4.0
       schema-utils: 2.7.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -6082,27 +6087,27 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/7.21.1:
+  /firebase/8.0.0:
     dependencies:
-      '@firebase/analytics': 0.5.0_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/app': 0.6.11
+      '@firebase/analytics': 0.6.1_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/app': 0.6.12
       '@firebase/app-types': 0.6.1
-      '@firebase/auth': 0.14.9_1c75c98b925b123d45eb2d7af28bd300
-      '@firebase/database': 0.6.13_@firebase+app-types@0.6.1
-      '@firebase/firestore': 1.17.1_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/functions': 0.4.51_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/installations': 0.4.17_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/messaging': 0.7.1_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/performance': 0.4.1_3086e2db7fbd23d77dbe2a1ae46c8b4b
+      '@firebase/auth': 0.15.1_de2357c027bda58296a44a448a452d69
+      '@firebase/database': 0.7.0_@firebase+app-types@0.6.1
+      '@firebase/firestore': 2.0.0_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/functions': 0.6.0_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/installations': 0.4.18_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/messaging': 0.7.2_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/performance': 0.4.3_32425dc7c4dd1a9597c15795efe57fba
       '@firebase/polyfill': 0.3.36
-      '@firebase/remote-config': 0.1.28_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/storage': 0.3.43_3086e2db7fbd23d77dbe2a1ae46c8b4b
-      '@firebase/util': 0.3.2
+      '@firebase/remote-config': 0.1.29_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/storage': 0.4.0_32425dc7c4dd1a9597c15795efe57fba
+      '@firebase/util': 0.3.3
     dev: false
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-ogqWUXIP2/1BTee112QJiAjgch/Ig7pzlAw2mfWOhl9E0IUX46OKv0hypLX62MBgaAKwPHfICIwsWOCxlQ9dZQ==
+      integrity: sha512-0JMwNGg5CeoYBJ27QuDYJe1pYdJ+lspKbK1Pr+aNtYBfJfZTNy265rRroQsSOTGbXiT6cUqObVPeGwnbi8wZHw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -6319,12 +6324,24 @@ packages:
       extend: 3.0.2
       https-proxy-agent: 5.0.0
       is-stream: 2.0.0
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
     dev: false
     engines:
       node: '>=10'
     resolution:
       integrity: sha512-DDTn3KXVJJigtz+g0J3vhcfbDbKtAroSTxauWsdnP57sM5KZ3d2c/3D9RKFJ86s43hfw6WULg6TXYw/AYiBlpA==
+  /gaxios/4.0.1:
+    dependencies:
+      abort-controller: 3.0.0
+      extend: 3.0.2
+      https-proxy-agent: 5.0.0
+      is-stream: 2.0.0
+      node-fetch: 2.6.1
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-jOin8xRZ/UytQeBpSXFqIzqU7Fi5TqgPNLlUsSB8kjJ76+FiGBfImF8KJu++c6J4jOldfJUtt0YmkRj2ZpSHTQ==
   /gaze/1.1.3:
     dependencies:
       globule: 1.3.2
@@ -6532,10 +6549,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-tbjzndQvSIHGBLzHnhDs3cL4RBjLbLXc2pYvGH+imGVu5b4RMAttUTdnmW2UH0t11QeBTXZ7wlXPS7hrypO/tg==
-  /googleapis-common/4.4.0:
+  /googleapis-common/4.4.3:
     dependencies:
       extend: 3.0.2
-      gaxios: 3.1.0
+      gaxios: 4.0.1
       google-auth-library: 6.0.6
       qs: 6.9.4
       url-template: 2.0.8
@@ -6544,16 +6561,16 @@ packages:
     engines:
       node: '>=10.10.0'
     resolution:
-      integrity: sha512-Bgrs8/1OZQFFIfVuX38L9t48rPAkVUXttZy6NzhhXxFOEMSHgfFIjxou7RIXOkBHxmx2pVwct9WjKkbnqMYImQ==
-  /googleapis/60.0.1:
+      integrity: sha512-W46WKCk3QtlCCfmZyQIH5zxmDOyeV5Qj+qs7nr2ox08eRkEJMWp6iwv542R/PsokXaGUSrmif4vCC4+rGzRSsQ==
+  /googleapis/63.0.0:
     dependencies:
       google-auth-library: 6.0.6
-      googleapis-common: 4.4.0
+      googleapis-common: 4.4.3
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-r/7pDeIMAm/FepbAl2iM+uRQURf2manjOaOVR0j7v2fDPU8QEme44z6N6qGroqJtne0JO5BM0FUz4LuskcwGeQ==
+      integrity: sha512-wixBalZFz9qLFJqKcEaKRAKuWAf20qw35/vVN/0ogfhIMlGuDUNE3groAPdaqAmaE3sTLSEe8+XRNIx3lxOhcQ==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -6710,6 +6727,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-w5dPeWoxlMyl4zKMXWT3zRxSt1dSblRCtrOoxxinK1fhYQ4Fwm5TPef8hNUYTVVu5Hwxr2nS0uaCX3JJFUeabA==
+  /history/5.0.0:
+    dependencies:
+      '@babel/runtime': 7.11.2
+    dev: false
+    resolution:
+      integrity: sha512-3NyRMKIiFSJmIPdq7FxkNMJkQ7ZEtVblOQ38VtKaA0zZMW1Eo6Q6W8oDKEflr1kNNTItSnk4JMCO1deeSgbLLg==
   /hmac-drbg/1.0.1:
     dependencies:
       hash.js: 1.1.7
@@ -6792,7 +6815,7 @@ packages:
       integrity: sha512-ZPr5MNObqnV/T9akshPKbVgyOqLmy+Bxo7juKCfTfnjNniTAMdy4hz21YQqoofMBJD2kdREaqPPdThoR78Tgxg==
   /html-to-draftjs/1.5.0_draft-js@0.11.7:
     dependencies:
-      draft-js: 0.11.7_react-dom@16.13.1+react@16.13.1
+      draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       draft-js: ^0.10.x || ^0.11.x
@@ -6807,7 +6830,7 @@ packages:
       pretty-error: 2.1.1
       tapable: 1.1.3
       util.promisify: 1.0.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>=6.9'
@@ -7683,7 +7706,7 @@ packages:
       jest-get-type: 24.9.0
       jest-jasmine2: 24.9.0
       jest-regex-util: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-util: 24.9.0
       jest-validate: 24.9.0
       micromatch: 3.1.10
@@ -7855,7 +7878,7 @@ packages:
       integrity: sha512-3BEYN5WbSq9wd+SyLDES7AHnjH9A/ROBwmz7l2y+ol+NtSFO8DYiEBzoO1CeFc9a8DYy10EO4dDFVv/wN3zl1w==
   /jest-pnp-resolver/1.2.2_jest-resolve@24.9.0:
     dependencies:
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
     dev: false
     engines:
       node: '>=6'
@@ -7882,7 +7905,7 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-Fm7b6AlWnYhT0BXy4hXpactHIqER7erNgIsIozDXWl5dVm+k8XdGVe1oTg1JyaFnOxarMEbax3wyRJqGP2Pq+g==
-  /jest-resolve/24.9.0_jest-resolve@24.9.0:
+  /jest-resolve/24.9.0:
     dependencies:
       '@jest/types': 24.9.0
       browser-resolve: 1.11.3
@@ -7892,8 +7915,6 @@ packages:
     dev: false
     engines:
       node: '>= 6'
-    peerDependencies:
-      jest-resolve: '*'
     resolution:
       integrity: sha512-TaLeLVL1l08YFZAt3zaPtjiVvyy4oSA6CRe+0AFPPVX3Q/VI0giIWWoAvoS5L96vj9Dqxj4fB5p2qrHCmTU/MQ==
   /jest-runner/24.9.0:
@@ -7911,7 +7932,7 @@ packages:
       jest-jasmine2: 24.9.0
       jest-leak-detector: 24.9.0
       jest-message-util: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-runtime: 24.9.0
       jest-util: 24.9.0
       jest-worker: 24.9.0
@@ -7939,7 +7960,7 @@ packages:
       jest-message-util: 24.9.0
       jest-mock: 24.9.0
       jest-regex-util: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-snapshot: 24.9.0
       jest-util: 24.9.0
       jest-validate: 24.9.0
@@ -7969,7 +7990,7 @@ packages:
       jest-get-type: 24.9.0
       jest-matcher-utils: 24.9.0
       jest-message-util: 24.9.0
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       mkdirp: 0.5.5
       natural-compare: 1.4.0
       pretty-format: 24.9.0
@@ -8791,11 +8812,11 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
-  /mini-create-react-context/0.4.0_prop-types@15.7.2+react@16.13.1:
+  /mini-create-react-context/0.4.0_prop-types@15.7.2+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
       prop-types: 15.7.2
-      react: 16.13.1
+      react: 17.0.1
       tiny-warning: 1.0.3
     dev: false
     peerDependencies:
@@ -8808,7 +8829,7 @@ packages:
       loader-utils: 1.4.0
       normalize-url: 1.9.1
       schema-utils: 1.0.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -8905,14 +8926,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
-  /moment/2.27.0:
+  /moment/2.29.1:
     dev: false
     resolution:
-      integrity: sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
-  /moment/2.29.0:
-    dev: false
-    resolution:
-      integrity: sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
+      integrity: sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
   /mousetrap/1.6.5:
     dev: false
     resolution:
@@ -9411,7 +9428,7 @@ packages:
     dependencies:
       cssnano: 4.1.10
       last-call-webpack-plugin: 3.0.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     peerDependencies:
       webpack: ^4.0.0
@@ -9868,9 +9885,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
-  /pnp-webpack-plugin/1.6.4_typescript@4.0.3:
+  /pnp-webpack-plugin/1.6.4_typescript@4.0.5:
     dependencies:
-      ts-pnp: 1.1.6_typescript@4.0.3
+      ts-pnp: 1.1.6_typescript@4.0.5
     dev: false
     engines:
       node: '>=6'
@@ -10912,26 +10929,26 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-OfBnObtnGgLGfweORmdZbyEz+3dgVePQBb3zipiaDsMHV1NpWm0rDFYIVXFV/AK+x4VIIfWHhrdMIeoTLyRr2g==
-  /react-bootstrap-table/4.3.1_react-dom@16.13.1+react@16.13.1:
+  /react-bootstrap-table/4.3.1_react-dom@17.0.1+react@17.0.1:
     dependencies:
       classnames: 2.2.6
       prop-types: 15.7.2
-      react: 16.13.1
-      react-modal: 3.11.2_react-dom@16.13.1+react@16.13.1
-      react-s-alert: 1.4.1_eb0d650be231ffd0ace4a30b38162117
+      react: 17.0.1
+      react-modal: 3.11.2_react-dom@17.0.1+react@17.0.1
+      react-s-alert: 1.4.1_738bb8f954d12b6833bcb33fcfa7848e
     dev: false
     peerDependencies:
       react: ^15.0.0 || ^16.0.0
       react-dom: '*'
     resolution:
       integrity: sha1-9wS+Vbf2vwVX0vxb7G0l/TB9DN4=
-  /react-chartjs-2/2.10.0_993042a9951b76ec634148f49ee6c836:
+  /react-chartjs-2/2.10.0_6c446a34f83b2a92e3214f8b711c141a:
     dependencies:
-      chart.js: 2.9.3
+      chart.js: 2.9.4
       lodash: 4.17.20
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
     dev: false
     peerDependencies:
       chart.js: ^2.3
@@ -10939,11 +10956,11 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0-beta || ^16.0.0
     resolution:
       integrity: sha512-1MjWEkUn8LLFf6GVyYUOrruJTW3yVU5hlEJOwGj3MiokuC+jH/BahjWVGAMonbe9UYbEIUbd2Rn36iVlC0Hb7w==
-  /react-datetime/3.0.4_moment@2.29.0+react@16.13.1:
+  /react-datetime/3.0.4_moment@2.29.1+react@17.0.1:
     dependencies:
-      moment: 2.29.0
+      moment: 2.29.1
       prop-types: 15.7.2
-      react: 16.13.1
+      react: 17.0.1
     dev: false
     peerDependencies:
       moment: ^2.16.0
@@ -10981,28 +10998,27 @@ packages:
       node: '>=8.10'
     resolution:
       integrity: sha512-XxTbgJnYZmxuPtY3y/UV0D8/65NKkmaia4rXzViknVnZeVlklSh8u6TnaEYPfAi/Gh1TP4mEOXHI6jQOPbeakQ==
-  /react-dom/16.13.1_react@16.13.1:
+  /react-dom/17.0.1_react@17.0.1:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.7.2
-      react: 16.13.1
-      scheduler: 0.19.1
+      react: 17.0.1
+      scheduler: 0.20.1
     dev: false
     peerDependencies:
-      react: ^16.13.1
+      react: 17.0.1
     resolution:
-      integrity: sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
-  /react-draft-wysiwyg/1.14.5_883ad373d05dcecea6c0c3fc2719d86d:
+      integrity: sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
+  /react-draft-wysiwyg/1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb:
     dependencies:
       classnames: 2.2.6
-      draft-js: 0.11.7_react-dom@16.13.1+react@16.13.1
+      draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
       draftjs-utils: 0.10.2_draft-js@0.11.7
       html-to-draftjs: 1.5.0_draft-js@0.11.7
       linkify-it: 2.2.0
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
     dev: false
     peerDependencies:
       draft-js: ^0.10.x || ^0.11.x
@@ -11015,11 +11031,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
-  /react-google-maps/9.4.5_7e90ebc9359381e7bce4b5c592f2ebc2:
+  /react-google-maps/9.4.5_00e53ae13adf1b7edad2696018908d80:
     dependencies:
-      '@types/googlemaps': 3.39.13
+      '@types/googlemaps': 3.40.3
       '@types/markerclustererplus': 2.1.33
-      '@types/react': 16.9.49
+      '@types/react': 16.9.55
       babel-runtime: 6.26.0
       can-use-dom: 0.1.0
       google-maps-infobox: 2.0.0
@@ -11028,9 +11044,9 @@ packages:
       marker-clusterer-plus: 2.1.4
       markerwithlabel: 2.0.2
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-      recompose: 0.26.0_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      recompose: 0.26.0_react@17.0.1
       scriptjs: 2.5.9
       warning: 3.0.0
     dev: false
@@ -11050,12 +11066,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-  /react-modal/3.11.2_react-dom@16.13.1+react@16.13.1:
+  /react-modal/3.11.2_react-dom@17.0.1+react@17.0.1:
     dependencies:
       exenv: 1.2.2
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
     dev: false
@@ -11064,24 +11080,24 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16
     resolution:
       integrity: sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
-  /react-notification-alert/0.0.12_react@16.13.1+reactstrap@8.6.0:
+  /react-notification-alert/0.0.12_react@17.0.1+reactstrap@8.7.1:
     dependencies:
-      react: 16.13.1
-      reactstrap: 8.6.0_react-dom@16.13.1+react@16.13.1
+      react: 17.0.1
+      reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       react: 16.x.x
       reactstrap: 8.x.x
     resolution:
       integrity: sha512-6GBpWe45zWEflV8c98l82HRl67iku2ARJ2FTbJh5kWiU/NyNb71l7CPKifkmDAdipDj0mouTxw8/3sRSVOMdvQ==
-  /react-popper/1.3.7_react@16.13.1:
+  /react-popper/1.3.7_react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
-      create-react-context: 0.3.0_prop-types@15.7.2+react@16.13.1
+      create-react-context: 0.3.0_prop-types@15.7.2+react@17.0.1
       deep-equal: 1.1.1
       popper.js: 1.16.1
       prop-types: 15.7.2
-      react: 16.13.1
+      react: 17.0.1
       typed-styles: 0.0.7
       warning: 4.0.3
     dev: false
@@ -11089,14 +11105,14 @@ packages:
       react: 0.14.x || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
-  /react-router-dom/5.2.0_react@16.13.1:
+  /react-router-dom/5.2.0_react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
       history: 4.10.0
       loose-envify: 1.4.0
       prop-types: 15.7.2
-      react: 16.13.1
-      react-router: 5.2.0_react@16.13.1
+      react: 17.0.1
+      react-router: 5.2.0_react@17.0.1
       tiny-invariant: 1.1.0
       tiny-warning: 1.0.3
     dev: false
@@ -11104,10 +11120,10 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-gxAmfylo2QUjcwxI63RhQ5G85Qqt4voZpUXSEqCwykV0baaOTQDR1f0PmY8AELqIyVc0NEZUj0Gov5lNGcXgsA==
-  /react-router-sitemap/1.2.0_react-router@5.2.0+react@16.13.1:
+  /react-router-sitemap/1.2.0_react-router@5.2.0+react@17.0.1:
     dependencies:
-      react: 16.13.1
-      react-router: 5.2.0_react@16.13.1
+      react: 17.0.1
+      react-router: 5.2.0_react@17.0.1
       sitemap: 1.13.0
     dev: true
     peerDependencies:
@@ -11115,16 +11131,16 @@ packages:
       react-router: ^2.3.0 || ^3.2.1 || ^4.3.0
     resolution:
       integrity: sha512-3aETwxCFTGHsGbXpyh7sr+c/WDr0q1rpng0M4pgoV6Owl3673buejPHGvzDmZEdiqhRa+I0znRDneKRc1NC06Q==
-  /react-router/5.2.0_react@16.13.1:
+  /react-router/5.2.0_react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
       history: 4.10.0
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
-      mini-create-react-context: 0.4.0_prop-types@15.7.2+react@16.13.1
+      mini-create-react-context: 0.4.0_prop-types@15.7.2+react@17.0.1
       path-to-regexp: 1.8.0
       prop-types: 15.7.2
-      react: 16.13.1
+      react: 17.0.1
       react-is: 16.13.1
       tiny-invariant: 1.1.0
       tiny-warning: 1.0.3
@@ -11133,12 +11149,12 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-smz1DUuFHRKdcJC0jobGo8cVbhO3x50tCL4icacOlcwDOEQPq4TMqwx3sY1TP+DvtTgz4nm3thuo7A+BK2U0Dw==
-  /react-s-alert/1.4.1_eb0d650be231ffd0ace4a30b38162117:
+  /react-s-alert/1.4.1_738bb8f954d12b6833bcb33fcfa7848e:
     dependencies:
       babel-runtime: 6.26.0
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
     deprecated: 'No longer maintained, see more info in readme'
     dev: false
     peerDependencies:
@@ -11147,12 +11163,12 @@ packages:
       react-dom: ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-+cSpVPe6YeGklhlo7zbVlB0Z6jdiU9HPmEVzp5nIhNm9lvdL7rVO2Jx09pCwT99GmODyoN0iNhbQku6r7six8A==
-  /react-scripts/3.4.3_85057db3d9353a802b4cff706e3330d2:
+  /react-scripts/3.4.3_25cdfeca2612d82db237d04dbdcb46c9:
     dependencies:
       '@babel/core': 7.9.0
       '@svgr/webpack': 4.3.3
-      '@typescript-eslint/eslint-plugin': 2.34.0_7b4bd3cb2bb8840c27da3f93640083dc
-      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.3
+      '@typescript-eslint/eslint-plugin': 2.34.0_78facdc1add3c1bc871f73c35e084619
+      '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.0.5
       babel-eslint: 10.1.0_eslint@6.8.0
       babel-jest: 24.9.0_@babel+core@7.9.0
       babel-loader: 8.1.0_@babel+core@7.9.0+webpack@4.42.0
@@ -11177,11 +11193,11 @@ packages:
       identity-obj-proxy: 3.0.0
       jest: 24.9.0
       jest-environment-jsdom-fourteen: 1.0.1
-      jest-resolve: 24.9.0_jest-resolve@24.9.0
+      jest-resolve: 24.9.0
       jest-watch-typeahead: 0.4.2
       mini-css-extract-plugin: 0.9.0_webpack@4.42.0
       optimize-css-assets-webpack-plugin: 5.0.3_webpack@4.42.0
-      pnp-webpack-plugin: 1.6.4_typescript@4.0.3
+      pnp-webpack-plugin: 1.6.4_typescript@4.0.5
       postcss-flexbugs-fixes: 4.1.0
       postcss-loader: 3.0.0
       postcss-normalize: 8.0.1
@@ -11195,10 +11211,10 @@ packages:
       semver: 6.3.0
       style-loader: 0.23.1
       terser-webpack-plugin: 2.3.8_webpack@4.42.0
-      ts-pnp: 1.1.6_typescript@4.0.3
-      typescript: 4.0.3
+      ts-pnp: 1.1.6_typescript@4.0.5
+      typescript: 4.0.5
       url-loader: 2.3.0_file-loader@4.3.0+webpack@4.42.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-dev-server: 3.11.0_webpack@4.42.0
       webpack-manifest-plugin: 2.2.0_webpack@4.42.0
       workbox-webpack-plugin: 4.3.1_webpack@4.42.0
@@ -11216,21 +11232,21 @@ packages:
         optional: true
     resolution:
       integrity: sha512-oSnoWmii/iKdeQiwaO6map1lUaZLmG0xIUyb/HwCVFLT7gNbj8JZ9RmpvMCZ4fB98ZUMRfNmp/ft8uy/xD1RLA==
-  /react-tagsinput-2/3.19.8_react@16.13.1:
+  /react-tagsinput-2/3.19.8_react@17.0.1:
     dependencies:
-      react: 16.13.1
+      react: 17.0.1
     dev: false
     peerDependencies:
       react: ^16.0.0 || ^15.0.0 || ^0.14.0
     resolution:
       integrity: sha512-KxKBjQJ/J3QwuaVuTV3UwLE0joGrhe6oKqhq9fYO5hZkZFZy87k4ehtzo+7yN9seypDLDJ0uW+1WVbRb0T+xMA==
-  /react-transition-group/2.9.0_react-dom@16.13.1+react@16.13.1:
+  /react-transition-group/2.9.0_react-dom@17.0.1+react@17.0.1:
     dependencies:
       dom-helpers: 3.4.0
       loose-envify: 1.4.0
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
       react-lifecycles-compat: 3.0.4
     dev: false
     peerDependencies:
@@ -11238,31 +11254,30 @@ packages:
       react-dom: '>=15.0.0'
     resolution:
       integrity: sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
-  /react/16.13.1:
+  /react/17.0.1:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.7.2
     dev: false
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
-  /reactstrap/8.6.0_react-dom@16.13.1+react@16.13.1:
+      integrity: sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
+  /reactstrap/8.7.1_react-dom@17.0.1+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
       classnames: 2.2.6
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-      react-popper: 1.3.7_react@16.13.1
-      react-transition-group: 2.9.0_react-dom@16.13.1+react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      react-popper: 1.3.7_react@17.0.1
+      react-transition-group: 2.9.0_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
-      react: ^16.3.0
-      react-dom: ^16.3.0
+      react: '>=16.3.0'
+      react-dom: '>=16.3.0'
     resolution:
-      integrity: sha512-03/UMbLPR6MhVStVUfCLuKh8xh4JOtNVkRxDB9/uHixN+cEQPOpSYa0K69YyK1/2YdZBs2qS6y0cQkK8NQKBHA==
+      integrity: sha512-nZEUSxqqWJh0yGIvp4BgoHkXAcm2PqRLhpoOodMp5ce6njVpPd+GgUtbZscpu4jOi7GUFwpJ15tWZn59co4EQg==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -11365,25 +11380,25 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-wlgPA6cCIIg9gKz0fgAPjnzh4yR/LnXovwuo9hvyGvx3h8nX4+/iLZplfUWasXpqD8BdnGnP5njOFjkUwPzvjA==
-  /recompose/0.26.0_react@16.13.1:
+  /recompose/0.26.0_react@17.0.1:
     dependencies:
       change-emitter: 0.1.6
       fbjs: 0.8.17
       hoist-non-react-statics: 2.5.5
-      react: 16.13.1
+      react: 17.0.1
       symbol-observable: 1.2.0
     dev: false
     peerDependencies:
       react: ^0.14.0 || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-KwOu6ztO0mN5vy3+zDcc45lgnaUoaQse/a5yLVqtzTK13czSWnFGmXbQVmnoMgDkI5POd1EwIKSbjU1V7xdZog==
-  /recompose/0.30.0_react@16.13.1:
+  /recompose/0.30.0_react@17.0.1:
     dependencies:
       '@babel/runtime': 7.11.2
       change-emitter: 0.1.6
       fbjs: 0.8.17
       hoist-non-react-statics: 2.5.5
-      react: 16.13.1
+      react: 17.0.1
       react-lifecycles-compat: 3.0.4
       symbol-observable: 1.2.0
     dev: false
@@ -11833,7 +11848,7 @@ packages:
       node-sass: 4.14.1
       schema-utils: 2.7.0
       semver: 6.3.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -11863,13 +11878,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-Ydydq3zC+WYDJK1+gRxRapLIED9PWeSuuS41wqyoRmzvhhh9nc+QQrVMKJYzJFULazeGhzSV0QleN2wD3boh2g==
-  /scheduler/0.19.1:
+  /scheduler/0.20.1:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
     dev: false
     resolution:
-      integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+      integrity: sha512-LKTe+2xNJBNxu/QhHvDR14wUXHRQbVY5ZOYpOGWRzhydZUqrLb2JBvLPY7cAqFmqrWuDED0Mjk7013SZiOz6Bw==
   /schema-utils/1.0.0:
     dependencies:
       ajv: 6.12.4
@@ -12632,13 +12647,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
-  /sweetalert2-react/0.8.3_react-dom@16.13.1+react@16.13.1:
+  /sweetalert2-react/0.8.3_react-dom@17.0.1+react@17.0.1:
     dependencies:
       lodash.pick: 4.4.0
       mousetrap: 1.6.5
       prop-types: 15.7.2
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
       sweetalert2: 8.19.0
       warning: 4.0.3
     dev: false
@@ -12649,10 +12664,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.3.5:
+  /sweetalert2/10.9.0:
     dev: false
     resolution:
-      integrity: sha512-8XBQvW2frWVn0Xs80qyraRXcb3Mg/aKG+9sdVPlzViDIYJfLhMeda3pRuyGzyvrPXbBQ3KRjs+66xKH3kz8/og==
+      integrity: sha512-ijIYsQ4ybOVt49GbZd5FfLoA5A3CCtHK2iSJqnIbCGT/p9d0SwhjtHNO10w/VU8chzM+5hJQ2J6Z6eAEUYtXtw==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -12701,7 +12716,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-sources: 1.4.3
       worker-farm: 1.7.0
     dev: false
@@ -12721,7 +12736,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -12895,9 +12910,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-m6s2OdQe5wgpFMC+pAJ+q9djG82O2jcHPOI6RNg1yy9rCYR+WD6Nbpl32fDpfC56nirdRy+opFa/Vk7HYhqaew==
-  /ts-pnp/1.1.6_typescript@4.0.3:
+  /ts-pnp/1.1.6_typescript@4.0.5:
     dependencies:
-      typescript: 4.0.3
+      typescript: 4.0.5
     dev: false
     engines:
       node: '>=6'
@@ -12912,10 +12927,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
-  /tsutils/3.17.1_typescript@4.0.3:
+  /tsutils/3.17.1_typescript@4.0.5:
     dependencies:
       tslib: 1.13.0
-      typescript: 4.0.3
+      typescript: 4.0.5
     dev: false
     engines:
       node: '>= 6'
@@ -12982,14 +12997,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript/4.0.3:
+  /typescript/4.0.5:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     optional: true
     resolution:
-      integrity: sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
+      integrity: sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
   /ua-parser-js/0.7.21:
     dev: false
     resolution:
@@ -13109,7 +13124,7 @@ packages:
       loader-utils: 1.4.0
       mime: 2.4.6
       schema-utils: 2.7.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -13315,7 +13330,7 @@ packages:
       mime: 2.4.6
       mkdirp: 0.5.5
       range-parser: 1.2.1
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-log: 2.0.0
     dev: false
     engines:
@@ -13355,7 +13370,7 @@ packages:
       strip-ansi: 3.0.1
       supports-color: 6.1.0
       url: 0.11.0
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       webpack-dev-middleware: 3.7.2_webpack@4.42.0
       webpack-log: 2.0.0
       ws: 6.2.1
@@ -13387,7 +13402,7 @@ packages:
       lodash: 4.17.20
       object.entries: 1.1.2
       tapable: 1.1.3
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
     dev: false
     engines:
       node: '>=6.11.5'
@@ -13402,7 +13417,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==
-  /webpack/4.42.0_webpack@4.42.0:
+  /webpack/4.42.0:
     dependencies:
       '@webassemblyjs/ast': 1.8.5
       '@webassemblyjs/helper-module-context': 1.8.5
@@ -13431,8 +13446,6 @@ packages:
     engines:
       node: '>=6.11.5'
     hasBin: true
-    peerDependencies:
-      webpack: '*'
     resolution:
       integrity: sha512-EzJRHvwQyBiYrYqhyjW9AqM90dE4+s1/XtCfn7uWg6cS72zH+2VPFAlsnW0+W0cDi0XRjNKUMoJtpSi50+Ph6w==
   /websocket-driver/0.6.5:
@@ -13634,7 +13647,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.11.2
       json-stable-stringify: 1.0.1
-      webpack: 4.42.0_webpack@4.42.0
+      webpack: 4.42.0
       workbox-build: 4.3.1
     dev: false
     engines:
@@ -13773,34 +13786,34 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
-  '@types/googlemaps': 3.39.13
+  '@types/googlemaps': 3.40.3
   '@types/markerclustererplus': 2.1.33
-  '@types/react': 16.9.49
-  axios: ^0.20.0
+  '@types/react': 16.9.55
+  axios: ^0.21.0
   babel-cli: ^6.26.0
   babel-preset-env: ^1.7.0
   babel-preset-react: ^6.24.1
   babel-register: ^6.26.0
-  bootstrap: 4.5.2
+  bootstrap: 4.5.3
   chalk: ^4.1.0
-  chart.js: 2.9.3
+  chart.js: 2.9.4
   draft-js: ^0.11.7
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^7.21.1
-  googleapis: ^60.0.1
-  history: 4.10.0
+  firebase: ^8.0.0
+  googleapis: ^63.0.0
+  history: 5.0.0
   jquery: 3.5.1
-  moment: ^2.29.0
+  moment: ^2.29.1
   node-sass: 4.14.1
   npm-run-all: ^4.1.5
   perfect-scrollbar: 1.5.0
   prop-types: ^15.7.2
-  react: 16.13.1
+  react: 17.0.1
   react-bootstrap-table: ^4.3.1
   react-chartjs-2: 2.10.0
   react-datetime: ^3.0.4
-  react-dom: 16.13.1
+  react-dom: 17.0.1
   react-draft-wysiwyg: ^1.14.5
   react-google-maps: 9.4.5
   react-notification-alert: 0.0.12
@@ -13809,8 +13822,8 @@ specifiers:
   react-router-sitemap: ^1.2.0
   react-scripts: 3.4.3
   react-tagsinput-2: ^3.19.8
-  reactstrap: 8.6.0
+  reactstrap: 8.7.1
   recompose: ^0.30.0
-  sweetalert2: ^10.3.5
+  sweetalert2: ^10.9.0
   sweetalert2-react: ^0.8.3
-  typescript: 4.0.3
+  typescript: 4.0.5
