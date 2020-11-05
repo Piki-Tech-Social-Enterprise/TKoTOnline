@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
 import {
   withFirebase

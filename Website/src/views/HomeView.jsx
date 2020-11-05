@@ -32,13 +32,13 @@ const EventsSection = lazy(async () => await import('components/Sections/Events'
 const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
 const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
 const {
-  home,
-  iwiMembers,
-  about,
-  projects,
-  events,
-  newsFeed,
-  resources
+  homeAnchor,
+  iwiMembersAnchor,
+  aboutAnchor,
+  projectsAnchor,
+  eventsAnchor,
+  newsFeedAnchor,
+  resourcesAnchor
 } = Routes;
 const HomeView = props => {
   const [state, setState] = useState({
@@ -102,14 +102,14 @@ const HomeView = props => {
             <Scrollspy
               names={[
                 'HomeNavbar',
-                home.replace('/#', ''),
-                iwiMembers.replace('/#', ''),
-                about.replace('/#', ''),
+                homeAnchor.replace('/#', ''),
+                iwiMembersAnchor.replace('/#', ''),
+                aboutAnchor.replace('/#', ''),
                 'TkotBgImgContainer',
-                projects.replace('/#', ''),
-                events.replace('/#', ''),
-                newsFeed.replace('/#', ''),
-                resources.replace('/#', ''),
+                projectsAnchor.replace('/#', ''),
+                eventsAnchor.replace('/#', ''),
+                newsFeedAnchor.replace('/#', ''),
+                resourcesAnchor.replace('/#', ''),
                 'HomeFooter'
               ]}
               homeIndex={1}

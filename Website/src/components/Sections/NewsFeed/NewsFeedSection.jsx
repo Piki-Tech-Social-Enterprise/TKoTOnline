@@ -26,12 +26,14 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
+import draftToHtml from 'draftjs-to-html';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,
+    dbSettings: {},
     dbNewsFeeds: []
   });
   const {
@@ -45,6 +47,7 @@ const NewsFeedSection = props => {
   } = parsedQs;
   const {
     isLoading,
+    dbSettings,
     dbNewsFeeds
   } = state;
   useEffect(() => {
@@ -52,6 +55,7 @@ const NewsFeedSection = props => {
       const {
         firebase
       } = props;
+      const dbSettings = await firebase.getDbSettingsValues(true);
       const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
       const filteredDbNewsFeeds = searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
@@ -65,6 +69,7 @@ const NewsFeedSection = props => {
       setState(s => ({
         ...s,
         isLoading: false,
+        dbSettings,
         dbNewsFeeds: filteredDbNewsFeedsAndEPanui
       }));
     };
@@ -77,8 +82,17 @@ const NewsFeedSection = props => {
       <Container>
         <a id="NewsFeed" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
         <Row className="debug-outline">
-          <Col className="mx-auto text-center my-3">
-            <h3 className="text-uppercase">Our Latest News{searchCategory ? `: ${searchCategory}` : null}</h3>
+          <Col className="mx-auto my-3">
+            <h3 className="text-uppercase text-center">Our Latest News{searchCategory ? `: ${searchCategory}` : null}</h3>
+            {
+              dbSettings.newsSectionDescription
+                ? <>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(dbSettings.newsSectionDescription)) }}
+                  />
+                </>
+                : null
+            }
             {/* <NewsFeedCarousel
               searchCategory={searchCategory}
             /> */}

@@ -48,6 +48,8 @@ const INITIAL_STATE = {
   ],
   content: '',
   header: '',
+  imageUrl: '',
+  imageUrlFile: null,
   resourceUrl: '',
   resourceUrlFile: null,
   rid: null
@@ -65,8 +67,8 @@ const AuthResourceView = props => {
     } = e.target;
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setResource(p => ({
-      ...p,
+    setResource(r => ({
+      ...r,
       [name]: useChecked
         ? checked
         : value
@@ -79,6 +81,7 @@ const AuthResourceView = props => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
+    const maxImageFileSize = 2097152;
     const maxResourceFileSize = 2097152;
     const now = new Date();
     const {
@@ -93,9 +96,11 @@ const AuthResourceView = props => {
       categoryTags,
       content,
       header,
+      imageUrlFile,
       resourceUrlFile
     } = resource;
     let rid = resource.rid;
+    let imageUrl = resource.imageUrl;
     let resourceUrl = resource.resourceUrl;
     let displayIcon = 'error';
     let displayTitle = 'Save Resource Failed';
@@ -103,6 +108,12 @@ const AuthResourceView = props => {
     try {
       if (!resourceUrl || !header || !content) {
         displayMessage = 'The Resource, Header and Content fields are required.';
+      } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
+        const {
+          size
+        } = imageUrlFile;
+        throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+        // eslint-disable-next-line
       } else if (resourceUrlFile && resourceUrlFile.size > maxResourceFileSize) {
         const {
           size
@@ -111,6 +122,9 @@ const AuthResourceView = props => {
       } else {
         if (isNew) {
           rid = await firebase.saveDbResource({});
+          if (imageUrlFile && imageUrlFile.name) {
+            imageUrl = getImageUrl(resourceImageUrlFormat, resourceKeyFormat, rid, resourceFilenameFormat, imageUrlFile.name, '');
+          }
           if (resourceUrlFile && resourceUrlFile.name) {
             resourceUrl = resourceResourceUrlFormat
               .replace(resourceKeyFormat, rid)
@@ -124,11 +138,15 @@ const AuthResourceView = props => {
           category: categoryTags.join(TAG_SEPARATOR),
           content: content,
           header,
+          imageUrl,
           resourceUrl,
           rid: rid,
           updated: now.toString(),
           updatedBy: uid
         });
+        if (imageUrlFile) {
+          await firebase.saveStorageFile(imageUrl, imageUrlFile);
+        }
         if (resourceUrlFile) {
           await firebase.saveStorageFile(resourceUrl, resourceUrlFile);
         }
@@ -203,12 +221,22 @@ const AuthResourceView = props => {
   const handleGotoParentList = () => {
     props.history.push('/auth/Resources');
   };
+  const handleImageUrlFileChange = async e => {
+    e.preventDefault();
+    if (e.target && e.target.files && e.target.files.length) {
+      const imageUrlFile = e.target.files[0];
+      setResource(r => ({
+        ...r,
+        imageUrlFile: imageUrlFile
+      }));
+    }
+  };
   const handleResourceUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
       const resourceUrlFile = e.target.files[0];
-      setResource(p => ({
-        ...p,
+      setResource(r => ({
+        ...r,
         resourceUrlFile: resourceUrlFile
       }));
     }
@@ -225,21 +253,23 @@ const AuthResourceView = props => {
         category,
         content,
         header,
+        imageUrl,
         resourceUrl,
         rid
       } = dbResource;
       const resourceDownloadUrl = resourceUrl.startsWith('/resources')
         ? await firebase.getStorageFileDownloadURL(resourceUrl)
         : resourceUrl;
-      setResource(p => ({
-        ...p,
+      setResource(r => ({
+        ...r,
         active,
         category,
         categoryTags: category && category.length
           ? category.split(TAG_SEPARATOR)
-          : p.categoryTags,
+          : r.categoryTags,
         content,
         header,
+        imageUrl: imageUrl || '',
         resourceUrl,
         resourceDownloadUrl,
         rid
@@ -320,6 +350,25 @@ const AuthResourceView = props => {
                       <FormGroup>
                         <Label>Header</Label>
                         <Input placeholder="Header" name="header" value={resource.header} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Image</Label>
+                        <FirebaseInput
+                          value={resource.imageUrl}
+                          onChange={handleChange}
+                          downloadURLInputProps={{
+                            id: 'imageUrl',
+                            name: 'imageUrl',
+                            placeholder: 'Image',
+                            type: 'text'
+                          }}
+                          downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
+                          downloadURLFileInputOnChange={handleImageUrlFileChange}
+                          downloadURLFormat={resourceImageUrlFormat}
+                          downloadURLFormatKeyName={resourceKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.rid}
+                          downloadURLFormatFileName={resourceFilenameFormat}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>

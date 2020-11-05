@@ -49,6 +49,7 @@ const INITIAL_STATE = {
   aboutPageTKoTBackOfficeStructureImageUrl: '',
   aboutPageTKoTBackOfficeStructureImageUrlFile: null,
   aboutPageExtraDescription: '',
+  newsSectionDescription: '',
   gmailEmail: '',
   gmailPassword: ''
 };
@@ -103,6 +104,7 @@ const AuthSettingsView = props => {
       aboutPageTKoTBackOfficeStructureDescription,
       aboutPageTKoTBackOfficeStructureImageUrlFile,
       aboutPageExtraDescription,
+      newsSectionDescription,
       gmailEmail,
       gmailPassword
     } = settings;
@@ -159,6 +161,7 @@ const AuthSettingsView = props => {
           aboutPageTKoTBackOfficeStructureDescription: aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl: aboutPageTKoTBackOfficeStructureImageUrl,
           aboutPageExtraDescription: aboutPageExtraDescription,
+          newsSectionDescription: newsSectionDescription,
           gmailEmail: gmailEmail,
           gmailPassword: gmailPassword,
           sid: sid,
@@ -288,6 +291,7 @@ const AuthSettingsView = props => {
           aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl,
           aboutPageExtraDescription,
+          newsSectionDescription,
           gmailEmail,
           gmailPassword,
           sid
@@ -302,6 +306,7 @@ const AuthSettingsView = props => {
           aboutPageTKoTBackOfficeStructureDescription,
           aboutPageTKoTBackOfficeStructureImageUrl,
           aboutPageExtraDescription,
+          newsSectionDescription,
           gmailEmail,
           gmailPassword,
           sid
@@ -356,6 +361,14 @@ const AuthSettingsView = props => {
                           <NavLink
                             data-tab={3}
                             active={activeTab === 3}
+                            onClick={handleTabClick}
+                            className="clickable"
+                          >News Section</NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            data-tab={4}
+                            active={activeTab === 4}
                             onClick={handleTabClick}
                             className="clickable"
                           >3rd Party Integrations</NavLink>
@@ -464,6 +477,17 @@ const AuthSettingsView = props => {
                           </FormGroup>
                         </TabPane>
                         <TabPane tabId={3}>
+                          <FormGroup>
+                            <Label>News Section Description</Label>
+                            <DraftEditor
+                              content={settings.newsSectionDescription}
+                              onChange={handleChange}
+                              uploadCallback={handleUploadCallback}
+                              contentFieldName="newsSectionDescription"
+                            />
+                          </FormGroup>
+                        </TabPane>
+                        <TabPane tabId={4}>
                           <h5 className="mt-3">GMail</h5>
                           <hr />
                           <Row form>

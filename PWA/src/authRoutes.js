@@ -158,7 +158,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/Wananga',
-    name: 'Wananga',
+    name: 'Wananga/Events',
     component: lazy(async () => await import('views/Auth/AuthEventsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',
@@ -170,7 +170,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/Wananga/:evid',
-    name: 'Wananga',
+    name: 'Wananga/Event',
     component: lazy(async () => await import('views/Auth/AuthEventView')),
     exact: true,
     iconLibrary: null,
@@ -251,30 +251,30 @@ const authRoutes = [
   //   excludeFromAuthenticatedRoutes: false,
   //   excludeFromSidebar: true
   // },
-  // {
-  //   layout: '/auth',
-  //   path: '/FacebookLinks',
-  //   name: 'Facebook Links',
-  //   component: lazy(async () => await import('views/Auth/AuthFacebookLinksView')),
-  //   exact: true,
-  //   iconLibrary: 'fab',
-  //   icon: 'fa-facebook-f',
-  //   roles: adminRoleUp,
-  //   excludeFromAuthenticatedRoutes: false,
-  //   excludeFromSidebar: false
-  // },
-  // {
-  //   layout: '/auth',
-  //   path: '/FacebookLinks/:fid',
-  //   name: 'Facebook Link',
-  //   component: lazy(async () => await import('views/Auth/AuthFacebookLinkView')),
-  //   exact: true,
-  //   iconLibrary: null,
-  //   icon: null,
-  //   roles: adminRoleUp,
-  //   excludeFromAuthenticatedRoutes: false,
-  //   excludeFromSidebar: true
-  // },
+  {
+    layout: '/auth',
+    path: '/FacebookLinks',
+    name: 'Facebook RSS',
+    component: lazy(async () => await import('views/Auth/AuthFacebookLinksView')),
+    exact: true,
+    iconLibrary: 'fab',
+    icon: 'fa-facebook-f',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/FacebookLinks/:fid',
+    name: 'Facebook RSS',
+    component: lazy(async () => await import('views/Auth/AuthFacebookLinkView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
   {
     layout: '/auth',
     path: '/Contacts',

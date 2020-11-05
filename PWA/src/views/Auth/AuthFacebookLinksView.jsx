@@ -17,6 +17,10 @@ import {
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
+import {
+  handleSort,
+  renderCaret
+} from 'components/App/Utilities';
 
 const AuthFacebookLinksView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,23 +40,6 @@ const AuthFacebookLinksView = props => {
       }
     };
   }, [props, isLoading, setIsLoading, setFacebookLinksAsArray]);
-  const handleSortChange = async (sortName, sortOrder) => {
-    FacebookLinksAsArray.sort((a, b) => {
-      const aValue = a[sortName];
-      const bValue = b[sortName];
-      return (
-        (aValue > bValue)
-          ? (sortOrder === 'asc')
-            ? 1
-            : -1
-          : (bValue > aValue)
-            ? (sortOrder === 'asc')
-              ? -1
-              : 1
-            : 0
-      );
-    });
-  };
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddFacebookLinksClick(onClick)} />
   );

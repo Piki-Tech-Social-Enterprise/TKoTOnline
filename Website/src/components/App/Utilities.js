@@ -149,30 +149,30 @@ const sortArray = (array, sortName, sortOrder) => {
 };
 const getNavItems = isHomePage => {
   const {
+    homeAnchor,
     home,
-    homePage,
-    iwiMembers,
-    // about,
+    iwiMembersAnchor,
     aboutUs,
-    newsFeed,
+    newsFeedAnchor,
     newsFeeds,
+    eventsAnchor,
     events,
-    eventsPage,
-    projects,
+    projectsAnchor,
     projectsPage,
-    resources,
+    resourcesAnchor,
     resourcesPage,
-    contactUs
+    contactUs,
+    facebookLinks
   } = Routes;
   const navItems = [{
     id: `homeNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? home : homePage,
+    route: isHomePage ? homeAnchor : home,
     name: 'Home',
     tooltip: 'Kāinga',
     group: 'left'
   }, {
     id: `iwiMembersNavItem${(!isHomePage && '_alt') || ''}`,
-    route: iwiMembers,
+    route: iwiMembersAnchor,
     name: 'Iwi',
     tooltip: 'Iwi',
     group: 'left'
@@ -184,25 +184,25 @@ const getNavItems = isHomePage => {
     group: 'left'
   }, {
     id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? projects : projectsPage,
+    route: isHomePage ? projectsAnchor : projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
     group: 'left'
   }, {
     id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? events : eventsPage,
-    name: 'Wānanga',
+    route: isHomePage ? eventsAnchor : events,
+    name: 'Wānanga/Events',
     tooltip: 'Wānanga',
     group: 'right'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? newsFeed : newsFeeds,
+    route: isHomePage ? newsFeedAnchor : newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
     group: 'right'
   }, {
     id: `resourcesNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? resources : resourcesPage,
+    route: isHomePage ? resourcesAnchor : resourcesPage,
     name: 'Resources',
     tooltip: 'Rauemi Ipurangi',
     group: 'right'
@@ -212,6 +212,12 @@ const getNavItems = isHomePage => {
     name: 'Contact',
     tooltip: 'Hono Mai',
     group: ''
+  }, {
+    id: `facebookLinksNavItem${(!isHomePage && '_alt') || ''}`,
+    route: facebookLinks,
+    name: 'RSS',
+    tooltip: 'RSS Whangai Paetukutuku',
+    group: 'right'
   }];
   return navItems;
 };

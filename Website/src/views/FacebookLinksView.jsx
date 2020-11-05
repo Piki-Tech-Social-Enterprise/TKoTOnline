@@ -1,81 +1,48 @@
 import React, {
   useEffect,
-  useState
+  useState,
+  lazy
 } from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
-const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 import {
   withFirebase
 } from 'components/Firebase';
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+import {
+  defaultPageSetup
+} from 'components/App/Utilities';
 
-const FacebookLink = props => {
-  const {
-    dbFacebookLink
-  } = props;
-  const {
-    name,
-    url
-  } = dbFacebookLink;
-  return (
-    <Col xs={12} sm={4}>
-      <iframe
-        allowTransparency="true"
-        allow="encrypted-media"
-        frameborder="0"
-        src={`https://www.facebook.com/plugins/page.php?href=${url}&tabs=timeline%2Cevents%2Cmessages&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`}
-        style={{
-          height: 400
-        }}
-        title={name}
-      />
-    </Col>
-  );
-};
-const FacebookLinksView = props => {
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const FacebookLinksSection = lazy(async () => await import('components/Sections/FacebookLinks'));
+const FacebookLinksView = () => {
   const [state, setState] = useState({
-    isLoading: true,
-    dbFacebookLinks: []
+    isLoading: true
   });
   useEffect(() => {
-    const retrieveFacebookLinkValues = async () => {
-      const {
-        firebase
-      } = props;
-      const dbFacebookLinksAsArray = await firebase.getDbFacebookLinksAsArray();
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbFacebookLinks: dbFacebookLinksAsArray
-      }));
-    }
-    if (state.isLoading) {
-      retrieveFacebookLinkValues();
-    }
-  }, [props, state]);
+    defaultPageSetup(true);
+    setState(s => ({
+      ...s,
+      isLoading: false
+    }));
+    return defaultPageSetup;
+  }, [setState]);
   return (
     <>
-      <HomeNavbar />
-      <Container className="p-5 mt-5">
-        <Row>
-          <Col className="px-0 mt-5">
-            <h3>FACEBOOK LINKS</h3>
-            <Row>
-              {
-                state.isLoading
-                  ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                  : state.dbFacebookLinks.map((dbFacebookLink, index) => <FacebookLink dbFacebookLink={dbFacebookLink} key={index} />)
-              }
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-      <HomeFooter />
+      {
+        state.isLoading
+          ? <LoadingSpinner
+            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
+            innerClassName="m-5 p-5 text-center"
+          />
+          : <>
+            <HomeNavbar
+              initalTransparent
+              colorOnScrollValue={25}
+            />
+            <FacebookLinksSection containerClassName="mt-0 mt-lg-3" />
+            <HomeFooter />
+          </>
+      }
     </>
   );
 };

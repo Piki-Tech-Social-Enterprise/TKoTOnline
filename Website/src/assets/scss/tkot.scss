@@ -108,7 +108,7 @@ $tkot-home-footer-x-padding: 1rem;
   }
 }
 .cards-row {
-  overflow: scroll hidden;
+  overflow: auto hidden;
 }
 .card-block {
   min-height: 225px;
@@ -428,6 +428,7 @@ $tkot-home-footer-x-padding: 1rem;
 .box-social-text {
   font-size: 0.75rem !important;
   padding: 0.5rem !important;
+  width: 100%;
 }
 
 .created-by-logo-image {
@@ -537,4 +538,10 @@ $tkot-home-footer-x-padding: 1rem;
   & video {
     width: 100%;
   }
+}
+
+.tkot-logo {
+  background: url('../img/tkot/tkot-logo-only-black.webp') no-repeat;
+  min-height: 64px;
+  min-width: 32px;
 }

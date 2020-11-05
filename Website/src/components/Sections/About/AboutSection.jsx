@@ -21,7 +21,7 @@ import tkotVideo from '../../../assets/videos/v2.mp4';
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const {
   aboutUs,
-  projects
+  projectsAnchor
 } = Routes;
 const AboutSection = props => {
   const {
@@ -93,7 +93,7 @@ const AboutSection = props => {
           </Row>
           {
             showClickScrollDownForMoreLink
-              ? <a href={projects} className="text-decoration-none text-dark">
+              ? <a href={projectsAnchor} className="text-decoration-none text-dark">
                 <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
               </a>
               : null

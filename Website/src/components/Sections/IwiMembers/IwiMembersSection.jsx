@@ -102,7 +102,7 @@ const IwiMembersSection = props => {
             </Container>
             {
               showClickScrollDownForMoreLink
-                ? <a href={Routes.about} className="text-decoration-none text-dark">
+                ? <a href={Routes.aboutAnchor} className="text-decoration-none text-dark">
                   <p className="my-0 mt-4"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
                 </a>
                 : null

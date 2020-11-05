@@ -39,7 +39,7 @@ const ResourcesView = () => {
               initalTransparent
               colorOnScrollValue={25}
             />
-            <ResourcesSection containerClassName="mt-5" />
+            <ResourcesSection containerClassName="mt-0 mt-lg-3" />
             <HomeFooter />
           </>
       }

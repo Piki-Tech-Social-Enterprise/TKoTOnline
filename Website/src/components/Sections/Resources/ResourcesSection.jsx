@@ -26,6 +26,7 @@ import {
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const ResourcesSection = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -89,7 +90,7 @@ const ResourcesSection = props => {
                         const dbCategorisedResource = dbCategorisedResources[dbCategorisedResourceKey];
                         return (
                           <Fragment key={dbCategorisedResourceKey}>
-                            <h4 className="text-uppercase">{dbCategorisedResourceKey}</h4>
+                            <h4 className="text-uppercase h3 font-weight-bold">{dbCategorisedResourceKey}</h4>
                             <Container className="my-3" fluid>
                               <Row className="cards-row flex-row flex-nowrap">
                                 {
@@ -99,6 +100,18 @@ const ResourcesSection = props => {
                                         <CardHeader>
                                           <CardTitle className="h5 text-uppercase my-3 mx-2">{dbResource.header}</CardTitle>
                                         </CardHeader>
+                                        {
+                                          dbResource.imageUrl
+                                            ? <FirebaseImage
+                                              className="card-img-max-height"
+                                              imageURL={dbResource.imageUrl}
+                                              width="340"
+                                              lossless={true}
+                                              alt={dbResource.header}
+                                              loadingIconSize="lg"
+                                            />
+                                            : null
+                                        }
                                         <CardBody className="bg-white text-dark text-left">
                                           <div
                                             className="resource-content clickable block-with-text"
@@ -116,8 +129,8 @@ const ResourcesSection = props => {
                                               rel="noopener noreferrer"
                                               className="tkot-primary-red-bg-color btn-outline-dark"
                                               color="white"
-                                              onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Resources'} page`, 'Clicked "Click Here" button', dbResource.header)}
-                                            >Click Here</Button>
+                                              onClick={() => sendEvent(`${isHomePage ? 'Home' : 'Resources'} page`, 'Clicked "Pā Mai" button', dbResource.header)}
+                                            >Pā Mai</Button>
                                           </div>
                                         </CardBody>
                                       </Card>

@@ -35,7 +35,7 @@ const HomeHeader = props => {
           </div>
           {
             showClickScrollDownForMoreLink
-              ? <a href={Routes.iwiMembers} className="text-decoration-none">
+              ? <a href={Routes.iwiMembersAnchor} className="text-decoration-none">
                 <p className="my-5 py-3 text-dark"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
               </a>
               : null

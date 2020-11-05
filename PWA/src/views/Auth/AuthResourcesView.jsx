@@ -14,6 +14,7 @@ import {
   TableHeaderColumn,
   InsertButton
 } from 'react-bootstrap-table';
+import FirebaseImage from 'components/App/FirebaseImage';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
 import StatusBadge from 'components/App/StatusBadge';
@@ -87,6 +88,9 @@ const AuthResourcesView = props => {
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleResourceRowClick
                       }}>
+                      <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
+                        <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell || ''} />
+                      )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort sortFunc={handleSort} caretRender={renderCaret}>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="category" dataSort sortFunc={handleSort} caretRender={renderCaret}>Catgory</TableHeaderColumn>
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{

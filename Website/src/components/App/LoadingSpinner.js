@@ -24,7 +24,7 @@ LoadingSpinner.propTypes = {
 LoadingSpinner.defaultProps = {
   outerClassName: 'my-5 p-5',
   innerClassName: 'my-5 p-5',
-  iconClassName: 'now-ui-icons loader_refresh spin'
+  iconClassName: 'now-ui-icons tkot-logo spin'
 };
 
 export default LoadingSpinner;
