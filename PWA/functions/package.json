@@ -11,9 +11,9 @@
     "firebase-functions": "^3.11.0",
     "fs-extra": "^8.1.0",
     "flatted": "^3.1.0",
-    "googleapis": "^63.0.0",
+    "googleapis": "^64.0.0",
     "moment": "^2.29.1",
-    "nodemailer": "^6.4.14",
+    "nodemailer": "^6.4.15",
     "sharp": "0.25.4"
   },
   "scripts": {

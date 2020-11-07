@@ -5,9 +5,9 @@ dependencies:
   firebase-functions: 3.11.0_firebase-admin@9.3.0
   flatted: 3.1.0
   fs-extra: 8.1.0
-  googleapis: 63.0.0
+  googleapis: 64.0.0
   moment: 2.29.1
-  nodemailer: 6.4.14
+  nodemailer: 6.4.15
   sharp: 0.25.4
 devDependencies:
   babel-cli: 6.26.0
@@ -2670,7 +2670,7 @@ packages:
       node: '>=10.10.0'
     resolution:
       integrity: sha512-W46WKCk3QtlCCfmZyQIH5zxmDOyeV5Qj+qs7nr2ox08eRkEJMWp6iwv542R/PsokXaGUSrmif4vCC4+rGzRSsQ==
-  /googleapis/63.0.0:
+  /googleapis/64.0.0:
     dependencies:
       google-auth-library: 6.0.6
       googleapis-common: 4.4.3
@@ -2678,7 +2678,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-wixBalZFz9qLFJqKcEaKRAKuWAf20qw35/vVN/0ogfhIMlGuDUNE3groAPdaqAmaE3sTLSEe8+XRNIx3lxOhcQ==
+      integrity: sha512-o8m4aRVv/LdvTVMgH4tLNeQvJZrXaa+62L9wPaKg6nHlCN3dBCKWWQKOklCwtg18xpWY4/vdNuTPHb/9Lnd00A==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -3801,12 +3801,12 @@ packages:
       node: '>= 4.5.0'
     resolution:
       integrity: sha512-G6RlQt5Sb4GMBzXvhfkeFmbqR6MzhtnT7VTHuLadjkii3rdYHNdw0m8zA4BTxVIh68FicCQ2NSUANpsqkr9jvQ==
-  /nodemailer/6.4.14:
+  /nodemailer/6.4.15:
     dev: false
     engines:
       node: '>=6.0.0'
     resolution:
-      integrity: sha512-0AQHOOT+nRAOK6QnksNaK7+5vjviVvEBzmZytKU7XSA+Vze2NLykTx/05ti1uJgXFTWrMq08u3j3x4r4OE6PAA==
+      integrity: sha512-2/z13dBTWdgTRlxVMAK6C13dCI22GEShET4+jFLlQsxpblxYhojnucfcTZO1QBu5CsHvABsBj2JCGO3vl0HSQA==
   /noop-logger/0.1.1:
     dev: false
     resolution:
@@ -5414,10 +5414,10 @@ specifiers:
   firebase-functions-test: ^0.2.3
   flatted: ^3.1.0
   fs-extra: ^8.1.0
-  googleapis: ^63.0.0
+  googleapis: ^64.0.0
   mocha: ^8.2.1
   moment: ^2.29.1
-  nodemailer: ^6.4.14
+  nodemailer: ^6.4.15
   npm-run-all: ^4.1.5
   sharp: 0.25.4
   sinon: ^9.2.1
