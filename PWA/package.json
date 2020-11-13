@@ -11,7 +11,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "history": "4.10.0",
-    "firebase": "^8.0.1",
+    "firebase": "^8.0.2",
     "googleapis": "^64.0.0",
     "moment": "^2.29.1",
     "node-sass": "4.14.1",
@@ -31,7 +31,7 @@
     "react-tagsinput-2": "^3.19.8",
     "reactstrap": "8.7.1",
     "recompose": "^0.30.0",
-    "sweetalert2": "^10.9.0",
+    "sweetalert2": "^10.10.0",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {

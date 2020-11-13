@@ -5,15 +5,15 @@
   "license": "MIT",
   "version": "1.0.0",
   "dependencies": {
-    "@google-cloud/storage": "^5.4.0",
+    "@google-cloud/storage": "^5.5.0",
     "cors": "^2.8.5",
-    "firebase-admin": "^9.3.0",
+    "firebase-admin": "8.13.0",
     "firebase-functions": "^3.11.0",
-    "fs-extra": "^8.1.0",
     "flatted": "^3.1.0",
+    "fs-extra": "^8.1.0",
     "googleapis": "^64.0.0",
     "moment": "^2.29.1",
-    "nodemailer": "^6.4.15",
+    "nodemailer": "^6.4.16",
     "sharp": "0.25.4"
   },
   "scripts": {
@@ -74,7 +74,7 @@
     "chalk": "^4.1.0",
     "cross-env": "^7.0.2",
     "env-cmd": "^10.1.0",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "eslint-plugin-promise": "^4.2.1",
     "firebase-functions-test": "^0.2.3",
     "mocha": "^8.2.1",

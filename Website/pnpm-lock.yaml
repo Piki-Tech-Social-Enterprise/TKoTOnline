@@ -1,20 +1,20 @@
 dependencies:
   axios: 0.21.0
   draftjs-to-html: 0.9.1
-  firebase: 8.0.1
+  firebase: 8.0.2
   lazysizes: 5.2.2
   moment-mini: 2.24.0
   prop-types: 15.7.2
   query-string: 6.13.7
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
-  react-ga: 3.2.0_prop-types@15.7.2+react@17.0.1
+  react-ga: 3.2.1_prop-types@15.7.2+react@17.0.1
   react-helmet: 6.1.0_react@17.0.1
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
   reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
   reactstrap-scrollspy: 0.1.1_5247530cef61d43e0566080439cf9131
-  sweetalert2: 10.9.0
+  sweetalert2: 10.10.0
 devDependencies:
   babel-cli: 6.26.0
   babel-preset-env: 1.7.0
@@ -1372,7 +1372,7 @@ packages:
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-/+gBHb1O9x/YlG7inXfxff/6X3BPZt4zgBv4kql6HEmdzNQCodIRlEYnI+/da+lN+dha7PjaFH7C7ewMmfV7rw==
-  /@firebase/auth/0.15.1_0dc33727bf3acedf92caf621e2889e7e:
+  /@firebase/auth/0.15.2_0dc33727bf3acedf92caf621e2889e7e:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/auth-types': 0.10.1_8006a2fb9a52d513340846aa4b6cf75b
@@ -1382,7 +1382,7 @@ packages:
       '@firebase/app-types': '*'
       '@firebase/util': '*'
     resolution:
-      integrity: sha512-qVJTmq/6l3/o6V93nAD+n1ExTywbKEFYbuuI1TZIUryy5KSXOFnxilmZI4yJeQSZ3ee06YiJsIRYRaYUeg6JQQ==
+      integrity: sha512-2n32PBi6x9jVhc0E/ewKLUCYYTzFEXL4PNkvrrlGKbzeTBEkkyzfgUX7OV9UF5wUOG+gurtUthuur1zspZ/9hg==
   /@firebase/component/0.1.21:
     dependencies:
       '@firebase/util': 0.3.4
@@ -1418,7 +1418,7 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-ZGb7p1SSQJP0Z+kc9GAUi+Fx5rJatFddBrS1ikkayW+QHfSIz0omU23OgSHcBGTxe8dJCeKiKA2Yf+tkDKO/LA==
-  /@firebase/firestore/2.0.1_e9d66a23fa701e65014ff8d410061da5:
+  /@firebase/firestore/2.0.2_e9d66a23fa701e65014ff8d410061da5:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
@@ -1438,7 +1438,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-7WMv3b+2P/6SOE0RxPB+S6k75/vYTDhOpPBp6JH6nPQjS9mGtR9m0adKtXjOBBugcbK6sBgPMzxmQGwQl8lW4w==
+      integrity: sha512-6kO/vWUmTOANA/ql+i16DFMc63gamU76Nycyt7k0r8QfcdXu93Cwizw4ff4DNMnpnkAJkTk36fPAxBxEvBXkzw==
   /@firebase/functions-types/0.4.0:
     dev: false
     resolution:
@@ -1567,7 +1567,7 @@ packages:
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-pL7b8d5kMNCCL0w9hF7pr16POyKkb3imOW7w0qYrhBnbyJTdVxMWZhb0HxCFyQWC0w3EiIFFmxoz8NTFZDEFog==
-  /@firebase/storage/0.4.1_e9d66a23fa701e65014ff8d410061da5:
+  /@firebase/storage/0.4.2_e9d66a23fa701e65014ff8d410061da5:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
@@ -1580,7 +1580,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-/l05Dn3UYynPELt0ZFJz24H49sQ8c8KnOEGR/Pk1AOjLmc71vjjobVEkgkHyy1eyfmYuAZtsc6ePOwc89YnBTg==
+      integrity: sha512-87CrvKrf8kijVekRBmUs8htsNz7N5X/pDhv3BvJBqw8K65GsUolpyjx0f4QJRkCRUYmh3MSkpa5P08lpVbC6nQ==
   /@firebase/util/0.3.4:
     dependencies:
       tslib: 1.13.0
@@ -5956,27 +5956,27 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/8.0.1:
+  /firebase/8.0.2:
     dependencies:
       '@firebase/analytics': 0.6.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
-      '@firebase/auth': 0.15.1_0dc33727bf3acedf92caf621e2889e7e
+      '@firebase/auth': 0.15.2_0dc33727bf3acedf92caf621e2889e7e
       '@firebase/database': 0.7.1_@firebase+app-types@0.6.1
-      '@firebase/firestore': 2.0.1_e9d66a23fa701e65014ff8d410061da5
+      '@firebase/firestore': 2.0.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/functions': 0.6.1_e9d66a23fa701e65014ff8d410061da5
       '@firebase/installations': 0.4.19_e9d66a23fa701e65014ff8d410061da5
       '@firebase/messaging': 0.7.3_e9d66a23fa701e65014ff8d410061da5
       '@firebase/performance': 0.4.4_e9d66a23fa701e65014ff8d410061da5
       '@firebase/polyfill': 0.3.36
       '@firebase/remote-config': 0.1.30_e9d66a23fa701e65014ff8d410061da5
-      '@firebase/storage': 0.4.1_e9d66a23fa701e65014ff8d410061da5
+      '@firebase/storage': 0.4.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/util': 0.3.4
     dev: false
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-7QQKw+ycoR3LhMlxhPM+ND1F2Fx1eDlf3E55xYbmooxFW1t0p94HNENBc3JZytR1H0VoG9nSm2QEHsdr/Ca1Rg==
+      integrity: sha512-tPtXQ8sifo82f7bOxYcR/yEdJ4IbL4/fpQrophRHFAaYCsYGp2Q/c1zz0voX9cLap8MH2uwh5LIVBqZ8nyT5ZQ==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -10702,16 +10702,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
-  /react-ga/3.2.0_prop-types@15.7.2+react@17.0.1:
+  /react-ga/3.2.1_prop-types@15.7.2+react@17.0.1:
     dependencies:
       prop-types: 15.7.2
       react: 17.0.1
     dev: false
     peerDependencies:
       prop-types: ^15.6.0
-      react: ^15.6.2 || ^16.0
+      react: ^15.6.2 || ^16.0 || ^17
     resolution:
-      integrity: sha512-YHHG5QIzRdDToB9ST1/BrGQhLZPzkrNjoeTu3SZLgwdqzeA9F2XOStuOGXAp1ak/SAo9pyR1Uo/hY0C5wZwfqA==
+      integrity: sha512-uRwNVd7seL2I2lZBE7et8Ul0r/xNDIQkZ43QmnMrcZwY8dNB5UgPjPJA6E18xFtArLgDK/dy/O0TzYqWCsMHDg==
   /react-helmet/6.1.0_react@17.0.1:
     dependencies:
       object-assign: 4.1.1
@@ -12317,10 +12317,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
-  /sweetalert2/10.9.0:
+  /sweetalert2/10.10.0:
     dev: false
     resolution:
-      integrity: sha512-ijIYsQ4ybOVt49GbZd5FfLoA5A3CCtHK2iSJqnIbCGT/p9d0SwhjtHNO10w/VU8chzM+5hJQ2J6Z6eAEUYtXtw==
+      integrity: sha512-TnYWt1hnPw/jkK1IqPpFT4yMZGE9VsKJApzd0dcjsrE8biykeoECpIgV8DzRVvWufit/1Z2m5Zdyo2hjBfGzoQ==
   /symbol-tree/3.2.4:
     dev: true
     resolution:
@@ -13423,7 +13423,7 @@ specifiers:
   chalk: ^4.1.0
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^8.0.1
+  firebase: ^8.0.2
   lazysizes: ^5.2.2
   moment-mini: ^2.24.0
   node-sass: ^4.14.1
@@ -13432,7 +13432,7 @@ specifiers:
   query-string: ^6.13.7
   react: 17.0.1
   react-dom: 17.0.1
-  react-ga: ^3.2.0
+  react-ga: ^3.2.1
   react-helmet: ^6.1.0
   react-router: 5.2.0
   react-router-dom: 5.2.0
@@ -13440,5 +13440,5 @@ specifiers:
   react-scripts: ^3.4.3
   reactstrap: 8.7.1
   reactstrap-scrollspy: ^0.1.1
-  sweetalert2: ^10.9.0
+  sweetalert2: ^10.10.0
   typescript: 4.0.5

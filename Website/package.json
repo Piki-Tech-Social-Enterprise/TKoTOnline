@@ -8,20 +8,20 @@
   "dependencies": {
     "axios": "^0.21.0",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^8.0.1",
+    "firebase": "^8.0.2",
     "lazysizes": "^5.2.2",
     "moment-mini": "^2.24.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-ga": "^3.2.0",
+    "react-ga": "^3.2.1",
     "react-helmet": "^6.1.0",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "reactstrap": "8.7.1",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.9.0"
+    "sweetalert2": "^10.10.0"
   },
   "scripts": {
     "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",
