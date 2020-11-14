@@ -17,7 +17,7 @@
     "sharp": "0.25.4"
   },
   "scripts": {
-    "updateDependencies": "ncu -x fs-extra,sharp -u && pnpm i",
+    "updateDependencies": "ncu -x fs-extra,sharp,firebase-admin -u && pnpm i",
     "lint": "eslint .",
     "test": "mocha --timeout 999999 --colors --reporter spec index.test.js --exit",
     "serveAll": "firebase emulators:start",
