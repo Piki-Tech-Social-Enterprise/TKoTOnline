@@ -11,15 +11,15 @@ class EventsRepository extends BaseRepository {
     return await this.db.ref('events');
   }
 
-  getDbEventsAsArray = async includeInactive => {
+  getDbEventsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
     const existingDbEvent = await this.getDbEvents();
     const dbEventRef = !includeInactive
       ? await existingDbEvent
-        .orderByChild('active')
-        .equalTo(true)
+        .orderByChild(childName)
+        .equalTo(childValue)
         .once('value')
       : await existingDbEvent
-        .orderByChild('active')
+        .orderByChild(childName)
         .once('value');
     const dbEvent = await dbEventRef.val();
     const dbEventAsArray = [];

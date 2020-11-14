@@ -14,15 +14,15 @@ class VolunteersRepository extends BaseRepository {
     return await this.db.ref('volunteers');
   }
 
-  getDbVolunteersAsArray = async includeInactive => {
+  getDbVolunteersAsArray = async (includeInactive, childName = 'active', childValue = true) => {
     const existingDbVolunteers = await this.getDbVolunteers();
     const dbVolunteersRef = !includeInactive
       ? await existingDbVolunteers
-        .orderByChild('active')
-        .equalTo(true)
+        .orderByChild(childName)
+        .equalTo(childValue)
         .once('value')
       : await existingDbVolunteers
-        .orderByChild('active')
+        .orderByChild(childName)
         .once('value');
     const dbVolunteers = await dbVolunteersRef.val();
     const dbVolunteersAsArray = [];

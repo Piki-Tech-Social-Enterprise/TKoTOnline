@@ -15,11 +15,11 @@ class SettingsRepository extends BaseRepository {
     return await this.db.ref(`settings/${sid}`);
   }
 
-  getDbSettingsValues = async includeInactive => {
+  getDbSettingsValues = async (includeInactive, childValue = true) => {
     const existingDbSettings = await this.getDbSettings();
     const dbSettingRef = !includeInactive
       ? await existingDbSettings
-        .equalTo(true)
+        .equalTo(childValue)
         .once('value')
       : await existingDbSettings
         .once('value');

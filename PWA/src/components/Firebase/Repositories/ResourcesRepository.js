@@ -11,15 +11,15 @@ class ResourcesRepository extends BaseRepository {
     return await this.db.ref('resources');
   }
 
-  getDbResourcesAsArray = async includeInactive => {
+  getDbResourcesAsArray = async (includeInactive, childName = 'active', childValue = true) => {
     const existingDbResource = await this.getDbResources();
     const dbResourceRef = !includeInactive
       ? await existingDbResource
-        .orderByChild('active')
-        .equalTo(true)
+        .orderByChild(childName)
+        .equalTo(childValue)
         .once('value')
       : await existingDbResource
-        .orderByChild('active')
+        .orderByChild(childName)
         .once('value');
     const dbResource = await dbResourceRef.val();
     const dbResourceAsArray = [];

@@ -11,15 +11,15 @@ class CommunityLinksRepository extends BaseRepository {
     return await this.db.ref('communityLinks');
   }
 
-  getDbCommunityLinksAsArray = async includeInactive => {
+  getDbCommunityLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => {
     const existingDbCommunityLink = await this.getDbCommunityLinks();
     const dbCommunityLinkRef = !includeInactive
       ? await existingDbCommunityLink
-        .orderByChild('active')
-        .equalTo(true)
+        .orderByChild(childName)
+        .equalTo(childValue)
         .once('value')
       : await existingDbCommunityLink
-        .orderByChild('active')
+        .orderByChild(childName)
         .once('value');
     const dbCommunityLink = await dbCommunityLinkRef.val();
     const dbCommunityLinkAsArray = [];

@@ -11,15 +11,15 @@ class FacebookLinksRepository extends BaseRepository {
     return await this.db.ref('facebookLinks');
   }
 
-  getDbFacebookLinksAsArray = async includeInactive => {
+  getDbFacebookLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => {
     const existingDbFacebookLink = await this.getDbFacebookLinks();
     const dbFacebookLinkRef = !includeInactive
       ? await existingDbFacebookLink
-        .orderByChild('active')
-        .equalTo(true)
+        .orderByChild(childName)
+        .equalTo(childValue)
         .once('value')
       : await existingDbFacebookLink
-        .orderByChild('active')
+        .orderByChild(childName)
         .once('value');
     const dbFacebookLink = await dbFacebookLinkRef.val();
     const dbFacebookLinkAsArray = [];
