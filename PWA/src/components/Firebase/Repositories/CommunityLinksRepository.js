@@ -36,10 +36,10 @@ class CommunityLinksRepository extends BaseRepository {
   }
 
   getDbCommunityLinkValue = async clid => {
-    const existingDbCommunityLinks = await this.getDbCommunityLink(clid);
-    const dbCommunityLinksRef = await existingDbCommunityLinks.once('value');
-    const dbCommunityLinks = await dbCommunityLinksRef.val();
-    return dbCommunityLinks;
+    const existingDbCommunityLink = await this.getDbCommunityLink(clid);
+    const dbCommunityLinkRef = await existingDbCommunityLink.once('value');
+    const dbCommunityLink = await dbCommunityLinkRef.val();
+    return dbCommunityLink;
   }
 
   saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => {
@@ -56,10 +56,10 @@ class CommunityLinksRepository extends BaseRepository {
     const now = new Date();
     let errorMessage = null;
     let existingDbCommunityLinks = await this.getDbCommunityLink(clid || '')
-    let dbCommunityLinksRef = null;
-    let dbCommunityLinks = null;
+    let dbCommunityLinkRef = null;
+    let dbCommunityLink = null;
     if (!clid) {
-      dbCommunityLinksRef = await existingDbCommunityLinks.push();
+      dbCommunityLinkRef = await existingDbCommunityLinks.push();
       communityLink = {
         active: active || false,
         created: created || now.toString(),
@@ -68,20 +68,20 @@ class CommunityLinksRepository extends BaseRepository {
         linkName: linkName || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
-        clid: await dbCommunityLinksRef.getKey()
+        clid: await dbCommunityLinkRef.getKey()
       };
-      dbCommunityLinksRef.set(communityLink, saveDbCommunityLink_completed);
+      dbCommunityLinkRef.set(communityLink, saveDbCommunityLink_completed);
     } else {
-      dbCommunityLinksRef = await existingDbCommunityLinks.once('value');
-      dbCommunityLinks = await dbCommunityLinksRef.val();
-      if (dbCommunityLinks) {
+      dbCommunityLinkRef = await existingDbCommunityLinks.once('value');
+      dbCommunityLink = await dbCommunityLinkRef.val();
+      if (dbCommunityLink) {
         communityLink = {
           active: active || (typeof active === 'boolean' && active) || false,
-          link: link || dbCommunityLinks.link || '',
-          linkName: linkName || dbCommunityLinks.linkName || '',
+          link: link || dbCommunityLink.link || '',
+          linkName: linkName || dbCommunityLink.linkName || '',
           clid: clid,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || dbCommunityLinks.updatedBy
+          updatedBy: updatedBy || dbCommunityLink.updatedBy
         };
         existingDbCommunityLinks.set(communityLink, saveDbCommunityLink_completed);
       } else {

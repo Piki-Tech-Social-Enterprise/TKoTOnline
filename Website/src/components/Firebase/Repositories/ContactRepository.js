@@ -52,12 +52,12 @@ class ContactRepository extends BaseRepository {
 
     const now = new Date();
     let errorMessage = null;
-    let existingDbContacts = await this.getDbContact(cid || '')
-    let dbContactsRef = null;
-    let dbContacts = null;
+    let existingDbContact = await this.getDbContact(cid || '')
+    let dbContactRef = null;
+    let dbContact = null;
 
     if (!cid) {
-      dbContactsRef = await existingDbContacts.push();
+      dbContactRef = await existingDbContact.push();
       contact = {
         active: active || false,
         created: created || now.toString(),
@@ -69,27 +69,27 @@ class ContactRepository extends BaseRepository {
         subscribed: subscribed || false,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
-        cid: await dbContactsRef.getKey()
+        cid: await dbContactRef.getKey()
       };
-      dbContactsRef.set(contact, saveDbContact_completed);
+      dbContactRef.set(contact, saveDbContact_completed);
     } else {
-      dbContactsRef = await existingDbContacts.once('value');
-      dbContacts = await dbContactsRef.val();
-      if (dbContacts) {
+      dbContactRef = await existingDbContact.once('value');
+      dbContact = await dbContactRef.val();
+      if (dbContact) {
         contact = {
           active: active || (typeof active === 'boolean' && active) || false,
-          created: created || dbContacts.created || '',
-          createdBy: createdBy || dbContacts.createdBy || '',
-          firstName: firstName || dbContacts.firstName || '',
-          lastName: lastName || dbContacts.lastName || '',
-          email: email || dbContacts.email || '',
-          message: message || dbContacts.message || '',
-          subscribed: subscribed || dbContacts.subscribed || false,
+          created: created || dbContact.created || '',
+          createdBy: createdBy || dbContact.createdBy || '',
+          firstName: firstName || dbContact.firstName || '',
+          lastName: lastName || dbContact.lastName || '',
+          email: email || dbContact.email || '',
+          message: message || dbContact.message || '',
+          subscribed: subscribed || dbContact.subscribed || false,
           cid: cid,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || dbContacts.updatedBy
+          updatedBy: updatedBy || dbContact.updatedBy
         };
-        existingDbContacts.set(contact, saveDbContact_completed);
+        existingDbContact.set(contact, saveDbContact_completed);
       } else {
         errorMessage = 'Save Db Contacts Error: cid (' + cid + ') not found.';
       }

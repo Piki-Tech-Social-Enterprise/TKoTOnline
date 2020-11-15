@@ -35,11 +35,11 @@ class FacebookLinksRepository extends BaseRepository {
     return await this.db.ref(`facebookLinks/${fid}`);
   }
 
-  getDbFacebookLinkValue = async fid => {
-    const existingDbFacebookLinks = await this.getDbFacebookLink(fid);
-    const dbFacebookLinksRef = await existingDbFacebookLinks.once('value');
-    const dbFacebookLinks = await dbFacebookLinksRef.val();
-    return dbFacebookLinks;
+  getDbFacebookLinksValue = async fid => {
+    const existingDbFacebookLink = await this.getDbFacebookLink(fid);
+    const dbFacebookLinkRef = await existingDbFacebookLink.once('value');
+    const dbFacebookLink = await dbFacebookLinkRef.val();
+    return dbFacebookLink;
   }
 
   saveDbFacebookLink = async (facebookLink, saveDbFacebookLink_completed) => {
@@ -55,11 +55,11 @@ class FacebookLinksRepository extends BaseRepository {
     } = facebookLink;
     const now = new Date();
     let errorMessage = null;
-    let existingDbFacebookLinks = await this.getDbFacebookLink(fid || '')
-    let dbFacebookLinksRef = null;
-    let dbFacebookLinks = null;
+    let existingDbFacebookLink = await this.getDbFacebookLinks(fid || '')
+    let dbFacebookLinkRef = null;
+    let dbFacebookLink = null;
     if (!fid) {
-      dbFacebookLinksRef = await existingDbFacebookLinks.push();
+      dbFacebookLinkRef = await existingDbFacebookLink.push();
       facebookLink = {
         active: active || false,
         created: created || now.toString(),
@@ -68,22 +68,22 @@ class FacebookLinksRepository extends BaseRepository {
         name: name || '',
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
-        fid: await dbFacebookLinksRef.getKey()
+        fid: await dbFacebookLinkRef.getKey()
       };
-      dbFacebookLinksRef.set(facebookLink, saveDbFacebookLink_completed);
+      dbFacebookLinkRef.set(facebookLink, saveDbFacebookLink_completed);
     } else {
-      dbFacebookLinksRef = await existingDbFacebookLinks.once('value');
-      dbFacebookLinks = await dbFacebookLinksRef.val();
-      if (dbFacebookLinks) {
+      dbFacebookLinkRef = await existingDbFacebookLink.once('value');
+      dbFacebookLink = await dbFacebookLinkRef.val();
+      if (dbFacebookLink) {
         facebookLink = {
           active: active || (typeof active === 'boolean' && active) || false,
-          url: url || dbFacebookLinks.url || '',
-          name: name || dbFacebookLinks.name || '',
+          url: url || dbFacebookLink.url || '',
+          name: name || dbFacebookLink.name || '',
           fid: fid,
           updated: updated || now.toString(),
-          updatedBy: updatedBy || dbFacebookLinks.updatedBy
+          updatedBy: updatedBy || dbFacebookLink.updatedBy
         };
-        existingDbFacebookLinks.set(facebookLink, saveDbFacebookLink_completed);
+        existingDbFacebookLink.set(facebookLink, saveDbFacebookLink_completed);
       } else {
         errorMessage = 'Save Db FacebookLinks Error: fid (' + fid + ') not found.';
       }
@@ -96,10 +96,10 @@ class FacebookLinksRepository extends BaseRepository {
   }
 
   deleteDbFacebookLink = async fid => {
-    const existingDbFacebookLinks = await this.getDbFacebookLink(fid);
+    const existingDbFacebookLink = await this.getDbFacebookLinks(fid);
     let errorMessage = null;
-    if (existingDbFacebookLinks) {
-      await existingDbFacebookLinks.remove();
+    if (existingDbFacebookLink) {
+      await existingDbFacebookLink.remove();
     } else {
       errorMessage = `Delete Db News Feed Error: fid (${fid}) not found.`;
     }
