@@ -76,7 +76,7 @@ class CommunityLinksRepository extends BaseRepository {
       dbCommunityLink = await dbCommunityLinkRef.val();
       if (dbCommunityLink) {
         communityLink = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbCommunityLink.active || false,
           link: link || dbCommunityLink.link || '',
           linkName: linkName || dbCommunityLink.linkName || '',
           clid: clid,

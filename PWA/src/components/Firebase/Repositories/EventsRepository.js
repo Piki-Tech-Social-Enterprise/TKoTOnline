@@ -80,7 +80,7 @@ class EventsRepository extends BaseRepository {
       dbEvent = await dbEventRef.val();
       if (dbEvent) {
         event = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbEvent.active || false,
           content: content || dbEvent.content || '',
           externalUrl: externalUrl || dbEvent.externalUrl || '',
           header: header || dbEvent.header || '',

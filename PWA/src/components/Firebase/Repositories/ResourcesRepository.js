@@ -82,7 +82,7 @@ class ResourcesRepository extends BaseRepository {
       dbResource = await dbResourceRef.val();
       if (dbResource) {
         resource = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbResource.active || false,
           category: category || dbResource.category || '',
           content: content || dbResource.content || '',
           header: header || dbResource.header || '',

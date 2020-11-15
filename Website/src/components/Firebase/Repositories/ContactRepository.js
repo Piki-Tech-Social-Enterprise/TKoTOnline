@@ -77,7 +77,7 @@ class ContactRepository extends BaseRepository {
       dbContact = await dbContactRef.val();
       if (dbContact) {
         contact = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbContact.active || false,
           created: created || dbContact.created || '',
           createdBy: createdBy || dbContact.createdBy || '',
           firstName: firstName || dbContact.firstName || '',

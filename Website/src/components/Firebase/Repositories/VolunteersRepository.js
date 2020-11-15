@@ -87,7 +87,7 @@ class VolunteersRepository extends BaseRepository {
       dbVolunteer = await dbVolunteerRef.val();
       if (dbVolunteer) {
         volunteer = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbVolunteer.active || false,
           firstName: firstName || dbVolunteer.firstName || '',
           lastName: lastName || dbVolunteer.lastName || '',
           phoneNumber: phoneNumber || dbVolunteer.phoneNumber || '',

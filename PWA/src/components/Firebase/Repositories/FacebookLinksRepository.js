@@ -76,7 +76,7 @@ class FacebookLinksRepository extends BaseRepository {
       dbFacebookLink = await dbFacebookLinkRef.val();
       if (dbFacebookLink) {
         facebookLink = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbFacebookLink.active || false,
           url: url || dbFacebookLink.url || '',
           name: name || dbFacebookLink.name || '',
           fid: fid,

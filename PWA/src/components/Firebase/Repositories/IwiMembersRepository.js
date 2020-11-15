@@ -84,7 +84,7 @@ class IwiMembersRepository extends BaseRepository {
       dbIwiMember = await dbIwiMemberRef.val();
       if (dbIwiMember) {
         iwiMember = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbIwiMember.active || false,
           iwiChairImageURL: iwiChairImageURL || dbIwiMember.iwiChairImageURL || '',
           iwiChairName: iwiChairName || dbIwiMember.iwiChairName || '',
           iwiChairProfile: iwiChairProfile || dbIwiMember.iwiChairProfile || '',

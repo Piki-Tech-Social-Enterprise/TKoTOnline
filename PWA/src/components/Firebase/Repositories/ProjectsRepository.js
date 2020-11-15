@@ -78,7 +78,7 @@ class ProjectsRepository extends BaseRepository {
       dbProject = await dbProjectRef.val();
       if (dbProject) {
         project = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbProject.active || false,
           content: content || dbProject.content || '',
           header: header || dbProject.header || '',
           imageUrl: imageUrl || dbProject.imageUrl || '',

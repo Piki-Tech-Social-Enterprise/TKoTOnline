@@ -90,7 +90,7 @@ class EPanuiListRepository extends BaseRepository {
       dbEPanui = await dbEPanuiRef.val();
       if (dbEPanui) {
         ePanui = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbEPanui.active || false,
           category: category || dbEPanui.category || '',
           content: content || dbEPanui.content || '',
           eid: eid,

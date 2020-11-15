@@ -79,7 +79,7 @@ class SettingsRepository extends BaseRepository {
       dbSettings = await dbSettingsRef.val();
       if (dbSettings) {
         settings = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbSettings.active || false,
           homePageHeaderImageUrl: homePageHeaderImageUrl || dbSettings.homePageHeaderImageUrl,
           homePageAboutImageUrl: homePageAboutImageUrl || dbSettings.homePageAboutImageUrl,
           homePageAboutDescription: homePageAboutDescription || dbSettings.homePageAboutDescription,

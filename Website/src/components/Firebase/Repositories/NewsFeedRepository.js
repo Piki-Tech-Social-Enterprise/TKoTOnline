@@ -82,7 +82,7 @@ class NewsFeedRepository extends BaseRepository {
       dbNewsFeed = await dbNewsFeedRef.val();
       if (dbNewsFeed) {
         newsFeed = {
-          active: active || (typeof active === 'boolean' && active) || false,
+          active: typeof active === 'boolean' ? active : dbNewsFeed.active || false,
           category: category || dbNewsFeed.category || '',
           content: content || dbNewsFeed.content || '',
           header: header || dbNewsFeed.header || '',
