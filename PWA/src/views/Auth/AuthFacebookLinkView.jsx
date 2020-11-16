@@ -194,7 +194,7 @@ const AuthFacebookLinkView = props => {
               <CardBody>
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-light" />
+                    ? <LoadingOverlayModal />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <FormGroup>
                         <Label>Link Name</Label>

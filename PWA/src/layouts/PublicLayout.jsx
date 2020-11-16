@@ -26,7 +26,7 @@ const PublicLayout = props => {
           <Col className="ml-auto mr-auto py-3 py-lg-5" md="8">
             <div className="p-3">
               <Switch>
-                <Suspense fallback={<LoadingOverlayModal color="text-warning" />}>
+                <Suspense fallback={<LoadingOverlayModal />}>
                   {publicRoutes.map((prop, key) => {
                     const {
                       layout,

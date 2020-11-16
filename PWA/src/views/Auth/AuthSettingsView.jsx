@@ -338,7 +338,7 @@ const AuthSettingsView = props => {
               <CardBody>
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-white" />
+                    ? <LoadingOverlayModal />
                     : <Form noValidate onSubmit={handleSubmit}>
                       <Nav tabs>
                         <NavItem>

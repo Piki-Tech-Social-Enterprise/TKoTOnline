@@ -90,7 +90,7 @@ const AuthVolunteersView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-gray" />
+                    ? <LoadingOverlayModal />
                     : <BootstrapTable data={volunteersAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

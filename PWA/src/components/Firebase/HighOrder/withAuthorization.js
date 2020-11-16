@@ -55,7 +55,7 @@ const withAuthorization = condition => Component => {
         {
           authUser =>
             isLoading
-              ? <LoadingOverlayModal color="text-secondary" />
+              ? <LoadingOverlayModal />
               : condition(authUser)
                 ? <Component {...props} authUser={authUser} />
                 : <>

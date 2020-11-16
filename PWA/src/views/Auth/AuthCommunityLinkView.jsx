@@ -191,7 +191,7 @@ const AuthCommunityLinkView = props => {
               <CardBody>
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-light" />
+                    ? <LoadingOverlayModal />
                     : <Form noValidate onSubmit={handleSubmit}>
                       {
                         isSubmitting

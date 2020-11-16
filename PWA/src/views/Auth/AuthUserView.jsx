@@ -387,7 +387,7 @@ const AuthUserView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal color="text-white-50" />
+            ? <LoadingOverlayModal />
             : <>
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>

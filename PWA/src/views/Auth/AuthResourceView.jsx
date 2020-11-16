@@ -293,7 +293,7 @@ const AuthResourceView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal color="text-body" />
+            ? <LoadingOverlayModal />
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs={12}>

@@ -69,7 +69,7 @@ const AuthFacebookLinksView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-info" />
+                    ? <LoadingOverlayModal />
                     : <BootstrapTable data={FacebookLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

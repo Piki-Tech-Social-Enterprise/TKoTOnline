@@ -292,7 +292,7 @@ const AuthResourceDriveView = () => {
               <CardBody>
                 {
                   isLoading
-                  ? <LoadingOverlayModal color="text-muted" />
+                  ? <LoadingOverlayModal />
                   : <BootstrapTable data={fileArray} version="4" bordered={false} condensed hover
                           tableHeaderClass="text-primary"
                           exportCSV csvFileName="file-table-export.csv"

@@ -82,7 +82,7 @@ const AuthEventsView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-dark" />
+                    ? <LoadingOverlayModal />
                     : <BootstrapTable data={eventsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

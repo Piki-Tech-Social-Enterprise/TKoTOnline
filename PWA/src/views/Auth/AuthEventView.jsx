@@ -249,7 +249,7 @@ const AuthEventView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal color="text-body" />
+            ? <LoadingOverlayModal />
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs={12} sm={8}>

@@ -65,7 +65,7 @@ const AuthContactsView = props => {
               <CardBody className="table-responsive">
                 {
                   isLoading
-                    ? <LoadingOverlayModal color="text-info" />
+                    ? <LoadingOverlayModal />
                     : <BootstrapTable data={contactsAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"

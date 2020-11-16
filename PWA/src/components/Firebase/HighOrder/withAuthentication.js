@@ -36,7 +36,7 @@ const withAuthentication = Component => {
       <>
         {
           isLoading
-            ? <LoadingOverlayModal color="text-primary" />
+            ? <LoadingOverlayModal />
             : <>
               <AuthUserContext.Provider value={authUser}>
                 <Component {...props} />

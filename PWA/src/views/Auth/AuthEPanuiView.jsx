@@ -279,7 +279,7 @@ const AuthEPanuiView = props => {
       <Container className="content">
         {
           isLoading
-            ? <LoadingOverlayModal color="text-aqua" />
+            ? <LoadingOverlayModal />
             : <>
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
