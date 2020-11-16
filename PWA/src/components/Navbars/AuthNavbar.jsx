@@ -42,7 +42,7 @@ const AuthNavbar = props => {
     e.preventDefault();
     setDropdownOpen(!dropdownOpen);
   };
-  const getBrand = () => { debugger;
+  const getBrand = () => { // debugger;
     const {
       pathname
     } = window.location;
