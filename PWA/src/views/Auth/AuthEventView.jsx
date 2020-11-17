@@ -39,6 +39,7 @@ const INITIAL_STATE = {
   header: '',
   imageUrl: '',
   imageUrlFile: null,
+  isFeatured: false,
   evid: null
 };
 const AuthEventView = props => {
@@ -82,7 +83,8 @@ const AuthEventView = props => {
       content,
       externalUrl,
       header,
-      imageUrlFile
+      imageUrlFile,
+      isFeatured
     } = event;
     let evid = event.evid;
     let imageUrl = event.imageUrl;
@@ -115,6 +117,7 @@ const AuthEventView = props => {
           externalUrl,
           header,
           imageUrl,
+          isFeatured,
           evid: evid,
           updated: now.toString(),
           updatedBy: uid
@@ -219,6 +222,7 @@ const AuthEventView = props => {
         externalUrl,
         header,
         imageUrl,
+        isFeatured,
         evid
       } = dbEvent;
       setEvent(p => ({
@@ -228,6 +232,7 @@ const AuthEventView = props => {
         externalUrl,
         header,
         imageUrl,
+        isFeatured,
         evid
       }));
       setIsLoading(false);
@@ -271,6 +276,9 @@ const AuthEventView = props => {
                           onChange={handleChange}
                           uploadCallback={handleUploadCallback}
                         />
+                      </FormGroup>
+                      <FormGroup>
+                        <CustomInput label="Is Featured" name="isFeatured" checked={event.isFeatured || false} onChange={handleChange} type="switch" id="EventIsFeatured" />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={event.active} onChange={handleChange} type="switch" id="EventActive" />

@@ -24,7 +24,8 @@ const Routes = {
   projectsPage: '/Projects',
   projectPage: '/Projects/:pid',
   resourcesAnchor: '/#Resources',
-  resourcesPage: '/Resources'
+  resourcesPage: '/Resources',
+  resourceCardPage: '/ResourceCard'
 };
 
 export default Routes;

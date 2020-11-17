@@ -8,11 +8,7 @@ import {
   Container,
   Row,
   Col,
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardHeader
+  Button
 } from 'reactstrap';
 import {
   withFirebase
@@ -20,13 +16,12 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import draftToHtml from 'draftjs-to-html';
 import {
   sortArray
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
-const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const ResourceCard = lazy(async () => await import('components/Sections/Resources/ResourceCard'));
 const ResourcesSection = props => {
   const [state, setState] = useState({
     isLoading: true,
@@ -46,9 +41,12 @@ const ResourcesSection = props => {
   useEffect(() => {
     const getDbResources = async () => {
       const {
-        firebase
-      } = props;
-      const dbResources = await firebase.getDbResourcesAsArray();
+        firebase,
+        isHomePage
+      } = props; // debugger;
+      const dbResources = isHomePage
+        ? await firebase.getDbResourcesAsArray(false, 'isFeatured')
+        : await firebase.getDbResourcesAsArray();
       const dbCategorisedResources = {};
       await Promise.all(dbResources.map(async dbResource => {
         const {
@@ -85,64 +83,63 @@ const ResourcesSection = props => {
                 ? <LoadingSpinner />
                 : <>
                   {
-                    dbCategorisedResourcesAsArray && dbCategorisedResourcesAsArray.length > 0
-                      ? dbCategorisedResourcesAsArray.map(dbCategorisedResourceKey => {
-                        const dbCategorisedResource = dbCategorisedResources[dbCategorisedResourceKey];
-                        return (
-                          <Fragment key={dbCategorisedResourceKey}>
-                            <h4 className="text-uppercase h3 font-weight-bold">{dbCategorisedResourceKey}</h4>
-                            <Container className="my-3" fluid>
-                              <Row className="cards-row flex-row flex-nowrap">
-                                {
-                                  dbCategorisedResource.map((dbResource, index) => (
-                                    <Col xs={12} sm={6} lg={4} key={index}>
-                                      <Card className="card-block resource-card">
-                                        <CardHeader>
-                                          <CardTitle className="h5 text-uppercase my-3 mx-2">{dbResource.header}</CardTitle>
-                                        </CardHeader>
-                                        {
-                                          dbResource.imageUrl
-                                            ? <FirebaseImage
-                                              className="card-img-max-height"
-                                              imageURL={dbResource.imageUrl}
-                                              width="340"
-                                              lossless={true}
-                                              alt={dbResource.header}
-                                              loadingIconSize="lg"
+                    isHomePage
+                      ? <>
+                        <Container className="my-3" fluid>
+                          <Row className="cards-row flex-row flex-nowrap" noGutters>
+                            {
+                              dbCategorisedResourcesAsArray && dbCategorisedResourcesAsArray.length > 0
+                                ? dbCategorisedResourcesAsArray.map(dbCategorisedResourcesKey => {
+                                  const categorisedResources = dbCategorisedResources[dbCategorisedResourcesKey];
+                                  return (
+                                    <Col key={dbCategorisedResourcesKey}>
+                                      <h4 className="text-uppercase h3 font-weight-bold">{dbCategorisedResourcesKey}</h4>
+                                      {
+                                        categorisedResources.map((dbResource, index) => (
+                                          <Col key={index}>
+                                            <ResourceCard
+                                              dbResource={dbResource}
+                                              onButtonClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Resources page`, 'Clicked "Pā Mai" button', dbResource.header)}
                                             />
-                                            : null
-                                        }
-                                        <CardBody className="bg-white text-dark text-left">
-                                          <div
-                                            className="resource-content clickable block-with-text"
-                                            dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(dbResource.content)) }}
-                                            onClick={async e => {
-                                              e.preventDefault();
-                                              e.target.closest('div.resource-content').classList.toggle('block-with-text');
-                                            }}
-                                          />
-                                          <div className="text-center mt-3">
-                                            <Button
-                                              download={dbResource.resourceUrl.split('/').pop()}
-                                              href={dbResource.resourceDownloadUrl}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              className="tkot-primary-red-bg-color btn-outline-dark"
-                                              color="white"
-                                              onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Resources page`, 'Clicked "Pā Mai" button', dbResource.header)}
-                                            >Pā Mai</Button>
-                                          </div>
-                                        </CardBody>
-                                      </Card>
+                                          </Col>
+                                        ))
+                                      }
                                     </Col>
-                                  ))
-                                }
-                              </Row>
-                            </Container>
-                          </Fragment>
-                        );
-                      })
-                      : <h4>No Resources found</h4>
+                                  );
+                                })
+                                : <h4>No Resources found</h4>
+                            }
+                          </Row>
+                        </Container>
+                      </>
+                      : <>
+                        {
+                          dbCategorisedResourcesAsArray && dbCategorisedResourcesAsArray.length > 0
+                            ? dbCategorisedResourcesAsArray.map(dbCategorisedResourceKey => {
+                              const dbCategorisedResource = dbCategorisedResources[dbCategorisedResourceKey];
+                              return (
+                                <Fragment key={dbCategorisedResourceKey}>
+                                  <h4 className="text-uppercase h3 font-weight-bold">{dbCategorisedResourceKey}</h4>
+                                  <Container className="my-3" fluid>
+                                    <Row className="cards-row flex-row flex-nowrap">
+                                      {
+                                        dbCategorisedResource.map((dbResource, index) => (
+                                          <Col xs={12} sm={6} lg={4} key={index}>
+                                            <ResourceCard
+                                              dbResource={dbResource}
+                                              onButtonClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Resources page`, 'Clicked "Pā Mai" button', dbResource.header)}
+                                            />
+                                          </Col>
+                                        ))
+                                      }
+                                    </Row>
+                                  </Container>
+                                </Fragment>
+                              );
+                            })
+                            : <h4>No Resources found</h4>
+                        }
+                      </>
                   }
                 </>
             }

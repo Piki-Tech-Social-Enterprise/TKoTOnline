@@ -47,7 +47,7 @@ const AuthProjectsView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setProjectsAsArray]);
+  }, [props, isLoading]);
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddProjectClick(onClick)} />
   );
@@ -63,6 +63,9 @@ const AuthProjectsView = props => {
     if (indexOfDbProject > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
         projectsAsArray[indexOfDbProject].active = updatedChildState.dbActive;
+      }
+      if (typeof updatedChildState.isFeatured === 'boolean') {
+        projectsAsArray[indexOfDbProject].isFeatured = updatedChildState.isFeatured;
       }
       setProjectsAsArray(projectsAsArray);
     }
@@ -95,6 +98,22 @@ const AuthProjectsView = props => {
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isFeatured" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="Project"
+                          dbId={row.pid}
+                          dbIdName="pid"
+                          dbFieldName="isFeatured"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbProject}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is Featured</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Project"

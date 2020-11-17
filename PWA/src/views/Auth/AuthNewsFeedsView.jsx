@@ -69,9 +69,12 @@ const AuthNewsFeedsView = props => {
       if (typeof updatedChildState.dbActive === 'boolean') {
         newsFeedsAsArray[indexOfDbNewsFeed].active = updatedChildState.dbActive;
       }
+      if (typeof updatedChildState.isFeatured === 'boolean') {
+        newsFeedsAsArray[indexOfDbNewsFeed].isFeatured = updatedChildState.isFeatured;
+      }
       setNewsFeedsAsArray(newsFeedsAsArray);
     }
-  }
+  };
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -102,6 +105,22 @@ const AuthNewsFeedsView = props => {
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isFeatured" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="News Feed"
+                          dbId={row.nfid}
+                          dbIdName="nfid"
+                          dbFieldName="isFeatured"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbNewsFeed}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is Featured</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"

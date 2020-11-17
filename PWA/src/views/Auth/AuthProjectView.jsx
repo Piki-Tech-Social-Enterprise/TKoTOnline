@@ -38,6 +38,7 @@ const INITIAL_STATE = {
   header: '',
   imageUrl: '',
   imageUrlFile: null,
+  isFeatured: false,
   pid: null
 };
 const AuthProjectView = props => {
@@ -80,7 +81,8 @@ const AuthProjectView = props => {
       active,
       content,
       header,
-      imageUrlFile
+      imageUrlFile,
+      isFeatured
     } = project;
     let pid = project.pid;
     let imageUrl = project.imageUrl;
@@ -109,6 +111,7 @@ const AuthProjectView = props => {
           content: content,
           header,
           imageUrl,
+          isFeatured,
           pid: pid,
           updated: now.toString(),
           updatedBy: uid
@@ -212,6 +215,7 @@ const AuthProjectView = props => {
         content,
         header,
         imageUrl,
+        isFeatured,
         pid
       } = dbProject;
       setProject(p => ({
@@ -220,6 +224,7 @@ const AuthProjectView = props => {
         content,
         header,
         imageUrl,
+        isFeatured,
         pid
       }));
       setIsLoading(false);
@@ -259,6 +264,9 @@ const AuthProjectView = props => {
                           onChange={handleChange}
                           uploadCallback={handleUploadCallback}
                         />
+                      </FormGroup>
+                      <FormGroup>
+                        <CustomInput label="Is Featured" name="isFeatured" checked={project.isFeatured || false} onChange={handleChange} type="switch" id="ProjectIsFeatured" />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={project.active} onChange={handleChange} type="switch" id="ProjectActive" />

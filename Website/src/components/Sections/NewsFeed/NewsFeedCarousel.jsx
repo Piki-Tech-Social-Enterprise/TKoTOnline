@@ -28,7 +28,8 @@ import {
 } from 'components/Firebase';
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
-  draftToText
+  draftToText,
+  handleBlockTextClick
 } from 'components/App/Utilities';
 
 const INITIAL_STATE = {
@@ -296,7 +297,10 @@ const NewsFeedCarousel = props => {
                           />
                         </p>
                         {/* <p className="font-weight-bold">{`${moment(cardItem.date, DATE_MOMENT_FORMAT).format(NEWSFEED_DATE_MOMENT_FORMAT)} | ${cardItem.category}`}</p> */}
-                        <p className="d-inline-block block-with-text">{contentAsText}</p>
+                        <p
+                          className="news-feed-content d-inline-block block-with-text"
+                          onClick={async e => await handleBlockTextClick(e, 'p.news-feed-content', 'block-with-text')}
+                        >{contentAsText}</p>
                         <CardLink
                           href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
                           target={externalUrl ? '_blank' : '_self'}

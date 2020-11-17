@@ -47,6 +47,7 @@ const INITIAL_STATE = {
   date: '',
   imageUrl: '',
   imageUrlFile: null,
+  isFeatured: false,
   name: '',
   url: '',
   eid: null
@@ -62,7 +63,7 @@ const AuthEPanuiView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['active'];
+    const checkedNames = ['active', 'isFeatured'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     setEPanui(u => ({
       ...u,
@@ -94,6 +95,7 @@ const AuthEPanuiView = props => {
       content,
       date,
       imageUrlFile,
+      isFeatured,
       name,
       url
     } = ePanui;
@@ -123,6 +125,7 @@ const AuthEPanuiView = props => {
             category: categoryTags.join(TAG_SEPARATOR),
             content: content,
             date,
+            isFeatured,
             name,
             url,
             updated: now.toString(),
@@ -138,6 +141,7 @@ const AuthEPanuiView = props => {
           content: content,
           date,
           imageUrl,
+          isFeatured,
           name,
           url,
           updated: now.toString(),
@@ -240,6 +244,7 @@ const AuthEPanuiView = props => {
         content,
         date,
         imageUrl,
+        isFeatured,
         name,
         url,
         eid
@@ -254,6 +259,7 @@ const AuthEPanuiView = props => {
         content,
         date,
         imageUrl,
+        isFeatured: isFeatured || false,
         name,
         url,
         eid
@@ -357,8 +363,10 @@ const AuthEPanuiView = props => {
                           />
                         </FormGroup>
                         <FormGroup>
-                          <Label>Active</Label><br />
-                          <CustomInput label="" name="active" checked={ePanui.active} onChange={handleChange} type="switch" id="EPanuiActive" />
+                          <CustomInput label="Is Featured" name="isFeatured" checked={ePanui.isFeatured || false} onChange={handleChange} type="switch" id="EPanuiIsFeatured" />
+                        </FormGroup>
+                        <FormGroup>
+                          <CustomInput label="Active" name="active" checked={ePanui.active} onChange={handleChange} type="switch" id="EPanuiActive" />
                         </FormGroup>
                         <FormGroup>
                           <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>

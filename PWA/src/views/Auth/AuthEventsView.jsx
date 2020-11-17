@@ -52,7 +52,7 @@ const AuthEventsView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setEventsAsArray]);
+  }, [props, isLoading]);
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddEventClick(onClick)} />
   );
@@ -68,6 +68,9 @@ const AuthEventsView = props => {
     if (indexOfDbEvent > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
         eventsAsArray[indexOfDbEvent].active = updatedChildState.dbActive;
+      }
+      if (typeof updatedChildState.isFeatured === 'boolean') {
+        eventsAsArray[indexOfDbEvent].isFeatured = updatedChildState.isFeatured;
       }
       setEventsAsArray(eventsAsArray);
     }
@@ -100,6 +103,22 @@ const AuthEventsView = props => {
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isFeatured" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="Event"
+                          dbId={row.evid}
+                          dbIdName="evid"
+                          dbFieldName="isFeatured"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbEvent}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is Featured</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Event"

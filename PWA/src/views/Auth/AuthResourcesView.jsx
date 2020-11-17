@@ -64,9 +64,12 @@ const AuthResourcesView = props => {
       if (typeof updatedChildState.dbActive === 'boolean') {
         resourcesAsArray[indexOfDbResource].active = updatedChildState.dbActive;
       }
+      if (typeof updatedChildState.isFeatured === 'boolean') {
+        resourcesAsArray[indexOfDbResource].isFeatured = updatedChildState.isFeatured;
+      }
       setResourcesAsArray(resourcesAsArray);
     }
-  }
+  };
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -96,6 +99,22 @@ const AuthResourcesView = props => {
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isFeatured" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="Resource"
+                          dbId={row.rid}
+                          dbIdName="rid"
+                          dbFieldName="isFeatured"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbResource}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is Featured</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Resource"

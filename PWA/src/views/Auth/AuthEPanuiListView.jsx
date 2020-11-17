@@ -22,6 +22,7 @@ import {
   renderCaret
 } from 'components/App/Utilities';
 import FirebaseImage from 'components/App/FirebaseImage';
+import StatusBadge from 'components/App/StatusBadge';
 
 const AuthEPanuiListView = props => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +42,7 @@ const AuthEPanuiListView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isLoading, setIsLoading, setEPanuiListAsArray]);
+  }, [props, isLoading]);
   const createCustomInsertButton = onClick => (
     <InsertButton btnText="Add New" onClick={() => handleAddEPanuiClick(onClick)} />
   );
@@ -51,6 +52,18 @@ const AuthEPanuiListView = props => {
   };
   const handleEPanuiRowClick = async row => {
     props.history.push(`/auth/EPanui/${row.eid}`);
+  };
+  const handleChildUpdate = updatedChildState => {
+    const indexOfDbEPanui = ePanuiListAsArray.findIndex(dbNewsFeed => dbNewsFeed.eid === updatedChildState.dbId);
+    if (indexOfDbEPanui > -1) {
+      if (typeof updatedChildState.dbActive === 'boolean') {
+        ePanuiListAsArray[indexOfDbEPanui].active = updatedChildState.dbActive;
+      }
+      if (typeof updatedChildState.isFeatured === 'boolean') {
+        ePanuiListAsArray[indexOfDbEPanui].isFeatured = updatedChildState.isFeatured;
+      }
+      setEPanuiListAsArray(ePanuiListAsArray);
+    }
   };
   return (
     <>
@@ -79,6 +92,33 @@ const AuthEPanuiListView = props => {
                       <TableHeaderColumn dataField="name" dataSort sortFunc={handleSort} caretRender={renderCaret} width="40%">Name</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="date" dataSort sortFunc={handleSort} caretRender={renderCaret} width="20%">Date</TableHeaderColumn>
                       <TableHeaderColumn dataField="url" dataSort sortFunc={handleSort} caretRender={renderCaret}>URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isFeatured" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="E-Panui"
+                          dbId={row.eid}
+                          dbIdName="eid"
+                          dbFieldName="isFeatured"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbEPanui}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is Featured</TableHeaderColumn>
+                      <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="E-Panui"
+                          dbId={row.eid}
+                          dbIdName="eid"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbEPanui}
+                          onChildUpdate={handleChildUpdate}
+                        />
+                      )}>Status</TableHeaderColumn>
                     </BootstrapTable>
                 }
               </CardBody>

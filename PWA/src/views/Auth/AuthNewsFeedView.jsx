@@ -298,9 +298,9 @@ const AuthNewsFeedView = props => {
                           uploadCallback={handleUploadCallback}
                         />
                       </FormGroup>
-                      {/* <FormGroup>
-                        <CustomInput label="Is Featured?" bsSize="lg" name="isFeatured" checked={newsFeed.isFeatured} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
-                      </FormGroup> */}
+                      <FormGroup>
+                        <CustomInput label="Is Featured" name="isFeatured" checked={newsFeed.isFeatured || false} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
+                      </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />
                       </FormGroup>

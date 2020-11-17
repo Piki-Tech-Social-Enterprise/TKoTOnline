@@ -19,6 +19,9 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
+import {
+  handleBlockTextClick
+} from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
@@ -41,7 +44,9 @@ const ProjectsSection = props => {
       const {
         firebase
       } = props;
-      const dbProjects = await firebase.getDbProjectsAsArray();
+      const dbProjects = isHomePage
+        ? await firebase.getDbProjectsAsArray(false, 'isFeatured')
+        : await firebase.getDbProjectsAsArray();
       setState(s => ({
         ...s,
         isLoading: false,
@@ -80,7 +85,10 @@ const ProjectsSection = props => {
                               loadingIconSize="lg"
                             />
                             <CardBody className="bg-white text-dark">
-                              <CardTitle className="h5 text-uppercase my-3 mx-2">{dbProject.header}</CardTitle>
+                              <CardTitle
+                                className="h5 text-uppercase my-3 mx-2 project-header clickable header-with-text"
+                                onClick={async e => await handleBlockTextClick(e, 'div.project-header', 'header-with-text')}
+                              >{dbProject.header}&nbsp;</CardTitle>
                               <Button
                                 href={`/Projects/${dbProject.pid}`}
                                 className="tkot-primary-red-bg-color btn-outline-dark"

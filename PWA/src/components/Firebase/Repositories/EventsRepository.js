@@ -51,6 +51,7 @@ class EventsRepository extends BaseRepository {
       externalUrl,
       header,
       imageUrl,
+      isFeatured,
       evid,
       updated,
       updatedBy
@@ -70,6 +71,7 @@ class EventsRepository extends BaseRepository {
         externalUrl: externalUrl || '',
         header: header || '',
         imageUrl: imageUrl || '',
+        isFeatured: isFeatured || false,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         evid: await dbEventRef.getKey()
@@ -85,6 +87,7 @@ class EventsRepository extends BaseRepository {
           externalUrl: externalUrl || dbEvent.externalUrl || '',
           header: header || dbEvent.header || '',
           imageUrl: imageUrl || dbEvent.imageUrl || '',
+          isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbEvent.isFeatured || false,
           evid: evid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbEvent.updatedBy

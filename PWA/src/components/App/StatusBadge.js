@@ -13,6 +13,7 @@ const propTypes = {
   dbObjectName: PropTypes.string.isRequired,
   dbId: PropTypes.string.isRequired,
   dbIdName: PropTypes.string.isRequired,
+  dbFieldName: PropTypes.string,
   dbActive: PropTypes.bool,
   authUserUid: PropTypes.string.isRequired,
   onSaveDbObject: PropTypes.func.isRequired,
@@ -22,7 +23,9 @@ const propTypes = {
   inActiveOverrideColor: PropTypes.string,
   inActiveOverrideText: PropTypes.string
 },
-  defaultProps = {};
+  defaultProps = {
+    dbFieldName: 'active'
+  };
 
 class StatusBadge extends Component {
   constructor(props) {
@@ -69,7 +72,7 @@ class StatusBadge extends Component {
       isLoading: true
     });
     const dbObject = {
-      active: !this.state.dbActive,
+      [this.props.dbFieldName]: !this.state.dbActive,
       uid: this.props.authUserUid
     };
     dbObject[this.props.dbIdName] = this.props.dbId;

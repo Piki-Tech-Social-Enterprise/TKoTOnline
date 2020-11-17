@@ -21,7 +21,8 @@ import {
 import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
   draftToText,
-  sortArray
+  sortArray,
+  handleBlockTextClick
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -53,14 +54,19 @@ const NewsFeedSection = props => {
   useEffect(() => {
     const getDbNewsFeeds = async () => {
       const {
-        firebase
+        firebase,
+        isHomePage
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true);
-      const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
+      const dbSettings = await firebase.getDbSettingsValues(true); debugger;
+      const dbNewsFeeds = isHomePage
+        ? await firebase.getDbNewsFeedsAsArray(false, 'isFeatured')
+        : await firebase.getDbNewsFeedsAsArray();
       const filteredDbNewsFeeds = searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbNewsFeeds;
-      const dbEPanui = await firebase.getDbEPanuiListAsArray();
+      const dbEPanui = isHomePage
+        ? await firebase.getDbEPanuiListAsArray(false, 'isFeatured')
+        : await firebase.getDbEPanuiListAsArray();
       const filteredDbEPanui = searchCategory
         ? dbEPanui.filter(dbep => dbep.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbEPanui;
@@ -122,7 +128,10 @@ const NewsFeedSection = props => {
                         <Col xs={12} sm={6} lg={4} key={index}>
                           <Card className="card-block news-feed-card">
                             <CardHeader>
-                              <CardTitle className="h4 my-3 mx-2 font-weight-bold">{displayName}</CardTitle>
+                              <CardTitle
+                                className="h4 my-3 mx-2 font-weight-bold news-feed-header clickable header-with-text"
+                                onClick={async e => await handleBlockTextClick(e, 'div.news-feed-header', 'header-with-text')}
+                              >{displayName}</CardTitle>
                             </CardHeader>
                             <FirebaseImage
                               className="card-img-max-height"
@@ -139,7 +148,10 @@ const NewsFeedSection = props => {
                                   categoryLinkClassName="text-dark"
                                 />
                               </p>
-                              <p className="d-inline-block block-with-text">{contentAsText}</p>
+                              <p
+                                className="news-feed-content clickable d-inline-block block-with-text"
+                                onClick={async e => await handleBlockTextClick(e, 'p.news-feed-content', 'block-with-text')}
+                              >{contentAsText}</p>
                               <div className="text-center">
                                 <Button
                                   href={isExternalLink ? externalLink : internalLink}

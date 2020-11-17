@@ -50,6 +50,7 @@ class ProjectsRepository extends BaseRepository {
       content,
       header,
       imageUrl,
+      isFeatured,
       pid,
       updated,
       updatedBy
@@ -68,6 +69,7 @@ class ProjectsRepository extends BaseRepository {
         content: content || '',
         header: header || '',
         imageUrl: imageUrl || '',
+        isFeatured: isFeatured || false,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         pid: await dbProjectRef.getKey()
@@ -82,6 +84,7 @@ class ProjectsRepository extends BaseRepository {
           content: content || dbProject.content || '',
           header: header || dbProject.header || '',
           imageUrl: imageUrl || dbProject.imageUrl || '',
+          isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbProject.isFeatured || false,
           pid: pid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbProject.updatedBy

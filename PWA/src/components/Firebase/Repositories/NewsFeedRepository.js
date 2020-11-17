@@ -93,7 +93,7 @@ class NewsFeedRepository extends BaseRepository {
           externalUrl: externalUrl || dbNewsFeed.externalUrl || '',
           header: header || dbNewsFeed.header || '',
           imageUrl: imageUrl || dbNewsFeed.imageUrl || '',
-          isFeatured: isFeatured || (typeof isFeatured === 'boolean' && isFeatured) || false,
+          isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbNewsFeed.isFeatured || false,
           nfid: nfid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbNewsFeed.updatedBy

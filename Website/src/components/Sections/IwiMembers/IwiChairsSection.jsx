@@ -22,7 +22,8 @@ import {
 } from 'components/Firebase';
 import {
   intoChunks,
-  draftToText
+  draftToText,
+  handleBlockTextClick
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -160,7 +161,10 @@ const IwiChairSection = props => {
                         <Col xs={12} lg={4} key={dbIwiMemberKey}>
                           <Card className="card-block iwi-chair-card my-3 py-3">
                             <CardHeader>
-                              <CardTitle className="h4 my-3 mx-2 font-weight-bold">{iwiChairName}</CardTitle>
+                              <CardTitle
+                                className="h4 my-3 mx-2 font-weight-bold iwi-chair-header clickable header-with-text"
+                                onClick={async e => await handleBlockTextClick(e, 'div.iwi-chair-header', 'header-with-text')}
+                              >{iwiChairName}</CardTitle>
                             </CardHeader>
                             <FirebaseImage
                               className="rounded-circle iwi-chair-image"
@@ -173,7 +177,10 @@ const IwiChairSection = props => {
                             />
                             <CardBody className="text-left bg-white">
                               <p className="h4 mt-0 font-weight-bold text-center card-iwi-member-name">{iwiMemberName}</p>
-                              <p className="d-inline-block block-with-text">{contentAsText}</p>
+                              <p
+                                className="iwi-chair-content clickable d-inline-block block-with-text"
+                                onClick={async e => await handleBlockTextClick(e, 'p.iwi-chair-content', 'block-with-text')}
+                              >{contentAsText}</p>
                               <div className="text-center">
                                 <Button
                                   href={`/AboutUs/${imid}`}

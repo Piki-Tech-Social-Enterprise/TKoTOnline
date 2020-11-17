@@ -48,7 +48,8 @@ const {
   resourcesPage,
   contactUs,
   facebookLinks,
-  facebookLink
+  facebookLink,
+  resourceCardPage
 } = Routes;
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
 const HomeView = lazy(async () => await import('views/HomeView'));
@@ -66,6 +67,7 @@ const IwiChairView = lazy(async () => await import('views/IwiChairView'));
 const ResourcesView = lazy(async () => await import('views/ResourcesView'));
 const FacebookLinksView = lazy(async () => await import('views/FacebookLinksView'));
 const FacebookLinkView = lazy(async () => await import('views/FacebookLinkView'));
+const ResourceCardView = lazy(async () => await import('views/ResourceCardView'));
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };
@@ -146,6 +148,11 @@ ReactDOM.render(
           <Route
             path={facebookLink}
             render={props => <FacebookLinkView {...props} />}
+            exact
+          />
+          <Route
+            path={resourceCardPage}
+            render={props => <ResourceCardView {...props} />}
             exact
           />
         </Switch>

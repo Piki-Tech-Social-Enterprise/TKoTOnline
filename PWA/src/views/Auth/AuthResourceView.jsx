@@ -50,6 +50,7 @@ const INITIAL_STATE = {
   header: '',
   imageUrl: '',
   imageUrlFile: null,
+  isFeatured: false,
   resourceUrl: '',
   resourceUrlFile: null,
   rid: null
@@ -59,13 +60,16 @@ const AuthResourceView = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [resource, setResource] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    REACT_APP_WEB_BASE_URL
+  } = process.env;
   const handleChange = async e => {
     const {
       name,
       value,
       checked
     } = e.target;
-    const checkedNames = ['active'];
+    const checkedNames = ['active', 'isFeatured'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     setResource(r => ({
       ...r,
@@ -97,6 +101,7 @@ const AuthResourceView = props => {
       content,
       header,
       imageUrlFile,
+      isFeatured,
       resourceUrlFile
     } = resource;
     let rid = resource.rid;
@@ -139,6 +144,7 @@ const AuthResourceView = props => {
           content: content,
           header,
           imageUrl,
+          isFeatured,
           resourceUrl,
           rid: rid,
           updated: now.toString(),
@@ -254,12 +260,14 @@ const AuthResourceView = props => {
         content,
         header,
         imageUrl,
+        isFeatured,
         resourceUrl,
         rid
       } = dbResource;
       const resourceDownloadUrl = resourceUrl.startsWith('/resources')
         ? await firebase.getStorageFileDownloadURL(resourceUrl)
         : resourceUrl;
+      const resourceCardUrl = `/ResourceCard?header=${encodeURIComponent(header)}&imageUrl=${encodeURIComponent(imageUrl)}&content=${encodeURIComponent(content)}&resourceUrl=${encodeURIComponent(resourceUrl)}&resourceDownloadUrl=${encodeURIComponent(resourceDownloadUrl)}`;
       setResource(r => ({
         ...r,
         active,
@@ -270,9 +278,11 @@ const AuthResourceView = props => {
         content,
         header,
         imageUrl: imageUrl || '',
+        isFeatured: isFeatured || false,
         resourceUrl,
         resourceDownloadUrl,
-        rid
+        rid,
+        resourceCardUrl
       }));
       setIsLoading(false);
     };
@@ -286,7 +296,7 @@ const AuthResourceView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isNew, isLoading, setIsLoading]);
+  }, [props, isNew, isLoading]);
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -296,7 +306,7 @@ const AuthResourceView = props => {
             ? <LoadingOverlayModal />
             : <Form noValidate onSubmit={handleSubmit}>
               <Row>
-                <Col xs={12}>
+                <Col xs={12} sm={7}>
                   {
                     isSubmitting
                       ? <LoadingOverlayModal text="Saving..." />
@@ -379,12 +389,33 @@ const AuthResourceView = props => {
                         />
                       </FormGroup>
                       <FormGroup>
+                        <CustomInput label="Is Featured" name="isFeatured" checked={resource.isFeatured || false} onChange={handleChange} type="switch" id="ResourceIsFeatured" />
+                      </FormGroup>
+                      <FormGroup>
                         <CustomInput label="Active" name="active" checked={resource.active} onChange={handleChange} type="switch" id="ResourceActive" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
                         <Button type="button" color="secondary" size="lg" className="btn-round w-25 px-0 mr-3" onClick={handleGotoParentList} disabled={isSubmitting}>Cancel</Button>
                         <Button type="button" color="danger" size="lg" className="btn-round w-25 px-0" onClick={handleDeleteClick} disabled={isNew || isSubmitting}>Delete</Button>
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col xs={12} sm={5}>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <Label className="text-muted">Website Preview</Label>
+                        <iframe
+                          title={resource.header}
+                          src={`${REACT_APP_WEB_BASE_URL}${resource.resourceCardUrl}`}
+                          style={{
+                            border: 'none',
+                            height: '50rem',
+                            width: '100%'
+                          }}
+                        />
                       </FormGroup>
                     </CardBody>
                   </Card>

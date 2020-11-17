@@ -239,6 +239,10 @@ const getFirstCharacters = (value, length, excludeEllipse = false) => {
     ? `${value.substring(0, length - (excludeEllipse ? 0 : 3))}${!excludeEllipse && '...'}`
     : value;
 };
+const handleBlockTextClick = async (e, selector, className) => {
+  e.preventDefault();
+  e.target.closest(selector).classList.toggle(className);
+};
 
 export {
   useWindowEvent,
@@ -268,5 +272,6 @@ export {
   srcPrefix,
   getQParameter,
   getSrc,
-  getFirstCharacters
+  getFirstCharacters,
+  handleBlockTextClick
 };

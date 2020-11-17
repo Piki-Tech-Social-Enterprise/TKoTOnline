@@ -40,9 +40,12 @@ const EventsSection = props => {
   useEffect(() => {
     const getDbEvents = async () => {
       const {
-        firebase
+        firebase,
+        isHomePage
       } = props;
-      const dbEvents = await firebase.getDbEventsAsArray();
+      const dbEvents = isHomePage
+        ? await firebase.getDbEventsAsArray(false, 'isFeatured')
+        : await firebase.getDbEventsAsArray();
       setState(s => ({
         ...s,
         isLoading: false,
