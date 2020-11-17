@@ -42,7 +42,8 @@ const ProjectsSection = props => {
   useEffect(() => {
     const getDbProjects = async () => {
       const {
-        firebase
+        firebase,
+        isHomePage
       } = props;
       const dbProjects = isHomePage
         ? await firebase.getDbProjectsAsArray(false, 'isFeatured')
