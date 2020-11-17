@@ -147,7 +147,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           {
-            appRoutes.map(ar => {
+            appRoutes.map((ar, index) => {
               const {
                 path,
                 component: Component
@@ -159,6 +159,7 @@ ReactDOM.render(
                     {...props}
                   />}
                   exact
+                  key={index}
                 />
               );
             })
