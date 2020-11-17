@@ -57,7 +57,7 @@ const NewsFeedSection = props => {
         firebase,
         isHomePage
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true); debugger;
+      const dbSettings = await firebase.getDbSettingsValues(true); // debugger;
       const dbNewsFeeds = isHomePage
         ? await firebase.getDbNewsFeedsAsArray(false, 'isFeatured')
         : await firebase.getDbNewsFeedsAsArray();

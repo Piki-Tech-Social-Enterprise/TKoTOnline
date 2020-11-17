@@ -68,6 +68,72 @@ const ResourcesView = lazy(async () => await import('views/ResourcesView'));
 const FacebookLinksView = lazy(async () => await import('views/FacebookLinksView'));
 const FacebookLinkView = lazy(async () => await import('views/FacebookLinkView'));
 const ResourceCardView = lazy(async () => await import('views/ResourceCardView'));
+const appRoutes = [
+  {
+    path: home,
+    component: HomeView
+  },
+  {
+    path: privacyPolicy,
+    component: PrivacyPolicyView
+  },
+  {
+    path: termsOfUse,
+    component: TermsOfServiceView
+  },
+  {
+    path: aboutUs,
+    component: AboutUsView
+  },
+  {
+    path: contactUs,
+    component: ContactUsView
+  },
+  {
+    path: projectsPage,
+    component: ProjectsView
+  },
+  {
+    path: projectPage,
+    component: ProjectView
+  },
+  {
+    path: newsFeeds,
+    component: NewsFeedsView
+  },
+  {
+    path: newsFeed,
+    component: NewsFeedView
+  },
+  {
+    path: events,
+    component: EventsView
+  },
+  {
+    path: event,
+    component: EventView
+  },
+  {
+    path: iwiChair,
+    component: IwiChairView
+  },
+  {
+    path: resourcesPage,
+    component: ResourcesView
+  },
+  {
+    path: facebookLinks,
+    component: FacebookLinksView
+  },
+  {
+    path: facebookLink,
+    component: FacebookLinkView
+  },
+  {
+    path: resourceCardPage,
+    component: ResourceCardView
+  }
+];
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };
@@ -80,81 +146,23 @@ ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
       <BrowserRouter>
         <Switch>
-          <Route path={home} render={props => (
-            <HomeView {...props} />
-          )} exact />
-          <Route
-            path={privacyPolicy}
-            render={props => <PrivacyPolicyView {...props} />}
-          />
-          <Route
-            path={termsOfUse}
-            render={props => <TermsOfServiceView {...props} />}
-          />
-          <Route
-            path={aboutUs}
-            render={props => <AboutUsView {...props} />}
-            exact
-          />
-          <Route
-            path={contactUs}
-            render={props => <ContactUsView {...props} />}
-          />
-          <Route
-            path={projectsPage}
-            render={props => <ProjectsView {...props} />}
-            exact
-          />
-          <Route
-            path={projectPage}
-            render={props => <ProjectView {...props} />}
-            exact
-          />
-          <Route
-            path={newsFeeds}
-            render={props => <NewsFeedsView {...props} />}
-            exact
-          />
-          <Route
-            path={newsFeed}
-            render={props => <NewsFeedView {...props} />}
-            exact
-          />
-          <Route
-            path={events}
-            render={props => <EventsView {...props} />}
-            exact
-          />
-          <Route
-            path={event}
-            render={props => <EventView {...props} />}
-            exact
-          />
-          <Route
-            path={iwiChair}
-            render={props => <IwiChairView {...props} />}
-            exact
-          />
-          <Route
-            path={resourcesPage}
-            render={props => <ResourcesView {...props} />}
-            exact
-          />
-          <Route
-            path={facebookLinks}
-            render={props => <FacebookLinksView {...props} />}
-            exact
-          />
-          <Route
-            path={facebookLink}
-            render={props => <FacebookLinkView {...props} />}
-            exact
-          />
-          <Route
-            path={resourceCardPage}
-            render={props => <ResourceCardView {...props} />}
-            exact
-          />
+          {
+            appRoutes.map(ar => {
+              const {
+                path,
+                component: Component
+              } = ar;
+              return (
+                <Route
+                  path={path}
+                  render={props => <Component
+                    {...props}
+                  />}
+                  exact
+                />
+              );
+            })
+          }
         </Switch>
         <GoogleAnalytics />
       </BrowserRouter>
