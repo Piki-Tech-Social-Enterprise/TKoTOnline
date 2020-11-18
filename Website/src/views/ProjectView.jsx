@@ -76,6 +76,7 @@ const ProjectView = props => {
               pageHeaderImage={state.imageDownloadURL}
               pageHeaderTitle={state.dbProject.header}
               pageHeaderCaption=""
+              pageHeaderFilterColour=""
             />
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
