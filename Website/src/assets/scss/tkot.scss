@@ -408,6 +408,21 @@ $tkot-home-footer-x-padding: 1rem;
   }
 }
 
+@media screen and (max-width: 767.98px) {
+  .card.news-feed-card {
+    .card-img-max-height {
+      height: 167px !important;
+      width: auto;
+    }
+  }
+  .card.resource-card {
+    .card-img-max-height {
+      height: 150px !important;
+      width: auto;
+    }
+  }
+}
+
 .nav-item .nav-link.active {
   background-color: rgba(lightgrey, 0.8) !important;
 }

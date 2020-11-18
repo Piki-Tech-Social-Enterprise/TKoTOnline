@@ -17,7 +17,8 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import {
-  sortArray
+  sortArray,
+  handleBlockTextClick
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
@@ -93,7 +94,10 @@ const ResourcesSection = props => {
                                   const categorisedResources = dbCategorisedResources[dbCategorisedResourcesKey];
                                   return (
                                     <Col key={dbCategorisedResourcesKey}>
-                                      <h4 className="text-uppercase h3 font-weight-bold">{dbCategorisedResourcesKey}</h4>
+                                      <h3
+                                        className="text-uppercase font-weight-bold categorised-resource-header clickable header-with-text"
+                                        onClick={async e => await handleBlockTextClick(e, 'h3.categorised-resource-header', 'header-with-text')}
+                                      >{dbCategorisedResourcesKey}</h3>
                                       {
                                         categorisedResources.map((dbResource, index) => (
                                           <Col key={index}>
