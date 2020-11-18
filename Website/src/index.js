@@ -33,119 +33,81 @@ import "assets/scss/tkot.scss?v=1.0.0";
 import 'lazysizes';
 import Routes from 'components/Routes/routes';
 
-const {
-  home,
-  privacyPolicy,
-  termsOfUse,
-  aboutUs,
-  newsFeeds,
-  newsFeed,
-  events,
-  event,
-  iwiChair,
-  projectsPage,
-  projectPage,
-  resourcesPage,
-  contactUs,
-  facebookLinks,
-  facebookLink,
-  resourceCardPage,
-  economicDevelopmentsPage,
-  economicDevelopmentCardPage
-} = Routes;
-const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
-const HomeView = lazy(async () => await import('views/HomeView'));
-const PrivacyPolicyView = lazy(async () => await import('views/PrivacyPolicyView'));
-const TermsOfServiceView = lazy(async () => await import('views/TermsOfServiceView'));
-const AboutUsView = lazy(async () => await import('views/AboutUsView'));
-const ContactUsView = lazy(async () => await import('views/ContactUsView'));
-const ProjectsView = lazy(async () => await import('views/ProjectsView'));
-const ProjectView = lazy(async () => await import('views/ProjectView'));
-const NewsFeedsView = lazy(async () => await import('views/NewsFeedsView'));
-const NewsFeedView = lazy(async () => await import('views/NewsFeedView'));
-const EventsView = lazy(async () => await import('views/EventsView'));
-const EventView = lazy(async () => await import('views/EventView'));
-const IwiChairView = lazy(async () => await import('views/IwiChairView'));
-const ResourcesView = lazy(async () => await import('views/ResourcesView'));
-const FacebookLinksView = lazy(async () => await import('views/FacebookLinksView'));
-const FacebookLinkView = lazy(async () => await import('views/FacebookLinkView'));
-const ResourceCardView = lazy(async () => await import('views/ResourceCardView'));
-const EconomicDevelopmentsView = lazy(async () => await import('views/EconomicDevelopmentsView'));
-const EconomicDevelopmentCardView = lazy(async () => await import('views/EconomicDevelopmentCardView'));
 const appRoutes = [
   {
-    path: home,
-    component: HomeView
+    path: Routes.home,
+    component: lazy(async () => await import('views/HomeView'))
   },
   {
-    path: privacyPolicy,
-    component: PrivacyPolicyView
+    path: Routes.privacyPolicy,
+    component: lazy(async () => await import('views/PrivacyPolicyView'))
   },
   {
-    path: termsOfUse,
-    component: TermsOfServiceView
+    path: Routes.termsOfUse,
+    component: lazy(async () => await import('views/TermsOfServiceView'))
   },
   {
-    path: aboutUs,
-    component: AboutUsView
+    path: Routes.aboutUs,
+    component: lazy(async () => await import('views/AboutUsView'))
   },
   {
-    path: contactUs,
-    component: ContactUsView
+    path: Routes.contactUs,
+    component: lazy(async () => await import('views/ContactUsView'))
   },
   {
-    path: projectsPage,
-    component: ProjectsView
+    path: Routes.projectsPage,
+    component: lazy(async () => await import('views/ProjectsView'))
   },
   {
-    path: projectPage,
-    component: ProjectView
+    path: Routes.projectPage,
+    component: lazy(async () => await import('views/ProjectView'))
   },
   {
-    path: newsFeeds,
-    component: NewsFeedsView
+    path: Routes.newsFeeds,
+    component: lazy(async () => await import('views/NewsFeedsView'))
   },
   {
-    path: newsFeed,
-    component: NewsFeedView
+    path: Routes.newsFeed,
+    component: lazy(async () => await import('views/NewsFeedView'))
   },
   {
-    path: events,
-    component: EventsView
+    path: Routes.events,
+    component: lazy(async () => await import('views/EventsView'))
   },
   {
-    path: event,
-    component: EventView
+    path: Routes.event,
+    component: lazy(async () => await import('views/EventView'))
   },
   {
-    path: iwiChair,
-    component: IwiChairView
+    path: Routes.iwiChair,
+    component: lazy(async () => await import('views/IwiChairView'))
   },
   {
-    path: resourcesPage,
-    component: ResourcesView
+    path: Routes.resourcesPage,
+    component: lazy(async () => await import('views/ResourcesView'))
   },
   {
-    path: facebookLinks,
-    component: FacebookLinksView
+    path: Routes.facebookLinks,
+    component: lazy(async () => await import('views/FacebookLinksView'))
   },
   {
-    path: facebookLink,
-    component: FacebookLinkView
+    path: Routes.facebookLink,
+    component: lazy(async () => await import('views/FacebookLinkView'))
   },
   {
-    path: resourceCardPage,
-    component: ResourceCardView
+    path: Routes.resourceCardPage,
+    component: lazy(async () => await import('views/ResourceCardView'))
   },
   {
-    path: economicDevelopmentsPage,
-    component: EconomicDevelopmentsView
+    path: Routes.economicDevelopmentsPage,
+    component: lazy(async () => await import('views/EconomicDevelopmentsView'))
   },
   {
-    path: economicDevelopmentCardPage,
-    component: EconomicDevelopmentCardView
+    path: Routes.economicDevelopmentCardPage,
+    component: lazy(async () => await import('views/EconomicDevelopmentCardView'))
   }
 ];
+const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };
