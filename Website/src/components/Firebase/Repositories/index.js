@@ -12,6 +12,7 @@ import ProjectsRepository from './ProjectsRepository';
 import IwiMembersRepository from './IwiMembersRepository';
 import EPanuiListRepository from './EPanuiListRepository';
 import ResourcesRepository from './ResourcesRepository';
+import EconomicDevelopmentsRepository from './EconomicDevelopmentsRepository';
 
 export default BaseRepository;
 export {
@@ -27,5 +28,6 @@ export {
   ProjectsRepository,
   IwiMembersRepository,
   EPanuiListRepository,
-  ResourcesRepository
+  ResourcesRepository,
+  EconomicDevelopmentsRepository
 };

@@ -31,6 +31,7 @@ const IwiMembers = lazy(async () => await import('components/Sections/IwiMembers
 const EventsSection = lazy(async () => await import('components/Sections/Events'));
 const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
 const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
+const EconomicDevelopmentsSection = lazy(async () => await import('components/Sections/EconomicDevelopments'));
 const {
   homeAnchor,
   iwiMembersAnchor,
@@ -162,6 +163,11 @@ const HomeView = props => {
               />
               <ResourcesSection
                 containerClassName="bg-secondary1"
+                showLearnMoreButton
+                isHomePage
+              />
+              <EconomicDevelopmentsSection
+                containerClassName="bg-primary1"
                 showLearnMoreButton
                 isHomePage
               />

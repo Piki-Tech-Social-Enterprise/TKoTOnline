@@ -74,11 +74,12 @@ const ProjectView = props => {
             />
             <HomeHeader
               pageHeaderImage={state.imageDownloadURL}
-              pageHeaderTitle={state.dbProject.header}
+              pageHeaderTitle=""
               pageHeaderCaption=""
               pageHeaderFilterColour=""
             />
-            <Container className="bg-warning1 mt-5 pt-5">
+            <Container className="bg-warning1 mt-1 pt-5">
+              <div className="h1 py-3 mb-0 font-weight-bold text-center">{state.dbProject.header}</div>
               <Row>
                 <Col
                   dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbProject.content)) }}

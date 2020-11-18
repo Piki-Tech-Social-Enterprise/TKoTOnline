@@ -16,7 +16,8 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import tkotVideo from '../../../assets/videos/v2.mp4';
+import tkotImage from '../../../assets/img/tkot/tkot-white-logo.webp';
+// import tkotVideo from '../../../assets/videos/v2.mp4';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const {
@@ -60,17 +61,17 @@ const AboutSection = props => {
         <Container className="py-5 text-center">
           <Row>
             <Col xs={12} sm={6} className="bg-danger1">
-              {/* <img alt="..." className="n-logo pt-2 my-1 lazyload" data-src={require("assets/img/tkot/tkot-white-logo.webp")} style={{
+              <img alt="..." className="n-logo pt-2 my-1 lazyload" data-src={tkotImage} style={{
                 width: 419
-              }} /> */}
-              <div className="videoHeader">
+              }} />
+              {/* <div className="videoHeader">
                 <video playsInline autoPlay loop muted>
                   <source
                     type="video/mp4"
                     src={tkotVideo}
                   />
                 </video>
-              </div>
+              </div> */}
             </Col>
             <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
               <div className="my-3">

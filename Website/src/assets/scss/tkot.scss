@@ -423,7 +423,10 @@ $tkot-home-footer-x-padding: 1rem;
   }
 }
 
-.nav-item .nav-link.active {
+.nav-item .nav-link.active,
+.nav-item .nav-link:active,
+.nav-item .dropdown-item.active,
+.nav-item .dropdown-item:active {
   background-color: rgba(lightgrey, 0.8) !important;
 }
 

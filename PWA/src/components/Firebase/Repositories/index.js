@@ -14,6 +14,7 @@ import EventsRepository from './EventsRepository';
 import ProjectsRepository from './ProjectsRepository';
 import IwiMembersRepository from './IwiMembersRepository';
 import ResourcesRepository from './ResourcesRepository';
+import EconomicDevelopmentsRepository from './EconomicDevelopmentsRepository';
 
 export default BaseRepository;
 export {
@@ -31,5 +32,6 @@ export {
   EventsRepository,
   ProjectsRepository,
   IwiMembersRepository,
-  ResourcesRepository
+  ResourcesRepository,
+  EconomicDevelopmentsRepository
 };

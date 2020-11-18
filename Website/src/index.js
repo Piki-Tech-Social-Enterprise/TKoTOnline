@@ -49,7 +49,9 @@ const {
   contactUs,
   facebookLinks,
   facebookLink,
-  resourceCardPage
+  resourceCardPage,
+  economicDevelopmentsPage,
+  economicDevelopmentCardPage
 } = Routes;
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
 const HomeView = lazy(async () => await import('views/HomeView'));
@@ -68,6 +70,8 @@ const ResourcesView = lazy(async () => await import('views/ResourcesView'));
 const FacebookLinksView = lazy(async () => await import('views/FacebookLinksView'));
 const FacebookLinkView = lazy(async () => await import('views/FacebookLinkView'));
 const ResourceCardView = lazy(async () => await import('views/ResourceCardView'));
+const EconomicDevelopmentsView = lazy(async () => await import('views/EconomicDevelopmentsView'));
+const EconomicDevelopmentCardView = lazy(async () => await import('views/EconomicDevelopmentCardView'));
 const appRoutes = [
   {
     path: home,
@@ -132,6 +136,14 @@ const appRoutes = [
   {
     path: resourceCardPage,
     component: ResourceCardView
+  },
+  {
+    path: economicDevelopmentsPage,
+    component: EconomicDevelopmentsView
+  },
+  {
+    path: economicDevelopmentCardPage,
+    component: EconomicDevelopmentCardView
   }
 ];
 

@@ -30,16 +30,16 @@ import DraftEditor from 'components/DraftEditor';
 import TagsInput from 'react-tagsinput-2';
 import 'react-tagsinput-2/react-tagsinput.css';
 
-const resourcesRef = '/resources';
-const resourceKeyFormat = '{rid}';
-const resourceFilenameFormat = '{filename}';
-const resourceResourceFolderUrlFormat = `${resourcesRef}/${resourceKeyFormat}/`;
-const resourceResourceUrlFormat = `${resourceResourceFolderUrlFormat}${resourceFilenameFormat}`;
-const resourceImagesRef = '/images/resources';
-const resourceImageKeyFormat = '{rid}';
-const resourceImageFilenameFormat = '{filename}';
-const resourceImageFolderUrlFormat = `${resourceImagesRef}/${resourceImageKeyFormat}/`;
-const resourceImageUrlFormat = `${resourceImageFolderUrlFormat}${resourceImageFilenameFormat}`;
+const economicDevelopmentsRef = '/economicDevelopments';
+const economicDevelopmentKeyFormat = '{edid}';
+const economicDevelopmentFilenameFormat = '{filename}';
+const economicDevelopmentEconomicDevelopmentFolderUrlFormat = `${economicDevelopmentsRef}/${economicDevelopmentKeyFormat}/`;
+const economicDevelopmentEconomicDevelopmentUrlFormat = `${economicDevelopmentEconomicDevelopmentFolderUrlFormat}${economicDevelopmentFilenameFormat}`;
+const economicDevelopmentImagesRef = '/images/economicDevelopments';
+const economicDevelopmentImageKeyFormat = '{edid}';
+const economicDevelopmentImageFilenameFormat = '{filename}';
+const economicDevelopmentImageFolderUrlFormat = `${economicDevelopmentImagesRef}/${economicDevelopmentImageKeyFormat}/`;
+const economicDevelopmentImageUrlFormat = `${economicDevelopmentImageFolderUrlFormat}${economicDevelopmentImageFilenameFormat}`;
 const INITIAL_STATE = {
   active: true,
   category: '',
@@ -51,14 +51,14 @@ const INITIAL_STATE = {
   imageUrl: '',
   imageUrlFile: null,
   isFeatured: false,
-  resourceUrl: '',
-  resourceUrlFile: null,
-  rid: null
+  economicDevelopmentUrl: '',
+  economicDevelopmentUrlFile: null,
+  edid: null
 };
-const AuthResourceView = props => {
-  const isNew = props.match.params.rid === 'New';
+const AuthEconomicDevelopmentView = props => {
+  const isNew = props.match.params.edid === 'New';
   const [isLoading, setIsLoading] = useState(true);
-  const [resource, setResource] = useState(INITIAL_STATE);
+  const [economicDevelopment, setEconomicDevelopment] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     REACT_APP_WEB_BASE_URL
@@ -71,7 +71,7 @@ const AuthResourceView = props => {
     } = e.target;
     const checkedNames = ['active', 'isFeatured'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    setResource(r => ({
+    setEconomicDevelopment(r => ({
       ...r,
       [name]: useChecked
         ? checked
@@ -79,14 +79,14 @@ const AuthResourceView = props => {
     }));
   };
   const handleUploadCallback = async file => {
-    const imageUrl = getImageUrl(resourceImageUrlFormat, resourceKeyFormat, props.match.params.rid, resourceFilenameFormat, file.name);
+    const imageUrl = getImageUrl(economicDevelopmentImageUrlFormat, economicDevelopmentKeyFormat, props.match.params.edid, economicDevelopmentFilenameFormat, file.name);
     return await uploadFileToStorage(file, props.firebase, imageUrl);
   };
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
     const maxImageFileSize = 2097152;
-    const maxResourceFileSize = 2097152;
+    const maxEconomicDevelopmentFileSize = 2097152;
     const now = new Date();
     const {
       authUser,
@@ -102,66 +102,66 @@ const AuthResourceView = props => {
       header,
       imageUrlFile,
       isFeatured,
-      resourceUrlFile
-    } = resource;
-    let rid = resource.rid;
-    let imageUrl = resource.imageUrl;
-    let resourceUrl = resource.resourceUrl;
+      economicDevelopmentUrlFile
+    } = economicDevelopment;
+    let edid = economicDevelopment.edid;
+    let imageUrl = economicDevelopment.imageUrl;
+    let economicDevelopmentUrl = economicDevelopment.economicDevelopmentUrl;
     let displayIcon = 'error';
-    let displayTitle = 'Save Resource Failed';
+    let displayTitle = 'Save Economic Development Failed';
     let displayMessage = 'Changes saved';
     try {
-      if (!resourceUrl || !header || !content) {
-        displayMessage = 'The Resource URL, Header and Content fields are required.';
+      if (!economicDevelopmentUrl || !header || !content) {
+        displayMessage = 'The Economic Development URL, Header and Content fields are required.';
       } else if (imageUrlFile && imageUrlFile.size > maxImageFileSize) {
         const {
           size
         } = imageUrlFile;
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
         // eslint-disable-next-line
-      } else if (resourceUrlFile && resourceUrlFile.size > maxResourceFileSize) {
+      } else if (economicDevelopmentUrlFile && economicDevelopmentUrlFile.size > maxEconomicDevelopmentFileSize) {
         const {
           size
-        } = resourceUrlFile;
-        throw new Error(`Resources greater than ${formatBytes(maxResourceFileSize)} (${formatInteger(maxResourceFileSize)} bytes) cannot be uploaded.<br /><br />Actual resource size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+        } = economicDevelopmentUrlFile;
+        throw new Error(`Economic Developments greater than ${formatBytes(maxEconomicDevelopmentFileSize)} (${formatInteger(maxEconomicDevelopmentFileSize)} bytes) cannot be uploaded.<br /><br />Actual Economic Development size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (isNew) {
-          rid = await firebase.saveDbResource({
+          edid = await firebase.saveDbEconomicDevelopment({
             created: now.toString(),
             createdBy: uid,
           });
           if (imageUrlFile && imageUrlFile.name) {
-            imageUrl = getImageUrl(resourceImageUrlFormat, resourceKeyFormat, rid, resourceFilenameFormat, imageUrlFile.name, '');
+            imageUrl = getImageUrl(economicDevelopmentImageUrlFormat, economicDevelopmentKeyFormat, edid, economicDevelopmentFilenameFormat, imageUrlFile.name, '');
           }
-          if (resourceUrlFile && resourceUrlFile.name) {
-            resourceUrl = resourceResourceUrlFormat
-              .replace(resourceKeyFormat, rid)
-              .replace(resourceFilenameFormat, resourceUrlFile.name);
+          if (economicDevelopmentUrlFile && economicDevelopmentUrlFile.name) {
+            economicDevelopmentUrl = economicDevelopmentEconomicDevelopmentUrlFormat
+              .replace(economicDevelopmentKeyFormat, edid)
+              .replace(economicDevelopmentFilenameFormat, economicDevelopmentUrlFile.name);
           }
         }
-        await firebase.saveDbResource({
+        await firebase.saveDbEconomicDevelopment({
           active: active,
           category: categoryTags.join(TAG_SEPARATOR),
           content: content,
           header,
           imageUrl,
           isFeatured,
-          resourceUrl,
-          rid: rid,
+          economicDevelopmentUrl,
+          edid: edid,
           updated: now.toString(),
           updatedBy: uid
         });
         if (imageUrlFile) {
           await firebase.saveStorageFile(imageUrl, imageUrlFile);
         }
-        if (resourceUrlFile) {
-          await firebase.saveStorageFile(resourceUrl, resourceUrlFile);
+        if (economicDevelopmentUrlFile) {
+          await firebase.saveStorageFile(economicDevelopmentUrl, economicDevelopmentUrlFile);
         }
         if (isNew) {
           handleGotoParentList();
         }
         displayIcon = 'success';
-        displayTitle = 'Save Resource Successful';
+        displayTitle = 'Save Economic Development Successful';
       }
     } catch (error) {
       displayMessage = `${error.message}`;
@@ -198,16 +198,16 @@ const AuthResourceView = props => {
           match
         } = props;
         const {
-          rid
+          edid
         } = match.params;
-        const resourceResourceFolderUrl = resourceResourceFolderUrlFormat.replace(resourceKeyFormat, rid);
-        const storageFiles = await firebase.getStorageFiles(resourceResourceFolderUrl);
+        const economicDevelopmentEconomicDevelopmentFolderUrl = economicDevelopmentEconomicDevelopmentFolderUrlFormat.replace(economicDevelopmentKeyFormat, edid);
+        const storageFiles = await firebase.getStorageFiles(economicDevelopmentEconomicDevelopmentFolderUrl);
         storageFiles.items.map(async storageFileItem => await storageFileItem.delete());
-        await firebase.deleteDbResource(rid);
+        await firebase.deleteDbEconomicDevelopment(edid);
         swal.fire({
           icon: 'success',
-          title: 'Delete Resource Successful',
-          text: 'Your Resource has been deleted.'
+          title: 'Delete Economic Development Successful',
+          text: 'Your Economic Development has been deleted.'
         });
         handleGotoParentList();
       }
@@ -219,42 +219,42 @@ const AuthResourceView = props => {
     if (displayMessage) {
       swal.fire({
         icon: 'error',
-        title: 'Delete Resource Error',
+        title: 'Delete Economic Development Error',
         html: displayMessage
       });
-      console.log(`Delete Resource Error: ${displayMessage}`);
+      console.log(`Delete Economic Development Error: ${displayMessage}`);
     }
   };
   const handleGotoParentList = () => {
-    props.history.push('/auth/Resources');
+    props.history.push('/auth/EconomicDevelopments');
   };
   const handleImageUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
       const imageUrlFile = e.target.files[0];
-      setResource(r => ({
+      setEconomicDevelopment(r => ({
         ...r,
         imageUrlFile: imageUrlFile
       }));
     }
   };
-  const handleResourceUrlFileChange = async e => {
+  const handleEconomicDevelopmentUrlFileChange = async e => {
     e.preventDefault();
     if (e.target && e.target.files && e.target.files.length) {
-      const resourceUrlFile = e.target.files[0];
-      setResource(r => ({
+      const economicDevelopmentUrlFile = e.target.files[0];
+      setEconomicDevelopment(r => ({
         ...r,
-        resourceUrlFile: resourceUrlFile
+        economicDevelopmentUrlFile: economicDevelopmentUrlFile
       }));
     }
   };
   useEffect(() => {
-    const retrieveResource = async () => {
+    const retrieveEconomicDevelopment = async () => {
       const {
         firebase,
         match
       } = props;
-      const dbResource = await firebase.getDbResourceValue(match.params.rid);
+      const dbEconomicDevelopment = await firebase.getDbEconomicDevelopmentValue(match.params.edid);
       const {
         active,
         category,
@@ -262,14 +262,14 @@ const AuthResourceView = props => {
         header,
         imageUrl,
         isFeatured,
-        resourceUrl,
-        rid
-      } = dbResource;
-      const resourceDownloadUrl = resourceUrl.startsWith('/resources')
-        ? await firebase.getStorageFileDownloadURL(resourceUrl)
-        : resourceUrl;
-      const resourceCardUrl = `/ResourceCard?header=${encodeURIComponent(header)}&imageUrl=${encodeURIComponent(imageUrl)}&content=${encodeURIComponent(content)}&resourceUrl=${encodeURIComponent(resourceUrl)}&resourceDownloadUrl=${encodeURIComponent(resourceDownloadUrl)}`;
-      setResource(r => ({
+        economicDevelopmentUrl,
+        edid
+      } = dbEconomicDevelopment;
+      const economicDevelopmentDownloadUrl = economicDevelopmentUrl.startsWith('/economicDevelopments')
+        ? await firebase.getStorageFileDownloadURL(economicDevelopmentUrl)
+        : economicDevelopmentUrl;
+      const economicDevelopmentCardUrl = `/EconomicDevelopmentCard?header=${encodeURIComponent(header)}&imageUrl=${encodeURIComponent(imageUrl)}&content=${encodeURIComponent(content)}&economicDevelopmentUrl=${encodeURIComponent(economicDevelopmentUrl)}&economicDevelopmentDownloadUrl=${encodeURIComponent(economicDevelopmentDownloadUrl)}`;
+      setEconomicDevelopment(r => ({
         ...r,
         active,
         category,
@@ -280,16 +280,16 @@ const AuthResourceView = props => {
         header,
         imageUrl: imageUrl || '',
         isFeatured: isFeatured || false,
-        resourceUrl,
-        resourceDownloadUrl,
-        rid,
-        resourceCardUrl
+        economicDevelopmentUrl,
+        economicDevelopmentDownloadUrl,
+        edid,
+        economicDevelopmentCardUrl
       }));
       setIsLoading(false);
     };
     if (isLoading) {
       if (!isNew) {
-        retrieveResource();
+        retrieveEconomicDevelopment();
       }
     }
     return () => {
@@ -318,7 +318,7 @@ const AuthResourceView = props => {
                       <FormGroup>
                         <Label>Category</Label>
                         <TagsInput
-                          value={resource.categoryTags}
+                          value={economicDevelopment.categoryTags}
                           onChange={tags => handleChange({
                             target: {
                               name: 'categoryTags',
@@ -328,11 +328,11 @@ const AuthResourceView = props => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label className="d-inline">Resource URL&nbsp;
+                        <Label className="d-inline">Economic Development URL&nbsp;
                           {
-                            resource.resourceDownloadUrl
+                            economicDevelopment.economicDevelopmentDownloadUrl
                               ? <>
-                                <a href={resource.resourceDownloadUrl} target="_blank" rel="noopener noreferrer" className="small text-muted text-decoration-none float-right">
+                                <a href={economicDevelopment.economicDevelopmentDownloadUrl} target="_blank" rel="noopener noreferrer" className="small text-muted text-decoration-none float-right">
                                   Preview (in another tab/window) <i className="fas fa-external-link-alt" />
                                 </a>
                               </>
@@ -340,32 +340,32 @@ const AuthResourceView = props => {
                           }
                         </Label>
                         <FirebaseInput
-                          value={resource.resourceUrl}
+                          value={economicDevelopment.economicDevelopmentUrl}
                           onChange={handleChange}
                           downloadURLInputProps={{
-                            id: 'resourceUrl',
-                            name: 'resourceUrl',
-                            placeholder: 'Resource URL',
+                            id: 'economicDevelopmentUrl',
+                            name: 'economicDevelopmentUrl',
+                            placeholder: 'Economic Development URL',
                             type: 'text'
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
-                          downloadURLFileInputOnChange={handleResourceUrlFileChange}
-                          downloadURLFormat={resourceResourceUrlFormat}
-                          downloadURLFormatKeyName={resourceKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.rid}
-                          downloadURLFormatFileName={resourceFilenameFormat}
+                          downloadURLFileInputOnChange={handleEconomicDevelopmentUrlFileChange}
+                          downloadURLFormat={economicDevelopmentEconomicDevelopmentUrlFormat}
+                          downloadURLFormatKeyName={economicDevelopmentKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.edid}
+                          downloadURLFormatFileName={economicDevelopmentFilenameFormat}
                           downloadURLFileInputAcceptProp="*/*"
                           showImagePreview={false}
                         />
                       </FormGroup>
                       <FormGroup>
                         <Label>Header</Label>
-                        <Input placeholder="Header" name="header" value={resource.header} onChange={handleChange} type="text" />
+                        <Input placeholder="Header" name="header" value={economicDevelopment.header} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
                         <Label>Image</Label>
                         <FirebaseInput
-                          value={resource.imageUrl}
+                          value={economicDevelopment.imageUrl}
                           onChange={handleChange}
                           downloadURLInputProps={{
                             id: 'imageUrl',
@@ -375,25 +375,25 @@ const AuthResourceView = props => {
                           }}
                           downloadURLInputGroupAddonIconClassName="now-ui-icons arrows-1_cloud-upload-94"
                           downloadURLFileInputOnChange={handleImageUrlFileChange}
-                          downloadURLFormat={resourceImageUrlFormat}
-                          downloadURLFormatKeyName={resourceKeyFormat}
-                          downloadURLFormatKeyValue={props.match.params.rid}
-                          downloadURLFormatFileName={resourceFilenameFormat}
+                          downloadURLFormat={economicDevelopmentImageUrlFormat}
+                          downloadURLFormatKeyName={economicDevelopmentKeyFormat}
+                          downloadURLFormatKeyValue={props.match.params.edid}
+                          downloadURLFormatFileName={economicDevelopmentFilenameFormat}
                         />
                       </FormGroup>
                       <FormGroup>
                         <Label>Content</Label>
                         <DraftEditor
-                          content={resource.content}
+                          content={economicDevelopment.content}
                           onChange={handleChange}
                           uploadCallback={handleUploadCallback}
                         />
                       </FormGroup>
                       <FormGroup>
-                        <CustomInput label="Is Featured" name="isFeatured" checked={resource.isFeatured || false} onChange={handleChange} type="switch" id="ResourceIsFeatured" />
+                        <CustomInput label="Is Featured" name="isFeatured" checked={economicDevelopment.isFeatured || false} onChange={handleChange} type="switch" id="EconomicDevelopmentIsFeatured" />
                       </FormGroup>
                       <FormGroup>
-                        <CustomInput label="Active" name="active" checked={resource.active} onChange={handleChange} type="switch" id="ResourceActive" />
+                        <CustomInput label="Active" name="active" checked={economicDevelopment.active} onChange={handleChange} type="switch" id="EconomicDevelopmentActive" />
                       </FormGroup>
                       <FormGroup>
                         <Button type="submit" color="primary" size="lg" className="btn-round w-25 px-0 mr-3" disabled={isSubmitting}>Save</Button>
@@ -409,8 +409,8 @@ const AuthResourceView = props => {
                       <FormGroup>
                         <Label className="text-muted">Website Preview</Label>
                         <iframe
-                          title={resource.header}
-                          src={`${REACT_APP_WEB_BASE_URL}${resource.resourceCardUrl}`}
+                          title={economicDevelopment.header}
+                          src={`${REACT_APP_WEB_BASE_URL}${economicDevelopment.economicDevelopmentCardUrl}`}
                           style={{
                             border: 'none',
                             height: '50rem',
@@ -431,4 +431,4 @@ const AuthResourceView = props => {
 
 const condition = authUser => !!authUser && !!authUser.active;
 
-export default withAuthorization(condition)(AuthResourceView);
+export default withAuthorization(condition)(AuthEconomicDevelopmentView);

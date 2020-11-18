@@ -1,10 +1,15 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  Fragment
 } from 'react';
 import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   NavItem,
   NavLink,
+  UncontrolledDropdown,
   UncontrolledTooltip
 } from 'reactstrap';
 import {
@@ -34,6 +39,7 @@ const NavItems = props => {
   const {
     isLoading
   } = state;
+  const subMenus = {};
   useEffect(() => {
     if (state.isLoading) {
       setState(s => ({
@@ -81,20 +87,84 @@ const NavItems = props => {
                     </>
                   );
                 };
+                const ItemAsDropdownItem = props => {
+                  const {
+                    item
+                  } = props;
+                  const {
+                    id,
+                    route,
+                    name,
+                    tooltip
+                  } = item;
+                  return (
+                    <>
+                      <DropdownItem
+                        id={id}
+                        href={route}
+                        active={isActive(pathname, hash, route)}
+                        className={`text-uppercase ${navLinkClassName || ''}`}
+                      // tag="a"
+                      >{name}</DropdownItem>
+                      {
+                        includeTooltips
+                          ? <UncontrolledTooltip
+                            innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
+                            placement="top"
+                            target={`${id}`}
+                          >{tooltip}</UncontrolledTooltip>
+                          : null
+                      }
+                    </>
+                  );
+                };
+                const {
+                  menu
+                } = item;
                 return (
-                  <NavItem className={`${navItemClassName || ''}`} key={index}>
+                  <Fragment key={index}>
                     {
-                      useScrollspyNavLinks
-                        ? <ScrollspyNavLink name={item.route.replace('/#', '')}>
-                          <ItemAsNavLink
-                            item={item}
-                          />
-                        </ScrollspyNavLink>
-                        : <ItemAsNavLink
-                          item={item}
-                        />
+                      menu
+                        ? !Boolean(subMenus[menu])
+                          ? <>
+                            {(subMenus[menu] = true)}
+                            <UncontrolledDropdown nav inNavbar>
+                              <DropdownToggle nav caret>
+                                {menu}
+                              </DropdownToggle>
+                              <DropdownMenu>
+                                {
+                                  items.filter(i => i.menu === menu).map((i, itemIndex) => {
+                                    return (
+                                      <Fragment key={itemIndex}>
+                                        <ItemAsDropdownItem
+                                          item={i}
+                                        />
+                                      </Fragment>
+                                    );
+                                  })
+                                }
+                              </DropdownMenu>
+                            </UncontrolledDropdown>
+                          </>
+                          : null
+                        : <>
+                          <NavItem className={`${navItemClassName || ''}`}>
+                            {
+                              useScrollspyNavLinks
+                                ? <ScrollspyNavLink name={item.route.replace('/#', '')}>
+                                  <ItemAsNavLink
+                                    item={item}
+                                  />
+                                </ScrollspyNavLink>
+                                : <ItemAsNavLink
+                                  item={item}
+                                />
+                            }
+                          </NavItem>
+                        </>
                     }
-                  </NavItem>
+                  </Fragment>
                 );
               })
             }

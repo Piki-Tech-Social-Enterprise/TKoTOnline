@@ -227,6 +227,30 @@ const authRoutes = [
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
   },
+  {
+    layout: '/auth',
+    path: '/EconomicDevelopments',
+    name: 'Economic Developments',
+    component: lazy(async () => await import('views/Auth/AuthEconomicDevelopmentsView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'business_bank',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/EconomicDevelopments/:edid',
+    name: 'Economic Development',
+    component: lazy(async () => await import('views/Auth/AuthEconomicDevelopmentView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
   // {
   //   layout: '/auth',
   //   path: '/Volunteers',

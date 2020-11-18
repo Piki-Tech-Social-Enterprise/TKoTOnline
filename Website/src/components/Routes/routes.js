@@ -25,7 +25,10 @@ const Routes = {
   projectPage: '/Projects/:pid',
   resourcesAnchor: '/#Resources',
   resourcesPage: '/Resources',
-  resourceCardPage: '/ResourceCard'
+  resourceCardPage: '/ResourceCard',
+  economicDevelopmentsAnchor: '/#EconomicDevelopments',
+  economicDevelopmentsPage: '/EconomicDevelopments',
+  economicDevelopmentCardPage: '/EconomicDevelopmentCard'
 };
 
 export default Routes;

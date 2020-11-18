@@ -34,7 +34,7 @@ const HomeNavbar = props => {
     pathname,
     hash
   } = window.location;
-  const navItems = getNavItems(isHomePage);
+  const navItems = getNavItems(isHomePage); // debugger;
   const updateNavbarColor = () => {
     let navbarColor = defaultTkotBackground;
     if (

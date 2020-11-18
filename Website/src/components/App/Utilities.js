@@ -162,7 +162,9 @@ const getNavItems = isHomePage => {
     resourcesAnchor,
     resourcesPage,
     contactUs,
-    facebookLinks
+    facebookLinks,
+    economicDevelopmentsAnchor,
+    economicDevelopmentsPage
   } = Routes;
   const navItems = [{
     id: `homeNavItem${(!isHomePage && '_alt') || ''}`,
@@ -193,7 +195,7 @@ const getNavItems = isHomePage => {
     route: isHomePage ? eventsAnchor : events,
     name: 'Wānanga/Events',
     tooltip: 'Wānanga',
-    group: 'right'
+    group: 'left'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? newsFeedAnchor : newsFeeds,
@@ -205,7 +207,15 @@ const getNavItems = isHomePage => {
     route: isHomePage ? resourcesAnchor : resourcesPage,
     name: 'Resources',
     tooltip: 'Rauemi Ipurangi',
-    group: 'right'
+    group: 'right',
+    menu: 'Resources'
+  }, {
+    id: `economicDevelopmentsNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
+    name: 'Economic Developments',
+    tooltip: 'Whanaketanga Ohaoha',
+    group: 'right',
+    menu: 'Resources'
   }, {
     id: `contactUsNavItem${(!isHomePage && '_alt') || ''}`,
     route: contactUs,
@@ -243,6 +253,22 @@ const handleBlockTextClick = async (e, selector, className) => {
   e.preventDefault();
   e.target.closest(selector).classList.toggle(className);
 };
+const groupBy = (array, key) => {
+  const groupByReducer = (accumulator, currentValue, index, array, keyOverride) => { // debugger;
+    const currentValueKey = currentValue[keyOverride || key];
+    if (typeof currentValueKey === 'object') {
+      Object.keys(currentValueKey).map(k => {
+        (accumulator[k] = accumulator[k] || []).push(currentValue);
+        return null;
+      });
+    } else {
+      (accumulator[currentValueKey] = accumulator[currentValueKey] || []).push(currentValue);
+    }
+    return accumulator;
+  };
+  const groupedBy = array.reduce(groupByReducer, {}); // debugger;
+  return groupedBy;
+};
 
 export {
   useWindowEvent,
@@ -273,5 +299,6 @@ export {
   getQParameter,
   getSrc,
   getFirstCharacters,
-  handleBlockTextClick
+  handleBlockTextClick,
+  groupBy
 };
