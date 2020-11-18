@@ -22,7 +22,7 @@ const GoogleAnalytics = props => {
         REACT_APP_GOOGLE_TRACKING_DEBUG: googleTrackingDebug
       } = process.env;
       ReactGA.initialize(googleTrackingCode, {
-        debug: googleTrackingDebug
+        debug: Boolean(googleTrackingDebug)
       });
       listener = history.listen(location => {
         const {
