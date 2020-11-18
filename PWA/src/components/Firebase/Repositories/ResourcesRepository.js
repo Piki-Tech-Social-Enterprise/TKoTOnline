@@ -87,6 +87,8 @@ class ResourcesRepository extends BaseRepository {
           active: typeof active === 'boolean' ? active : dbResource.active || false,
           category: category || dbResource.category || '',
           content: content || dbResource.content || '',
+          created: dbResource.created || now.toString(),
+          createdBy: dbResource.createdBy,
           header: header || dbResource.header || '',
           imageUrl: imageUrl || (typeof imageUrl === 'undefined' ? dbResource.imageUrl : ''),
           isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbResource.isFeatured || false,

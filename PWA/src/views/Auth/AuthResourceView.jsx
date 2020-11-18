@@ -126,7 +126,10 @@ const AuthResourceView = props => {
         throw new Error(`Resources greater than ${formatBytes(maxResourceFileSize)} (${formatInteger(maxResourceFileSize)} bytes) cannot be uploaded.<br /><br />Actual resource size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (isNew) {
-          rid = await firebase.saveDbResource({});
+          rid = await firebase.saveDbResource({
+            created: now.toString(),
+            createdBy: uid,
+          });
           if (imageUrlFile && imageUrlFile.name) {
             imageUrl = getImageUrl(resourceImageUrlFormat, resourceKeyFormat, rid, resourceFilenameFormat, imageUrlFile.name, '');
           }
@@ -138,8 +141,6 @@ const AuthResourceView = props => {
         }
         await firebase.saveDbResource({
           active: active,
-          created: now.toString(),
-          createdBy: uid,
           category: categoryTags.join(TAG_SEPARATOR),
           content: content,
           header,
