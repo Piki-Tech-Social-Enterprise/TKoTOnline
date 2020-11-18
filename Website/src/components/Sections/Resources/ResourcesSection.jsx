@@ -93,7 +93,7 @@ const ResourcesSection = props => {
                                 ? dbCategorisedResourcesAsArray.map(dbCategorisedResourcesKey => {
                                   const categorisedResources = dbCategorisedResources[dbCategorisedResourcesKey];
                                   return (
-                                    <Col key={dbCategorisedResourcesKey}>
+                                    <Col xs={12} sm={4} key={dbCategorisedResourcesKey}>
                                       <h3
                                         className="text-uppercase font-weight-bold categorised-resource-header clickable header-with-text"
                                         onClick={async e => await handleBlockTextClick(e, 'h3.categorised-resource-header', 'header-with-text')}

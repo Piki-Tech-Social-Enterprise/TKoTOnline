@@ -402,6 +402,7 @@ $tkot-home-footer-x-padding: 1rem;
   border-radius: $border-radius-extreme;
   .card-img-max-height {
     height: 174px !important;
+    width: 100%;
   }
   .card-body {
     margin-bottom: 0.5rem;
@@ -462,7 +463,8 @@ $tkot-home-footer-x-padding: 1rem;
 .event-card,
 .news-feed-card,
 .iwi-chair-card,
-.resource-card {
+.resource-card,
+.economicDevelopment-card {
   border: none !important;
   border-radius: 0.25rem !important;
 }

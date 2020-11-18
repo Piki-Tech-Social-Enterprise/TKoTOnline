@@ -93,7 +93,7 @@ const EconomicDevelopmentsSection = props => {
                                 ? dbCategorisedEconomicDevelopmentsAsArray.map(dbCategorisedEconomicDevelopmentsKey => {
                                   const categorisedEconomicDevelopments = dbCategorisedEconomicDevelopments[dbCategorisedEconomicDevelopmentsKey];
                                   return (
-                                    <Col key={dbCategorisedEconomicDevelopmentsKey}>
+                                    <Col xs={12} sm={4} key={dbCategorisedEconomicDevelopmentsKey}>
                                       <h3
                                         className="text-uppercase font-weight-bold categorised-economicDevelopment-header clickable header-with-text"
                                         onClick={async e => await handleBlockTextClick(e, 'h3.categorised-economicDevelopment-header', 'header-with-text')}
