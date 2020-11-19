@@ -87,7 +87,7 @@ const AuthEconomicDevelopmentsView = props => {
                       insertRow exportCSV csvFileName="economicDevelopments-table-export.csv"
                       search pagination options={{
                         hideSizePerPage: true,
-                        noDataText: 'No Economic Developments found.',
+                        noDataText: 'No Economic Development found.',
                         insertBtn: createCustomInsertButton,
                         onRowClick: handleEconomicDevelopmentRowClick
                       }}>

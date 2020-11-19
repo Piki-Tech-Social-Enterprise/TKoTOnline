@@ -123,7 +123,7 @@ const AuthEconomicDevelopmentView = props => {
         const {
           size
         } = economicDevelopmentUrlFile;
-        throw new Error(`Economic Developments greater than ${formatBytes(maxEconomicDevelopmentFileSize)} (${formatInteger(maxEconomicDevelopmentFileSize)} bytes) cannot be uploaded.<br /><br />Actual Economic Development size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
+        throw new Error(`Economic Development greater than ${formatBytes(maxEconomicDevelopmentFileSize)} (${formatInteger(maxEconomicDevelopmentFileSize)} bytes) cannot be uploaded.<br /><br />Actual Economic Development size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else {
         if (isNew) {
           edid = await firebase.saveDbEconomicDevelopment({

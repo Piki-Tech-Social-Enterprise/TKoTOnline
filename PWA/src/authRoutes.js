@@ -230,7 +230,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/EconomicDevelopments',
-    name: 'Economic Developments',
+    name: 'Economic Development',
     component: lazy(async () => await import('views/Auth/AuthEconomicDevelopmentsView')),
     exact: true,
     iconLibrary: 'now-ui-icons',

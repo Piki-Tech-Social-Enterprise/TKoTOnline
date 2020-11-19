@@ -212,7 +212,7 @@ const getNavItems = isHomePage => {
   }, {
     id: `economicDevelopmentsNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
-    name: 'Economic Developments',
+    name: 'Economic Development',
     tooltip: 'Whanaketanga Ohaoha',
     group: 'right',
     menu: 'Resources'

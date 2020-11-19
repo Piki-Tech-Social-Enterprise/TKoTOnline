@@ -78,7 +78,7 @@ const EconomicDevelopmentsSection = props => {
         <a id="EconomicDevelopments" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
         <Row className="debug-outline">
           <Col className="mx-auto text-center my-3">
-            <h3 className="text-uppercase">Our Economic Developments</h3>
+            <h3 className="text-uppercase">Our Economic Development</h3>
             {
               isLoading
                 ? <LoadingSpinner />
