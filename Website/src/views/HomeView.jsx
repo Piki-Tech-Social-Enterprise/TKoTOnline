@@ -121,42 +121,42 @@ const HomeView = props => {
                 isHomePage={state.isHomePage}
               />
               {/* About */}
-              <AboutSection
+              {/* <AboutSection
                 pageAboutImage={state.homePageAboutImageDownloadUrl}
-              />
+              /> */}
               {/* Iwi Members */}
-              <IwiMembers
+              {/* <IwiMembers
                 containerClassName="bg-white"
-              />
-              <HomeHeader
+              /> */}
+              {/* <HomeHeader
                 pageHeaderImage={state.homePageHeaderImageDownloadUrl}
                 showClickScrollDownForMoreLink={false}
-              />
+              /> */}
               {/* Community Links Section) */}
               {/* <CommuintyLinksSection /> */}
               <div className="tkot-background-image-container" id="TkotBgImgContainer">
                 <div className="tkot-background-image" />
               </div>
               {/* Projects */}
-              <ProjectsSection
+              {/* <ProjectsSection
                 containerClassName="bg-secondary1"
                 showLearnMoreButton
                 isHomePage
-              />
+              /> */}
               {/* Events */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-blue-bg-color-50-pc" /> */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-primary-red-bg-color-50-pc" /> */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-50-pc" /> */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-black-bg-color-50-pc" /> */}
               {/* <EventsSection showLearnMoreButton containerClassName="tkot-secondary-color-grey-bg-color-61-pc" /> */}
-              <EventsSection
+              {/* <EventsSection
                 showLearnMoreButton
                 containerClassName="tkot-secondary-color-black-bg-color-61-pc"
                 // containerClassName="bg-success"
                 isHomePage
-              />
+              /> */}
               {/* Live News Feeds/Updates (Te Ao, Te Hiku Media, Covid 19 - MOH & Iwi Leaders) */}
-              <NewsFeedSection
+              {/* <NewsFeedSection
                 containerClassName="bg-warning1"
                 showLearnMoreButton
                 isHomePage
@@ -170,7 +170,7 @@ const HomeView = props => {
                 containerClassName="bg-primary1"
                 showLearnMoreButton
                 isHomePage
-              />
+              /> */}
               {/* Interactive Map of Iwi Links */}
               {/* <InteractiveMapSection /> */}
               {/* Volunteers via Mutual Aid */}
