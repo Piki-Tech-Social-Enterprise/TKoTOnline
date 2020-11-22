@@ -441,6 +441,13 @@ $tkot-home-footer-x-padding: 1rem;
   font-size: 0.96rem !important;
 }
 
+.footer-content {
+  .dropdown-toggle.nav-link {
+    font-size: 0.75rem !important;
+    margin: 0.45rem 1.15rem;
+  }
+}
+
 .bg-black {
   background-color: $black-bg;
 }
