@@ -156,7 +156,7 @@ const HomeFooter = props => {
           <Row className="footer-content px-0 mx-0">
             <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
               <a href="/">
-                <img alt="..." className="n-logo py-3 lazyload" width="289" data-src={require("assets/img/tkot/tkot-logo-white.webp")} />
+                <img alt="..." className="n-logo py-3 lazyload" width="289" height="auto" data-src={require("assets/img/tkot/tkot-logo-white.webp")} />
               </a>
             </Col>
             <Col xs={12} lg={3} className="bg-light1 text-dark1">
@@ -266,10 +266,10 @@ const HomeFooter = props => {
           <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
             <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />
             {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
-            <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={require('assets/img/tkot/mea-logo-165x165.webp')} />
+            <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={require('assets/img/tkot/mea-logo-165x165.webp')} width="95" height="auto" />
             {/* </a> */}
             <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
-              <img className="ml-3 created-by-logo-image lazyload" alt="Piki Tech Limited" data-src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp')} />
+              <img className="ml-3 created-by-logo-image lazyload" alt="Piki Tech Limited" data-src={require('assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp')} width="95" height="auto" />
             </a>
           </Col>
         </Row>

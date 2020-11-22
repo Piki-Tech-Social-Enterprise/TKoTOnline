@@ -108,10 +108,25 @@ const appRoutes = [
   }
 ];
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
+const updatePreloads = async () => {
+  // console.log(`navigator.userAgent: ${navigator.userAgent}`);
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  if (isFirefox) {
+    const links = document.getElementsByTagName('link');
+    for (let i = 0; i < links.length; i++) {
+      const link = links[i];
+      if (link.rel === 'preload' && typeof link.onload === 'function') {
+        link.rel = 'stylesheet';
+      }
+    }
+  }
+};
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };
 }
+updatePreloads();
+
 ReactDOM.render(
   <React.Suspense fallback={<LoadingSpinner
     outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"

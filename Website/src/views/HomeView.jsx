@@ -20,15 +20,15 @@ import {
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const AboutSection = lazy(async () => await import('components/Sections/About'));
-const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
 const IwiMembers = lazy(async () => await import('components/Sections/IwiMembers'));
-const EventsSection = lazy(async () => await import('components/Sections/Events'));
+const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
+const EventsSection = lazy(async () => await import('components/Sections/Events'));
+const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
 const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
 const EconomicDevelopmentsSection = lazy(async () => await import('components/Sections/EconomicDevelopments'));
+const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const {
   homeAnchor,
   iwiMembersAnchor,
@@ -36,7 +36,8 @@ const {
   projectsAnchor,
   eventsAnchor,
   newsFeedAnchor,
-  resourcesAnchor
+  resourcesAnchor,
+  economicDevelopmentsAnchor
 } = Routes;
 const HomeView = props => {
   const [state, setState] = useState({
@@ -108,6 +109,7 @@ const HomeView = props => {
                 eventsAnchor.replace('/#', ''),
                 newsFeedAnchor.replace('/#', ''),
                 resourcesAnchor.replace('/#', ''),
+                economicDevelopmentsAnchor.replace('/#', ''),
                 'HomeFooter'
               ]}
               homeIndex={1}
@@ -127,7 +129,6 @@ const HomeView = props => {
                 pageHeaderImage={state.homePageHeaderImageDownloadUrl}
                 showClickScrollDownForMoreLink={false}
               />
-              {/* <CommuintyLinksSection /> */}
               <div className="tkot-background-image-container" id="TkotBgImgContainer">
                 <div className="tkot-background-image" />
               </div>
@@ -139,7 +140,6 @@ const HomeView = props => {
               <EventsSection
                 showLearnMoreButton
                 containerClassName="tkot-secondary-color-black-bg-color-61-pc"
-                // containerClassName="bg-success"
                 isHomePage
               />
               <NewsFeedSection

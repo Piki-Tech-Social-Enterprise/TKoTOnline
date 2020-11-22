@@ -61,7 +61,7 @@ const AboutSection = props => {
         <Container className="py-5 text-center">
           <Row>
             <Col xs={12} sm={6} className="bg-danger1">
-              <img alt="..." className="n-logo pt-2 my-1 lazyload w-100" data-src={tkotImage} style={{
+              <img alt="..." className="n-logo pt-2 my-1 lazyload" data-src={tkotImage} width="100%" height="auto" style={{
                 maxWidth: 419
               }} />
               {/* <div className="videoHeader">
