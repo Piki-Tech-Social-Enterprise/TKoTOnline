@@ -84,6 +84,7 @@ const ProjectsSection = props => {
                               lossless={true}
                               alt={dbProject.header}
                               loadingIconSize="lg"
+                              imageResize="md"
                             />
                             <CardBody className="bg-white text-dark">
                               <CardTitle

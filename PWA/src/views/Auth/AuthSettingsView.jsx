@@ -58,6 +58,7 @@ const AuthSettingsView = props => {
   const [settings, setSettings] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
+  const [isResizingImages, setIsResizingImages] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = async e => {
     e.preventDefault();
@@ -278,6 +279,40 @@ const AuthSettingsView = props => {
       }
     }
   };
+  const handleResizeImagesClick = async e => {
+    e.preventDefault();
+    let displayIcon = 'error';
+    let displayTitle = 'Resize Images Failed';
+    let displayMessage = '';
+    try {
+      setIsResizingImages(true);
+      const {
+        firebase
+      } = props;
+      const functionsRepositoryOptions = {
+        functionName: 'resizeImages',
+        data: {}
+      };
+      const result = await firebase.call(functionsRepositoryOptions);
+      console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+      displayIcon = 'success';
+      displayTitle = 'Resize Images Successful';
+      displayMessage = `Resizing images have finished.`;
+      return result.data;
+    } catch (error) {
+      console.log('handleResizeImagesClick.error: ', error);
+      displayMessage = error;
+    } finally {
+      setIsResizingImages(false);
+      if (displayMessage) {
+        swal.fire({
+          icon: displayIcon,
+          title: displayTitle,
+          html: displayMessage
+        });
+      }
+    }
+  };
   useEffect(() => {
     const retrieveSettings = async () => {
       const dbSettings = await props.firebase.getDbSettingsValues(true);
@@ -372,6 +407,14 @@ const AuthSettingsView = props => {
                             onClick={handleTabClick}
                             className="clickable"
                           >3rd Party Integrations</NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            data-tab={5}
+                            active={activeTab === 5}
+                            onClick={handleTabClick}
+                            className="clickable"
+                          >Misc.</NavLink>
                         </NavItem>
                       </Nav>
                       <TabContent
@@ -514,6 +557,18 @@ const AuthSettingsView = props => {
                               >Send Test Email</Button>
                             </Col>
                           </Row>
+                        </TabPane>
+                        <TabPane tabId={5}>
+                          <FormGroup>
+                            <Button
+                              type="button"
+                              color="success"
+                              size="lg"
+                              className="btn-round w-25 px-0 mr-3"
+                              disabled={isSubmitting || isResizingImages}
+                              onClick={handleResizeImagesClick}
+                            >Resize Images</Button>
+                          </FormGroup>
                         </TabPane>
                       </TabContent>
                       <FormGroup>

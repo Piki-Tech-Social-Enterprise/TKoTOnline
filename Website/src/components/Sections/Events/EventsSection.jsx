@@ -85,6 +85,7 @@ const EventsSection = props => {
                               lossless={true}
                               alt={header}
                               loadingIconSize="lg"
+                              imageResize="md"
                             />
                             <CardBody className="bg-white">
                               <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>

@@ -31,6 +31,9 @@ const {
   handleSendEmail,
   handleSendEmailAlt
 } = require('./handleSendEmail');
+const {
+  handleResizeImages
+} = require('./handleResizeImages');
 
 exports.handleGetServerDateTime = functions
   .https
@@ -68,3 +71,6 @@ exports.handleSendEmail = functions
 exports.handleSendEmailAlt = functions
   .https
   .onRequest(handleSendEmailAlt);
+exports.handleResizeImages = functions
+  .https
+  .onCall(handleResizeImages);

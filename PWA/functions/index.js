@@ -21,7 +21,8 @@ const {
   handleIsUniqueAlt,
   handleImageTransform,
   handleSendEmail,
-  handleSendEmailAlt
+  handleSendEmailAlt,
+  handleResizeImages
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -244,6 +245,19 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/sendEmailAlt
 */
 exports.sendEmailAlt = handleSendEmailAlt;
+
+/*
+--- Resize Images ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/resizeImages
+{
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/resizeImages
+*/
+exports.resizeImages = handleResizeImages;
 
 const {
   handleCreateVolunteer,

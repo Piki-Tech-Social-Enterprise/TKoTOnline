@@ -174,6 +174,7 @@ const IwiChairSection = props => {
                               lossless={true}
                               alt={iwiChairName}
                               loadingIconSize="lg"
+                              imageResize="md"
                             />
                             <CardBody className="text-left bg-white">
                               <p className="h4 mt-0 font-weight-bold text-center card-iwi-member-name">{iwiMemberName}</p>
@@ -220,6 +221,7 @@ const IwiChairSection = props => {
                               imageURL={iwiChairImageURL}
                               alt={iwiChairName}
                               loadingIconSize="lg"
+                              imageResize="md"
                             />
                             <CardBody className="text-left bg-white">
                               <p className="h4 mt-0 font-weight-bold text-center">{iwiMemberName}</p>

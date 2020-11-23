@@ -9,8 +9,13 @@ import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
 // import LoadingIcon from './LoadingIcon';
 import PropTypes from 'prop-types';
 import {
-  getSrc
+  getSrc,
+  isNullOrEmpty,
+  isNumber
 } from './Utilities';
+import {
+  dirname
+} from 'path';
 
 const propTypes = {
   isLoading: PropTypes.bool,
@@ -22,6 +27,12 @@ const propTypes = {
     'sm',
     'lg'
   ]),
+  imageResize: PropTypes.oneOf([
+    '',
+    'sm',
+    'md',
+    'lg'
+  ]),
   src: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
@@ -30,7 +41,39 @@ const propTypes = {
 const defaultProps = {
   className: 'firebase-image',
   loadingIconSize: '',
+  imageResize: '',
   lossless: true
+};
+const getSize = imageResize => {
+  let size = null;
+  switch (imageResize) {
+    case 'sm':
+      size = 150;
+      break;
+    case 'md':
+      size = 400;
+      break;
+    case 'lg':
+      size = 768;
+      break;
+    default:
+      size = NaN;
+  }
+  return size;
+};
+const getImageURLToUse = (imageResize, imageURL) => {
+  let imageURLToUse = imageURL;
+  if (imageResize) {
+    const size = getSize(imageResize); // debugger;
+    if (isNumber(size)) {
+      const bucketFolder = dirname(imageURL);
+      const fileName = imageURL.split('/').pop();
+      const ext = fileName.split('.').pop();
+      const imgName = fileName.replace(`.${ext}`, '');
+      imageURLToUse = `${bucketFolder}/${imgName}@s_${size}.${ext}`;
+    }
+  }
+  return imageURLToUse;
 };
 const FirebaseImage = props => {
   const [state, setState] = useState({
@@ -56,14 +99,30 @@ const FirebaseImage = props => {
       const {
         firebase,
         alt,
+        imageResize,
         imageURL,
         src,
         width,
         height,
         lossless
       } = props;
-      const imageSrc = src || await getSrc(imageURL, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
-      // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);
+      const imageURLToUse = getImageURLToUse(imageResize, imageURL);
+      let imageSrc = src;
+      if (isNullOrEmpty(imageSrc)) {
+        try {
+          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
+        } catch (error) {
+          const {
+            code,
+            message
+          } = error;
+          console.error(`Firebase Image Get Src Error for '${imageURLToUse}': ${message} (${code})`);
+          if (code === 'storage/object-not-found') {
+            imageSrc = await firebase.getStorageFileDownloadURL(imageURL);
+          }
+        }
+        // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);
+      }
       setState(s => ({
         ...s,
         isLoading: false,

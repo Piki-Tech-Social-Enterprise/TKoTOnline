@@ -38,6 +38,7 @@ const ResourceCard = props => {
               lossless={true}
               alt={dbResource.header}
               loadingIconSize="lg"
+              imageResize="md"
             />
             : null
         }

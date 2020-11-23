@@ -114,7 +114,7 @@ const handleIsUserValid = async uid => {
     (Boolean(dbUser.roles[systemAdminRole]) ||
       Boolean(dbUser.roles[adminRole]) ||
       Boolean(dbUser.roles[basicRole]));
-  console.log(`dbUser: ${JSON.stringify(dbUser, null, 2)},\nisUserValid: ${isUserValid}`);
+  console.log(`uid: '${uid}',\ndbUser: ${JSON.stringify(dbUser, null, 2)},\nisUserValid: ${isUserValid}`);
   return isUserValid;
 };
 const FORBIDDEN_TEXT = 'Forbidden!';

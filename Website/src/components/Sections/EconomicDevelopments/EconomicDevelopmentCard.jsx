@@ -38,6 +38,7 @@ const EconomicDevelopmentCard = props => {
               lossless={true}
               alt={dbEconomicDevelopment.header}
               loadingIconSize="lg"
+              imageResize="md"
             />
             : null
         }

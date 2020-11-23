@@ -83,6 +83,7 @@ const IwiChairView = props => {
                   lossless={true}
                   alt={state.dbIwiMember.iwiChairName}
                   loadingIconSize="lg"
+                  imageResize="md"
                 />
                 <p className="h4 font-weight-bold text-center">{state.dbIwiMember.iwiMemberName}</p>
               </>)}

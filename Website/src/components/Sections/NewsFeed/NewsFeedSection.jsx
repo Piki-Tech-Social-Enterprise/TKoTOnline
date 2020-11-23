@@ -140,6 +140,7 @@ const NewsFeedSection = props => {
                               lossless={true}
                               alt={displayName}
                               loadingIconSize="lg"
+                              imageResize="md"
                             />
                             <CardBody className="text-left bg-white">
                               <p className="font-weight-bold">

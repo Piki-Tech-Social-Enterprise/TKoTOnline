@@ -60,7 +60,7 @@ const handleResizeImage = async objectMetadata => {
     if (currentSize > 400) {
       sizes.push(400);
     }
-    console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName}...`);
+    console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName} - image width of '${currentSize}'...`);
     const uploadPromises = sizes.map(async size => {
       const {
         imgPath,
