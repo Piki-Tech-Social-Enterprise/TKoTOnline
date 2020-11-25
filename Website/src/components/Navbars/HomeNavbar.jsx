@@ -77,7 +77,7 @@ const HomeNavbar = props => {
           </div>
           <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
             <a href="/">
-              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={require("assets/img/tkot/tkot-logo-only-black.webp")} width="32" height="auto" />
+              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={require("assets/img/tkot/tkot-logo-only-black.webp")} width="32" height="62" />
             </a>
             <Nav navbar>
               <NavItems

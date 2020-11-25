@@ -533,6 +533,18 @@ $tkot-home-footer-x-padding: 1rem;
   max-width: 32px;
 }
 
+.hero-image-tkot-logo,
+.footer-tkot-logo {
+  height: auto;
+  width: 100%;
+}
+.hero-image-tkot-logo {
+  max-width: 419px;
+}
+.footer-tkot-logo {
+  max-width: 289px;
+}
+
 .iwi-chairs-carousel {
   .carousel-inner {
     box-shadow: none;
