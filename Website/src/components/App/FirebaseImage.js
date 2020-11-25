@@ -70,7 +70,7 @@ const getImageURLToUse = (imageResize, imageURL) => {
       const fileName = imageURL.split('/').pop();
       const ext = fileName.split('.').pop();
       const imgName = fileName.replace(`.${ext}`, '');
-      imageURLToUse = `${bucketFolder}/${imgName}@s_${size}.${ext}`;
+      imageURLToUse = `${bucketFolder}/${imgName}@s_${size}.webp`;
     }
   }
   return imageURLToUse;
