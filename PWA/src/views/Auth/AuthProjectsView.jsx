@@ -92,7 +92,7 @@ const AuthProjectsView = props => {
                         onRowClick: handleProjectRowClick
                       }}>
                       <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
+                        <FirebaseImage loadingIconSize="sm" imageResize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort sortFunc={handleSort} caretRender={renderCaret}>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{

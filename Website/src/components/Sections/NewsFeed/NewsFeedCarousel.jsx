@@ -200,7 +200,7 @@ const NewsFeedCarousel = props => {
   const createCarouselItems = carouselItems.map((item, index) => {
     return (
       <CarouselItem onExiting={() => handleAnimate(true)} onExited={() => handleAnimate(false)} key={index}>
-        <FirebaseImage imageURL={item.imageUrl} alt={item.header} />
+        <FirebaseImage imageResize="sm" imageURL={item.imageUrl} alt={item.header} />
         <CarouselCaption captionText={item.category} captionHeader={item.header} />
       </CarouselItem>
     );
@@ -289,7 +289,7 @@ const NewsFeedCarousel = props => {
                       <CardHeader>
                         <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
                       </CardHeader>
-                      <FirebaseImage className="card-img-max-height" imageURL={imageUrl} alt={header} />
+                      <FirebaseImage imageResize="md" className="card-img-max-height" imageURL={imageUrl} alt={header} />
                       <CardBody className="text-left bg-white">
                         <p className="font-weight-bold">
                           <NewsFeedCaption

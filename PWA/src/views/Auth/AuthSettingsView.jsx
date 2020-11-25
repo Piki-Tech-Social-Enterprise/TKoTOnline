@@ -17,7 +17,8 @@ import {
   NavItem,
   NavLink,
   TabContent,
-  TabPane
+  TabPane,
+  CustomInput
 } from 'reactstrap';
 import LoadingOverlayModal from 'components/App/LoadingOverlayModal';
 import withAuthorization from 'components/Firebase/HighOrder/withAuthorization';
@@ -58,6 +59,8 @@ const AuthSettingsView = props => {
   const [settings, setSettings] = useState(INITIAL_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
+  const [overwriteExisting, setOverwriteExisting] = useState(true);
+  const [deleteOnly, setDeleteOnly] = useState(false);
   const [isResizingImages, setIsResizingImages] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = async e => {
@@ -291,14 +294,17 @@ const AuthSettingsView = props => {
       } = props;
       const functionsRepositoryOptions = {
         functionName: 'resizeImages',
-        data: {}
+        data: {
+          overwriteExisting: overwriteExisting,
+          deleteOnly: deleteOnly
+        }
       };
-      const result = await firebase.call(functionsRepositoryOptions);
+      const result = firebase.call(functionsRepositoryOptions);
       console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
       displayIcon = 'success';
       displayTitle = 'Resize Images Successful';
       displayMessage = `Resizing images have finished.`;
-      return result.data;
+      // return result.data;
     } catch (error) {
       console.log('handleResizeImagesClick.error: ', error);
       displayMessage = error;
@@ -559,6 +565,26 @@ const AuthSettingsView = props => {
                           </Row>
                         </TabPane>
                         <TabPane tabId={5}>
+                          <FormGroup>
+                            <CustomInput
+                              label="Overwrite Existing"
+                              name="overwriteExisting"
+                              checked={overwriteExisting}
+                              onChange={async () => setOverwriteExisting(!overwriteExisting)}
+                              type="switch"
+                              id="SettingsOverwriteExisting"
+                            />
+                          {/* </FormGroup>
+                          <FormGroup> */}
+                            <CustomInput
+                              label="Delete Only"
+                              name="deleteOnly"
+                              checked={deleteOnly}
+                              onChange={async () => setDeleteOnly(!deleteOnly)}
+                              type="switch"
+                              id="SettingsDeleteOnly"
+                            />
+                          </FormGroup>
                           <FormGroup>
                             <Button
                               type="button"

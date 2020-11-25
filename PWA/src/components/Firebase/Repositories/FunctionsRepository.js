@@ -117,7 +117,7 @@ class FunctionsRepository extends BaseRepository {
       console.log(`FunctionsRepository.call Error: ${JSON.stringify(error, null, 2)}`);
       response = error.response || response;
       // debugger;
-      throw error;
+      // throw error;
     }
     return response;
   }

@@ -131,6 +131,7 @@ const AboutUsView = props => {
                     lossless={true}
                     alt="TKoT Back Office Structure"
                     loadingIconSize="lg"
+                    imageResize="lg"
                   />
                   <div
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageExtraDescription)) }}

@@ -107,14 +107,14 @@ const getDbUserValue = async uid => {
 const systemAdminRole = 'systemAdminRole';
 const adminRole = 'adminRole';
 const basicRole = 'basicRole';
-const handleIsUserValid = async uid => {
+const handleIsUserValid = async (uid, debug = false) => {
   const dbUser = await getDbUserValue(uid);
   const isUserValid = dbUser &&
     dbUser.active &&
     (Boolean(dbUser.roles[systemAdminRole]) ||
       Boolean(dbUser.roles[adminRole]) ||
       Boolean(dbUser.roles[basicRole]));
-  console.log(`uid: '${uid}',\ndbUser: ${JSON.stringify(dbUser, null, 2)},\nisUserValid: ${isUserValid}`);
+      debug && console.log(`uid: '${uid}',\ndbUser: ${JSON.stringify(dbUser, null, 2)},\nisUserValid: ${isUserValid}`);
   return isUserValid;
 };
 const FORBIDDEN_TEXT = 'Forbidden!';

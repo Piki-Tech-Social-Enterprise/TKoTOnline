@@ -8,13 +8,25 @@ const {
   handleResizeImage
 } = require('../storage/handleResizeImage');
 const {
-  isUserValid
+  isBoolean,
+  isUserValid,
+  StorageBucketHelper
 } = require('../utilities');
 const validateParameters = async (data, context) => {
   let errorMessages = [];
   if (!data || !context) {
     errorMessages.push(`'data' and 'context' are required parameters.`);
   } else {
+    const {
+      overwriteExisting,
+      deleteOnly
+    } = data;
+    if (!isBoolean(overwriteExisting)) {
+      errorMessages.push(`'overwriteExisting' is a required parameter.`);
+    }
+    if (!isBoolean(deleteOnly)) {
+      errorMessages.push(`'deleteOnly' is a required parameter.`);
+    }
     const {
       auth
     } = context;
@@ -45,13 +57,24 @@ const handleResizeImages = async (data, context, source = 'handleResizeImages') 
   try {
     errorMessage = await validateParameters(data, context);
     if (!errorMessage) {
+      const {
+        overwriteExisting,
+        deleteOnly
+      } = data;
       const files = await getFiles({
         prefix: 'images/'
       });
-      console.log(`Processing ${files.length} files...`);
-      await Promise.all(files.map(async file =>
-        await handleResizeImage(file.metadata)
-      ));
+      const originalFiles = files.filter(file => {
+        const storageBucketHelper = new StorageBucketHelper(file.metadata);
+        const fileIsValid = storageBucketHelper.isValid();
+        return fileIsValid;
+      });
+      console.log(`Processing ${originalFiles.length} files...`);
+      await Promise.all(originalFiles.map(async file => {
+        const imageResized = await handleResizeImage(file.metadata, overwriteExisting, deleteOnly);
+        console.log(`Processed '${file.metadata.name}' file.`);
+        return imageResized;
+      }));
       imagesResized = true;
     }
   } catch (error) {

@@ -87,7 +87,7 @@ const AuthEPanuiListView = props => {
                         onRowClick: handleEPanuiRowClick
                       }}>
                       <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage loadingIconSize="sm" alt={row.name} imageURL={cell} />
+                        <FirebaseImage loadingIconSize="sm" imageResize="sm" alt={row.name} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn dataField="name" dataSort sortFunc={handleSort} caretRender={renderCaret} width="40%">Name</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="date" dataSort sortFunc={handleSort} caretRender={renderCaret} width="20%">Date</TableHeaderColumn>

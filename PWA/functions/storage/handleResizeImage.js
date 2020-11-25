@@ -5,11 +5,12 @@
  */
 const admin = require('firebase-admin');
 const {
-  StorageBucketHelper
+  StorageBucketHelper,
+  isNullOrEmpty
 } = require('../utilities');
 const sharp = require('sharp');
 const fs = require('fs');
-const handleResizeImage = async objectMetadata => {
+const handleResizeImage = async (objectMetadata, overwriteExisting = true, deleteOnly = false) => {
   const storageBucketHelper = new StorageBucketHelper(objectMetadata);
   const {
     filePath,
@@ -22,21 +23,10 @@ const handleResizeImage = async objectMetadata => {
   const downloadOptions = {
     destination: tmpFilePath
   };
-  // const functions = require('firebase-functions');
-  // const {
-  //   jsonObjectPropertiesToUppercase
-  // } = require('../utilities');
-  // const envcmd = jsonObjectPropertiesToUppercase(functions.config && functions.config().envcmd
-  //   ? functions.config().envcmd
-  //   : {});
-  // const config = Object.assign(process.env, envcmd);
-  // console.log(`config: ${JSON.stringify(config, null, 2)}`);
   if (admin.apps.length === 0) {
     admin.initializeApp();
   }
   const storage = admin.storage();
-  // console.log(`require.resolve('@google-cloud/storage'): ${require.resolve('@google-cloud/storage')}`);
-  // const storage = new require('@google-cloud/storage').Storage();
   const bucket = storage
     .bucket(objectMetadata.bucket);
   if (!isValid()) {
@@ -47,31 +37,61 @@ const handleResizeImage = async objectMetadata => {
     .download(downloadOptions);
   if (fs.existsSync(tmpFilePath)) {
     const imageFile = sharp(tmpFilePath);
-    const metaData = await imageFile
-      .metadata();
+    const metaData = await imageFile.metadata();
     const currentSize = metaData.width;
-    const sizes = [150];
     if (currentSize <= 100) {
-      throw new Error(`Image width of '${currentSize}' is too small.`);
+      throw new Error(`Image '${filePath}' with a width of '${currentSize}' is too small.`);
     }
-    if (currentSize <= 150) {
-      return false;
-    }
-    if (currentSize > 400) {
-      sizes.push(400);
-    }
+    const sizes = [150, 400, 768];
+    // if (currentSize <= 150) {
+    //   return false;
+    // }
+    // if (currentSize > 400) {
+    //   sizes.push(400);
+    // }
+    // if (currentSize > 768) {
+    //   sizes.push(768);
+    // }
     console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName} - image width of '${currentSize}'...`);
     const uploadPromises = sizes.map(async size => {
       const {
         imgPath,
         bucketImgName
-      } = getImgPathAndBucketImgName(size);
+      } = getImgPathAndBucketImgName(size, 'webp');
       const uploadOptions = {
         destination: bucketImgName
       };
+      // console.log(`resizeImage.calling: imgFile = bucket.file(imgPath);`);
+      const imgFile = bucket.file(imgPath);
+      if (!imgFile) {
+        return null;
+      }
+      const imgExists = await imgFile
+        .exists()
+        .then(data =>
+          Boolean(data[0])
+        )
+        .catch(error => {
+          console.log(`resizeImage.exists.error: ${JSON.stringify(error, null, 2)}`);
+          return false;
+        });
+      if (imgExists) {
+        if (!overwriteExisting) {
+          return null;
+        }
+        await imgFile.delete();
+        if (deleteOnly) {
+          return null;
+        }
+      }
+      console.log(`resizeImage: Generateing... ${bucketImgName}`);
       await imageFile
         .resize({
           width: size
+        })
+        .webp({
+          force: true,
+          lossless: true
         })
         .toFile(imgPath);
       console.log(`resizeImage: Generated ${bucketImgName}`);
@@ -79,7 +99,11 @@ const handleResizeImage = async objectMetadata => {
         .upload(imgPath, uploadOptions);
     });
     await Promise
-      .all(uploadPromises);
+      .all(uploadPromises
+        .filter(up =>
+          !isNullOrEmpty(up)
+        )
+      );
   }
   console.log('resizeImage: Completed.');
   return await cleanUp();

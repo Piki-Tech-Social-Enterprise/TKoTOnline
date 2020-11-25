@@ -305,6 +305,7 @@ const AuthResourceDriveView = () => {
                           <TableHeaderColumn dataField="photoURL" dataSort sortFunc={handleSort} caretRender={renderCaret} width="45px" dataFormat={(cell, row) => (
                             <FirebaseImage
                               loadingIconSize="sm"
+                              imageResize="sm"
                               alt= 'File Image'
                               imageURL={cell}
                             />

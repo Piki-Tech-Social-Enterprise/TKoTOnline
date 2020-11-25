@@ -97,7 +97,7 @@ const AuthNewsFeedsView = props => {
                         onRowClick: handleNewsFeedRowClick
                       }}>
                       <TableHeaderColumn dataField="imageUrl" dataSort sortFunc={handleSort} caretRender={renderCaret} width="65px" thStyle={{ width: '65px' }} dataFormat={(cell, row) => (
-                        <FirebaseImage loadingIconSize="sm" alt={row.header} imageURL={cell} />
+                        <FirebaseImage loadingIconSize="sm" imageResize="sm" alt={row.header} imageURL={cell} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort sortFunc={handleSort} caretRender={renderCaret}>Header</TableHeaderColumn>
                       <TableHeaderColumn dataField="date" dataSort sortFunc={handleSort} caretRender={renderCaret} width="100px">Date</TableHeaderColumn>

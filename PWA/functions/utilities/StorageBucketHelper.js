@@ -46,16 +46,16 @@ class StorageBucketHelper {
     }
     return isValid;
   }
-  handleGetImgPathAndBucketImgName(size) {
-    const newImgName = `${this.imgName}${resizedFileNamePrefix}${size}.${this.fileNameExt}`;
+  handleGetImgPathAndBucketImgName(size, fileNameExtOverride = '') {
+    const newImgName = `${this.imgName}${resizedFileNamePrefix}${size}.${fileNameExtOverride || this.fileNameExt}`;
     return {
       imgPath: join(this.workingDir, newImgName),
       bucketImgName: `${this.bucketDir}/${newImgName}`
     };
   }
   async handleCleanUp() {
-    return await fs
-      .remove(this.workingDir);
+    await fs.remove(this.workingDir);
+    return true;
   }
 }
 
