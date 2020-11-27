@@ -24,6 +24,7 @@ import {
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const ProjectsSection = props => {
   const [state, setState] = useState({
@@ -70,38 +71,40 @@ const ProjectsSection = props => {
                 {
                   isLoading
                     ? <LoadingSpinner />
-                    : dbProjects.map((dbProject, index) => {
-                      return (
-                        <Col xs={12} sm={6} lg={4} key={index}>
-                          <Card className="card-block" style={{
-                            border: 'none',
-                            boxShadow: 'none'
-                          }}>
-                            <FirebaseImage
-                              className="card-img-max-height"
-                              imageURL={dbProject.imageUrl}
-                              width="340"
-                              lossless={true}
-                              alt={dbProject.header}
-                              loadingIconSize="lg"
-                              imageResize="md"
-                            />
-                            <CardBody className="bg-white text-dark">
-                              <CardTitle
-                                className="h5 text-uppercase my-3 mx-2 project-header clickable header-with-text"
-                                onClick={async e => await handleBlockTextClick(e, 'div.project-header', 'header-with-text')}
-                              >{dbProject.header}&nbsp;</CardTitle>
-                              <Button
-                                href={`/Projects/${dbProject.pid}`}
-                                className="tkot-primary-red-bg-color btn-outline-dark"
-                                color="white"
-                                onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Projects page`, 'Clicked "Pānui Mai..." button', dbProject.header)}
-                              >Pānui Mai...</Button>
-                            </CardBody>
-                          </Card>
-                        </Col>
-                      );
-                    })
+                    : dbProjects.length === 0
+                      ? <NoDataToDisplayDiv name="Projects" isHomePage={isHomePage} />
+                      : dbProjects.map((dbProject, index) => {
+                        return (
+                          <Col xs={12} sm={6} lg={4} key={index}>
+                            <Card className="card-block" style={{
+                              border: 'none',
+                              boxShadow: 'none'
+                            }}>
+                              <FirebaseImage
+                                className="card-img-max-height"
+                                imageURL={dbProject.imageUrl}
+                                width="340"
+                                lossless={true}
+                                alt={dbProject.header}
+                                loadingIconSize="lg"
+                                imageResize="md"
+                              />
+                              <CardBody className="bg-white text-dark">
+                                <CardTitle
+                                  className="h5 text-uppercase my-3 mx-2 project-header clickable header-with-text"
+                                  onClick={async e => await handleBlockTextClick(e, 'div.project-header', 'header-with-text')}
+                                >{dbProject.header}&nbsp;</CardTitle>
+                                <Button
+                                  href={`/Projects/${dbProject.pid}`}
+                                  className="tkot-primary-red-bg-color btn-outline-dark"
+                                  color="white"
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Projects page`, 'Clicked "Pānui Mai..." button', dbProject.header)}
+                                >Pānui Mai...</Button>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        );
+                      })
                 }
               </Row>
             </Container>

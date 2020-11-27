@@ -11,7 +11,7 @@ class FacebookLinksRepository extends BaseRepository {
     return await this.db.ref('facebookLinks');
   }
 
-  getDbFacebookLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbFacebookLinksAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbFacebookLink = await this.getDbFacebookLinks();
     const dbFacebookLinkRef = !includeInactive
       ? await existingDbFacebookLink
@@ -28,14 +28,14 @@ class FacebookLinksRepository extends BaseRepository {
         dbFacebookLinkAsArray.push(dbFacebookLink[key])
       );
     }
-    return dbFacebookLinkAsArray;
+    return dbFacebookLinkAsArray.filter(fl => includeInactive || fl.active);
   }
 
   getDbFacebookLink = async fid => {
     return await this.db.ref(`facebookLinks/${fid}`);
   }
 
-  getDbFacebookLinkValue = async fid => {
+  getDbFacebookLinksValue = async fid => {
     const existingDbFacebook = await this.getDbFacebookLink(fid);
     const dbFacebookRef = await existingDbFacebook.once('value');
     const dbFacebook = await dbFacebookRef.val();

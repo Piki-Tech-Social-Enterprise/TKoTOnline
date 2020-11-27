@@ -15,7 +15,7 @@ class UserRepository extends BaseRepository {
     return await this.db.ref('users');
   }
 
-  getDbUsersAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbUsersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbUsers = await this.getDbUsers();
     const dbUsersRef = !includeInactive
       ? await existingDbUsers
@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository {
         dbUsersAsArray.push(dbUsers[key])
       );
     }
-    return dbUsersAsArray;
+    return dbUsersAsArray.filter(u => includeInactive || u.active);
   }
 
   getDbUser = async uid => {

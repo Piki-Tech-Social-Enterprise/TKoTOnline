@@ -11,7 +11,7 @@ class NewsFeedRepository extends BaseRepository {
     return await this.db.ref('newsFeeds');
   }
 
-  getDbNewsFeedsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbNewsFeeds = await this.getDbNewsFeeds();
     const dbNewsFeedsRef = !includeInactive
       ? await existingDbNewsFeeds
@@ -28,7 +28,7 @@ class NewsFeedRepository extends BaseRepository {
         dbNewsFeedsAsArray.push(dbNewsFeeds[key])
       );
     }
-    return dbNewsFeedsAsArray;
+    return dbNewsFeedsAsArray.filter(nf => includeInactive || nf.active);
   }
 
   getDbNewsFeed = async nfid => {

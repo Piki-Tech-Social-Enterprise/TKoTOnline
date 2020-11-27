@@ -11,7 +11,7 @@ class ResourcesRepository extends BaseRepository {
     return await this.db.ref('resources');
   }
 
-  getDbResourcesAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbResource = await this.getDbResources();
     const dbResourceRef = !includeInactive
       ? await existingDbResource
@@ -28,7 +28,7 @@ class ResourcesRepository extends BaseRepository {
         dbResourceAsArray.push(dbResource[key])
       );
     }
-    return dbResourceAsArray;
+    return dbResourceAsArray.filter(r => includeInactive || r.active);
   }
 
   getDbResource = async rid => {

@@ -23,9 +23,16 @@ import {
   formatBytes,
   formatInteger,
   getImageUrl,
-  uploadFileToStorage
+  uploadFileToStorage,
+  toMoment,
+  isDate,
+  isEmptyString,
+  DATE_TIME_MOMENT_FORMAT,
+  DATE_MOMENT_FORMAT,
+  TIME_MOMENT_FORMAT
 } from 'components/App/Utilities';
 import DraftEditor from 'components/DraftEditor';
+import InputDateTime from 'components/App/InputDateTime';
 
 const eventsRef = '/images/events';
 const eventKeyFormat = '{evid}';
@@ -37,6 +44,8 @@ const INITIAL_STATE = {
   content: '',
   externalUrl: '',
   header: '',
+  startDateTime: '',
+  endDateTime: '',
   imageUrl: '',
   imageUrlFile: null,
   isFeatured: false,
@@ -83,6 +92,8 @@ const AuthEventView = props => {
       content,
       externalUrl,
       header,
+      startDateTime,
+      endDateTime,
       imageUrlFile,
       isFeatured
     } = event;
@@ -116,6 +127,8 @@ const AuthEventView = props => {
           content: content,
           externalUrl,
           header,
+          startDateTime,
+          endDateTime,
           imageUrl,
           isFeatured,
           evid: evid,
@@ -221,6 +234,8 @@ const AuthEventView = props => {
         content,
         externalUrl,
         header,
+        startDateTime,
+        endDateTime,
         imageUrl,
         isFeatured,
         evid
@@ -231,6 +246,14 @@ const AuthEventView = props => {
         content,
         externalUrl,
         header,
+        startDateTime: isDate(startDateTime)
+          ? startDateTime
+          : isEmptyString(startDateTime)
+            ? ''
+            : new Date().toString(),
+        endDateTime: isDate(endDateTime)
+          ? endDateTime
+          : '',
         imageUrl,
         isFeatured,
         evid
@@ -297,6 +320,48 @@ const AuthEventView = props => {
                       <FormGroup>
                         <Label>Header</Label>
                         <Input placeholder="Header" name="header" value={event.header} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Start Date/Time</Label>
+                        <InputDateTime
+                          dateFormat={DATE_MOMENT_FORMAT}
+                          timeFormat={TIME_MOMENT_FORMAT}
+                          inputProps={{
+                            name: 'startDateTime',
+                            placeholder: 'Start Date/Time'
+                          }}
+                          value={event.startDateTime}
+                          onChange={value =>
+                            handleChange({
+                              target: {
+                                name: 'startDateTime',
+                                value: isDate(value)
+                                  ? toMoment(value).format(DATE_TIME_MOMENT_FORMAT)
+                                  : ''
+                              }
+                            })}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>End Date/Time</Label>
+                        <InputDateTime
+                          dateFormat={DATE_MOMENT_FORMAT}
+                          timeFormat={TIME_MOMENT_FORMAT}
+                          inputProps={{
+                            name: 'endDateTime',
+                            placeholder: 'End Date/Time'
+                          }}
+                          value={event.endDateTime}
+                          onChange={value =>
+                            handleChange({
+                              target: {
+                                name: 'endDateTime',
+                                value: isDate(value)
+                                  ? toMoment(value).format(DATE_TIME_MOMENT_FORMAT)
+                                  : ''
+                              }
+                            })}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <Label>Image</Label>

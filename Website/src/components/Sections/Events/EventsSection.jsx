@@ -19,8 +19,13 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
+import {
+  isDate,
+  toMoment
+} from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const EventsSection = props => {
   const [state, setState] = useState({
@@ -46,10 +51,29 @@ const EventsSection = props => {
       const dbEvents = isHomePage
         ? await firebase.getDbEventsAsArray(false, 'isFeatured')
         : await firebase.getDbEventsAsArray();
+      const now = new Date();
       setState(s => ({
         ...s,
         isLoading: false,
-        dbEvents
+        dbEvents: dbEvents.filter(dbEvent => {
+          const {
+            startDateTime,
+            endDateTime
+          } = dbEvent;
+          if (isDate(startDateTime)) {
+            const startDateTimeAsMoment = toMoment(startDateTime);
+            if (startDateTimeAsMoment.isAfter(now)) {
+              return false;
+            }
+          }
+          if (isDate(endDateTime)) {
+            const endDateTimeAsMoment = toMoment(endDateTime);
+            if (endDateTimeAsMoment.isBefore(now)) {
+              return false;
+            }
+          }
+          return true;
+        })
       }));
     };
     if (isLoading) {
@@ -68,40 +92,42 @@ const EventsSection = props => {
                 {
                   isLoading
                     ? <LoadingSpinner />
-                    : dbEvents.map((dbEvent, index) => {
-                      const {
-                        imageUrl,
-                        header,
-                        externalUrl,
-                        evid
-                      } = dbEvent;
-                      return (
-                        <Col xs={12} sm={6} lg={4} key={index}>
-                          <Card className="card-block event-card">
-                            <FirebaseImage
-                              className="card-img-max-height card-img-top"
-                              imageURL={imageUrl}
-                              width="340"
-                              lossless={true}
-                              alt={header}
-                              loadingIconSize="lg"
-                              imageResize="md"
-                            />
-                            <CardBody className="bg-white">
-                              <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
-                              <Button
-                                href={externalUrl ? externalUrl : `/Wananga/${evid}`}
-                                target={externalUrl ? '_blank' : '_self'}
-                                rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                                className="tkot-primary-red-bg-color"
-                                color="white"
-                                onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Wānanga page`, 'Clicked "Pānui Mai..." button', header, externalUrl ? externalUrl : `/Wananga/${evid}`)}
-                              >Pānui Mai...</Button>
-                            </CardBody>
-                          </Card>
-                        </Col>
-                      );
-                    })
+                    : dbEvents.length === 0
+                      ? <NoDataToDisplayDiv name="Events" isHomePage={isHomePage} color={isHomePage ? 'light' : 'dark'} />
+                      : dbEvents.map((dbEvent, index) => {
+                        const {
+                          imageUrl,
+                          header,
+                          externalUrl,
+                          evid
+                        } = dbEvent;
+                        return (
+                          <Col xs={12} sm={6} lg={4} key={index}>
+                            <Card className="card-block event-card">
+                              <FirebaseImage
+                                className="card-img-max-height card-img-top"
+                                imageURL={imageUrl}
+                                width="340"
+                                lossless={true}
+                                alt={header}
+                                loadingIconSize="lg"
+                                imageResize="md"
+                              />
+                              <CardBody className="bg-white">
+                                <CardTitle className="h5 my-3 mx-2">{header}</CardTitle>
+                                <Button
+                                  href={externalUrl ? externalUrl : `/Wananga/${evid}`}
+                                  target={externalUrl ? '_blank' : '_self'}
+                                  rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
+                                  className="tkot-primary-red-bg-color"
+                                  color="white"
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Wānanga page`, 'Clicked "Pānui Mai..." button', header, externalUrl ? externalUrl : `/Wananga/${evid}`)}
+                                >Pānui Mai...</Button>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        );
+                      })
                 }
               </Row>
             </Container>

@@ -29,7 +29,7 @@ const FacebookLinkView = props => {
       const {
         fid
       } = match.params;
-      const dbFacebookLink = await firebase.getDbFacebookLinkValue(fid);
+      const dbFacebookLink = await firebase.getDbFacebookLinksValue(fid);
       setState(s => ({
         ...s,
         isLoading: false,

@@ -11,7 +11,7 @@ class IwiMembersRepository extends BaseRepository {
     return await this.db.ref('iwiMembers');
   }
 
-  getDbIwiMembersAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbIwiMember = await this.getDbIwiMembers();
     const dbIwiMemberRef = !includeInactive
       ? await existingDbIwiMember
@@ -28,7 +28,7 @@ class IwiMembersRepository extends BaseRepository {
         dbIwiMemberAsArray.push(dbIwiMember[key])
       );
     }
-    return dbIwiMemberAsArray;
+    return dbIwiMemberAsArray.filter(im => includeInactive || im.active);
   }
 
   getDbIwiMember = async imid => {
@@ -54,6 +54,7 @@ class IwiMembersRepository extends BaseRepository {
       iwiMemberName,
       iwiMemberURL,
       imid,
+      sequence,
       updated,
       updatedBy
     } = iwiMember;
@@ -74,6 +75,7 @@ class IwiMembersRepository extends BaseRepository {
         iwiMemberImageURL: iwiMemberImageURL || '',
         iwiMemberName: iwiMemberName || '',
         iwiMemberURL: iwiMemberURL || '',
+        sequence: sequence || Number.MAX_SAFE_INTEGER,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         imid: await dbIwiMemberRef.getKey()
@@ -92,6 +94,7 @@ class IwiMembersRepository extends BaseRepository {
           iwiMemberName: iwiMemberName || dbIwiMember.iwiMemberName || '',
           iwiMemberURL: iwiMemberURL || dbIwiMember.iwiMemberURL || '',
           imid: imid,
+          sequence: sequence || dbIwiMember.sequence || Number.MAX_SAFE_INTEGER,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbIwiMember.updatedBy
         };

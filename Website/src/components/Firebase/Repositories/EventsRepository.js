@@ -11,7 +11,7 @@ class EventsRepository extends BaseRepository {
     return await this.db.ref('events');
   }
 
-  getDbEventsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbEvent = await this.getDbEvents();
     const dbEventRef = !includeInactive
       ? await existingDbEvent
@@ -28,7 +28,7 @@ class EventsRepository extends BaseRepository {
         dbEventAsArray.push(dbEvent[key])
       );
     }
-    return dbEventAsArray;
+    return dbEventAsArray.filter(e => includeInactive || e.active);
   }
 
   getDbEvent = async evid => {

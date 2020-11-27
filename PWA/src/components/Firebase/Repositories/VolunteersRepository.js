@@ -14,7 +14,7 @@ class VolunteersRepository extends BaseRepository {
     return await this.db.ref('volunteers');
   }
 
-  getDbVolunteersAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbVolunteersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbVolunteers = await this.getDbVolunteers();
     const dbVolunteersRef = !includeInactive
       ? await existingDbVolunteers
@@ -31,7 +31,7 @@ class VolunteersRepository extends BaseRepository {
         dbVolunteersAsArray.push(dbVolunteers[key])
       );
     }
-    return dbVolunteersAsArray;
+    return dbVolunteersAsArray.filter(v => includeInactive || v.active);
   }
 
   getDbVolunteer = async vid => {

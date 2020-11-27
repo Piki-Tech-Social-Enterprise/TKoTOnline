@@ -278,7 +278,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/FacebookLinks',
-    name: 'Facebook RSS',
+    name: 'FB Feeds',
     component: lazy(async () => await import('views/Auth/AuthFacebookLinksView')),
     exact: true,
     iconLibrary: 'fab',
@@ -290,7 +290,7 @@ const authRoutes = [
   {
     layout: '/auth',
     path: '/FacebookLinks/:fid',
-    name: 'Facebook RSS',
+    name: 'FB Feeds',
     component: lazy(async () => await import('views/Auth/AuthFacebookLinkView')),
     exact: true,
     iconLibrary: null,

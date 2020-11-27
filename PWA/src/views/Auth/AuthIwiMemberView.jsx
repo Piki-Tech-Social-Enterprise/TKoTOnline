@@ -43,7 +43,8 @@ const INITIAL_STATE = {
   iwiMemberImageURLFile: null,
   iwiMemberName: '',
   iwiMemberURL: '',
-  imid: null
+  imid: null,
+  sequence: Number.MAX_SAFE_INTEGER
 };
 const AuthIwiMemberView = props => {
   const isNew = props.match.params.imid === 'New';
@@ -88,7 +89,8 @@ const AuthIwiMemberView = props => {
       iwiChairProfile,
       iwiMemberImageURLFile,
       iwiMemberName,
-      iwiMemberURL
+      iwiMemberURL,
+      sequence
     } = iwiMember;
     let imid = iwiMember.imid;
     let iwiChairImageURL = iwiMember.iwiChairImageURL;
@@ -132,6 +134,7 @@ const AuthIwiMemberView = props => {
           iwiMemberName,
           iwiMemberURL,
           imid: imid,
+          sequence: sequence,
           updated: now.toString(),
           updatedBy: uid
         });
@@ -243,7 +246,8 @@ const AuthIwiMemberView = props => {
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
-        imid
+        imid,
+        sequence
       } = dbIwiMember;
       setIwiMember(im => ({
         ...im,
@@ -254,7 +258,8 @@ const AuthIwiMemberView = props => {
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
-        imid
+        imid,
+        sequence
       }));
       setIsLoading(false);
     };
@@ -319,6 +324,10 @@ const AuthIwiMemberView = props => {
                       <FormGroup>
                         <Label>Iwi Member URL</Label>
                         <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Sequence</Label>
+                        <Input placeholder="Sequence" name="sequence" value={iwiMember.sequence} onChange={handleChange} type="number" min="1" step="1" max={Number.MAX_SAFE_INTEGER} />
                       </FormGroup>
                       <FormGroup>
                         <Label>Iwi Member Image</Label>

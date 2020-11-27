@@ -24,7 +24,7 @@ import {
 
 const AuthFacebookLinksView = props => {
   const [isLoading, setIsLoading] = useState(true);
-  const [FacebookLinksAsArray, setFacebookLinksAsArray] = useState([]);
+  const [facebookLinksAsArray, setFacebookLinksAsArray] = useState([]);
   useEffect(() => {
     const retrieveFacebookLinks = async () => {
       const dbFacebookLinksAsArray = await props.firebase.getDbFacebookLinksAsArray(true);
@@ -51,12 +51,12 @@ const AuthFacebookLinksView = props => {
     props.history.push(`/auth/FacebookLinks/${row.fid}`);
   };
   const handleChildUpdate = updatedChildState => {
-    const indexOfDbFacebookLinks = FacebookLinksAsArray.findIndex(dbFacebookLinks => dbFacebookLinks.fid === updatedChildState.dbId);
+    const indexOfDbFacebookLinks = facebookLinksAsArray.findIndex(dbFacebookLinks => dbFacebookLinks.fid === updatedChildState.dbId);
     if (indexOfDbFacebookLinks > -1) {
       if (typeof updatedChildState.dbActive === 'boolean') {
-        FacebookLinksAsArray[indexOfDbFacebookLinks].active = updatedChildState.dbActive;
+        facebookLinksAsArray[indexOfDbFacebookLinks].active = updatedChildState.dbActive;
       }
-      setFacebookLinksAsArray(FacebookLinksAsArray);
+      setFacebookLinksAsArray(facebookLinksAsArray);
     }
   }
   return (
@@ -70,13 +70,13 @@ const AuthFacebookLinksView = props => {
                 {
                   isLoading
                     ? <LoadingOverlayModal />
-                    : <BootstrapTable data={FacebookLinksAsArray} version="4" bordered={false} condensed hover
+                    : <BootstrapTable data={facebookLinksAsArray} version="4" bordered={false} condensed hover
                       trClassName="clickable"
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="facebookLinks-table-export.csv"
                       search pagination options={{
-                        defaultSortName: 'name',
-                        defaultSortOrder: 'asc',
+                        defaultSortName: 'sequence',
+                        defaultSortOrder: 'desc',
                         hideSizePerPage: true,
                         noDataText: 'No Facebook Links found.',
                         insertBtn: createCustomInsertButton,
@@ -84,6 +84,7 @@ const AuthFacebookLinksView = props => {
                       }}>
                       <TableHeaderColumn isKey dataField="name" dataSort sortFunc={handleSort} caretRender={renderCaret}>Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="url" dataSort sortFunc={handleSort} caretRender={renderCaret}>URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="sequence" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px">Seq.</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Facebook Link"

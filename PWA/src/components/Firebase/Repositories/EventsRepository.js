@@ -1,5 +1,9 @@
 import BaseRepository from './BaseRepository';
 import 'firebase/database';
+import {
+  isEmptyString,
+  isDate
+} from 'components/App/Utilities';
 
 class EventsRepository extends BaseRepository {
   constructor(firebaseApp) {
@@ -11,7 +15,7 @@ class EventsRepository extends BaseRepository {
     return await this.db.ref('events');
   }
 
-  getDbEventsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbEvent = await this.getDbEvents();
     const dbEventRef = !includeInactive
       ? await existingDbEvent
@@ -28,7 +32,7 @@ class EventsRepository extends BaseRepository {
         dbEventAsArray.push(dbEvent[key])
       );
     }
-    return dbEventAsArray;
+    return dbEventAsArray.filter(e => includeInactive || e.active);
   }
 
   getDbEvent = async evid => {
@@ -50,6 +54,8 @@ class EventsRepository extends BaseRepository {
       content,
       externalUrl,
       header,
+      startDateTime,
+      endDateTime,
       imageUrl,
       isFeatured,
       evid,
@@ -70,6 +76,8 @@ class EventsRepository extends BaseRepository {
         content: content || '',
         externalUrl: externalUrl || '',
         header: header || '',
+        startDateTime: startDateTime || '',
+        endDateTime: endDateTime || '',
         imageUrl: imageUrl || '',
         isFeatured: isFeatured || false,
         updated: updated || now.toString(),
@@ -86,6 +94,8 @@ class EventsRepository extends BaseRepository {
           content: content || dbEvent.content || '',
           externalUrl: externalUrl || dbEvent.externalUrl || '',
           header: header || dbEvent.header || '',
+          startDateTime: isEmptyString(startDateTime) ? '' : isDate(startDateTime) ? startDateTime : dbEvent.startDateTime || '',
+          endDateTime: isEmptyString(endDateTime) ? '' : isDate(endDateTime) ? endDateTime : dbEvent.endDateTime || '',
           imageUrl: imageUrl || dbEvent.imageUrl || '',
           isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbEvent.isFeatured || false,
           evid: evid,

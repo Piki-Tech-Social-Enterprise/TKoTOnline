@@ -148,6 +148,7 @@ const FirebaseImage = props => {
         className={`lazyload ${className} ${isLoading ? 'invisible' : ''}`}
         alt={alt}
         data-src={src}
+        src={src}
         title={alt}
         width={width}
         height={height}

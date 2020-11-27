@@ -22,6 +22,7 @@ const INITIAL_STATE = {
   active: true,
   url: '',
   name: '',
+  sequence: Number.MAX_SAFE_INTEGER,
   fid: null
 };
 const AuthFacebookLinkView = props => {
@@ -59,6 +60,7 @@ const AuthFacebookLinkView = props => {
       active,
       url,
       name,
+      sequence
     } = facebookLink;
     let fid = facebookLink.fid;
     let displayIcon = 'error';
@@ -79,6 +81,7 @@ const AuthFacebookLinkView = props => {
           createdBy: uid,
           fid: fid,
           name: name,
+          sequence: sequence,
           updated: now.toString(),
           updatedBy: uid,
           url: url
@@ -153,18 +156,20 @@ const AuthFacebookLinkView = props => {
   };
   useEffect(() => {
     const retrievefacebookLink = async () => {
-      const dbfacebookLink = await props.firebase.getDbFacebookLinkValue(props.match.params.fid);
+      const dbfacebookLink = await props.firebase.getDbFacebookLinksValue(props.match.params.fid);
       const {
         active,
         url,
         name,
-        fid
+        fid,
+        sequence
       } = dbfacebookLink;
       setfacebookLink({
         active,
         url,
         name,
-        fid
+        fid,
+        sequence
       });
       setIsLoading(false);
     };
@@ -203,6 +208,10 @@ const AuthFacebookLinkView = props => {
                       <FormGroup>
                         <Label>Link</Label>
                         <Input placeholder="URL" name="url" value={facebookLink.url} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Sequence</Label>
+                        <Input placeholder="Sequence" name="sequence" value={facebookLink.sequence} onChange={handleChange} type="number" min="1" step="1" max={Number.MAX_SAFE_INTEGER} />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={facebookLink.active} onChange={handleChange} type="switch" id="facebookLinkActive" />

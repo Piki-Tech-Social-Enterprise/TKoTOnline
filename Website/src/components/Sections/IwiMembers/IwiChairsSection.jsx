@@ -23,13 +23,15 @@ import {
 import {
   intoChunks,
   draftToText,
-  handleBlockTextClick
+  handleBlockTextClick,
+  sortArray
 } from 'components/App/Utilities';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const getIwiMembersAsChunks = (iwiMembers, columnCount) => {
   const iwiMembersMegaMenuItems = {};
@@ -125,6 +127,7 @@ const IwiChairSection = props => {
         firebase
       } = props;
       const dbIwiMembers = await firebase.getDbIwiMembersAsArray();
+      sortArray(dbIwiMembers, 'sequence', 'desc');
       setState(s => ({
         ...s,
         isLoading: false,
@@ -146,56 +149,58 @@ const IwiChairSection = props => {
               {
                 state.isLoading
                   ? <LoadingSpinner />
-                  : <IwiChairCarousel
-                    itemsAsChunks={getIwiMembersAsChunks(dbIwiMembers, 3)}
-                    itemCallbackFunc={(dbIwiMember, dbIwiMemberKey) => {
-                      const {
-                        iwiChairName,
-                        iwiChairProfile,
-                        iwiChairImageURL,
-                        iwiMemberName,
-                        imid
-                      } = dbIwiMember;
-                      const contentAsText = draftToText(iwiChairProfile, '');
-                      return (
-                        <Col xs={12} lg={4} key={dbIwiMemberKey}>
-                          <Card className="card-block iwi-chair-card my-3 py-3">
-                            <CardHeader>
-                              <CardTitle
-                                className="h4 my-3 mx-2 font-weight-bold iwi-chair-header clickable header-with-text"
-                                onClick={async e => await handleBlockTextClick(e, 'div.iwi-chair-header', 'header-with-text')}
-                              >{iwiChairName}</CardTitle>
-                            </CardHeader>
-                            <FirebaseImage
-                              className="rounded-circle iwi-chair-image"
-                              imageURL={iwiChairImageURL}
-                              width="250"
-                              height="250"
-                              lossless={true}
-                              alt={iwiChairName}
-                              loadingIconSize="lg"
-                              imageResize="md"
-                            />
-                            <CardBody className="text-left bg-white">
-                              <p className="h4 mt-0 font-weight-bold text-center card-iwi-member-name">{iwiMemberName}</p>
-                              <p
-                                className="iwi-chair-content clickable d-inline-block block-with-text"
-                                onClick={async e => await handleBlockTextClick(e, 'p.iwi-chair-content', 'block-with-text')}
-                              >{contentAsText}</p>
-                              <div className="text-center">
-                                <Button
-                                  href={`/AboutUs/${imid}`}
-                                  className="tkot-primary-red-bg-color btn-outline-dark"
-                                  color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Iwi Chairs section`, 'Clicked "Pānui Mai..." button', iwiChairName, `/AboutUs/${imid}`)}
-                                >Pānui Mai...</Button>
-                              </div>
-                            </CardBody>
-                          </Card>
-                        </Col>
-                      );
-                    }}
-                  />
+                  : dbIwiMembers.length === 0
+                    ? <NoDataToDisplayDiv name="Iwi Chairs" isHomePage={isHomePage} />
+                    : <IwiChairCarousel
+                      itemsAsChunks={getIwiMembersAsChunks(dbIwiMembers, 3)}
+                      itemCallbackFunc={(dbIwiMember, dbIwiMemberKey) => {
+                        const {
+                          iwiChairName,
+                          iwiChairProfile,
+                          iwiChairImageURL,
+                          iwiMemberName,
+                          imid
+                        } = dbIwiMember;
+                        const contentAsText = draftToText(iwiChairProfile, '');
+                        return (
+                          <Col xs={12} lg={4} key={dbIwiMemberKey}>
+                            <Card className="card-block iwi-chair-card my-3 py-3">
+                              <CardHeader>
+                                <CardTitle
+                                  className="h4 my-3 mx-2 font-weight-bold iwi-chair-header clickable header-with-text"
+                                  onClick={async e => await handleBlockTextClick(e, 'div.iwi-chair-header', 'header-with-text')}
+                                >{iwiChairName}</CardTitle>
+                              </CardHeader>
+                              <FirebaseImage
+                                className="rounded-circle iwi-chair-image"
+                                imageURL={iwiChairImageURL}
+                                width="250"
+                                height="250"
+                                lossless={true}
+                                alt={iwiChairName}
+                                loadingIconSize="lg"
+                                imageResize="md"
+                              />
+                              <CardBody className="text-left bg-white">
+                                <p className="h4 mt-0 font-weight-bold text-center card-iwi-member-name">{iwiMemberName}</p>
+                                <p
+                                  className="iwi-chair-content clickable d-inline-block block-with-text"
+                                  onClick={async e => await handleBlockTextClick(e, 'p.iwi-chair-content', 'block-with-text')}
+                                >{contentAsText}</p>
+                                <div className="text-center">
+                                  <Button
+                                    href={`/AboutUs/${imid}`}
+                                    className="tkot-primary-red-bg-color btn-outline-dark"
+                                    color="white"
+                                    onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Iwi Chairs section`, 'Clicked "Pānui Mai..." button', iwiChairName, `/AboutUs/${imid}`)}
+                                  >Pānui Mai...</Button>
+                                </div>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        );
+                      }}
+                    />
               }
               {/* <Row>
                 {

@@ -22,6 +22,7 @@ import {
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const ResourceCard = lazy(async () => await import('components/Sections/Resources/ResourceCard'));
 const ResourcesSection = props => {
   const [state, setState] = useState({
@@ -84,13 +85,14 @@ const ResourcesSection = props => {
                 ? <LoadingSpinner />
                 : <>
                   {
-                    isHomePage
-                      ? <>
-                        <Container className="my-3" fluid>
-                          <Row className="cards-row flex-row flex-nowrap" noGutters>
-                            {
-                              dbCategorisedResourcesAsArray && dbCategorisedResourcesAsArray.length > 0
-                                ? dbCategorisedResourcesAsArray.map(dbCategorisedResourcesKey => {
+                    dbCategorisedResourcesAsArray.length === 0
+                      ? <NoDataToDisplayDiv name="Resources" isHomePage={isHomePage} />
+                      : isHomePage
+                        ? <>
+                          <Container className="my-3" fluid>
+                            <Row className="cards-row flex-row flex-nowrap" noGutters>
+                              {
+                                dbCategorisedResourcesAsArray.map(dbCategorisedResourcesKey => {
                                   const categorisedResources = dbCategorisedResources[dbCategorisedResourcesKey];
                                   return (
                                     <Col xs={12} sm={4} key={dbCategorisedResourcesKey}>
@@ -111,15 +113,13 @@ const ResourcesSection = props => {
                                     </Col>
                                   );
                                 })
-                                : <h4>No Resources found</h4>
-                            }
-                          </Row>
-                        </Container>
-                      </>
-                      : <>
-                        {
-                          dbCategorisedResourcesAsArray && dbCategorisedResourcesAsArray.length > 0
-                            ? dbCategorisedResourcesAsArray.map(dbCategorisedResourceKey => {
+                              }
+                            </Row>
+                          </Container>
+                        </>
+                        : <>
+                          {
+                            dbCategorisedResourcesAsArray.map(dbCategorisedResourceKey => {
                               const dbCategorisedResource = dbCategorisedResources[dbCategorisedResourceKey];
                               return (
                                 <Fragment key={dbCategorisedResourceKey}>
@@ -141,9 +141,8 @@ const ResourcesSection = props => {
                                 </Fragment>
                               );
                             })
-                            : <h4>No Resources found</h4>
-                        }
-                      </>
+                          }
+                        </>
                   }
                 </>
             }

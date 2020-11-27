@@ -16,8 +16,12 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
+import { 
+  sortArray
+} from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const IwiMembersSection = props => {
   const {
@@ -38,6 +42,7 @@ const IwiMembersSection = props => {
         firebase
       } = props;
       const dbIwiMembers = await firebase.getDbIwiMembersAsArray();
+      sortArray(dbIwiMembers, 'sequence', 'desc');
       // debugger;
       setState(s => ({
         ...s,
@@ -61,43 +66,45 @@ const IwiMembersSection = props => {
                 {
                   state.isLoading
                     ? <LoadingSpinner />
-                    : state.iwiMembers.map((iwiMember, index) => {
-                      const {
-                        imid,
-                        iwiMemberImageURL,
-                        iwiMemberName,
-                        iwiMemberURL
-                      } = iwiMember;
-                      return (
-                        <Fragment key={imid}>
-                          {
-                            index > 0 && index % 6 === 0
-                              ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
-                              : null
-                          }
-                          <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
-                            <a
-                              href={iwiMemberURL}
-                              className="text-dark text-decoration-none tkot-primary-blue-color"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName}" Logo`)}
-                            >
-                              <FirebaseImage
-                                className="iwi-member-image mt-3 mb-0"
-                                imageURL={iwiMemberImageURL}
-                                alt={iwiMemberName}
-                                width="120"
-                                height="120"
-                                lossless={true}
-                                imageResize="sm"
-                              /><br />
-                              <span className="iwi-member-name">{iwiMemberName}</span>
-                            </a>
-                          </Col>
-                        </Fragment>
-                      );
-                    })
+                    : state.iwiMembers.length === 0
+                      ? <NoDataToDisplayDiv name="Iwi Members" />
+                      : state.iwiMembers.map((iwiMember, index) => {
+                        const {
+                          imid,
+                          iwiMemberImageURL,
+                          iwiMemberName,
+                          iwiMemberURL
+                        } = iwiMember;
+                        return (
+                          <Fragment key={imid}>
+                            {
+                              index > 0 && index % 6 === 0
+                                ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
+                                : null
+                            }
+                            <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
+                              <a
+                                href={iwiMemberURL}
+                                className="text-dark text-decoration-none tkot-primary-blue-color"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName}" Logo`)}
+                              >
+                                <FirebaseImage
+                                  className="iwi-member-image mt-3 mb-0"
+                                  imageURL={iwiMemberImageURL}
+                                  alt={iwiMemberName}
+                                  width="120"
+                                  height="120"
+                                  lossless={true}
+                                  imageResize="sm"
+                                /><br />
+                                <span className="iwi-member-name">{iwiMemberName}</span>
+                              </a>
+                            </Col>
+                          </Fragment>
+                        );
+                      })
                 }
               </Row>
             </Container>

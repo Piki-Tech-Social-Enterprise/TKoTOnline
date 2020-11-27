@@ -11,7 +11,7 @@ class ProjectsRepository extends BaseRepository {
     return await this.db.ref('projects');
   }
 
-  getDbProjectsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbProject = await this.getDbProjects();
     const dbProjectRef = !includeInactive
       ? await existingDbProject
@@ -28,7 +28,7 @@ class ProjectsRepository extends BaseRepository {
         dbProjectAsArray.push(dbProject[key])
       );
     }
-    return dbProjectAsArray;
+    return dbProjectAsArray.filter(p => includeInactive || p.active);
   }
 
   getDbProject = async pid => {

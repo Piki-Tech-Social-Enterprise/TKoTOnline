@@ -78,6 +78,8 @@ const AuthIwiMembersView = props => {
                       tableHeaderClass="text-primary"
                       insertRow exportCSV csvFileName="iwi-members-table-export.csv"
                       search pagination options={{
+                        defaultSortName: 'sequence',
+                        defaultSortOrder: 'desc',
                         hideSizePerPage: true,
                         noDataText: 'No Iwi Members found.',
                         insertBtn: createCustomInsertButton,
@@ -88,6 +90,7 @@ const AuthIwiMembersView = props => {
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="iwiMemberName" dataSort sortFunc={handleSort} caretRender={renderCaret}>Iwi Member Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="iwiMemberURL" dataSort sortFunc={handleSort} caretRender={renderCaret}>Iwi Member URL</TableHeaderColumn>
+                      <TableHeaderColumn dataField="sequence" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px">Seq.</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Iwi Member"

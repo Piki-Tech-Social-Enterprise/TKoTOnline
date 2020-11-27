@@ -14,7 +14,7 @@ const Routes = {
   termsOfUse: '/TermsOfUse',
   aboutUs: '/AboutUs',
   contactUs: '/ContactUs',
-  facebookLinks: '/RSS',
+  facebookLinks: '/FBFeeds',
   facebookLink: '/FacebookLinks/:fid',
   eventsAnchor: '/#Wananga',
   events: '/Wananga',

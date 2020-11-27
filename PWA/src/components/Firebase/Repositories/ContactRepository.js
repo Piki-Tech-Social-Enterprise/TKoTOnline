@@ -11,7 +11,7 @@ class ContactRepository extends BaseRepository {
     return await this.db.ref('contacts');
   }
 
-  getDbContactsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbContact = await this.getDbContacts();
     const dbContactRef = !includeInactive
       ? await existingDbContact
@@ -28,7 +28,7 @@ class ContactRepository extends BaseRepository {
         dbContactsAsArray.push(dbContact[key])
       );
     }
-    return dbContactsAsArray;
+    return dbContactsAsArray.filter(c => includeInactive || c.active);
   }
 
   getDbContact = async cid => {

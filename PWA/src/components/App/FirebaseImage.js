@@ -1,24 +1,27 @@
 import React, {
-  Component
+  useState,
+  useEffect
 } from 'react';
 import {
   withFirebase
-} from '../../components/Firebase';
-import noImageAvailable from '../../assets/img/tkot/no-image-available.svg';
-import LoadingIcon from './LoadingIcon';
-import shallowCompare, {
-  isEmptyObject,
-  handleLoadBlob
-} from './Utilities';
+} from 'components/Firebase';
+import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
+// import LoadingIcon from './LoadingIcon';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import {
+  getSrc,
+  isNullOrEmpty,
+  isNumber
+} from '../App/Utilities';
+import {
+  dirname
+} from 'path';
 
-const {dirname} = require('path');
 const propTypes = {
+  isLoading: PropTypes.bool,
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
   imageURL: PropTypes.string.isRequired,
-  isImageLoading: PropTypes.bool,
   loadingIconSize: PropTypes.oneOf([
     '',
     'sm',
@@ -30,199 +33,129 @@ const propTypes = {
     'md',
     'lg'
   ]),
-  src: PropTypes.string
-},
-  defaultProps = {
-    className: 'firebase-image',
-    loadingIconSize: '',
-    imageResize: ''
-  },
-  getSize = (imageResize) => {
-    let size = null;
-    switch (imageResize) {
-      case 'sm':
-        size = 150;
-        break;
-      case 'md':
-        size = 400;
-        break;
-      case 'lg':
-        size = 768;
-        break;
-      default:
-        size = NaN;
-    }
-    return size;
-  };
-
-class FirebaseImage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      src: noImageAvailable,
-      alt: '',
-      isImageLoading: true
-    };
+  src: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  lossless: PropTypes.bool
+};
+const defaultProps = {
+  className: 'firebase-image',
+  loadingIconSize: '',
+  imageResize: '',
+  lossless: true
+};
+const getSize = imageResize => {
+  let size = null;
+  switch (imageResize) {
+    case 'sm':
+      size = 150;
+      break;
+    case 'md':
+      size = 400;
+      break;
+    case 'lg':
+      size = 768;
+      break;
+    default:
+      size = NaN;
   }
-  componentDidMount = async () => {
-    const {
-      alt,
-      imageURL,
-      src
-    } = this.props;
-    this.downloadImage(src || await this.getSrc(imageURL));
-    this.setState({
-      isLoading: false,
-      alt: alt
-    });
-  }
-  shouldComponentUpdate = (nextProps, nextState) => {
-    const shallowCompared = shallowCompare(this, nextProps, nextState, false);
-    // console.log(`FirebaseImage.shouldComponentUpdate: ${shallowCompared}`);
-    return shallowCompared;
-  }
-  componentDidUpdate = async prevProps => {
-    const {
-      isLoading,
-      isImageLoading,
-      alt,
-      imageURL,
-      src
-    } = this.props,
-      newState = {};
-    if (isImageLoading === prevProps.isImageLoading &&
-      imageURL === prevProps.imageURL &&
-      src === prevProps.src &&
-      alt === prevProps.alt &&
-      (isLoading || isImageLoading)) {
-      newState.isLoading = false;
-      newState.isImageLoading = false;
-    } else {
-      if (isImageLoading !== prevProps.isImageLoading) {
-        newState.isImageLoading = isImageLoading;
-      }
-      if (imageURL !== prevProps.imageURL) {
-        const newSrc = await this.getSrc(imageURL);
-        if (imageURL === '' || newSrc !== noImageAvailable) {
-          this.downloadImage(newSrc);
-          newState.isImageLoading = true;
-        }
-      }
-      if (src !== prevProps.src) {
-        this.downloadImage(src);
-        newState.isImageLoading = true;
-      }
-      if (alt !== prevProps.alt) {
-        newState.alt = alt;
-      }
-    }
-    if (!isEmptyObject(newState)) {
-      console.log(`newState: ${JSON.stringify(newState)}`);
-      this.setState(newState);
+  return size;
+};
+const getImageURLToUse = (imageResize, imageURL) => {
+  let imageURLToUse = imageURL;
+  if (imageResize) {
+    const size = getSize(imageResize); // debugger;
+    if (isNumber(size)) {
+      const bucketFolder = dirname(imageURL);
+      const fileName = imageURL.split('/').pop();
+      const ext = fileName.split('.').pop();
+      const imgName = fileName.replace(`.${ext}`, '');
+      imageURLToUse = `${bucketFolder}/${imgName}@s_${size}.webp`;
     }
   }
-  getSrc = async imageURL => {
-    const {
-      imageResize
-    } = this.props;
-    let newImgName = imageURL;
-    const fileName = imageURL.split('/').pop();
-    const ext = fileName.split('.').pop();
-    const imgName = fileName.replace(`.${ext}`, '');
-    let bucketDir = dirname(newImgName);
-    let src = noImageAvailable;
-    if (newImgName) {
-      if (newImgName.startsWith('/images/')) {
+  return imageURLToUse;
+};
+const FirebaseImage = props => {
+  const [state, setState] = useState({
+    isLoading: true,
+    src: '',
+    // src: noImageAvailable,
+    alt: ''
+  });
+  const {
+    className,
+    // loadingIconSize
+  } = props;
+  const {
+    isLoading,
+    alt,
+    src,
+    width,
+    height
+  } = state;
+  // !isLoading && console.log(`src: ${src}`);
+  useEffect(() => {
+    const retrieveData = async () => {
+      const {
+        firebase,
+        alt,
+        imageResize,
+        imageURL,
+        src,
+        width,
+        height,
+        lossless
+      } = props;
+      const imageURLToUse = getImageURLToUse(imageResize, imageURL);
+      let imageSrc = src;
+      if (isNullOrEmpty(imageSrc)) {
         try {
-          if (imageResize !== '') {
-            const size = getSize(imageResize);
-            if (!isNaN(size)) {
-              newImgName = `${bucketDir}/${imgName}@s_${size}.${ext}`;
-            }
-          }
-          src = await this.props.firebase.getStorageFileDownloadURL(newImgName); //Error is hitting here
+          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
         } catch (error) {
-          console.error(`Firebase Image Get Src Error for '${newImgName}': ${error.message} (${error.code})`);
-          if (error.code === 'storage/object-not-found') {
-            src = await this.props.firebase.getStorageFileDownloadURL(imageURL);
+          const {
+            code,
+            message
+          } = error;
+          console.error(`Firebase Image Get Src Error for '${imageURLToUse}': ${message} (${code})`);
+          if (code === 'storage/object-not-found') {
+            imageSrc = await firebase.getStorageFileDownloadURL(imageURL);
           }
         }
-      } else {
-        src = newImgName;
+        // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);
       }
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        alt: alt,
+        src: imageSrc,
+        width,
+        height
+      }));
+    };
+    if (state.isLoading) {
+      retrieveData();
     }
-    return src;
-  }
-  downloadImage = async (src) => {
-    if (src) {
-      const srcResponse = await axios.get(src, {
-        responseType: 'blob'
-      }),
-        {
-          data: srcAsBlob
-        } = srcResponse;
-      handleLoadBlob(srcAsBlob, this.handleDownloadImageLoadComplete);
-    }
-  }
-  handleDownloadImageLoadComplete = downloadedImage => {
-    this.setState({
-      isLoading: false,
-      src: downloadedImage
-    });
-  }
-  handleLoad = async e => {
-    e.preventDefault();
-    this.setState({
-      isImageLoading: false
-    });
-  }
-  handleError = async e => {
-    e.preventDefault();
-    console.log(`Firebase Image Error: '${this.state.src}' was not found.`);
-    this.setState({
-      src: noImageAvailable,
-      isLoading: false,
-      isImageLoading: false
-    });
-  }
-  render = () => {
-    const {
-      className,
-      loadingIconSize
-    } = this.props,
-    {
-      isLoading,
-      isImageLoading,
-      alt,
-      src
-    } = this.state,
-      isAnythingLoading = isLoading || isImageLoading,
-      imgClassNames = `${className}${isAnythingLoading
-        ? ' d-none'
-        : ''}`;
-    return (
-      <b className={`firebase-image-container${isAnythingLoading
-        ? ` is-loading${loadingIconSize
-          ? ` ${loadingIconSize}`
-          : ''}`
-        : ''}`}>
-        {
-          isAnythingLoading
-            ? <LoadingIcon size={loadingIconSize} />
-            : null
-        }
-        <img
-          className={imgClassNames}
-          alt={alt}
-          src={src}
-          title={alt}
-          onLoad={this.handleLoad}
-          onError={this.handleError} />
-      </b>
-    );
-  }
-}
+    return () => { };
+  }, [props, state]);
+  return (
+    <>
+      {/* {
+        isLoading
+          ? <LoadingIcon size={loadingIconSize} />
+          : null
+      } */}
+      <img
+        className={`lazyload ${className} ${isLoading ? 'invisible' : ''}`}
+        alt={alt}
+        data-src={src}
+        src={src}
+        title={alt}
+        width={width}
+        height={height}
+      />
+    </>
+  );
+};
 
 FirebaseImage.propTypes = propTypes;
 FirebaseImage.defaultProps = defaultProps;

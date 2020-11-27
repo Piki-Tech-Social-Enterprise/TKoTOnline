@@ -30,6 +30,7 @@ import {
 import draftToHtml from 'draftjs-to-html';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const NewsFeedSection = props => {
   const [state, setState] = useState({
@@ -107,67 +108,69 @@ const NewsFeedSection = props => {
                 {
                   isLoading
                     ? <LoadingSpinner />
-                    : dbNewsFeeds.map((dbNewsFeed, index) => {
-                      const {
-                        content,
-                        header,
-                        imageUrl,
-                        externalUrl,
-                        nfid,
-                        name,
-                        url
-                      } = dbNewsFeed;
-                      const displayName = header || name || '';
-                      const isExternalLink = (externalUrl || url || '').length > 0;
-                      const externalLink = isExternalLink
-                        ? externalUrl || url
-                        : '';
-                      const internalLink = `/NewsFeeds/${nfid}`;
-                      const contentAsText = draftToText(content, '');
-                      return (
-                        <Col xs={12} sm={6} lg={4} key={index}>
-                          <Card className="card-block news-feed-card">
-                            <CardHeader>
-                              <CardTitle
-                                className="h4 my-3 mx-2 font-weight-bold news-feed-header clickable header-with-text"
-                                onClick={async e => await handleBlockTextClick(e, 'div.news-feed-header', 'header-with-text')}
-                              >{displayName}</CardTitle>
-                            </CardHeader>
-                            <FirebaseImage
-                              className="card-img-max-height"
-                              imageURL={imageUrl || ''}
-                              width="340"
-                              lossless={true}
-                              alt={displayName}
-                              loadingIconSize="lg"
-                              imageResize="md"
-                            />
-                            <CardBody className="text-left bg-white">
-                              <p className="font-weight-bold">
-                                <NewsFeedCaption
-                                  newsFeed={dbNewsFeed}
-                                  categoryLinkClassName="text-dark"
-                                />
-                              </p>
-                              <p
-                                className="news-feed-content clickable d-inline-block block-with-text"
-                                onClick={async e => await handleBlockTextClick(e, 'p.news-feed-content', 'block-with-text')}
-                              >{contentAsText}</p>
-                              <div className="text-center">
-                                <Button
-                                  href={isExternalLink ? externalLink : internalLink}
-                                  target={isExternalLink ? '_blank' : '_self'}
-                                  rel={isExternalLink ? 'noopener noreferrer' : 'alternate'}
-                                  className="tkot-primary-red-bg-color btn-outline-dark"
-                                  color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} News page`, 'Clicked "Pānui Mai..." button', displayName, isExternalLink ? externalLink : internalLink)}
-                                >Pānui Mai...</Button>
-                              </div>
-                            </CardBody>
-                          </Card>
-                        </Col>
-                      );
-                    })
+                    : dbNewsFeeds.length === 0
+                      ? <NoDataToDisplayDiv name="Newsfeeds" isHomePage={isHomePage} />
+                      : dbNewsFeeds.map((dbNewsFeed, index) => {
+                        const {
+                          content,
+                          header,
+                          imageUrl,
+                          externalUrl,
+                          nfid,
+                          name,
+                          url
+                        } = dbNewsFeed;
+                        const displayName = header || name || '';
+                        const isExternalLink = (externalUrl || url || '').length > 0;
+                        const externalLink = isExternalLink
+                          ? externalUrl || url
+                          : '';
+                        const internalLink = `/NewsFeeds/${nfid}`;
+                        const contentAsText = draftToText(content, '');
+                        return (
+                          <Col xs={12} sm={6} lg={4} key={index}>
+                            <Card className="card-block news-feed-card">
+                              <CardHeader>
+                                <CardTitle
+                                  className="h4 my-3 mx-2 font-weight-bold news-feed-header clickable header-with-text"
+                                  onClick={async e => await handleBlockTextClick(e, 'div.news-feed-header', 'header-with-text')}
+                                >{displayName}</CardTitle>
+                              </CardHeader>
+                              <FirebaseImage
+                                className="card-img-max-height"
+                                imageURL={imageUrl || ''}
+                                width="340"
+                                lossless={true}
+                                alt={displayName}
+                                loadingIconSize="lg"
+                                imageResize="md"
+                              />
+                              <CardBody className="text-left bg-white">
+                                <p className="font-weight-bold">
+                                  <NewsFeedCaption
+                                    newsFeed={dbNewsFeed}
+                                    categoryLinkClassName="text-dark"
+                                  />
+                                </p>
+                                <p
+                                  className="news-feed-content clickable d-inline-block block-with-text"
+                                  onClick={async e => await handleBlockTextClick(e, 'p.news-feed-content', 'block-with-text')}
+                                >{contentAsText}</p>
+                                <div className="text-center">
+                                  <Button
+                                    href={isExternalLink ? externalLink : internalLink}
+                                    target={isExternalLink ? '_blank' : '_self'}
+                                    rel={isExternalLink ? 'noopener noreferrer' : 'alternate'}
+                                    className="tkot-primary-red-bg-color btn-outline-dark"
+                                    color="white"
+                                    onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} News page`, 'Clicked "Pānui Mai..." button', displayName, isExternalLink ? externalLink : internalLink)}
+                                  >Pānui Mai...</Button>
+                                </div>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        );
+                      })
                 }
               </Row>
             </Container>

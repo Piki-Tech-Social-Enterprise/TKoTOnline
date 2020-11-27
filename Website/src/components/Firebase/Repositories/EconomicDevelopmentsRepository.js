@@ -11,7 +11,7 @@ class EconomicDevelopmentsRepository extends BaseRepository {
     return await this.db.ref('economicDevelopments');
   }
 
-  getDbEconomicDevelopmentsAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbEconomicDevelopment = await this.getDbEconomicDevelopments();
     const dbEconomicDevelopmentRef = !includeInactive
       ? await existingDbEconomicDevelopment
@@ -28,7 +28,7 @@ class EconomicDevelopmentsRepository extends BaseRepository {
         dbEconomicDevelopmentAsArray.push(dbEconomicDevelopment[key])
       );
     }
-    return dbEconomicDevelopmentAsArray;
+    return dbEconomicDevelopmentAsArray.filter(ed => includeInactive || ed.active);
   }
 
   getDbEconomicDevelopment = async edid => {

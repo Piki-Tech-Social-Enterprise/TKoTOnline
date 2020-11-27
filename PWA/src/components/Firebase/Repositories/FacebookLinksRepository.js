@@ -11,7 +11,7 @@ class FacebookLinksRepository extends BaseRepository {
     return await this.db.ref('facebookLinks');
   }
 
-  getDbFacebookLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbFacebookLinksAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbFacebookLink = await this.getDbFacebookLinks();
     const dbFacebookLinkRef = !includeInactive
       ? await existingDbFacebookLink
@@ -28,7 +28,7 @@ class FacebookLinksRepository extends BaseRepository {
         dbFacebookLinkAsArray.push(dbFacebookLink[key])
       );
     }
-    return dbFacebookLinkAsArray;
+    return dbFacebookLinkAsArray.filter(fl => includeInactive || fl.active);
   }
 
   getDbFacebookLink = async fid => {
@@ -50,12 +50,13 @@ class FacebookLinksRepository extends BaseRepository {
       url,
       name,
       fid,
+      sequence,
       updated,
       updatedBy
     } = facebookLink;
     const now = new Date();
     let errorMessage = null;
-    let existingDbFacebookLink = await this.getDbFacebookLinks(fid || '')
+    let existingDbFacebookLink = await this.getDbFacebookLink(fid || '')
     let dbFacebookLinkRef = null;
     let dbFacebookLink = null;
     if (!fid) {
@@ -66,6 +67,7 @@ class FacebookLinksRepository extends BaseRepository {
         createdBy: createdBy || '',
         url: url || '',
         name: name || '',
+        sequence: sequence || Number.MAX_SAFE_INTEGER,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         fid: await dbFacebookLinkRef.getKey()
@@ -80,6 +82,7 @@ class FacebookLinksRepository extends BaseRepository {
           url: url || dbFacebookLink.url || '',
           name: name || dbFacebookLink.name || '',
           fid: fid,
+          sequence: sequence || dbFacebookLink.sequence || Number.MAX_SAFE_INTEGER,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbFacebookLink.updatedBy
         };
@@ -96,7 +99,7 @@ class FacebookLinksRepository extends BaseRepository {
   }
 
   deleteDbFacebookLink = async fid => {
-    const existingDbFacebookLink = await this.getDbFacebookLinks(fid);
+    const existingDbFacebookLink = await this.getDbFacebookLink(fid);
     let errorMessage = null;
     if (existingDbFacebookLink) {
       await existingDbFacebookLink.remove();

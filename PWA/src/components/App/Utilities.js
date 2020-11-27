@@ -216,8 +216,15 @@ const isBoolean = (value, expectedValue = undefined) =>
   !isNullOrEmpty(value) &&
   (typeof value === 'boolean' || isTrueOrFalse(value)) &&
   (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase());
-const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
-const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
+const toMoment = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => moment(value, dateFormat);
+const isDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => toMoment(value, dateFormat).isValid();
+const toDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => toMoment(value, dateFormat).toDate();
+const toFormattedDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => isDate(value, dateFormat)
+  ? toMoment(value, dateFormat).format(DATE_MOMENT_FORMAT)
+  : value;
+const toFormattedDateTime = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => isDate(value, dateFormat)
+  ? toMoment(value, dateFormat).format(DATE_TIME_MOMENT_FORMAT)
+  : value;
 const tryToConvertValue = value => {
   let convertedValue = undefined;
   let convertedValueType = undefined;
@@ -306,6 +313,19 @@ const uploadFileToStorage = async (file, firebase, imageUrl) => {
     resolve(resolveValue);
   });
 };
+const srcPrefix = process.env.NODE_ENV !== 'production' || isBoolean(process.env.REACT_APP_DEBUG_MODE, true)
+  ? `${process.env.REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL}/imageTransform`
+  : process.env.REACT_APP_WEB_BASE_URL;
+const getQParameter = (key, value) => (value && `${key}=${value}`) || '';
+const getSrc = async (imageURL, width, height, lossless, noImageAvailable, getStorageFileDownloadURL) => {
+  return imageURL
+    ? imageURL.startsWith('/images/')
+      ? isBoolean(process.env.REACT_APP_USE_IMAGE_CDN, true)
+        ? `${srcPrefix}/cdn/image/?s=${encodeURIComponent(imageURL)}${getQParameter('&w', width)}${getQParameter('&h', height)}${getQParameter('&l', (Boolean(lossless) && 1) || undefined)}`
+        : (typeof getStorageFileDownloadURL === 'function' && await getStorageFileDownloadURL(imageURL)) || imageURL
+      : imageURL
+    : noImageAvailable;
+};
 
 export default shallowCompare;
 export {
@@ -337,12 +357,17 @@ export {
   isNullOrEmpty,
   isTrueOrFalse,
   isBoolean,
+  toMoment,
   isDate,
   toDate,
+  toFormattedDateTime,
+  toFormattedDate,
   tryToConvertValue,
   handleSort,
   sortArray,
   renderCaret,
   getImageUrl,
-  uploadFileToStorage
+  uploadFileToStorage,
+  getQParameter,
+  getSrc
 };

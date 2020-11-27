@@ -57,7 +57,7 @@ class Firebase {
   authUserListener = async (next, fallback) => await this.authenticationRepository.authUserListener(next, fallback);
   deleteAccount = async e => await this.authenticationRepository.deleteAccount(e);
   getDbUsers = async () => await this.userRepository.getDbUsers();
-  getDbUsersAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.userRepository.getDbUsersAsArray(includeInactive, childName, childValue);
+  getDbUsersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.userRepository.getDbUsersAsArray(includeInactive, childName, childValue);
   getDbUser = async uid => await this.userRepository.getDbUser(uid);
   updateUserOnboarding = async uid => await this.userRepository.updateUserOnboarding(uid);
   getDbUserValue = async uid => await this.userRepository.getDbUserValue(uid);
@@ -69,14 +69,14 @@ class Firebase {
   deleteStorageFile = async path => await this.storageRepository.deleteStorageFile(path);
   getStorageFiles = async (path, listOptions) => await this.storageRepository.getStorageFiles(path, listOptions);
   getDbNewsFeeds = async () => await this.newsFeedRepository.getDbNewsFeeds();
-  getDbNewsFeedsAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.newsFeedRepository.getDbNewsFeedsAsArray(includeInactive, childName, childValue);
+  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.newsFeedRepository.getDbNewsFeedsAsArray(includeInactive, childName, childValue);
   getDbNewsFeed = async nfid => await this.newsFeedRepository.getDbNewsFeed(nfid);
   getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
   deleteDbNewsFeed = async nfid => await this.newsFeedRepository.deleteDbNewsFeed(nfid);
 
   getDbCommunityLinks = async () => await this.communityLinksRepository.getDbCommunityLinks();
-  getDbCommunityLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.communityLinksRepository.getDbCommunityLinksAsArray(includeInactive, childName, childValue);
+  getDbCommunityLinksAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.communityLinksRepository.getDbCommunityLinksAsArray(includeInactive, childName, childValue);
   getDbCommunityLink = async clid => await this.communityLinksRepository.getDbCommunityLinks(clid);
   getDbCommunityLinkValue = async clid => await this.communityLinksRepository.getDbCommunityLinkValue(clid);
   saveDbCommunityLink = async (communityLink, saveDbCommunityLink_completed) => await this.communityLinksRepository.saveDbCommunityLink(communityLink, saveDbCommunityLink_completed);
@@ -84,11 +84,11 @@ class Firebase {
 
   getDbSettings = async () => await this.settingsRepository.getDbSettings();
   getDbSetting = async sid => await this.settings.getDbSetting(sid);
-  getDbSettingsValues = async (includeInactive, childName = 'active', childValue = true) => await this.settingsRepository.getDbSettingsValues(includeInactive);
+  getDbSettingsValues = async (includeInactive = false, childName = 'active', childValue = true) => await this.settingsRepository.getDbSettingsValues(includeInactive);
   saveDbSettings = async (settings, saveDbSetting_completed) => await this.settingsRepository.saveDbSettings(settings, saveDbSetting_completed);
 
   getDbVolunteers = async () => await this.volunteersRepository.getDbVolunteers();
-  getDbVolunteersAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive, childName, childValue);
+  getDbVolunteersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.volunteersRepository.getDbVolunteersAsArray(includeInactive, childName, childValue);
   getDbVolunteer = async vid => await this.volunteersRepository.getDbVolunteer(vid);
   addDbVolunteerDetails = async (vid, details) => await this.volunteersRepository.addDbVolunteerDetails(vid, details);
   getDbVolunteerValue = async vid => await this.volunteersRepository.getDbVolunteerValue(vid);
@@ -96,7 +96,7 @@ class Firebase {
   deleteDbVolunteer = async vid => await this.volunteersRepository.deleteDbVolunteer(vid);
 
   getDbContacts = async () => await this.contactRepository.getDbContacts();
-  getDbContactsAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.contactRepository.getDbContactsAsArray(includeInactive, childName, childValue);
+  getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.contactRepository.getDbContactsAsArray(includeInactive, childName, childValue);
   getDbContact = async cid => await this.contactRepository.getDbContact(cid);
   getDbContactValue = async cid => await this.contactRepository.getDbContactValue(cid);
   saveDbContact = async (contact, saveDbContact_completed) => await this.contactRepository.saveDbContact(contact, saveDbContact_completed);
@@ -109,49 +109,49 @@ class Firebase {
   call = async options => await this.functionsRepository.call(options);
 
   getDbEPanuiList = async () => await this.ePanuiListRepository.getDbEPanuiList();
-  getDbEPanuiListAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive, childName, childValue);
+  getDbEPanuiListAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive, childName, childValue);
   getDbEPanui = async eid => await this.ePanuiListRepository.getDbEPanui(eid);
   getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
   saveDbEPanui = async (ePanui, saveDbEPanui_completed) => await this.ePanuiListRepository.saveDbEPanui(ePanui, saveDbEPanui_completed);
   deleteDbEPanui = async eid => await this.ePanuiListRepository.deleteDbEPanui(eid);
 
   getDbFacebookLinks = async () => await this.facebookLinksRepository.getDbFacebookLinks();
-  getDbFacebookLinksAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.facebookLinksRepository.getDbFacebookLinksAsArray(includeInactive, childName, childValue);
-  getDbFacebookLink = async fid => await this.facebookLinksRepository.getDbFacebookLinks(fid);
-  getDbFacebookLinkValue = async fid => await this.facebookLinksRepository.getDbFacebookLinkValue(fid);
+  getDbFacebookLinksAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.facebookLinksRepository.getDbFacebookLinksAsArray(includeInactive, childName, childValue);
+  getDbFacebookLink = async fid => await this.facebookLinksRepository.getDbFacebookLink(fid);
+  getDbFacebookLinksValue = async fid => await this.facebookLinksRepository.getDbFacebookLinksValue(fid);
   saveDbFacebookLink = async (facebookLink, saveDbFacebookLink_completed) => await this.facebookLinksRepository.saveDbFacebookLink(facebookLink, saveDbFacebookLink_completed);
   deleteDbFacebookLink = async fid => await this.facebookLinksRepository.deleteDbFacebookLink(fid);
 
   getDbEvents = async () => await this.eventsRepository.getDbEvents();
-  getDbEventsAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.eventsRepository.getDbEventsAsArray(includeInactive, childName, childValue);
+  getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.eventsRepository.getDbEventsAsArray(includeInactive, childName, childValue);
   getDbEvent = async evid => await this.eventsRepository.getDbEvents(evid);
   getDbEventValue = async evid => await this.eventsRepository.getDbEventValue(evid);
   saveDbEvent = async (event, saveDbEvent_completed) => await this.eventsRepository.saveDbEvent(event, saveDbEvent_completed);
   deleteDbEvent = async evid => await this.eventsRepository.deleteDbEvent(evid);
 
   getDbProjects = async () => await this.projectsRepository.getDbProjects();
-  getDbProjectsAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.projectsRepository.getDbProjectsAsArray(includeInactive, childName, childValue);
+  getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.projectsRepository.getDbProjectsAsArray(includeInactive, childName, childValue);
   getDbProject = async pid => await this.projectsRepository.getDbProjects(pid);
   getDbProjectValue = async pid => await this.projectsRepository.getDbProjectValue(pid);
   saveDbProject = async (project, saveDbProject_completed) => await this.projectsRepository.saveDbProject(project, saveDbProject_completed);
   deleteDbProject = async pid => await this.projectsRepository.deleteDbProject(pid);
 
   getDbIwiMembers = async () => await this.iwiMembersRepository.getDbIwiMembers();
-  getDbIwiMembersAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive, childName, childValue);
+  getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.iwiMembersRepository.getDbIwiMembersAsArray(includeInactive, childName, childValue);
   getDbIwiMember = async imid => await this.iwiMembersRepository.getDbIwiMembers(imid);
   getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
   saveDbIwiMember = async (iwiMember, saveDbIwiMember_completed) => await this.iwiMembersRepository.saveDbIwiMember(iwiMember, saveDbIwiMember_completed);
   deleteDbIwiMember = async imid => await this.iwiMembersRepository.deleteDbIwiMember(imid);
 
   getDbResources = async () => await this.resourcesRepository.getDbResources();
-  getDbResourcesAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.resourcesRepository.getDbResourcesAsArray(includeInactive, childName, childValue);
+  getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.resourcesRepository.getDbResourcesAsArray(includeInactive, childName, childValue);
   getDbResource = async rid => await this.resourcesRepository.getDbResources(rid);
   getDbResourceValue = async rid => await this.resourcesRepository.getDbResourceValue(rid);
   saveDbResource = async (resource, saveDbResource_completed) => await this.resourcesRepository.saveDbResource(resource, saveDbResource_completed);
   deleteDbResource = async rid => await this.resourcesRepository.deleteDbResource(rid);
 
   getDbEconomicDevelopments = async () => await this.economicDevelopmentsRepository.getDbEconomicDevelopments();
-  getDbEconomicDevelopmentsAsArray = async (includeInactive, childName = 'active', childValue = true) => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentsAsArray(includeInactive, childName, childValue);
+  getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentsAsArray(includeInactive, childName, childValue);
   getDbEconomicDevelopment = async edid => await this.economicDevelopmentsRepository.getDbEconomicDevelopments(edid);
   getDbEconomicDevelopmentValue = async edid => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentValue(edid);
   saveDbEconomicDevelopment = async (economicDevelopment, saveDbEconomicDevelopment_completed) => await this.economicDevelopmentsRepository.saveDbEconomicDevelopment(economicDevelopment, saveDbEconomicDevelopment_completed);

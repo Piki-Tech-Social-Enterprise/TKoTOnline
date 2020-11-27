@@ -125,7 +125,7 @@ const AboutUsView = props => {
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageTKoTBackOfficeStructureDescription || '{}')) }}
                   />
                   <FirebaseImage
-                    className="my-3"
+                    className="my-3 w-100"
                     imageURL={state.settings.aboutPageTKoTBackOfficeStructureImageUrl}
                     width="1074"
                     lossless={true}

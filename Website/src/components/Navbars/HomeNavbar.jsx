@@ -13,6 +13,7 @@ import {
   useWindowEvent,
   getNavItems
 } from 'components/App/Utilities';
+import tkotLogoOnlyBlack from 'assets/img/tkot/tkot-logo-only-black.webp';
 
 const NavItems = lazy(async () => await import('components/App/NavItems'));
 const HomeNavbar = props => {
@@ -77,7 +78,7 @@ const HomeNavbar = props => {
           </div>
           <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
             <a href="/">
-              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={require("assets/img/tkot/tkot-logo-only-black.webp")} width="32" height="62" />
+              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlack} src={tkotLogoOnlyBlack} width="32" height="62" />
             </a>
             <Nav navbar>
               <NavItems

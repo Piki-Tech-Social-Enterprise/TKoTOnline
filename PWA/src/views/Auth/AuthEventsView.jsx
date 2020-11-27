@@ -119,6 +119,8 @@ const AuthEventsView = props => {
                           inActiveOverrideText="No"
                         />
                       )}>Is Featured</TableHeaderColumn>
+                      <TableHeaderColumn dataField="startDateTime" dataSort sortFunc={handleSort} caretRender={renderCaret}>Start</TableHeaderColumn>
+                      <TableHeaderColumn dataField="endDateTime" dataSort sortFunc={handleSort} caretRender={renderCaret}>End</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="Event"

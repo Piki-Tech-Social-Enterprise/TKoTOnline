@@ -11,7 +11,7 @@ class EPanuiListRepository extends BaseRepository {
     return await this.db.ref('ePanuiList');
   }
 
-  getDbEPanuiListAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbEPanuiListAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbEPanuiList = await this.getDbEPanuiList();
     const dbEPanuiListRef = !includeInactive
       ? await existingDbEPanuiList
@@ -28,7 +28,7 @@ class EPanuiListRepository extends BaseRepository {
         dbEPanuiListAsArray.push(dbEPanuiList[key])
       );
     }
-    return dbEPanuiListAsArray;
+    return dbEPanuiListAsArray.filter(ep => includeInactive || ep.active);
   }
 
   getDbEPanui = async eid => {

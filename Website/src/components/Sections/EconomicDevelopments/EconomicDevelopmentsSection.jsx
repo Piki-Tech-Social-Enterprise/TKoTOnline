@@ -22,6 +22,7 @@ import {
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
 const EconomicDevelopmentCard = lazy(async () => await import('components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));
 const EconomicDevelopmentsSection = props => {
   const [state, setState] = useState({
@@ -84,13 +85,14 @@ const EconomicDevelopmentsSection = props => {
                 ? <LoadingSpinner />
                 : <>
                   {
-                    isHomePage
-                      ? <>
-                        <Container className="my-3" fluid>
-                          <Row className="cards-row flex-row flex-nowrap" noGutters>
-                            {
-                              dbCategorisedEconomicDevelopmentsAsArray && dbCategorisedEconomicDevelopmentsAsArray.length > 0
-                                ? dbCategorisedEconomicDevelopmentsAsArray.map(dbCategorisedEconomicDevelopmentsKey => {
+                    dbCategorisedEconomicDevelopmentsAsArray.length === 0
+                      ? <NoDataToDisplayDiv name="Economic Development" isHomePage={isHomePage} />
+                      : isHomePage
+                        ? <>
+                          <Container className="my-3" fluid>
+                            <Row className="cards-row flex-row flex-nowrap" noGutters>
+                              {
+                                dbCategorisedEconomicDevelopmentsAsArray.map(dbCategorisedEconomicDevelopmentsKey => {
                                   const categorisedEconomicDevelopments = dbCategorisedEconomicDevelopments[dbCategorisedEconomicDevelopmentsKey];
                                   return (
                                     <Col xs={12} sm={4} key={dbCategorisedEconomicDevelopmentsKey}>
@@ -111,15 +113,13 @@ const EconomicDevelopmentsSection = props => {
                                     </Col>
                                   );
                                 })
-                                : <h4>No EconomicDevelopments found</h4>
-                            }
-                          </Row>
-                        </Container>
-                      </>
-                      : <>
-                        {
-                          dbCategorisedEconomicDevelopmentsAsArray && dbCategorisedEconomicDevelopmentsAsArray.length > 0
-                            ? dbCategorisedEconomicDevelopmentsAsArray.map(dbCategorisedEconomicDevelopmentKey => {
+                              }
+                            </Row>
+                          </Container>
+                        </>
+                        : <>
+                          {
+                            dbCategorisedEconomicDevelopmentsAsArray.map(dbCategorisedEconomicDevelopmentKey => {
                               const dbCategorisedEconomicDevelopment = dbCategorisedEconomicDevelopments[dbCategorisedEconomicDevelopmentKey];
                               return (
                                 <Fragment key={dbCategorisedEconomicDevelopmentKey}>
@@ -141,9 +141,8 @@ const EconomicDevelopmentsSection = props => {
                                 </Fragment>
                               );
                             })
-                            : <h4>No EconomicDevelopments found</h4>
-                        }
-                      </>
+                          }
+                        </>
                   }
                 </>
             }

@@ -11,7 +11,7 @@ class IwiMembersRepository extends BaseRepository {
     return await this.db.ref('iwiMembers');
   }
 
-  getDbIwiMembersAsArray = async (includeInactive, childName = 'active', childValue = true) => {
+  getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
     const existingDbIwiMember = await this.getDbIwiMembers();
     const dbIwiMemberRef = !includeInactive
       ? await existingDbIwiMember
@@ -28,7 +28,7 @@ class IwiMembersRepository extends BaseRepository {
         dbIwiMemberAsArray.push(dbIwiMember[key])
       );
     }
-    return dbIwiMemberAsArray;
+    return dbIwiMemberAsArray.filter(im => includeInactive || im.active);
   }
 
   getDbIwiMember = async imid => {

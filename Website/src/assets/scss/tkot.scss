@@ -163,7 +163,7 @@ $tkot-home-footer-x-padding: 1rem;
   padding-top: 150px;
   padding-bottom: 100px;
   color: white;
-  background: $tkot-bg-color;
+  background: rgb(52, 58, 64);
 }
 
 .footer-copyright-container {
@@ -431,14 +431,17 @@ $tkot-home-footer-x-padding: 1rem;
   background-color: rgba(lightgrey, 0.8) !important;
 }
 
-.nav-item,
-.nav-link {
+.nav-item {
   font-size: 0.75rem !important;
 }
 
 .nav-link,
 .iwi-member-name {
   font-size: 0.96rem !important;
+  white-space: nowrap;
+}
+.iwi-member-name {
+  white-space: inherit !important;
 }
 
 .footer-content {

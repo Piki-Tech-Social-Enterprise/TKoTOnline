@@ -21,7 +21,7 @@
     "react-router-dom": "5.2.0",
     "reactstrap": "8.7.1",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.10.2"
+    "sweetalert2": "^10.10.3"
   },
   "scripts": {
     "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",

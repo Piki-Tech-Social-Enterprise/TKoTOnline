@@ -21,6 +21,7 @@ const intoChunks = (array, size) => {
 };
 const DATE_MOMENT_FORMAT = 'DD/MM/YYYY';
 const TIME_MOMENT_FORMAT = 'HH:mm:ss';
+const DATE_TIME_MOMENT_FORMAT = `${DATE_MOMENT_FORMAT} ${TIME_MOMENT_FORMAT}`;
 const NEWSFEED_DATE_MOMENT_FORMAT = 'DD MMM, YYYY';
 const TAG_SEPARATOR = ', ';
 const isJson = value => {
@@ -91,8 +92,15 @@ const isBoolean = (value, expectedValue = undefined) =>
   !isNullOrEmpty(value) &&
   (typeof value === 'boolean' || isTrueOrFalse(value)) &&
   (isNullOrEmpty(expectedValue) || value.toString().toLowerCase() === expectedValue.toString().toLowerCase());
-const isDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).isValid();
-const toDate = value => value && moment(value.toString(), DATE_MOMENT_FORMAT).toDate();
+const toMoment = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => moment(value, dateFormat);
+const isDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => toMoment(value, dateFormat).isValid();
+const toDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => toMoment(value, dateFormat).toDate();
+const toFormattedDate = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => isDate(value, dateFormat)
+  ? toMoment(value, dateFormat).format(DATE_MOMENT_FORMAT)
+  : value;
+const toFormattedDateTime = (value, dateFormat = DATE_TIME_MOMENT_FORMAT) => isDate(value, dateFormat)
+  ? toMoment(value, dateFormat).format(DATE_TIME_MOMENT_FORMAT)
+  : value;
 const tryToConvertValue = value => {
   let convertedValue = undefined;
   let convertedValueType = undefined;
@@ -225,8 +233,8 @@ const getNavItems = isHomePage => {
   }, {
     id: `facebookLinksNavItem${(!isHomePage && '_alt') || ''}`,
     route: facebookLinks,
-    name: 'RSS',
-    tooltip: 'RSS Whangai Paetukutuku',
+    name: 'FB Feeds',
+    tooltip: 'FB Ngā Whāngai',
     group: 'right'
   }];
   return navItems;
@@ -289,8 +297,11 @@ export {
   isNullOrEmpty,
   isTrueOrFalse,
   isBoolean,
+  toMoment,
   isDate,
   toDate,
+  toFormattedDateTime,
+  toFormattedDate,
   tryToConvertValue,
   handleSort,
   sortArray,

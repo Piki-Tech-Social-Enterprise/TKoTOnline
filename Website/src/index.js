@@ -29,7 +29,7 @@ import Firebase, {
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
 import "assets/scss/now-ui-kit.scss";
-import "assets/scss/tkot.scss?v=1.0.0";
+import "assets/scss/tkot.scss";
 import 'lazysizes';
 import Routes from 'components/Routes/routes';
 
