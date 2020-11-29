@@ -554,13 +554,17 @@ $tkot-home-footer-x-padding: 1rem;
     padding-left: 15px;
     padding-right: 15px;
   }
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+    background: rgba(white, 0.5);
+  }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
     height: 70px;
     width: 70px;
     outline: black;
     background-size: 100%, 100%;
-    background-color: $tkot-bg-color-white;
+    background-color: $tkot-secondary-color-grey;
     border-radius: 50%;
     border: 1px dotted $tkot-secondary-color-grey;
     background-image: none;
@@ -573,7 +577,7 @@ $tkot-home-footer-x-padding: 1rem;
   .carousel-control-prev-icon:after {
     font-size: 42px;
     font-weight: bolder;
-    color: $tkot-secondary-color-grey;
+    color: $tkot-bg-color-white;
   }
   .carousel-control-next-icon:after {
     content: '>';
