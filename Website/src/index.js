@@ -110,7 +110,8 @@ const appRoutes = [
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
 const updatePreloads = async () => {
   // console.log(`navigator.userAgent: ${navigator.userAgent}`);
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  const navigatorUserAgentAsLowerCase = navigator.userAgent.toLowerCase();
+  const isFirefox = navigatorUserAgentAsLowerCase.indexOf('firefox') > -1 || navigatorUserAgentAsLowerCase.indexOf('mozilla') > -1;
   if (isFirefox) {
     const links = document.getElementsByTagName('link');
     for (let i = 0; i < links.length; i++) {
