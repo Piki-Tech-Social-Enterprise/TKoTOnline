@@ -172,7 +172,9 @@ const getNavItems = isHomePage => {
     contactUs,
     facebookLinks,
     economicDevelopmentsAnchor,
-    economicDevelopmentsPage
+    economicDevelopmentsPage,
+    mediaListAnchor,
+    mediaListPage
   } = Routes;
   const navItems = [{
     id: `homeNavItem${(!isHomePage && '_alt') || ''}`,
@@ -203,13 +205,21 @@ const getNavItems = isHomePage => {
     route: isHomePage ? eventsAnchor : events,
     name: 'Wānanga/Events',
     tooltip: 'Wānanga',
-    group: 'left'
+    group: 'right'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? newsFeedAnchor : newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
-    group: 'right'
+    group: 'right',
+    menu: 'News'
+  }, {
+    id: `mediaListNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? mediaListAnchor : mediaListPage,
+    name: 'Media',
+    tooltip: 'Toirau',
+    group: 'right',
+    menu: 'News'
   }, {
     id: `resourcesNavItem${(!isHomePage && '_alt') || ''}`,
     route: isHomePage ? resourcesAnchor : resourcesPage,

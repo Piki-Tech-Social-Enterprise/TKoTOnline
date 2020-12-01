@@ -121,6 +121,22 @@ const AuthNewsFeedsView = props => {
                           inActiveOverrideText="No"
                         />
                       )}>Is Featured</TableHeaderColumn>
+                      <TableHeaderColumn dataField="isTKoTMedia" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
+                        <StatusBadge
+                          dbObjectName="News Feed"
+                          dbId={row.nfid}
+                          dbIdName="nfid"
+                          dbFieldName="isTKoTMedia"
+                          dbActive={cell}
+                          authUserUid={props.authUser.uid}
+                          onSaveDbObject={props.firebase.saveDbNewsFeed}
+                          onChildUpdate={handleChildUpdate}
+                          activeOverrideColor="primary"
+                          activeOverrideText="Yes"
+                          inActiveOverrideColor="secondary"
+                          inActiveOverrideText="No"
+                        />
+                      )}>Is TKoT Media</TableHeaderColumn>
                       <TableHeaderColumn dataField="active" dataSort sortFunc={handleSort} caretRender={renderCaret} width="85px" dataFormat={(cell, row) => (
                         <StatusBadge
                           dbObjectName="News Feed"

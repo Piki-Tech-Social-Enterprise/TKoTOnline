@@ -4,7 +4,7 @@ const Routes = {
   iwiMembersAnchor: '/#IwiMembers',
   aboutAnchor: '/#About',
   communityLinksAnchor: '/#CommunityLinks',
-  newsFeedAnchor: '/#NewsFeed',
+  newsFeedAnchor: '/#NewsFeeds',
   newsFeeds: '/NewsFeeds',
   newsFeed: '/NewsFeeds/:nfid',
   interactiveMapAnchor: '/#InteractiveMap',
@@ -28,7 +28,10 @@ const Routes = {
   resourceCardPage: '/ResourceCard',
   economicDevelopmentsAnchor: '/#EconomicDevelopments',
   economicDevelopmentsPage: '/EconomicDevelopments',
-  economicDevelopmentCardPage: '/EconomicDevelopmentCard'
+  economicDevelopmentCardPage: '/EconomicDevelopmentCard',
+  mediaListAnchor: '/#Media',
+  mediaListPage: '/Media',
+  mediaPage: '/Media/:nfid'
 };
 
 export default Routes;

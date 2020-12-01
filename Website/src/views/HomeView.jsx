@@ -36,6 +36,7 @@ const {
   projectsAnchor,
   eventsAnchor,
   newsFeedAnchor,
+  mediaListAnchor,
   resourcesAnchor,
   economicDevelopmentsAnchor
 } = Routes;
@@ -108,6 +109,7 @@ const HomeView = props => {
                 projectsAnchor.replace('/#', ''),
                 eventsAnchor.replace('/#', ''),
                 newsFeedAnchor.replace('/#', ''),
+                mediaListAnchor.replace('/#', ''),
                 resourcesAnchor.replace('/#', ''),
                 economicDevelopmentsAnchor.replace('/#', ''),
                 'HomeFooter'
@@ -146,6 +148,11 @@ const HomeView = props => {
                 containerClassName="bg-warning1"
                 showLearnMoreButton
                 isHomePage
+              />
+              <NewsFeedSection
+                showLearnMoreButton
+                isHomePage
+                isTKoTMedia
               />
               <ResourcesSection
                 containerClassName="bg-secondary1"

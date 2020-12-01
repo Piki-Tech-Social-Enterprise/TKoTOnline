@@ -50,6 +50,7 @@ const INITIAL_STATE = {
   imageUrl: '',
   imageUrlFile: null,
   isFeatured: false,
+  isTKoTMedia: false,
   nfid: null
 };
 const AuthNewsFeedView = props => {
@@ -63,7 +64,7 @@ const AuthNewsFeedView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['isFeatured', 'active'];
+    const checkedNames = ['isFeatured', 'isTKoTMedia', 'active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     setNewsFeed(nf => ({
       ...nf,
@@ -96,7 +97,8 @@ const AuthNewsFeedView = props => {
       externalUrl,
       header,
       imageUrlFile,
-      isFeatured
+      isFeatured,
+      isTKoTMedia
     } = newsFeed;
     let nfid = newsFeed.nfid;
     let imageUrl = newsFeed.imageUrl;
@@ -132,6 +134,7 @@ const AuthNewsFeedView = props => {
           header,
           imageUrl,
           isFeatured,
+          isTKoTMedia,
           nfid: nfid,
           updated: now.toString(),
           updatedBy: uid
@@ -239,6 +242,7 @@ const AuthNewsFeedView = props => {
         header,
         imageUrl,
         isFeatured,
+        isTKoTMedia,
         nfid
       } = dbNewsFeed;
       setNewsFeed(nf => ({
@@ -254,6 +258,7 @@ const AuthNewsFeedView = props => {
         header,
         imageUrl,
         isFeatured,
+        isTKoTMedia,
         nfid
       }));
       setIsLoading(false);
@@ -300,6 +305,9 @@ const AuthNewsFeedView = props => {
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Is Featured" name="isFeatured" checked={newsFeed.isFeatured || false} onChange={handleChange} type="switch" id="NewsFeedIsFeatured" />
+                      </FormGroup>
+                      <FormGroup>
+                        <CustomInput label="Is TKoTMedia" name="isTKoTMedia" checked={newsFeed.isTKoTMedia || false} onChange={handleChange} type="switch" id="NewsFeedIsTKoTMedia" />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Active" name="active" checked={newsFeed.active} onChange={handleChange} type="switch" id="NewsFeedActive" />

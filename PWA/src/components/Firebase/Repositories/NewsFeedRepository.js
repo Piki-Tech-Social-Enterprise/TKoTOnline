@@ -54,6 +54,7 @@ class NewsFeedRepository extends BaseRepository {
       header,
       imageUrl,
       isFeatured,
+      isTKoTMedia,
       nfid,
       updated,
       updatedBy
@@ -76,6 +77,7 @@ class NewsFeedRepository extends BaseRepository {
         header: header || '',
         imageUrl: imageUrl || '',
         isFeatured: isFeatured || false,
+        isTKoTMedia: isTKoTMedia || false,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         nfid: await dbNewsFeedRef.getKey()
@@ -94,6 +96,7 @@ class NewsFeedRepository extends BaseRepository {
           header: header || dbNewsFeed.header || '',
           imageUrl: imageUrl || dbNewsFeed.imageUrl || '',
           isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbNewsFeed.isFeatured || false,
+          isTKoTMedia: typeof isTKoTMedia === 'boolean' ? isTKoTMedia : dbNewsFeed.isTKoTMedia || false,
           nfid: nfid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbNewsFeed.updatedBy

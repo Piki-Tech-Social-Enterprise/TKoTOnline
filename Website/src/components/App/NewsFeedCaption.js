@@ -22,7 +22,7 @@ const NewsFeedCaption = props => {
     <>
       {formattedDate} | {
         categoryTags.map((categoryTag, key) =>
-          <span key={key}>{i++ > 0 ? TAG_SEPARATOR : ''}<a href={`/NewsFeeds?c=${categoryTag}`} className={`text-decoration-none ${categoryLinkClassName || 'text-light'}`}>{categoryTag}</a></span>
+          <span key={key}>{i++ > 0 ? TAG_SEPARATOR : ''}<a href={`/NewsFeeds?c=${encodeURIComponent(categoryTag)}`} className={`text-decoration-none ${categoryLinkClassName || 'text-light'}`}>{categoryTag}</a></span>
         )
       }
     </>

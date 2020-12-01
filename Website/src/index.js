@@ -105,6 +105,14 @@ const appRoutes = [
   {
     path: Routes.economicDevelopmentCardPage,
     component: lazy(async () => await import('views/EconomicDevelopmentCardView'))
+  },
+  {
+    path: Routes.mediaListPage,
+    component: lazy(async () => await import('views/NewsFeedsView'))
+  },
+  {
+    path: Routes.mediaPage,
+    component: lazy(async () => await import('views/NewsFeedView'))
   }
 ];
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));

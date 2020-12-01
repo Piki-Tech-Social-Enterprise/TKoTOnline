@@ -11,37 +11,47 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardHeader
+  CardHeader,
+  Badge
 } from 'reactstrap';
 // import NewsFeedCarousel from './NewsFeedCarousel';
 import queryString from 'query-string';
 import {
   withFirebase
 } from 'components/Firebase';
-import NewsFeedCaption from 'components/App/NewsFeedCaption';
 import {
   draftToText,
   sortArray,
-  handleBlockTextClick
+  handleBlockTextClick,
+  groupBy,
+  isBoolean
 } from 'components/App/Utilities';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import draftToHtml from 'draftjs-to-html';
+import Routes from 'components/Routes/routes';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
+const NewsFeedCaption = lazy(async () => await import('components/App/NewsFeedCaption'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const {
+  newsFeeds,
+  mediaListPage
+} = Routes;
 const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,
     dbSettings: {},
-    dbNewsFeeds: []
+    dbNewsFeeds: [],
+    availableCategoriesAsArray: []
   });
   const {
     containerClassName,
     showLearnMoreButton,
-    isHomePage
+    isHomePage,
+    isTKoTMedia
   } = props;
   const parsedQs = queryString.parse(window.location.search);
   const {
@@ -50,13 +60,32 @@ const NewsFeedSection = props => {
   const {
     isLoading,
     dbSettings,
-    dbNewsFeeds
+    dbNewsFeeds,
+    availableCategoriesAsArray
   } = state;
+  const routeToUse = !isTKoTMedia ? newsFeeds : mediaListPage;
+  const CategoryBadge = props => {
+    const {
+      category,
+      color
+    } = props;
+    return (
+      <>
+        <Badge
+          href={`${routeToUse}${category === 'All' ? '' : `?c=${encodeURIComponent(category)}`}`}
+          className="mr-1"
+          color={color}
+          pill
+        >{category}</Badge>
+      </>
+    );
+  };
   useEffect(() => {
     const getDbNewsFeeds = async () => {
       const {
         firebase,
-        isHomePage
+        isHomePage,
+        isTKoTMedia
       } = props;
       const dbSettings = await firebase.getDbSettingsValues(true); // debugger;
       const dbNewsFeeds = isHomePage
@@ -71,13 +100,32 @@ const NewsFeedSection = props => {
       const filteredDbEPanui = searchCategory
         ? dbEPanui.filter(dbep => dbep.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbEPanui;
-      const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds.concat(filteredDbEPanui);
+      const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds
+        .concat(filteredDbEPanui)
+        .filter(item =>
+          (!isTKoTMedia && (isBoolean(item.isTKoTMedia, false))) ||
+          (isTKoTMedia && (isBoolean(item.isTKoTMedia, true)))
+        );
+      const availableCategories = groupBy(filteredDbNewsFeedsAndEPanui, 'category');
+      const availableCategoriesAsArray = [];
+      Object.keys(availableCategories).map(k => {
+        const categories = k.split(',').map(c => c.trim());
+        categories.map(c => {
+          if (!availableCategoriesAsArray.includes(c)) {
+            availableCategoriesAsArray.push(c);
+          }
+          return null;
+        })
+        return null;
+      });
+      // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
       sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'desc');
       setState(s => ({
         ...s,
         isLoading: false,
         dbSettings,
-        dbNewsFeeds: filteredDbNewsFeedsAndEPanui
+        dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
+        availableCategoriesAsArray
       }));
     };
     if (isLoading) {
@@ -87,18 +135,39 @@ const NewsFeedSection = props => {
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
-        <a id="NewsFeed" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <a id={!isTKoTMedia ? newsFeeds.replace('/', '') : mediaListPage.replace('/', '')} href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
         <Row className="debug-outline">
-          <Col className="mx-auto my-3">
-            <h3 className="text-uppercase text-center">Our Latest News{searchCategory ? `: ${searchCategory}` : null}</h3>
+          <Col xs={12} className="mx-auto my-3">
+            <h3 className="text-uppercase text-center">Our Latest {!isTKoTMedia ? 'Newsfeeds' : 'Media'}{searchCategory ? `: ${searchCategory}` : null}</h3>
             {
-              dbSettings.newsSectionDescription
+              !isTKoTMedia && dbSettings.newsSectionDescription
                 ? <>
                   <div
                     dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(dbSettings.newsSectionDescription)) }}
                   />
                 </>
                 : null
+            }
+            {
+              isHomePage || availableCategoriesAsArray.length === 0
+                ? null
+                : <>
+                  <div className="mb-3">
+                    Categories:&nbsp;
+                    {
+                      availableCategoriesAsArray.map((category, index) =>
+                        <CategoryBadge
+                          category={category}
+                          color="primary"
+                          key={index}
+                        />)
+                    }
+                    <CategoryBadge
+                      category="All"
+                      color="secondary"
+                    />
+                  </div>
+                </>
             }
             {/* <NewsFeedCarousel
               searchCategory={searchCategory}
@@ -109,7 +178,7 @@ const NewsFeedSection = props => {
                   isLoading
                     ? <LoadingSpinner />
                     : dbNewsFeeds.length === 0
-                      ? <NoDataToDisplayDiv name="Newsfeeds" isHomePage={isHomePage} />
+                      ? <NoDataToDisplayDiv name={!isTKoTMedia ? newsFeeds.replace('/', '') : mediaListPage.replace('/', '')} isHomePage={isHomePage} />
                       : dbNewsFeeds.map((dbNewsFeed, index) => {
                         const {
                           content,
@@ -125,7 +194,7 @@ const NewsFeedSection = props => {
                         const externalLink = isExternalLink
                           ? externalUrl || url
                           : '';
-                        const internalLink = `/NewsFeeds/${nfid}`;
+                        const internalLink = `${routeToUse}/${nfid}`;
                         const contentAsText = draftToText(content, '');
                         return (
                           <Col xs={12} sm={6} lg={4} key={index}>
@@ -177,7 +246,7 @@ const NewsFeedSection = props => {
             {
               showLearnMoreButton
                 ? <div className="mb-4 text-center">
-                  <Button href="/NewsFeeds" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
+                  <Button href={!isTKoTMedia ? newsFeeds : mediaListPage} className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
                     View more...
                   </Button>
                 </div>
