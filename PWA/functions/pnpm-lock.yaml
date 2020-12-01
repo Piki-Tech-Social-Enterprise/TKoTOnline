@@ -2,7 +2,7 @@ dependencies:
   '@google-cloud/storage': 5.5.0
   cors: 2.8.5
   firebase-admin: 8.13.0
-  firebase-functions: 3.11.0_firebase-admin@8.13.0
+  firebase-functions: 3.12.0_firebase-admin@8.13.0
   flatted: 3.1.0
   fs-extra: 8.1.0
   googleapis: 65.0.0
@@ -20,7 +20,7 @@ devDependencies:
   env-cmd: 10.1.0
   eslint: 7.14.0
   eslint-plugin-promise: 4.2.1
-  firebase-functions-test: 0.2.3_e708d69303bdb6553728ebee0a0275b9
+  firebase-functions-test: 0.2.3_771c79dffa336df849fefb1b70589788
   mocha: 8.2.1
   npm-run-all: 4.1.5
   sinon: 9.2.1
@@ -2519,11 +2519,11 @@ packages:
       '@google-cloud/storage': 4.7.0
     resolution:
       integrity: sha512-krXj5ncWMJBhCpXSn9UFY6zmDWjFjqgx+1e9ATXKFYndEjmKtNBuJzqdrAdDh7aTUR7X6+0TPx4Hbc08kd0lwQ==
-  /firebase-functions-test/0.2.3_e708d69303bdb6553728ebee0a0275b9:
+  /firebase-functions-test/0.2.3_771c79dffa336df849fefb1b70589788:
     dependencies:
       '@types/lodash': 4.14.159
       firebase-admin: 8.13.0
-      firebase-functions: 3.11.0_firebase-admin@8.13.0
+      firebase-functions: 3.12.0_firebase-admin@8.13.0
       lodash: 4.17.20
     dev: true
     engines:
@@ -2533,7 +2533,7 @@ packages:
       firebase-functions: '>=2.0.0'
     resolution:
       integrity: sha512-zYX0QTm53wCazuej7O0xqbHl90r/v1PTXt/hwa0jo1YF8nDM+iBKnLDlkIoW66MDd0R6aGg4BvKzTTdJpvigUA==
-  /firebase-functions/3.11.0_firebase-admin@8.13.0:
+  /firebase-functions/3.12.0_firebase-admin@8.13.0:
     dependencies:
       '@types/express': 4.17.3
       cors: 2.8.5
@@ -2546,7 +2546,7 @@ packages:
     peerDependencies:
       firebase-admin: ^8.0.0 || ^9.0.0
     resolution:
-      integrity: sha512-i1uMhZ/M6i5SCI3ulKo7EWX0/LD+I5o6N+sk0HbOWfzyWfOl0iJTvQkR3BVDcjrlhPVC4xG1bDTLxd+DTkLqaw==
+      integrity: sha512-C6XfFlnL9JPo2tRNpncxkXeXIpViLzKxBsfNTMB3M2i33mJFvkrLhxp9rhsCRSrcwxraBKmpeSvyh3FJkka54w==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -5939,7 +5939,7 @@ specifiers:
   eslint: ^7.14.0
   eslint-plugin-promise: ^4.2.1
   firebase-admin: 8.13.0
-  firebase-functions: ^3.11.0
+  firebase-functions: ^3.12.0
   firebase-functions-test: ^0.2.3
   flatted: ^3.1.0
   fs-extra: ^8.1.0
