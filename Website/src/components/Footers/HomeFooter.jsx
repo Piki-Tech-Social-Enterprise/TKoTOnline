@@ -52,6 +52,25 @@ const HomeTermsLink = () => {
     <HomeFooterLink to="/TermsOfUse" title="Terms of Use" text="Terms" />
   );
 };
+const CopyrightYear = props => {
+  const {
+    text,
+    startYear
+  } = props;
+  const today = new Date();
+  const thisYear = today.getFullYear();
+  const years = [
+    startYear
+  ];
+  if (thisYear > Number(startYear)) {
+    years.push(thisYear);
+  }
+  return (
+    <>
+      {text} &copy; {years.join('-')} All rights reserved.
+    </>
+  );
+};
 const HomeFooter = props => {
   const {
     isDefault,
@@ -62,10 +81,10 @@ const HomeFooter = props => {
     hash
   } = window.location;
   const {
-    REACT_APP_WEB_NAME
+    REACT_APP_WEB_NAME,
+    REACT_APP_WEB_BUILD_VERSION
   } = process.env;
   const navItems = getNavItems(isHomePage);
-  const thisYear = 1900 + new Date().getYear();
   const INITIAL_STATE = {
     active: true,
     firstName: '',
@@ -264,7 +283,7 @@ const HomeFooter = props => {
       <div className="bg-black text-light footer-copyright-container">
         <Row className="copyright p-0 m-0">
           <Col xs={12} lg={6} className="my-auto bg-danger1">
-            <span className="my-0 mt-3 mt-sm-0 mt-lg-3">{REACT_APP_WEB_NAME} &copy; {thisYear} All rights reserved. <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
+            <span className="my-0 mt-3 mt-sm-0 mt-lg-3"><CopyrightYear text={`${REACT_APP_WEB_NAME} v${REACT_APP_WEB_BUILD_VERSION}`} startYear="2020" /> <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
           </Col>
           <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
             <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />

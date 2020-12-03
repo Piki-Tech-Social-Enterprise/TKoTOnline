@@ -23,15 +23,33 @@ const AuthTermsLink = () => {
     <AuthFooterLink to="/public/TermsOfUse" title="Terms of Use" text="Terms" />
   );
 };
+const CopyrightYear = props => {
+  const {
+    text,
+    startYear
+  } = props;
+  const today = new Date();
+  const thisYear = today.getFullYear();
+  const years = [
+    startYear
+  ];
+  if (thisYear > Number(startYear)) {
+    years.push(thisYear);
+  }
+  return (
+    <>
+      {text} &copy; {years.join('-')} All rights reserved.
+    </>
+  );
+};
 const CopyrightInfomation = () => {
   const {
     REACT_APP_PWA_NAME,
     REACT_APP_PWA_BUILD_VERSION
   } = process.env;
-  const thisYear = 1900 + new Date().getYear();
   return (
     <div className="copyright">
-      {REACT_APP_PWA_NAME} v{REACT_APP_PWA_BUILD_VERSION} &copy; {thisYear} <AuthPrivacyLink /> &amp; <AuthTermsLink />
+      <CopyrightYear text={`${REACT_APP_PWA_NAME} v${REACT_APP_PWA_BUILD_VERSION}`} startYear="2020" /> <AuthPrivacyLink /> &amp; <AuthTermsLink />
     </div>
   )
 }
