@@ -1,11 +1,11 @@
 dependencies:
-  '@google-cloud/storage': 5.5.0
+  '@google-cloud/storage': 5.6.0
   cors: 2.8.5
   firebase-admin: 8.13.0
   firebase-functions: 3.12.0_firebase-admin@8.13.0
   flatted: 3.1.0
   fs-extra: 8.1.0
-  googleapis: 65.0.0
+  googleapis: 66.0.0
   moment: 2.29.1
   nodemailer: 6.4.16
   sharp: 0.25.4
@@ -127,7 +127,7 @@ packages:
     optional: true
     resolution:
       integrity: sha512-zWFjBS35eI9leAHhjfeOYlK5Plcuj/77EzstnrJIZbKgF/nkqjcQuGiMCpzCwOfPyUbz8ZaEOYgbHa759AKbjg==
-  /@google-cloud/common/3.3.2:
+  /@google-cloud/common/3.5.0:
     dependencies:
       '@google-cloud/projectify': 2.0.1
       '@google-cloud/promisify': 2.0.2
@@ -135,14 +135,14 @@ packages:
       duplexify: 4.1.1
       ent: 2.2.0
       extend: 3.0.2
-      google-auth-library: 6.0.6
-      retry-request: 4.1.2
+      google-auth-library: 6.1.3
+      retry-request: 4.1.3
       teeny-request: 7.0.0
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-W7JRLBEJWYtZQQuGQX06U6GBOSLrSrlvZxv6kGNwJtFrusu6AVgZltQ9Pajuz9Dh9aSXy9aTnBcyxn2/O0EGUw==
+      integrity: sha512-10d7ZAvKhq47L271AqvHEd8KzJqGU45TY+rwM2Z3JHuB070FeTi7oJJd7elfrnKaEvaktw3hH2wKnRWxk/3oWQ==
   /@google-cloud/firestore/3.8.6:
     dependencies:
       deep-equal: 2.0.4
@@ -231,9 +231,9 @@ packages:
     optional: true
     resolution:
       integrity: sha512-f0guAlbeg7Z0m3gKjCfBCu7FG9qS3M3oL5OQQxlvGoPtK7/qg3+W+KQV73O2/sbuS54n0Kh2mvT5K2FWzF5vVQ==
-  /@google-cloud/storage/5.5.0:
+  /@google-cloud/storage/5.6.0:
     dependencies:
-      '@google-cloud/common': 3.3.2
+      '@google-cloud/common': 3.5.0
       '@google-cloud/paginator': 3.0.4
       '@google-cloud/promisify': 2.0.2
       arrify: 2.0.1
@@ -244,7 +244,7 @@ packages:
       gaxios: 4.0.1
       gcs-resumable-upload: 3.1.1
       get-stream: 6.0.0
-      hash-stream-validation: 0.2.3
+      hash-stream-validation: 0.2.4
       mime: 2.4.6
       mime-types: 2.1.27
       onetime: 5.1.2
@@ -257,7 +257,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-Pat83kHNnKJpEHUirtQtCoAJ2K3OlEo2ZcSlPjierJnEKnhbIQPyJ6mAbs/ovm3K3QDQhouKJ9QSONkFPEwQuA==
+      integrity: sha512-nLcym8IuCzy1O7tNTXNFuMHfX900sTM3kSTqbKe7oFSoKUiaIM+FHuuuDimMMlieY6StA1xYNPRFFHz57Nv8YQ==
   /@grpc/grpc-js/1.0.5_google-auth-library@5.10.1:
     dependencies:
       google-auth-library: 5.10.1
@@ -2697,18 +2697,6 @@ packages:
     optional: true
     resolution:
       integrity: sha512-US8UMj8C5pRnao3Zykc4AAVr+cffoNKRTg9Rsf2GiuZCW69vgJj38VK2PzlPuQU73FZ/nTk9/Av6/JGcE1N9vA==
-  /gaxios/3.1.0:
-    dependencies:
-      abort-controller: 3.0.0
-      extend: 3.0.2
-      https-proxy-agent: 5.0.0
-      is-stream: 2.0.0
-      node-fetch: 2.6.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-DDTn3KXVJJigtz+g0J3vhcfbDbKtAroSTxauWsdnP57sM5KZ3d2c/3D9RKFJ86s43hfw6WULg6TXYw/AYiBlpA==
   /gaxios/3.2.0:
     dependencies:
       abort-controller: 3.0.0
@@ -2752,6 +2740,15 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-5J/GIH0yWt/56R3dNaNWPGQ/zXsZOddYECfJaqxFWgrZ9HC2Kvc5vl9upOgUUHKzURjAVf2N+f6tEJiojqXUuA==
+  /gcp-metadata/4.2.1:
+    dependencies:
+      gaxios: 4.0.1
+      json-bigint: 1.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-tSk+REe5iq/N+K+SK1XjZJUrFPuDqGZVzCy2vocIHIGmPlTGsa8owXMJwGkrXr73NO0AzhPW4MF2DEHz7P2AVw==
   /gcs-resumable-upload/2.3.3:
     dependencies:
       abort-controller: 3.0.0
@@ -2772,7 +2769,7 @@ packages:
       abort-controller: 3.0.0
       configstore: 5.0.1
       extend: 3.0.2
-      gaxios: 3.1.0
+      gaxios: 3.2.0
       google-auth-library: 6.0.6
       pumpify: 2.0.1
       stream-events: 1.0.5
@@ -2901,6 +2898,22 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-fWYdRdg55HSJoRq9k568jJA1lrhg9i2xgfhVIMJbskUmbDpJGHsbv9l41DGhCDXM21F9Kn4kUwdysgxSYBYJUw==
+  /google-auth-library/6.1.3:
+    dependencies:
+      arrify: 2.0.1
+      base64-js: 1.5.1
+      ecdsa-sig-formatter: 1.0.11
+      fast-text-encoding: 1.0.3
+      gaxios: 4.0.1
+      gcp-metadata: 4.2.1
+      gtoken: 5.1.0
+      jws: 4.0.0
+      lru-cache: 6.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-m9mwvY3GWbr7ZYEbl61isWmk+fvTmOt0YNUfPOUY2VH8K5pZlAIWJjxEi0PqR3OjMretyiQLI6GURMrPSwHQ2g==
   /google-gax/1.15.3:
     dependencies:
       '@grpc/grpc-js': 1.0.5_google-auth-library@5.10.1
@@ -2944,6 +2957,15 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-tbjzndQvSIHGBLzHnhDs3cL4RBjLbLXc2pYvGH+imGVu5b4RMAttUTdnmW2UH0t11QeBTXZ7wlXPS7hrypO/tg==
+  /google-p12-pem/3.0.3:
+    dependencies:
+      node-forge: 0.10.0
+    dev: false
+    engines:
+      node: '>=10'
+    hasBin: true
+    resolution:
+      integrity: sha512-wS0ek4ZtFx/ACKYF3JhyGe5kzH7pgiQ7J5otlumqR9psmWMYc+U9cErKlCYVYHoUaidXHdZ2xbo34kB+S+24hA==
   /googleapis-common/4.4.3:
     dependencies:
       extend: 3.0.2
@@ -2957,7 +2979,7 @@ packages:
       node: '>=10.10.0'
     resolution:
       integrity: sha512-W46WKCk3QtlCCfmZyQIH5zxmDOyeV5Qj+qs7nr2ox08eRkEJMWp6iwv542R/PsokXaGUSrmif4vCC4+rGzRSsQ==
-  /googleapis/65.0.0:
+  /googleapis/66.0.0:
     dependencies:
       google-auth-library: 6.0.6
       googleapis-common: 4.4.3
@@ -2965,7 +2987,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-dcfZVkML8H6mPAsph0hgfyRQYKJpw2XjKchAXx5YEfDYWU7021Mpzaf+ejNSipa3QmcfOLOcWg6sUr0I7M4jjQ==
+      integrity: sha512-jdEleRoyo/AeJZjKGC7Z2mHgochn2vR2JKqey6kydRkIBmCZxoQKLisRR4H8CRYZeEd6+c8Ns/LzS1S7qUjoFw==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -2998,6 +3020,17 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Nyd1wZCMRc2dj/mAD0LlfQLcAO06uKdpKJXvK85SGrF5+5+Bpfil9u/2aw35ltvEHjvl0h5FMKN5knEU+9JrOg==
+  /gtoken/5.1.0:
+    dependencies:
+      gaxios: 4.0.1
+      google-p12-pem: 3.0.3
+      jws: 4.0.0
+      mime: 2.4.6
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-4d8N6Lk8TEAHl9vVoRVMh9BNOKWVgl2DdNtr3428O75r3QFrF/a5MMu851VmK0AA8+iSvbwRv69k5XnMLURGhg==
   /has-ansi/2.0.0:
     dependencies:
       ansi-regex: 2.1.1
@@ -3073,15 +3106,8 @@ packages:
       node: '>= 0.4.0'
     resolution:
       integrity: sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
-  /hash-stream-validation/0.2.3:
-    dependencies:
-      through2: 2.0.5
-    dev: false
-    resolution:
-      integrity: sha512-OEohGLoUOh+bwsIpHpdvhIXFyRGjeLqJbT8Yc5QTZPbRM7LKywagTQxnX/6mghLDOrD9YGz88hy5mLN2eKflYQ==
   /hash-stream-validation/0.2.4:
     dev: false
-    optional: true
     resolution:
       integrity: sha512-Gjzu0Xn7IagXVkSu9cSFuK1fqzwtLwFhNhVL8IFJijRNMgUttFbBSIAzKuSIrsFMO1+g1RlsoN49zPIbwPDMGQ==
   /he/1.2.0:
@@ -4184,18 +4210,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-sSHCgWfJ+Lui/u+0msF3oyCgvdkhxDbkCS6Q8uiJquzOimkJBvX6hl5aSSA7DR1XbMpdM8r7phjcF63sF4rkKg==
-  /node-fetch/2.6.0:
-    dev: false
-    engines:
-      node: 4.x || >=6.0.0
-    resolution:
-      integrity: sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
   /node-fetch/2.6.1:
     dev: false
     engines:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+  /node-forge/0.10.0:
+    dev: false
+    engines:
+      node: '>= 6.0.0'
+    resolution:
+      integrity: sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
   /node-forge/0.7.6:
     dev: false
     resolution:
@@ -4913,22 +4939,12 @@ packages:
     optional: true
     resolution:
       integrity: sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
-  /retry-request/4.1.2:
-    dependencies:
-      debug: 4.2.0
-      through2: 3.0.2
-    dev: false
-    engines:
-      node: '>=8.10.0'
-    resolution:
-      integrity: sha512-fa4OwUcplhOYIhTm7zt6xsUfoApWo+auhvxbpPR4XLxHj0k67MhPItpCzYWzOEjtJlCH4MJ5V0qUrXiu/pOpag==
   /retry-request/4.1.3:
     dependencies:
       debug: 4.2.0
     dev: false
     engines:
       node: '>=8.10.0'
-    optional: true
     resolution:
       integrity: sha512-QnRZUpuPNgX0+D1xVxul6DbJ9slvo4Rm6iV/dn63e048MvGbUZiKySVt6Tenp04JqmchxjiLltGerOJys7kJYQ==
   /rimraf/2.6.3:
@@ -5490,7 +5506,7 @@ packages:
     dependencies:
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.0
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
       stream-events: 1.0.5
       uuid: 8.3.0
     dev: false
@@ -5502,18 +5518,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
-  /through2/2.0.5:
-    dependencies:
-      readable-stream: 2.3.7
-      xtend: 4.0.2
-    dev: false
-    resolution:
-      integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==
   /through2/3.0.2:
     dependencies:
       inherits: 2.0.4
       readable-stream: 3.6.0
     dev: false
+    optional: true
     resolution:
       integrity: sha512-enaDQ4MUyP2W6ZyT6EsMzqBPZaM/avg8iuo+l2d3QCs0J+6RaqkHV/2/lOwDTueBHeJ/2LG9lrLW3d5rWPucuQ==
   /to-fast-properties/1.0.3:
@@ -5873,12 +5883,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==
-  /xtend/4.0.2:
-    dev: false
-    engines:
-      node: '>=0.4'
-    resolution:
-      integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
   /y18n/4.0.0:
     dev: true
     resolution:
@@ -5926,7 +5930,7 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
-  '@google-cloud/storage': ^5.5.0
+  '@google-cloud/storage': ^5.6.0
   babel-cli: ^6.26.0
   babel-preset-env: ^1.7.0
   babel-preset-react: ^6.24.1
@@ -5943,7 +5947,7 @@ specifiers:
   firebase-functions-test: ^0.2.3
   flatted: ^3.1.0
   fs-extra: ^8.1.0
-  googleapis: ^65.0.0
+  googleapis: ^66.0.0
   mocha: ^8.2.1
   moment: ^2.29.1
   nodemailer: ^6.4.16
