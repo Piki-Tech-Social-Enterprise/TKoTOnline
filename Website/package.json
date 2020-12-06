@@ -8,7 +8,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^8.1.1",
+    "firebase": "^8.1.2",
     "lazysizes": "^5.2.2",
     "moment-mini": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -21,7 +21,7 @@
     "react-router-dom": "5.2.0",
     "reactstrap": "8.7.1",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.11.1"
+    "sweetalert2": "^10.12.0"
   },
   "scripts": {
     "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",
