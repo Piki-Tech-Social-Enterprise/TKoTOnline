@@ -162,7 +162,7 @@ const HomeView = props => {
               <EconomicDevelopmentsSection
                 containerClassName="bg-primary1"
                 showLearnMoreButton
-                isHomePage
+                isHomePage={false}
               />
               <HomeFooter
                 isHomePage={state.isHomePage}
