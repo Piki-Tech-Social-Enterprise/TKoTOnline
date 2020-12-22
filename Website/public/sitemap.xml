@@ -3,13 +3,23 @@
 <url> <loc>https://tkot.org.nz/</loc> </url>
 <url> <loc>https://tkot.org.nz/</loc> </url>
 <url> <loc>https://tkot.org.nz/NewsFeeds</loc> </url>
+<url> <loc>https://tkot.org.nz/NewsFeeds/:nfid</loc> </url>
 <url> <loc>https://tkot.org.nz/Volunteer</loc> </url>
 <url> <loc>https://tkot.org.nz/PrivacyPolicy</loc> </url>
 <url> <loc>https://tkot.org.nz/TermsOfUse</loc> </url>
 <url> <loc>https://tkot.org.nz/AboutUs</loc> </url>
 <url> <loc>https://tkot.org.nz/ContactUs</loc> </url>
-<url> <loc>https://tkot.org.nz/FacebookLinks</loc> </url>
+<url> <loc>https://tkot.org.nz/FBFeeds</loc> </url>
 <url> <loc>https://tkot.org.nz/FacebookLinks/:fid</loc> </url>
 <url> <loc>https://tkot.org.nz/Wananga</loc> </url>
+<url> <loc>https://tkot.org.nz/Wananga/:evid</loc> </url>
+<url> <loc>https://tkot.org.nz/AboutUs/:imid</loc> </url>
 <url> <loc>https://tkot.org.nz/Projects</loc> </url>
+<url> <loc>https://tkot.org.nz/Projects/:pid</loc> </url>
+<url> <loc>https://tkot.org.nz/Resources</loc> </url>
+<url> <loc>https://tkot.org.nz/ResourceCard</loc> </url>
+<url> <loc>https://tkot.org.nz/EconomicDevelopments</loc> </url>
+<url> <loc>https://tkot.org.nz/EconomicDevelopmentCard</loc> </url>
+<url> <loc>https://tkot.org.nz/Media</loc> </url>
+<url> <loc>https://tkot.org.nz/Media/:nfid</loc> </url>
 </urlset>
