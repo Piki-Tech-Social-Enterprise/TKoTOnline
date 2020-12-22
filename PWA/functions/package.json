@@ -63,7 +63,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
