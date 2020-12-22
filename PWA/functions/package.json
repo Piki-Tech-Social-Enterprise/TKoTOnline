@@ -17,13 +17,13 @@
     "sharp": "0.25.4"
   },
   "scripts": {
-    "updateDependencies": "ncu -x fs-extra,sharp,firebase-admin -u && pnpm i",
+    "updateDependencies": "ncu -x fs-extra,sharp,firebase-admin -u && npm i",
     "lint": "eslint .",
     "test": "mocha --timeout 999999 --colors --reporter spec index.test.js --exit",
     "serveAll": "firebase emulators:start",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell --port 5001",
-    "start": "pnpm run shell",
+    "start": "npm run shell",
     "deploy": "firebase deploy -m \"\"\"$REACT_APP_PWA_NAME v$REACT_APP_PWA_BUILD_VERSION\"\"\" --only functions",
     "logs": "firebase functions:log",
     "firebaseUseDev": "firebase use \"tkot-online-dev\"",
@@ -55,12 +55,11 @@
     "deployCleanInstallProd": "run-s -sn firebaseUseProd \"envCmdProd cleanInstall applyGAC unsetFunctionsConfig setFunctionsConfig deploy\"",
     "removeNodeModules": "shx test -e ./node_modules && shx rm -rf ./node_modules && echo \"'node_modules' successfully removed\" || echo \"'node_modules' folder not found\"",
     "removePackageLockJsonFile": "shx test -e ./package-lock.json && shx rm -rf package-lock.json && echo \"'package-lock.json' file successfully removed\" || echo \"'package-lock.json' file not found\"",
-    "npmSetProgressOff": "pnpm set progress=false",
-    "npmInstall": "pnpm install",
+    "npmSetProgressOff": "npm set progress=false",
+    "npmInstall": "npm install",
     "cleanInstall": "run-s -sn removeNodeModules removePackageLockJsonFile npmSetProgressOff npmInstall",
     "unsetFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js unset",
-    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set",
-    "preinstall": "npx only-allow pnpm"
+    "setFunctionsConfig": "babel-node ./buildUtilities/processFunctionsConfig.js set"
   },
   "engines": {
     "node": "10"
