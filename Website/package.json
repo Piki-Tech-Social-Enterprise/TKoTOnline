@@ -6,9 +6,9 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^8.1.2",
+    "firebase": "^8.2.1",
     "lazysizes": "^5.2.2",
     "moment-mini": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -21,7 +21,7 @@
     "react-router-dom": "5.2.0",
     "reactstrap": "8.7.1",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.12.0"
+    "sweetalert2": "^10.12.5"
   },
   "scripts": {
     "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",
@@ -128,7 +128,7 @@
     ]
   },
   "optionalDependencies": {
-    "typescript": "4.1.2"
+    "typescript": "4.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
