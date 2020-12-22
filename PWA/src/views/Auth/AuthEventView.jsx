@@ -62,7 +62,7 @@ const AuthEventView = props => {
       value,
       checked
     } = e.target;
-    const checkedNames = ['active'];
+    const checkedNames = ['active', 'isFeatured'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     setEvent(p => ({
       ...p,
