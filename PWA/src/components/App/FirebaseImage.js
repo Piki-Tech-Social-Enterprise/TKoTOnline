@@ -63,7 +63,7 @@ const getSize = imageResize => {
 };
 const getImageURLToUse = (imageResize, imageURL) => {
   let imageURLToUse = imageURL;
-  if (imageResize) {
+  if (!isNullOrEmpty(imageResize) && !isNullOrEmpty(imageURLToUse) && (imageURLToUse.startsWith('images/') || imageURLToUse.startsWith('/images/'))) {
     const size = getSize(imageResize); // debugger;
     if (isNumber(size)) {
       const bucketFolder = dirname(imageURL);
