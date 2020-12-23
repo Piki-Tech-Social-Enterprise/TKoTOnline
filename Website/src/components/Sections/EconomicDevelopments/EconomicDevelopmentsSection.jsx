@@ -169,6 +169,7 @@ const EconomicDevelopmentsSection = props => {
                     rel="noopener noreferrer"
                     className="tkot-primary-red-bg-color btn-outline-dark"
                     color="white"
+                    size="lg"
                     onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}
                   >View Taitokerau Economic Summit 2020 Site</Button>
                 </div>

@@ -89,7 +89,7 @@ class NewsFeedRepository extends BaseRepository {
       if (dbNewsFeed) {
         newsFeed = {
           active: typeof active === 'boolean' ? active : dbNewsFeed.active || false,
-          category: category || dbNewsFeed.category || '',
+          category: category || '',
           content: content || dbNewsFeed.content || '',
           date: date || dbNewsFeed.date || '',
           externalUrl: externalUrl || dbNewsFeed.externalUrl || '',

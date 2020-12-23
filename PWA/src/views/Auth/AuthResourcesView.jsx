@@ -95,7 +95,7 @@ const AuthResourcesView = props => {
                         <FirebaseImage loadingIconSize="sm" imageResize="sm" alt={row.header} imageURL={cell || ''} />
                       )}>Image</TableHeaderColumn>
                       <TableHeaderColumn isKey dataField="header" dataSort sortFunc={handleSort} caretRender={renderCaret}>Header</TableHeaderColumn>
-                      <TableHeaderColumn dataField="category" dataSort sortFunc={handleSort} caretRender={renderCaret}>Catgory</TableHeaderColumn>
+                      <TableHeaderColumn dataField="category" dataSort sortFunc={handleSort} caretRender={renderCaret}>Category</TableHeaderColumn>
                       <TableHeaderColumn dataField="contentAsText" dataSort sortFunc={handleSort} caretRender={renderCaret} width="400px" columnClassName="d-inline-block text-truncate" tdStyle={{
                         maxWidth: '400px'
                       }}>Content</TableHeaderColumn>

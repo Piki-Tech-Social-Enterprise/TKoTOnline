@@ -40,9 +40,7 @@ const newsFeedImageUrlFormat = `${newsFeedImageFolderUrlFormat}${newsFeedFilenam
 const INITIAL_STATE = {
   active: true,
   category: '',
-  categoryTags: [
-    'Uncategorised'
-  ],
+  categoryTags: [],
   content: '',
   date: '',
   externalUrl: '',

@@ -85,7 +85,7 @@ class EconomicDevelopmentsRepository extends BaseRepository {
       if (dbEconomicDevelopment) {
         economicDevelopment = {
           active: typeof active === 'boolean' ? active : dbEconomicDevelopment.active || false,
-          category: category || dbEconomicDevelopment.category || '',
+          category: category || '',
           content: content || dbEconomicDevelopment.content || '',
           created: dbEconomicDevelopment.created || now.toString(),
           createdBy: dbEconomicDevelopment.createdBy,

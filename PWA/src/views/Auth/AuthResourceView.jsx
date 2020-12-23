@@ -43,9 +43,7 @@ const resourceImageUrlFormat = `${resourceImageFolderUrlFormat}${resourceImageFi
 const INITIAL_STATE = {
   active: true,
   category: '',
-  categoryTags: [
-    'Uncategorised'
-  ],
+  categoryTags: [],
   content: '',
   header: '',
   imageUrl: '',

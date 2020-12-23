@@ -85,7 +85,7 @@ class ResourcesRepository extends BaseRepository {
       if (dbResource) {
         resource = {
           active: typeof active === 'boolean' ? active : dbResource.active || false,
-          category: category || dbResource.category || '',
+          category: category || '',
           content: content || dbResource.content || '',
           created: dbResource.created || now.toString(),
           createdBy: dbResource.createdBy,
