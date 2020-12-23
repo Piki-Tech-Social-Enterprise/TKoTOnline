@@ -39,7 +39,7 @@ const EconomicDevelopmentsView = () => {
               initalTransparent
               colorOnScrollValue={25}
             />
-            <EconomicDevelopmentsSection containerClassName="mt-0 mt-lg-3" />
+            <EconomicDevelopmentsSection containerClassName="mt-0 mt-lg-3" showViewTaitokerauEconomicSummit2020SiteButton />
             <HomeFooter />
           </>
       }

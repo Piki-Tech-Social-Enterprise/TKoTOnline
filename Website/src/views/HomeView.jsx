@@ -163,6 +163,7 @@ const HomeView = props => {
                 containerClassName="bg-primary1"
                 showLearnMoreButton
                 isHomePage={false}
+                showViewTaitokerauEconomicSummit2020SiteButton
               />
               <HomeFooter
                 isHomePage={state.isHomePage}

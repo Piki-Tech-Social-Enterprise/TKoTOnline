@@ -32,7 +32,8 @@ const EconomicDevelopmentsSection = props => {
   const {
     containerClassName,
     showLearnMoreButton,
-    isHomePage
+    isHomePage,
+    showViewTaitokerauEconomicSummit2020SiteButton
   } = props;
   const {
     isLoading,
@@ -148,10 +149,28 @@ const EconomicDevelopmentsSection = props => {
             }
             {
               showLearnMoreButton
+                ? <div className="mb-4x text-center">
+                  <Button
+                    href="/EconomicDevelopments"
+                    className="text-dark"
+                    color="link"
+                    size="lg"
+                    onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}
+                  >View more...</Button>
+                </div>
+                : null
+            }
+            {
+              showViewTaitokerauEconomicSummit2020SiteButton
                 ? <div className="mb-4 text-center">
-                  <Button href="/EconomicDevelopments" className="text-dark" color="link" size="lg" onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}>
-                    View more...
-                  </Button>
+                  <Button
+                    href="http://tautokoeconomy.maori.nz/summit-main/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tkot-primary-red-bg-color btn-outline-dark"
+                    color="white"
+                    onClick={() => sendEvent('Home page', 'Clicked "View More..." button')}
+                  >View Taitokerau Economic Summit 2020 Site</Button>
                 </div>
                 : null
             }
