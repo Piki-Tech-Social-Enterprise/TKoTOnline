@@ -14,7 +14,7 @@ dependencies:
   react-router-dom: 5.2.0_react@17.0.1
   reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
   reactstrap-scrollspy: 0.1.1_5247530cef61d43e0566080439cf9131
-  sweetalert2: 10.12.5
+  sweetalert2: 10.12.6
 devDependencies:
   babel-cli: 6.26.0
   babel-preset-env: 1.7.0
@@ -12317,10 +12317,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
-  /sweetalert2/10.12.5:
+  /sweetalert2/10.12.6:
     dev: false
     resolution:
-      integrity: sha512-AyHHvwIIkelpfTLAKb3RDdOJv5rXoKGfMzcWr9lx6EEK/PnRU3bZosvnJavXgf2f5Uaz+N3KlqtDOgLVdi33hA==
+      integrity: sha512-kkPRpNqP0wF9tAVu1Ygp4pQx4pXY/pgseyW3dOXXRu0S6s7HKfHEmpBUIZrBylRfeJFPOsSEk6sALSwKzNZ9RQ==
   /symbol-tree/3.2.4:
     dev: true
     resolution:
@@ -13440,5 +13440,5 @@ specifiers:
   react-scripts: ^3.4.3
   reactstrap: 8.7.1
   reactstrap-scrollspy: ^0.1.1
-  sweetalert2: ^10.12.5
+  sweetalert2: ^10.12.6
   typescript: 4.1.3

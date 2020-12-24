@@ -17,7 +17,7 @@ dependencies:
   react-datetime: 3.0.4_moment@2.29.1+react@17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
-  react-google-maps: 9.4.5_e80e2f25ec62b89bafa34718feb35dff
+  react-google-maps: 9.4.5_aa7c221ae0ee654d6397c98b60696748
   react-notification-alert: 0.0.13_ccd22a08a3bda03a9dd818270919d6ce
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
@@ -25,7 +25,7 @@ dependencies:
   react-tagsinput-2: 3.19.8_react@17.0.1
   reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
   recompose: 0.30.0_react@17.0.1
-  sweetalert2: 10.12.5
+  sweetalert2: 10.12.6
   sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
 devDependencies:
   babel-cli: 6.26.0
@@ -38,7 +38,7 @@ devDependencies:
   react-router-sitemap: 1.2.0_react-router@5.2.0+react@17.0.1
 lockfileVersion: 5.2
 optionalDependencies:
-  '@types/googlemaps': 3.40.5
+  '@types/googlemaps': 3.43.0
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   jquery: 3.5.1
@@ -2046,11 +2046,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==
-  /@types/googlemaps/3.40.5:
+  /@types/googlemaps/3.43.0:
     dev: false
     optional: true
     resolution:
-      integrity: sha512-xYqO51dgJsZ+xgNUzYHW4zy/jII2RE0HU87bqMgggkp3nCGw/w7MYoQrUKyxIf0022XQ+iQwDua39wM30MG4MA==
+      integrity: sha512-4k6N1LKTmwHEG6zKNMfINqQS08jd3wYdmlBRfJpcKqUYC9A9uXzuO3irV6muI+PWg1DRAjlBuLfrQTmHNjzlGA==
   /@types/istanbul-lib-coverage/2.0.3:
     dev: false
     resolution:
@@ -11026,9 +11026,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
-  /react-google-maps/9.4.5_e80e2f25ec62b89bafa34718feb35dff:
+  /react-google-maps/9.4.5_aa7c221ae0ee654d6397c98b60696748:
     dependencies:
-      '@types/googlemaps': 3.40.5
+      '@types/googlemaps': 3.43.0
       '@types/markerclustererplus': 2.1.33
       '@types/react': 17.0.0
       babel-runtime: 6.26.0
@@ -12661,10 +12661,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.12.5:
+  /sweetalert2/10.12.6:
     dev: false
     resolution:
-      integrity: sha512-AyHHvwIIkelpfTLAKb3RDdOJv5rXoKGfMzcWr9lx6EEK/PnRU3bZosvnJavXgf2f5Uaz+N3KlqtDOgLVdi33hA==
+      integrity: sha512-kkPRpNqP0wF9tAVu1Ygp4pQx4pXY/pgseyW3dOXXRu0S6s7HKfHEmpBUIZrBylRfeJFPOsSEk6sALSwKzNZ9RQ==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -13783,7 +13783,7 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
-  '@types/googlemaps': 3.40.5
+  '@types/googlemaps': 3.43.0
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   axios: ^0.21.1
@@ -13821,6 +13821,6 @@ specifiers:
   react-tagsinput-2: ^3.19.8
   reactstrap: 8.7.1
   recompose: ^0.30.0
-  sweetalert2: ^10.12.5
+  sweetalert2: ^10.12.6
   sweetalert2-react: ^0.8.3
   typescript: 4.1.3
