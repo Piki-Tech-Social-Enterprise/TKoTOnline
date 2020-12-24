@@ -46,8 +46,8 @@ class StorageBucketHelper {
     }
     return isValid;
   }
-  handleGetImgPathAndBucketImgName(size, fileNameExtOverride = '') {
-    const newImgName = `${this.imgName}${resizedFileNamePrefix}${size}.${fileNameExtOverride || this.fileNameExt}`;
+  handleGetImgPathAndBucketImgName(size = NaN, fileNameExtOverride = '') {
+    const newImgName = `${this.imgName}${!isNaN(size) ? `${resizedFileNamePrefix}${size}` : ''}.${fileNameExtOverride || this.fileNameExt}`;
     return {
       imgPath: join(this.workingDir, newImgName),
       bucketImgName: `${this.bucketDir}/${newImgName}`

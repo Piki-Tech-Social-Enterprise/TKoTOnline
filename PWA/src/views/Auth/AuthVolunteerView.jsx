@@ -88,8 +88,7 @@ const AuthVolunteerView = props => {
     console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
     return result.data;
   };
-  // const isEmailUniqueAlt = async email => {
-  //   debugger;
+  // const isEmailUniqueAlt = async email => { // debugger;
   //   const {
   //     firebase,
   //     authUser

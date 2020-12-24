@@ -11,11 +11,8 @@ import PropTypes from 'prop-types';
 import {
   getSrc,
   isNullOrEmpty,
-  isNumber
+  getImageURLToUse
 } from '../App/Utilities';
-import {
-  dirname
-} from 'path';
 
 const propTypes = {
   isLoading: PropTypes.bool,
@@ -43,37 +40,6 @@ const defaultProps = {
   loadingIconSize: '',
   imageResize: '',
   lossless: true
-};
-const getSize = imageResize => {
-  let size = null;
-  switch (imageResize) {
-    case 'sm':
-      size = 150;
-      break;
-    case 'md':
-      size = 400;
-      break;
-    case 'lg':
-      size = 768;
-      break;
-    default:
-      size = NaN;
-  }
-  return size;
-};
-const getImageURLToUse = (imageResize, imageURL) => {
-  let imageURLToUse = imageURL;
-  if (!isNullOrEmpty(imageResize) && !isNullOrEmpty(imageURLToUse) && (imageURLToUse.startsWith('images/') || imageURLToUse.startsWith('/images/'))) {
-    const size = getSize(imageResize); // debugger;
-    if (isNumber(size)) {
-      const bucketFolder = dirname(imageURL);
-      const fileName = imageURL.split('/').pop();
-      const ext = fileName.split('.').pop();
-      const imgName = fileName.replace(`.${ext}`, '');
-      imageURLToUse = `${bucketFolder}/${imgName}@s_${size}.webp`;
-    }
-  }
-  return imageURLToUse;
 };
 const FirebaseImage = props => {
   const [state, setState] = useState({
@@ -129,10 +95,11 @@ const FirebaseImage = props => {
         alt: alt,
         src: imageSrc,
         width,
-        height
+        height,
+        imageURL
       }));
     };
-    if (state.isLoading) {
+    if (state.isLoading || state.imageURL !== props.imageURL) {
       retrieveData();
     }
     return () => { };

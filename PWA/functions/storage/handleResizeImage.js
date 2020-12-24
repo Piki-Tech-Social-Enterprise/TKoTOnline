@@ -42,7 +42,7 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
     if (currentSize <= 100) {
       throw new Error(`Image '${filePath}' with a width of '${currentSize}' is too small.`);
     }
-    const sizes = [150, 400, 768];
+    const sizes = [150, 400, 768, NaN];
     // if (currentSize <= 150) {
     //   return false;
     // }

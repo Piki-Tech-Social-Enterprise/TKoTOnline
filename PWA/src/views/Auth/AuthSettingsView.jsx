@@ -444,7 +444,7 @@ const AuthSettingsView = props => {
                               downloadURLFormatKeyName={settingKeyFormat}
                               downloadURLFormatKeyValue={settings.sid || ''}
                               downloadURLFormatFileName={settingFilenameFormat}
-                              imageResize="md"
+                              downloadURLResize="md"
                             />
                           </FormGroup>
                           <FormGroup>
@@ -468,7 +468,7 @@ const AuthSettingsView = props => {
                               downloadURLFormatKeyName={settingKeyFormat}
                               downloadURLFormatKeyValue={settings.sid || ''}
                               downloadURLFormatFileName={settingFilenameFormat}
-                              imageResize="md"
+                              downloadURLResize="md"
                             />
                           </FormGroup>
                         </TabPane>
@@ -512,7 +512,7 @@ const AuthSettingsView = props => {
                               downloadURLFormatKeyName={settingKeyFormat}
                               downloadURLFormatKeyValue={settings.sid || ''}
                               downloadURLFormatFileName={settingFilenameFormat}
-                              imageResize="md"
+                              downloadURLResize="md"
                             />
                           </FormGroup>
                           <FormGroup>

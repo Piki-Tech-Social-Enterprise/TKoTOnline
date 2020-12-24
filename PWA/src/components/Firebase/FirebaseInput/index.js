@@ -170,7 +170,7 @@ class FirebaseInput extends Component {
                 this.props.showImagePreview
                   ? <>
                     <FirebaseImage
-                      imageResize={this.state.downloadURLResize}
+                      imageResize={this.props.downloadURLResize}
                       imageURL={this.state.downloadURL}
                       src={this.state.downloadURLSrc}
                       alt={this.state.downloadURLAlt} />

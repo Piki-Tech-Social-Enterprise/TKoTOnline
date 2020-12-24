@@ -14,7 +14,8 @@ import {
   indexPageClassName,
   sidebarCollapseClassName,
   defaultPageSetup,
-  getSrc
+  getSrc,
+  getImageURLToUse
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
@@ -58,8 +59,8 @@ const HomeView = props => {
         homePageHeaderImageUrl,
         homePageAboutImageUrl
       } = dbSettings;
-      const homePageHeaderImageDownloadUrl = await getSrc(homePageHeaderImageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
-      const homePageAboutImageDownloadUrl = await getSrc(homePageAboutImageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+      const homePageHeaderImageDownloadUrl = await getSrc(getImageURLToUse(NaN, homePageHeaderImageUrl), null, null, true, null, firebase.getStorageFileDownloadURL);
+      const homePageAboutImageDownloadUrl = await getSrc(getImageURLToUse(NaN, homePageAboutImageUrl), null, null, true, null, firebase.getStorageFileDownloadURL);
       defaultPageSetup({
         isLoading: true,
         classNames: [

@@ -273,7 +273,7 @@ const AuthIwiMemberView = props => {
         setIsLoading(false);
       }
     };
-  }, [props, isNew, isLoading, setIsLoading]);
+  }, [props, isNew, isLoading]);
   return (
     <>
       <div className="panel-header panel-header-xs" />
@@ -302,7 +302,8 @@ const AuthIwiMemberView = props => {
                       <FormGroup>
                         <Label>Iwi Chair Profile</Label>
                         <DraftEditor
-                          content={iwiMember.content}
+                          content={iwiMember.iwiChairProfile}
+                          contentFieldName="iwiChairProfile"
                           onChange={handleChange}
                           uploadCallback={handleUploadCallback}
                         />

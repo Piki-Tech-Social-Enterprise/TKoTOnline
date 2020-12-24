@@ -14,7 +14,8 @@ import {
 import draftToHtml from 'draftjs-to-html';
 import {
   draftToText,
-  getSrc
+  getSrc,
+  getImageURLToUse
 } from 'components/App/Utilities';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
@@ -41,7 +42,7 @@ const IwiChairView = props => {
       const {
         iwiChairImageURL
       } = dbIwiMember;
-      const iwiChairImageDownloadURL = await getSrc(iwiChairImageURL, 250, null, true, null, firebase.getStorageFileDownloadURL);
+      const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, firebase.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,
@@ -78,7 +79,7 @@ const IwiChairView = props => {
               pageHeaderCaption={() => (<>
                 <FirebaseImage
                   className="rounded-circle iwi-chair-image"
-                  imageURL={state.iwiChairImageDownloadURL}
+                  imageURL={state.dbIwiMember.iwiChairImageURL}
                   width="250"
                   lossless={true}
                   alt={state.dbIwiMember.iwiChairName}

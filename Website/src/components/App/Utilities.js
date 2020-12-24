@@ -4,6 +4,9 @@ import {
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment-mini';
 import Routes from 'components/Routes/routes';
+import {
+  dirname
+} from 'path';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -287,6 +290,35 @@ const groupBy = (array, key) => {
   const groupedBy = array.reduce(groupByReducer, {}); // debugger;
   return groupedBy;
 };
+const getSize = imageResize => {
+  let size = null;
+  switch ((imageResize || '')) {
+    case 'sm':
+      size = 150;
+      break;
+    case 'md':
+      size = 400;
+      break;
+    case 'lg':
+      size = 768;
+      break;
+    default:
+      size = NaN;
+  }
+  return size;
+};
+const getImageURLToUse = (imageResize, imageURL) => {
+  let imageURLToUse = imageURL;
+  const size = getSize(imageResize); // debugger;
+  const bucketFolder = dirname(imageURL);
+  const fileName = imageURL.split('/').pop();
+  const ext = fileName.split('.').pop();
+  const imgName = fileName.replace(`.${ext}`, '');
+  if (bucketFolder && imgName) {
+    imageURLToUse = `${bucketFolder}/${imgName}${isNumber(size) ? `@s_${size}` : ''}.webp`;
+  }
+  return imageURLToUse;
+};
 
 export {
   useWindowEvent,
@@ -321,5 +353,7 @@ export {
   getSrc,
   getFirstCharacters,
   handleBlockTextClick,
-  groupBy
+  groupBy,
+  getSize,
+  getImageURLToUse
 };
