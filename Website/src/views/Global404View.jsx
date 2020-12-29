@@ -56,9 +56,7 @@ const Global404View = () => {
                   <img
                     alt="404"
                     src={tkotLogoOnlyBlackImage}
-                    style={{
-                      maxWidth: '180px'
-                    }}
+                    className="global-404-image"
                   />
                 </Col>
                 <Col xs={12} sm={9} className="mt-5">

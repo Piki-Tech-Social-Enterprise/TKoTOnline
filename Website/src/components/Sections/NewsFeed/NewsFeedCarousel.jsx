@@ -305,9 +305,7 @@ const NewsFeedCarousel = props => {
                           href={externalUrl ? externalUrl : `/NewsFeeds/${nfid}`}
                           target={externalUrl ? '_blank' : '_self'}
                           rel={externalUrl ? 'noopener noreferrer' : 'alternate'}
-                          style={{
-                            color: 'inherit'
-                          }}>Pānui Mai...</CardLink>
+                        >Pānui Mai...</CardLink>
                       </CardBody>
                     </Card>
                   </Col>

@@ -169,10 +169,7 @@ const HomeFooter = props => {
   };
   return (
     <>
-      <div className="bg-dark text-light" style={{
-        position: 'relative',
-        top: '3rem'
-      }}>
+      <div className="bg-dark text-light home-footer-container">
         <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
           {/* <Container> */}
           <Row className="footer-content px-0 mx-0">

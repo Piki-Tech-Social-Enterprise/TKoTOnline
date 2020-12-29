@@ -76,10 +76,7 @@ const ProjectsSection = props => {
                       : dbProjects.map((dbProject, index) => {
                         return (
                           <Col xs={12} sm={6} lg={4} key={index}>
-                            <Card className="card-block" style={{
-                              border: 'none',
-                              boxShadow: 'none'
-                            }}>
+                            <Card className="card-block">
                               <FirebaseImage
                                 className="card-img-max-height"
                                 imageURL={dbProject.imageUrl}

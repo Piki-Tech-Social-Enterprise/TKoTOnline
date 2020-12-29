@@ -111,6 +111,8 @@ $tkot-home-footer-x-padding: 1rem;
   overflow: auto hidden;
 }
 .card-block {
+  border: none;
+  box-shadow: none;
   min-height: 225px;
 }
 
@@ -607,4 +609,19 @@ $tkot-home-footer-x-padding: 1rem;
   background: url('../img/tkot/tkot-logo-only-black.webp') no-repeat;
   min-height: 64px;
   min-width: 32px;
+}
+
+.home-footer-container {
+  position: relative;
+  top: 3rem;
+}
+
+.fb-feed-iframe {
+  height: 400px;
+  width: 100%;
+}
+
+.global-404-image {
+  max-width: 180px;
+  width: 100%;
 }

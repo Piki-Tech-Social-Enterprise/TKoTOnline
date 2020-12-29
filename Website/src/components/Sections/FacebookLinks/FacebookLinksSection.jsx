@@ -78,10 +78,7 @@ const FacebookLinksSection = props => {
                                   allow="encrypted-media"
                                   frameBorder="0"
                                   src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(url)}&tabs=timeline%2Cevents%2Cmessages&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true`}
-                                  style={{
-                                    height: 400,
-                                    width: '100%'
-                                  }}
+                                  className="fb-feed-iframe"
                                   title={name}
                                 />
                               </Col>
