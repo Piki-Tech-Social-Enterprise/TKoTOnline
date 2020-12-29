@@ -17,7 +17,8 @@ import draftToHtml from 'draftjs-to-html';
 import {
   defaultPageSetup,
   draftToText,
-  useWindowEvent
+  useWindowEvent,
+  fromCamelcaseToTitlecase
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -25,7 +26,11 @@ import {
 import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
+import Routes from 'components/Routes/routes';
 
+const {
+  aboutUs
+} = Routes;
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
@@ -80,6 +85,14 @@ const AboutUsView = props => {
   } = process.env;
   return (
     <>
+      <TKoTHelmet
+        name={fromCamelcaseToTitlecase(aboutUs.replace('/', ''))}
+        path={aboutUs}
+        description={state.isLoading
+          ? 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'
+          : draftToText(state.settings.aboutPageDescription, '')}
+        image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
+      />
       {
         state.isLoading
           ? <LoadingSpinner
@@ -87,12 +100,6 @@ const AboutUsView = props => {
             innerClassName="m-5 p-5 text-center"
           />
           : <>
-            <TKoTHelmet
-              name="About Us"
-              path="/AboutUs"
-              description={draftToText(state.settings.aboutPageDescription, '')}
-              image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
-            />
             <HomeNavbar
               initalTransparent
               colorOnScrollValue={25}
