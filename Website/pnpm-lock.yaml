@@ -12,8 +12,8 @@ dependencies:
   react-helmet: 6.1.0_react@17.0.1
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
-  reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
-  reactstrap-scrollspy: 0.1.1_7397bb60d67a56f9d8fbec52a91bd127
+  reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
+  reactstrap-scrollspy: 0.1.1_67f0233118ce3edd97d76f806eb63e85
   sweetalert2: 10.12.6
 devDependencies:
   babel-cli: 6.26.0
@@ -10907,12 +10907,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
-  /reactstrap-scrollspy/0.1.1_7397bb60d67a56f9d8fbec52a91bd127:
+  /reactstrap-scrollspy/0.1.1_67f0233118ce3edd97d76f806eb63e85:
     dependencies:
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       react-waypoint: 9.0.3_react@17.0.1
-      reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
+      reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       react: '>=16.9.0'
@@ -10920,7 +10920,7 @@ packages:
       reactstrap: '>=8.0.1'
     resolution:
       integrity: sha512-Z3Fr2LdO7n9GvlER8JaYNpc0hX71i9Uzly7wR3tPhVCEsAgAII7p8Ugb1LRyjNqA6F/rAxbjkH1HCYwySZK74Q==
-  /reactstrap/8.8.0_react-dom@17.0.1+react@17.0.1:
+  /reactstrap/8.8.1_react-dom@17.0.1+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.12.5
       classnames: 2.2.6
@@ -10934,7 +10934,7 @@ packages:
       react: '>=16.3.0'
       react-dom: '>=16.3.0'
     resolution:
-      integrity: sha512-Eg8suEeeSWiaOAXBAlvVO7Xci4472uiWZYOZ3akHNXUeRr8/DDKd/OslkcP9VTAOaa6GY/4K71o5IJY/nDr4PQ==
+      integrity: sha512-Sv+JdQNrr0J96rUpI19slm21A1T++Xv97mhO5C9gq1bz8qdOQE0fXhF0/HxYcxyUops8Rdmwsli+8iu+yy9N/w==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -13444,7 +13444,7 @@ specifiers:
   react-router-dom: 5.2.0
   react-router-sitemap: ^1.2.0
   react-scripts: ^3.4.3
-  reactstrap: 8.8.0
+  reactstrap: 8.8.1
   reactstrap-scrollspy: ^0.1.1
   sweetalert2: ^10.12.6
   typescript: 4.1.3

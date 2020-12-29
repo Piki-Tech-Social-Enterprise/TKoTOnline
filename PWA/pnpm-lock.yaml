@@ -18,12 +18,12 @@ dependencies:
   react-dom: 17.0.1_react@17.0.1
   react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
   react-google-maps: 9.4.5_aa7c221ae0ee654d6397c98b60696748
-  react-notification-alert: 0.0.13_1555d5ee19cba95724782d0b8e1a063e
+  react-notification-alert: 0.0.13_49daeac96a220a82252e67bf4739f9e9
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
   react-scripts: 3.4.3_e63ef16b0a30c60c9b8eb66ae58bfa55
   react-tagsinput-2: 3.19.8_react@17.0.1
-  reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
+  reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
   recompose: 0.30.0_react@17.0.1
   sweetalert2: 10.12.6
   sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
@@ -11081,11 +11081,11 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16
     resolution:
       integrity: sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
-  /react-notification-alert/0.0.13_1555d5ee19cba95724782d0b8e1a063e:
+  /react-notification-alert/0.0.13_49daeac96a220a82252e67bf4739f9e9:
     dependencies:
       prop-types: 15.7.2
       react: 17.0.1
-      reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
+      reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       prop-types: 15.x.x
@@ -11266,7 +11266,7 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
-  /reactstrap/8.8.0_react-dom@17.0.1+react@17.0.1:
+  /reactstrap/8.8.1_react-dom@17.0.1+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.12.5
       classnames: 2.2.6
@@ -11280,7 +11280,7 @@ packages:
       react: '>=16.3.0'
       react-dom: '>=16.3.0'
     resolution:
-      integrity: sha512-Eg8suEeeSWiaOAXBAlvVO7Xci4472uiWZYOZ3akHNXUeRr8/DDKd/OslkcP9VTAOaa6GY/4K71o5IJY/nDr4PQ==
+      integrity: sha512-Sv+JdQNrr0J96rUpI19slm21A1T++Xv97mhO5C9gq1bz8qdOQE0fXhF0/HxYcxyUops8Rdmwsli+8iu+yy9N/w==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -13825,7 +13825,7 @@ specifiers:
   react-router-sitemap: ^1.2.0
   react-scripts: 3.4.3
   react-tagsinput-2: ^3.19.8
-  reactstrap: 8.8.0
+  reactstrap: 8.8.1
   recompose: ^0.30.0
   sweetalert2: ^10.12.6
   sweetalert2-react: ^0.8.3
