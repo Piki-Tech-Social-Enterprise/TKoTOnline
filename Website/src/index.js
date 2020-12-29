@@ -113,6 +113,10 @@ const appRoutes = [
   {
     path: Routes.mediaPage,
     component: lazy(async () => await import('views/NewsFeedView'))
+  },
+  {
+    path: '',
+    component: lazy(async () => await import('views/Global404View'))
   }
 ];
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
