@@ -12,8 +12,8 @@ dependencies:
   react-helmet: 6.1.0_react@17.0.1
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
-  reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
-  reactstrap-scrollspy: 0.1.1_5247530cef61d43e0566080439cf9131
+  reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
+  reactstrap-scrollspy: 0.1.1_7397bb60d67a56f9d8fbec52a91bd127
   sweetalert2: 10.12.6
 devDependencies:
   babel-cli: 6.26.0
@@ -1260,6 +1260,12 @@ packages:
       regenerator-runtime: 0.13.7
     resolution:
       integrity: sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
+  /@babel/runtime/7.12.5:
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: false
+    resolution:
+      integrity: sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
   /@babel/runtime/7.9.0:
     dependencies:
       regenerator-runtime: 0.13.7
@@ -4962,7 +4968,7 @@ packages:
       integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   /dom-helpers/3.4.0:
     dependencies:
-      '@babel/runtime': 7.11.2
+      '@babel/runtime': 7.12.5
     dev: false
     resolution:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -10733,7 +10739,7 @@ packages:
       integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
   /react-popper/1.3.7_react@17.0.1:
     dependencies:
-      '@babel/runtime': 7.11.2
+      '@babel/runtime': 7.12.5
       create-react-context: 0.3.0_prop-types@15.7.2+react@17.0.1
       deep-equal: 1.1.1
       popper.js: 1.16.1
@@ -10901,12 +10907,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
-  /reactstrap-scrollspy/0.1.1_5247530cef61d43e0566080439cf9131:
+  /reactstrap-scrollspy/0.1.1_7397bb60d67a56f9d8fbec52a91bd127:
     dependencies:
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       react-waypoint: 9.0.3_react@17.0.1
-      reactstrap: 8.7.1_react-dom@17.0.1+react@17.0.1
+      reactstrap: 8.8.0_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       react: '>=16.9.0'
@@ -10914,9 +10920,9 @@ packages:
       reactstrap: '>=8.0.1'
     resolution:
       integrity: sha512-Z3Fr2LdO7n9GvlER8JaYNpc0hX71i9Uzly7wR3tPhVCEsAgAII7p8Ugb1LRyjNqA6F/rAxbjkH1HCYwySZK74Q==
-  /reactstrap/8.7.1_react-dom@17.0.1+react@17.0.1:
+  /reactstrap/8.8.0_react-dom@17.0.1+react@17.0.1:
     dependencies:
-      '@babel/runtime': 7.11.2
+      '@babel/runtime': 7.12.5
       classnames: 2.2.6
       prop-types: 15.7.2
       react: 17.0.1
@@ -10928,7 +10934,7 @@ packages:
       react: '>=16.3.0'
       react-dom: '>=16.3.0'
     resolution:
-      integrity: sha512-nZEUSxqqWJh0yGIvp4BgoHkXAcm2PqRLhpoOodMp5ce6njVpPd+GgUtbZscpu4jOi7GUFwpJ15tWZn59co4EQg==
+      integrity: sha512-Eg8suEeeSWiaOAXBAlvVO7Xci4472uiWZYOZ3akHNXUeRr8/DDKd/OslkcP9VTAOaa6GY/4K71o5IJY/nDr4PQ==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -13438,7 +13444,7 @@ specifiers:
   react-router-dom: 5.2.0
   react-router-sitemap: ^1.2.0
   react-scripts: ^3.4.3
-  reactstrap: 8.7.1
+  reactstrap: 8.8.0
   reactstrap-scrollspy: ^0.1.1
   sweetalert2: ^10.12.6
   typescript: 4.1.3
