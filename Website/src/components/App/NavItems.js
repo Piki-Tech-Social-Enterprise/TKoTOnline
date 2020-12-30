@@ -15,6 +15,9 @@ import {
 import {
   ScrollspyNavLink
 } from 'reactstrap-scrollspy';
+import {
+  isNullOrEmpty
+} from 'components/App/Utilities';
 
 const NavItems = props => {
   const {
@@ -104,7 +107,6 @@ const NavItems = props => {
                         href={route}
                         active={isActive(pathname, hash, route)}
                         className={`text-uppercase ${navLinkClassName || ''}`}
-                      // tag="a"
                       >{name}</DropdownItem>
                       {
                         includeTooltips
@@ -128,7 +130,7 @@ const NavItems = props => {
                         ? !Boolean(subMenus[menu])
                           ? <>
                             {(subMenus[menu] = true)}
-                            <UncontrolledDropdown nav inNavbar>
+                            <UncontrolledDropdown nav inNavbar className={!isNullOrEmpty(navItemClassName) ? 'ml-auto mr-5' : ''}>
                               <DropdownToggle nav caret>
                                 {menu}
                               </DropdownToggle>
