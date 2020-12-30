@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /static/
 
-Sitemap: https://www.tkot.org.nz/sitemap.xml
+Sitemap: https://tkot.org.nz/sitemap.xml
