@@ -139,7 +139,6 @@ const HomeView = props => {
                 <div className="tkot-background-image" />
               </div>
               <ProjectsSection
-                containerClassName="bg-secondary1"
                 showLearnMoreButton
                 isHomePage
               />
@@ -149,7 +148,6 @@ const HomeView = props => {
                 isHomePage
               />
               <NewsFeedSection
-                containerClassName="bg-warning1"
                 showLearnMoreButton
                 isHomePage
               />
@@ -159,12 +157,10 @@ const HomeView = props => {
                 isTKoTMedia
               />
               <ResourcesSection
-                containerClassName="bg-secondary1"
                 showLearnMoreButton
                 isHomePage
               />
               <EconomicDevelopmentsSection
-                containerClassName="bg-primary1"
                 showLearnMoreButton
                 isHomePage={false}
                 showViewTaitokerauEconomicSummit2020SiteButton
