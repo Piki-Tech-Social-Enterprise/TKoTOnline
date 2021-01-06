@@ -54,7 +54,7 @@ const FacebookLinksSection = props => {
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
-        <a id="FacebookLinks" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <a id="FacebookLinks" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         <Row className="debug-outline">
           <Col className="mx-auto text-center my-3">
             <h3 className="text-uppercase">FB Feeds</h3>

@@ -57,7 +57,7 @@ const IwiMembersSection = props => {
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
-        <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         <Row className="debug-outline">
           <Col className="mx-auto text-center my-3">
             <h3 className="text-uppercase">Our Iwi Members</h3>

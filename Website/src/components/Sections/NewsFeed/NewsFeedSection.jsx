@@ -135,7 +135,7 @@ const NewsFeedSection = props => {
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
-        <a id={!isTKoTMedia ? newsFeeds.replace('/', '') : mediaListPage.replace('/', '')} href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+        <a id={!isTKoTMedia ? newsFeeds.replace('/', '') : mediaListPage.replace('/', '')} href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         <Row className="debug-outline">
           <Col xs={12} className="mx-auto my-3">
             <h3 className="text-uppercase text-center">Our Latest {!isTKoTMedia ? 'Newsfeeds' : 'Media'}{searchCategory ? `: ${searchCategory}` : null}</h3>

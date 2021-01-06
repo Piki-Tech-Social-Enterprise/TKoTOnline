@@ -54,7 +54,7 @@ const AboutSection = props => {
   }, [props, state]);
   return (
     <div className="tkot-section">
-      <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nsbp;</a>
+      <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
       <div className="about-image" style={{
         backgroundImage: `linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0)), url(${pageAboutImage})`
       }}>
