@@ -1,7 +1,7 @@
 dependencies:
   axios: 0.21.1
   draftjs-to-html: 0.9.1
-  firebase: 8.2.1
+  firebase: 8.2.2
   lazysizes: 5.3.0
   moment-mini: 2.24.0
   prop-types: 15.7.2
@@ -1402,7 +1402,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JtL3FUbWG+bM59iYuphfx9WOu2Mzf0OZNaqWiQ7lJR8wBe7bS9rIm9jlBFtksB7xcya1lZSQPA/GAy2jIlMIkA==
-  /@firebase/database/0.8.1_@firebase+app-types@0.6.1:
+  /@firebase/database/0.8.2_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/auth-interop-types': 0.1.5_8006a2fb9a52d513340846aa4b6cf75b
       '@firebase/component': 0.1.21
@@ -1415,7 +1415,7 @@ packages:
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-/1HhR4ejpqUaM9Cn3KSeNdQvdlehWIhdfTVWFxS73ZlLYf7ayk9jITwH10H3ZOIm5yNzxF67p/U7Z/0IPhgWaQ==
+      integrity: sha512-E86yrom0Ii+61UScG44y1q3H3NuozzGGTGbYmiyTe1qK8Qvzuiu7yyfdDnqFW2fkeKvTRLoDeCpgZy27FgEndQ==
   /@firebase/firestore-types/2.1.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -1424,7 +1424,7 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-jietErBWihMvJkqqEquQy5GgoEwzHnMXXC/TsVoe9FPysXm1/AeJS12taS7ZYvenAtyvL/AEJyKrRKRh4adcJQ==
-  /@firebase/firestore/2.1.1_e9d66a23fa701e65014ff8d410061da5:
+  /@firebase/firestore/2.1.2_e9d66a23fa701e65014ff8d410061da5:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
@@ -1444,7 +1444,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-mcKp8psdKSxujaGjyfmt/thlTG5Gk+gFdJbkx4DnGO1PsJG4H5mE0wG//7tOH7DGeRCAmiagjKhA8nQlf/UNCg==
+      integrity: sha512-8yUdBLLr6UhE+IjPR+fxLBD0bDnEqF9GalohfURZeLQPaL3b+LtqqGCLvvXC4MKT0lJAHOV8J9LA6rHj8vI0/Q==
   /@firebase/functions-types/0.4.0:
     dev: false
     resolution:
@@ -5962,14 +5962,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/8.2.1:
+  /firebase/8.2.2:
     dependencies:
       '@firebase/analytics': 0.6.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
       '@firebase/auth': 0.16.1_0dc33727bf3acedf92caf621e2889e7e
-      '@firebase/database': 0.8.1_@firebase+app-types@0.6.1
-      '@firebase/firestore': 2.1.1_e9d66a23fa701e65014ff8d410061da5
+      '@firebase/database': 0.8.2_@firebase+app-types@0.6.1
+      '@firebase/firestore': 2.1.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/functions': 0.6.1_e9d66a23fa701e65014ff8d410061da5
       '@firebase/installations': 0.4.19_e9d66a23fa701e65014ff8d410061da5
       '@firebase/messaging': 0.7.3_e9d66a23fa701e65014ff8d410061da5
@@ -5982,7 +5982,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-u2dvRIbyHZ2g0dziHKwXvMBubTSf+fgJcijXyy7fXcFFPd3wbDaGlHz7Sc6saOnlJtzZAYmvZUXaIxnStKOOXg==
+      integrity: sha512-a07aW2TTAA9S7p4mx5pu8hvtVokJEjAQlAocHKOWwmRJRIduE9Vvr/3i50FtujT5gGNr0Qm+EyWyB+/7TJiwnw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -13429,7 +13429,7 @@ specifiers:
   chalk: ^4.1.0
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^8.2.1
+  firebase: ^8.2.2
   lazysizes: ^5.3.0
   moment-mini: ^2.24.0
   node-sass: ^4.14.1

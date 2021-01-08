@@ -4,8 +4,8 @@ dependencies:
   chart.js: 2.9.4
   draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
   draftjs-to-html: 0.9.1
-  firebase: 8.2.1
-  googleapis: 66.0.0
+  firebase: 8.2.2
+  googleapis: 67.0.0
   history: 4.10.0
   moment: 2.29.1
   node-sass: 4.14.1
@@ -17,7 +17,7 @@ dependencies:
   react-datetime: 3.0.4_moment@2.29.1+react@17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
-  react-google-maps: 9.4.5_aa7c221ae0ee654d6397c98b60696748
+  react-google-maps: 9.4.5_3b7eb2d918c43b66abcd745522d02f56
   react-notification-alert: 0.0.13_49daeac96a220a82252e67bf4739f9e9
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
@@ -38,7 +38,7 @@ devDependencies:
   react-router-sitemap: 1.2.0_react-router@5.2.0+react@17.0.1
 lockfileVersion: 5.2
 optionalDependencies:
-  '@types/googlemaps': 3.43.0
+  '@types/googlemaps': 3.43.1
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   jquery: 3.5.1
@@ -1419,7 +1419,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JtL3FUbWG+bM59iYuphfx9WOu2Mzf0OZNaqWiQ7lJR8wBe7bS9rIm9jlBFtksB7xcya1lZSQPA/GAy2jIlMIkA==
-  /@firebase/database/0.8.1_@firebase+app-types@0.6.1:
+  /@firebase/database/0.8.2_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/auth-interop-types': 0.1.5_8006a2fb9a52d513340846aa4b6cf75b
       '@firebase/component': 0.1.21
@@ -1432,7 +1432,7 @@ packages:
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-/1HhR4ejpqUaM9Cn3KSeNdQvdlehWIhdfTVWFxS73ZlLYf7ayk9jITwH10H3ZOIm5yNzxF67p/U7Z/0IPhgWaQ==
+      integrity: sha512-E86yrom0Ii+61UScG44y1q3H3NuozzGGTGbYmiyTe1qK8Qvzuiu7yyfdDnqFW2fkeKvTRLoDeCpgZy27FgEndQ==
   /@firebase/firestore-types/2.1.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -1441,7 +1441,7 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-jietErBWihMvJkqqEquQy5GgoEwzHnMXXC/TsVoe9FPysXm1/AeJS12taS7ZYvenAtyvL/AEJyKrRKRh4adcJQ==
-  /@firebase/firestore/2.1.1_e9d66a23fa701e65014ff8d410061da5:
+  /@firebase/firestore/2.1.2_e9d66a23fa701e65014ff8d410061da5:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
@@ -1461,7 +1461,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-mcKp8psdKSxujaGjyfmt/thlTG5Gk+gFdJbkx4DnGO1PsJG4H5mE0wG//7tOH7DGeRCAmiagjKhA8nQlf/UNCg==
+      integrity: sha512-8yUdBLLr6UhE+IjPR+fxLBD0bDnEqF9GalohfURZeLQPaL3b+LtqqGCLvvXC4MKT0lJAHOV8J9LA6rHj8vI0/Q==
   /@firebase/functions-types/0.4.0:
     dev: false
     resolution:
@@ -2052,11 +2052,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==
-  /@types/googlemaps/3.43.0:
+  /@types/googlemaps/3.43.1:
     dev: false
     optional: true
     resolution:
-      integrity: sha512-4k6N1LKTmwHEG6zKNMfINqQS08jd3wYdmlBRfJpcKqUYC9A9uXzuO3irV6muI+PWg1DRAjlBuLfrQTmHNjzlGA==
+      integrity: sha512-0fLZrXDMx/spPbn0YVae0YVxwd2tAdWvA4RrjIy4s4k77DEGUJJYks7AAEW8fHGAoTwu0LmGvO3NsJAPjXRAJw==
   /@types/istanbul-lib-coverage/2.0.3:
     dev: false
     resolution:
@@ -6094,14 +6094,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/8.2.1:
+  /firebase/8.2.2:
     dependencies:
       '@firebase/analytics': 0.6.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
       '@firebase/auth': 0.16.1_0dc33727bf3acedf92caf621e2889e7e
-      '@firebase/database': 0.8.1_@firebase+app-types@0.6.1
-      '@firebase/firestore': 2.1.1_e9d66a23fa701e65014ff8d410061da5
+      '@firebase/database': 0.8.2_@firebase+app-types@0.6.1
+      '@firebase/firestore': 2.1.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/functions': 0.6.1_e9d66a23fa701e65014ff8d410061da5
       '@firebase/installations': 0.4.19_e9d66a23fa701e65014ff8d410061da5
       '@firebase/messaging': 0.7.3_e9d66a23fa701e65014ff8d410061da5
@@ -6114,7 +6114,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-u2dvRIbyHZ2g0dziHKwXvMBubTSf+fgJcijXyy7fXcFFPd3wbDaGlHz7Sc6saOnlJtzZAYmvZUXaIxnStKOOXg==
+      integrity: sha512-a07aW2TTAA9S7p4mx5pu8hvtVokJEjAQlAocHKOWwmRJRIduE9Vvr/3i50FtujT5gGNr0Qm+EyWyB+/7TJiwnw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -6569,7 +6569,7 @@ packages:
       node: '>=10.10.0'
     resolution:
       integrity: sha512-W46WKCk3QtlCCfmZyQIH5zxmDOyeV5Qj+qs7nr2ox08eRkEJMWp6iwv542R/PsokXaGUSrmif4vCC4+rGzRSsQ==
-  /googleapis/66.0.0:
+  /googleapis/67.0.0:
     dependencies:
       google-auth-library: 6.0.6
       googleapis-common: 4.4.3
@@ -6577,7 +6577,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-jdEleRoyo/AeJZjKGC7Z2mHgochn2vR2JKqey6kydRkIBmCZxoQKLisRR4H8CRYZeEd6+c8Ns/LzS1S7qUjoFw==
+      integrity: sha512-luhulHrk42DruR+c12W2sY2rrEVoKVdjaZDuHWSxcp1qz+VxvWQpuiK2QDLCXmo36/VFPMaa+Y7rRUR+Qqzd7w==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -11032,9 +11032,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
-  /react-google-maps/9.4.5_aa7c221ae0ee654d6397c98b60696748:
+  /react-google-maps/9.4.5_3b7eb2d918c43b66abcd745522d02f56:
     dependencies:
-      '@types/googlemaps': 3.43.0
+      '@types/googlemaps': 3.43.1
       '@types/markerclustererplus': 2.1.33
       '@types/react': 17.0.0
       babel-runtime: 6.26.0
@@ -13789,7 +13789,7 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
-  '@types/googlemaps': 3.43.0
+  '@types/googlemaps': 3.43.1
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   axios: ^0.21.1
@@ -13803,8 +13803,8 @@ specifiers:
   draft-js: ^0.11.7
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^8.2.1
-  googleapis: ^66.0.0
+  firebase: ^8.2.2
+  googleapis: ^67.0.0
   history: 4.10.0
   jquery: 3.5.1
   moment: ^2.29.1

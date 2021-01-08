@@ -11,8 +11,8 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "history": "4.10.0",
-    "firebase": "^8.2.1",
-    "googleapis": "^66.0.0",
+    "firebase": "^8.2.2",
+    "googleapis": "^67.0.0",
     "moment": "^2.29.1",
     "node-sass": "4.14.1",
     "perfect-scrollbar": "1.5.0",
@@ -116,7 +116,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "optionalDependencies": {
-    "@types/googlemaps": "3.43.0",
+    "@types/googlemaps": "3.43.1",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "17.0.0",
     "jquery": "3.5.1",
