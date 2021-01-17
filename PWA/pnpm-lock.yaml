@@ -4,7 +4,7 @@ dependencies:
   chart.js: 2.9.4
   draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
   draftjs-to-html: 0.9.1
-  firebase: 8.2.2
+  firebase: 8.2.3
   googleapis: 67.0.0
   history: 4.10.0
   moment: 2.29.1
@@ -17,7 +17,7 @@ dependencies:
   react-datetime: 3.0.4_moment@2.29.1+react@17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
-  react-google-maps: 9.4.5_3b7eb2d918c43b66abcd745522d02f56
+  react-google-maps: 9.4.5_38225d6bcf28bd36395914c951de14fe
   react-notification-alert: 0.0.13_49daeac96a220a82252e67bf4739f9e9
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
@@ -38,7 +38,7 @@ devDependencies:
   react-router-sitemap: 1.2.0_react-router@5.2.0+react@17.0.1
 lockfileVersion: 5.2
 optionalDependencies:
-  '@types/googlemaps': 3.43.1
+  '@types/googlemaps': 3.43.2
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   jquery: 3.5.1
@@ -1419,7 +1419,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JtL3FUbWG+bM59iYuphfx9WOu2Mzf0OZNaqWiQ7lJR8wBe7bS9rIm9jlBFtksB7xcya1lZSQPA/GAy2jIlMIkA==
-  /@firebase/database/0.8.2_@firebase+app-types@0.6.1:
+  /@firebase/database/0.8.3_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/auth-interop-types': 0.1.5_8006a2fb9a52d513340846aa4b6cf75b
       '@firebase/component': 0.1.21
@@ -1432,7 +1432,7 @@ packages:
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-E86yrom0Ii+61UScG44y1q3H3NuozzGGTGbYmiyTe1qK8Qvzuiu7yyfdDnqFW2fkeKvTRLoDeCpgZy27FgEndQ==
+      integrity: sha512-i29rr3kcPltIkA8La9M1lgsSxx9bfu5lCQ0T+tbJptZ3UpqpcL1NzCcZa24cJjiLgq3HQNPyLvUvCtcPSFDlRg==
   /@firebase/firestore-types/2.1.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -1653,7 +1653,7 @@ packages:
       '@hapi/bourne': 1.3.2
       '@hapi/hoek': 8.5.1
       '@hapi/topo': 3.1.6
-    deprecated: 'joi is leaving the @hapi organization and moving back to ''joi'' (https://github.com/sideway/joi/issues/2411)'
+    deprecated: joi is leaving the @hapi organization and moving back to 'joi' (https://github.com/sideway/joi/issues/2411)
     dev: false
     resolution:
       integrity: sha512-entf8ZMOK8sc+8YfeOlM8pCfg3b5+WZIKBfUaaJT8UsjAAPjartzxIYm3TIbjvA4u+u++KbcXD38k682nVHDAQ==
@@ -2052,11 +2052,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==
-  /@types/googlemaps/3.43.1:
+  /@types/googlemaps/3.43.2:
     dev: false
     optional: true
     resolution:
-      integrity: sha512-0fLZrXDMx/spPbn0YVae0YVxwd2tAdWvA4RrjIy4s4k77DEGUJJYks7AAEW8fHGAoTwu0LmGvO3NsJAPjXRAJw==
+      integrity: sha512-qiu5rms7+bgLciKAXpRsxVB1P+Z6gbSxuO8tZfdyQV2k5e5L/7GjUI6Z69rMR+7YFmqU9vwOUglLQ6NJyP/K8g==
   /@types/istanbul-lib-coverage/2.0.3:
     dev: false
     resolution:
@@ -4415,12 +4415,12 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
     requiresBuild: true
     resolution:
       integrity: sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
@@ -4845,7 +4845,7 @@ packages:
   /debug/4.1.1:
     dependencies:
       ms: 2.1.2
-    deprecated: 'Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)'
+    deprecated: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
     dev: false
     resolution:
       integrity: sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -6094,13 +6094,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/8.2.2:
+  /firebase/8.2.3:
     dependencies:
       '@firebase/analytics': 0.6.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
       '@firebase/auth': 0.16.1_0dc33727bf3acedf92caf621e2889e7e
-      '@firebase/database': 0.8.2_@firebase+app-types@0.6.1
+      '@firebase/database': 0.8.3_@firebase+app-types@0.6.1
       '@firebase/firestore': 2.1.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/functions': 0.6.1_e9d66a23fa701e65014ff8d410061da5
       '@firebase/installations': 0.4.19_e9d66a23fa701e65014ff8d410061da5
@@ -6114,7 +6114,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-a07aW2TTAA9S7p4mx5pu8hvtVokJEjAQlAocHKOWwmRJRIduE9Vvr/3i50FtujT5gGNr0Qm+EyWyB+/7TJiwnw==
+      integrity: sha512-WdbcGSiLxiW/kGZT+EyqD9z3Md7kR35+k9qMjDn/twiIrm6Hh7Qi/Z69cqxhKW6+4uK5ghXIF28CjK67OyD9Qw==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -9897,7 +9897,7 @@ packages:
     resolution:
       integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
   /popper.js/1.16.1:
-    deprecated: 'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
+    deprecated: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
     dev: false
     resolution:
       integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -11032,9 +11032,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
-  /react-google-maps/9.4.5_3b7eb2d918c43b66abcd745522d02f56:
+  /react-google-maps/9.4.5_38225d6bcf28bd36395914c951de14fe:
     dependencies:
-      '@types/googlemaps': 3.43.1
+      '@types/googlemaps': 3.43.2
       '@types/markerclustererplus': 2.1.33
       '@types/react': 17.0.0
       babel-runtime: 6.26.0
@@ -11158,7 +11158,7 @@ packages:
       prop-types: 15.7.2
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
-    deprecated: 'No longer maintained, see more info in readme'
+    deprecated: No longer maintained, see more info in readme
     dev: false
     peerDependencies:
       prop-types: ^15.5.4
@@ -11600,7 +11600,7 @@ packages:
       request-promise-core: 1.1.4_request@2.88.2
       stealthy-require: 1.1.1
       tough-cookie: 2.5.0
-    deprecated: 'request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142'
+    deprecated: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
     dev: false
     engines:
       node: '>=0.12.0'
@@ -11630,7 +11630,7 @@ packages:
       tough-cookie: 2.5.0
       tunnel-agent: 0.6.0
       uuid: 3.4.0
-    deprecated: 'request has been deprecated, see https://github.com/request/request/issues/3142'
+    deprecated: request has been deprecated, see https://github.com/request/request/issues/3142
     dev: false
     engines:
       node: '>= 6'
@@ -11692,7 +11692,7 @@ packages:
     resolution:
       integrity: sha512-K1N5xUjj7v0l2j/3Sgs5b8CjrrgtC70SmdCuZiJ8tSyb5J+uk3FoeZ4b7yTnH6j7ngI+Bc5bldHJIa8hYdu2gQ==
   /resolve-url/0.2.1:
-    deprecated: 'https://github.com/lydell/resolve-url#deprecated'
+    deprecated: https://github.com/lydell/resolve-url#deprecated
     resolution:
       integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
   /resolve/1.1.7:
@@ -13114,7 +13114,7 @@ packages:
     resolution:
       integrity: sha512-KY9Frmirql91X2Qgjry0Wd4Y+YTdrdZheS8TFwvkbLWf/G5KNJDCh6pKL5OZctEW4+0Baa5idK2ZQuELRwPznQ==
   /urix/0.1.0:
-    deprecated: 'Please see https://github.com/lydell/urix#deprecated'
+    deprecated: Please see https://github.com/lydell/urix#deprecated
     resolution:
       integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
   /url-join/1.1.0:
@@ -13789,7 +13789,7 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
-  '@types/googlemaps': 3.43.1
+  '@types/googlemaps': 3.43.2
   '@types/markerclustererplus': 2.1.33
   '@types/react': 17.0.0
   axios: ^0.21.1
@@ -13803,7 +13803,7 @@ specifiers:
   draft-js: ^0.11.7
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^8.2.2
+  firebase: ^8.2.3
   googleapis: ^67.0.0
   history: 4.10.0
   jquery: 3.5.1
