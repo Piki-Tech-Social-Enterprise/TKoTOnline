@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  lazy,
   Fragment
 } from 'react';
 import {
@@ -20,6 +19,9 @@ import {
   sortArray,
   handleBlockTextClick
 } from 'components/App/Utilities';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
@@ -45,9 +47,10 @@ const EconomicDevelopmentsSection = props => {
     const getDbEconomicDevelopments = async () => {
       const {
         firebase,
-        isHomePage
+        isHomePage,
+        isFeatured
       } = props; // debugger;
-      const dbEconomicDevelopments = isHomePage
+      const dbEconomicDevelopments = isHomePage || isFeatured
         ? await firebase.getDbEconomicDevelopmentsAsArray(false, 'isFeatured')
         : await firebase.getDbEconomicDevelopmentsAsArray();
       const dbCategorisedEconomicDevelopments = {};

@@ -1,7 +1,6 @@
 import React, {
   useState,
-  useEffect,
-  lazy
+  useEffect
 } from 'react';
 import {
   Container,
@@ -31,6 +30,9 @@ import {
 } from 'components/App/GoogleAnalytics';
 import draftToHtml from 'draftjs-to-html';
 import Routes from 'components/Routes/routes';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));

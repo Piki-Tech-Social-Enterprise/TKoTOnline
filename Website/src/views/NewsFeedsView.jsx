@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   withFirebase
@@ -10,6 +9,9 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));

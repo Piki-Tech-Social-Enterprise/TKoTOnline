@@ -1,6 +1,5 @@
 import React, {
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Collapse,
@@ -14,6 +13,9 @@ import {
   getNavItems
 } from 'components/App/Utilities';
 import tkotLogoOnlyBlack from 'assets/img/tkot/tkot-logo-only-black.webp';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const NavItems = lazy(async () => await import('components/App/NavItems'));
 const HomeNavbar = props => {

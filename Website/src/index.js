@@ -15,9 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {
-  lazy
-} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter,
@@ -37,6 +35,9 @@ import 'assets/fontawesome-free-5.15.1-web/scss/solid.scss';
 import 'assets/fontawesome-free-5.15.1-web/scss/v4-shims.scss';
 import 'lazysizes';
 import Routes from 'components/Routes/routes';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const appRoutes = [
   {

@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   withRouter
@@ -11,6 +10,9 @@ import {
   Row,
   Col
 } from 'reactstrap';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const EconomicDevelopmentCard = lazy(async () => await import('components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));

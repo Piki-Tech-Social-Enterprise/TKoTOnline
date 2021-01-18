@@ -1,6 +1,4 @@
-import React, {
-  lazy
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -13,6 +11,9 @@ import draftToHtml from 'draftjs-to-html';
 import {
   handleBlockTextClick
 } from 'components/App/Utilities';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
 const ResourceCard = props => {

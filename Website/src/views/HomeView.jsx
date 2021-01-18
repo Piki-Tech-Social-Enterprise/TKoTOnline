@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Scrollspy
@@ -17,6 +16,9 @@ import {
   getSrc,
   getImageURLToUse
 } from 'components/App/Utilities';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
@@ -162,7 +164,7 @@ const HomeView = props => {
               />
               <EconomicDevelopmentsSection
                 showLearnMoreButton
-                isHomePage={false}
+                isFeatured
                 showViewTaitokerauEconomicSummit2020SiteButton
               />
               <HomeFooter

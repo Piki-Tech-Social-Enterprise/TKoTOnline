@@ -1,7 +1,6 @@
 import React, {
   useState,
-  useEffect,
-  lazy
+  useEffect
 } from 'react';
 import {
   Container,
@@ -18,6 +17,9 @@ import {
 } from 'components/App/GoogleAnalytics';
 import tkotImage from '../../../assets/img/tkot/tkot-white-logo.webp';
 // import tkotVideo from '../../../assets/videos/v2.mp4';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const {

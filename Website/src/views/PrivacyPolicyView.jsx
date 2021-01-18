@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Container,
@@ -11,6 +10,9 @@ import {
 import {
   defaultPageSetup
 } from 'components/App/Utilities';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));

@@ -1,6 +1,5 @@
 import React, {
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Link
@@ -29,6 +28,9 @@ import {
 import tkotLogo from 'assets/img/tkot/tkot-logo-white.webp';
 import meaLogo from 'assets/img/tkot/mea-logo-165x165.webp';
 import pikitechLogo from 'assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const NavItems = lazy(async () => await import('components/App/NavItems'));
 const SocialMedia = lazy(async () => await import('./SocialMedia'));

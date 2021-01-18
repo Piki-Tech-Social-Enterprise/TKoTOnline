@@ -1,5 +1,6 @@
 import React, {
-  useState, useEffect
+  useState,
+  useEffect
 } from 'react';
 import {
   Container,
@@ -12,7 +13,6 @@ import {
   Label,
   Input,
   InputGroup,
-  CustomInput,
   Button
 } from 'reactstrap';
 import swal from 'sweetalert2';
@@ -20,9 +20,12 @@ import * as Roles from '../components/Domains/VolunteerRoles';
 import {
   withFirebase
 } from 'components/Firebase';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
+
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
-
 const Volunteer = props => {
   const INITIAL_STATE = {
     active: true,

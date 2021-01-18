@@ -16,11 +16,14 @@ import {
 import {
   withFirebase
 } from 'components/Firebase';
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 import {
   intoChunks
 } from 'components/App/Utilities';
 
+const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const getCommunityLinksMegaMenuItems = (communityLinks, columnCount) => {
   const communityLinksMegaMenuItems = {};
   const chunks = intoChunks(communityLinks, columnCount);

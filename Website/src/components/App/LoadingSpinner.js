@@ -1,18 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  usePastDelay
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = props => {
+  const hasPastDelay = usePastDelay(800);
   const {
     outerClassName,
     innerClassName,
     iconClassName
   } = props;
   return (
-    <div className={outerClassName}>
-      <h1 className={innerClassName}>
-        <i className={iconClassName} />
-      </h1>
-    </div>
+    <>
+      {
+        !hasPastDelay
+          ? null
+          : <>
+            <div className={outerClassName}>
+              <h1 className={innerClassName}>
+                <i className={iconClassName} />
+              </h1>
+            </div>
+          </>
+      }
+    </>
   )
 };
 

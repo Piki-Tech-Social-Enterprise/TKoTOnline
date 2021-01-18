@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Container,
@@ -17,6 +16,9 @@ import {
   getSrc,
   getImageURLToUse
 } from 'components/App/Utilities';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));

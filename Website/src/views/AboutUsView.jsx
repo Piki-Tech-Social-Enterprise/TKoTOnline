@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useState,
-  lazy,
   useRef,
   useCallback
 } from 'react';
@@ -27,6 +26,9 @@ import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
 import Routes from 'components/Routes/routes';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const {
   aboutUs

@@ -1,7 +1,6 @@
 import React, {
   useEffect,
-  useState,
-  lazy
+  useState
 } from 'react';
 import {
   Container,
@@ -14,6 +13,9 @@ import {
 } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
 import tkotLogoOnlyBlackImage from 'assets/img/tkot/tkot-logo-only-black.png';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 
 const {
   home
