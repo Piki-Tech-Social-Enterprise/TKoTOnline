@@ -13,7 +13,6 @@ import {
   indexPageClassName,
   sidebarCollapseClassName,
   defaultPageSetup,
-  getSrc,
   getImageURLToUse
 } from 'components/App/Utilities';
 import {
@@ -52,18 +51,32 @@ const HomeView = props => {
     homePageHeaderImageDownloadUrl: '',
     homePageAboutImageDownloadUrl: ''
   });
+  const {
+    isLoading,
+    isHomePage,
+    dbSettings,
+    homePageHeaderImageDownloadUrl,
+    homePageAboutImageDownloadUrl
+  } = state;
   useEffect(() => {
-    const retrieveSettingValues = async () => {
+    const pageSetup = async () => {
       const {
         firebase
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true);
+      const {
+        getDbSettingsValues,
+        getStorageFileDownloadURL
+      } = firebase;
+      const dbSettings = await getDbSettingsValues(true);
       const {
         homePageHeaderImageUrl,
         homePageAboutImageUrl
       } = dbSettings;
-      const homePageHeaderImageDownloadUrl = await getSrc(getImageURLToUse(NaN, homePageHeaderImageUrl), null, null, true, null, firebase.getStorageFileDownloadURL);
-      const homePageAboutImageDownloadUrl = await getSrc(getImageURLToUse(NaN, homePageAboutImageUrl), null, null, true, null, firebase.getStorageFileDownloadURL);
+      const imageSize = window.screen.width <= 400
+        ? 'md'
+        : NaN;
+      const homePageHeaderImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageHeaderImageUrl));
+      const homePageAboutImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageAboutImageUrl));
       defaultPageSetup({
         isLoading: true,
         classNames: [
@@ -74,16 +87,16 @@ const HomeView = props => {
       setState(s => ({
         ...s,
         isLoading: false,
-        dbSettings: dbSettings,
-        homePageHeaderImageDownloadUrl: homePageHeaderImageDownloadUrl,
-        homePageAboutImageDownloadUrl: homePageAboutImageDownloadUrl
+        dbSettings,
+        homePageHeaderImageDownloadUrl,
+        homePageAboutImageDownloadUrl
       }));
     };
-    if (state.isLoading) {
-      retrieveSettingValues();
+    if (isLoading) {
+      pageSetup();
     }
     return defaultPageSetup;
-  }, [props, state]);
+  }, [props, isLoading]);
   const scrollspyTopOffset = '10%';
   const {
     REACT_APP_WEB_BASE_URL
@@ -93,13 +106,13 @@ const HomeView = props => {
       <TKoTHelmet
         name={homeAnchor.replace('/#', '')}
         path={home}
-        description={state.isLoading
+        description={isLoading
           ? 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'
-          : state.dbSettings.homePageAboutDescription}
+          : dbSettings.homePageAboutDescription}
         image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
       />
       {
-        state.isLoading
+        isLoading
           ? <LoadingSpinner
             outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
             innerClassName="m-5 p-5 text-center"
@@ -125,16 +138,17 @@ const HomeView = props => {
             >
               <HomeNavbar
                 initalTransparent={false}
-                isHomePage={state.isHomePage}
+                isHomePage={isHomePage}
               />
               <AboutSection
-                pageAboutImage={state.homePageAboutImageDownloadUrl}
+                pageAboutImage={homePageAboutImageDownloadUrl}
+                pageAboutDescription={dbSettings.homePageAboutDescription}
               />
               <IwiMembers
                 containerClassName="bg-white"
               />
               <HomeHeader
-                pageHeaderImage={state.homePageHeaderImageDownloadUrl}
+                pageHeaderImage={homePageHeaderImageDownloadUrl}
                 showClickScrollDownForMoreLink={false}
               />
               <div className="tkot-background-image-container" id="TkotBgImgContainer">
@@ -168,7 +182,7 @@ const HomeView = props => {
                 showViewTaitokerauEconomicSummit2020SiteButton
               />
               <HomeFooter
-                isHomePage={state.isHomePage}
+                isHomePage={isHomePage}
               />
             </Scrollspy>
           </>

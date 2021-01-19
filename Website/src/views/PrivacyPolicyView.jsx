@@ -22,6 +22,9 @@ const PrivacyPolicyView = () => {
     isLoading: true
   });
   const {
+    isLoading
+  } = state;
+  const {
     REACT_APP_WEB_EMAIL
   } = process.env;
   useEffect(() => {
@@ -32,14 +35,15 @@ const PrivacyPolicyView = () => {
       }));
     };
     defaultPageSetup(true);
-    if (state.isLoading) {
+    if (isLoading) {
       pageSetup();
     }
-  }, [state]);
+    return defaultPageSetup;
+  }, [isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <LoadingSpinner
             outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
             innerClassName="m-5 p-5 text-center"

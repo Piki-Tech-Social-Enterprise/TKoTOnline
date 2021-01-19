@@ -16,7 +16,6 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import tkotImage from '../../../assets/img/tkot/tkot-white-logo.webp';
-// import tkotVideo from '../../../assets/videos/v2.mp4';
 import {
   lazy
 } from 'react-lazy-no-flicker';
@@ -26,82 +25,77 @@ const {
   aboutUs,
   projectsAnchor
 } = Routes;
+const INITIAL_STATE = {
+  isLoading: true,
+  backgroundImage: 'linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0))'
+};
 const AboutSection = props => {
   const {
-    pageAboutImage,
+    pageAboutDescription,
     showClickScrollDownForMoreLink
   } = props;
-  const [state, setState] = useState({
-    isLoading: true,
-    settings: {}
-  });
+  const [state, setState] = useState(INITIAL_STATE);
+  const {
+    isLoading,
+    backgroundImage
+  } = state;
   useEffect(() => {
-    const {
-      isLoading
-    } = state;
-    const getData = async () => {
+    const pageSetup = async () => {
       const {
-        firebase
+        pageAboutImage
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true);
+      const backgroundImage = `${INITIAL_STATE.backgroundImage}, url(${pageAboutImage})`;
       setState(s => ({
         ...s,
         isLoading: false,
-        settings: dbSettings
+        backgroundImage
       }));
     };
     if (isLoading) {
-      getData();
+      pageSetup();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
-    <div className="tkot-section">
-      <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
-      <div className="about-image" style={{
-        backgroundImage: `linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0)), url(${pageAboutImage})`
-      }}>
-        <Container className="py-5 text-center">
-          <Row>
-            <Col xs={12} sm={6} className="bg-danger1">
-              <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkotImage} width="300" height="267" />
-              {/* <div className="videoHeader">
-                <video playsInline autoPlay loop muted>
-                  <source
-                    type="video/mp4"
-                    src={tkotVideo}
-                  />
-                </video>
-              </div> */}
-            </Col>
-            <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
-              <div className="my-3">
-                {
-                  state.isLoading
-                    ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
-                    : <>
-                      <span>{state.settings.homePageAboutDescription}</span><br />
-                      <Button
-                        href={aboutUs}
-                        className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3 mt-lg-5 mb-lg-1"
-                        color="white"
-                        onClick={() => sendEvent('Home page', 'Clicked "Learn More..." button')}
-                      >Learn more...
-                      </Button>
-                    </>
-                }
+    <>
+      {
+        isLoading
+          ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
+          : <>
+            <div className="tkot-section">
+              <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
+              <div className="about-image" style={{
+                backgroundImage
+              }}>
+                <Container className="py-5 text-center">
+                  <Row>
+                    <Col xs={12} sm={6} className="bg-danger1">
+                      <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkotImage} width="300" height="267" />
+                    </Col>
+                    <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
+                      <div className="my-3">
+                        <span>{pageAboutDescription}</span><br />
+                        <Button
+                          href={aboutUs}
+                          className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3 mt-lg-5 mb-lg-1"
+                          color="white"
+                          onClick={() => sendEvent('Home page', 'Clicked "Learn More..." button')}
+                        >Learn more...</Button>
+                      </div>
+                    </Col>
+                  </Row>
+                  {
+                    showClickScrollDownForMoreLink
+                      ? <a href={projectsAnchor} className="text-decoration-none text-dark">
+                        <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
+                      </a>
+                      : null
+                  }
+                </Container>
               </div>
-            </Col>
-          </Row>
-          {
-            showClickScrollDownForMoreLink
-              ? <a href={projectsAnchor} className="text-decoration-none text-dark">
-                <p className="my-0 mt-5"><i className="fas fa-angle-double-down" /> Click/Scroll down for more <i className="fas fa-angle-double-down" /></p>
-              </a>
-              : null
-          }
-        </Container>
-      </div>
-    </div>
+            </div>
+          </>
+      }
+    </>
   );
 };
 

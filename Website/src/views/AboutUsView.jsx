@@ -43,6 +43,9 @@ const AboutUsView = props => {
     isLoading: true,
     settings: {}
   });
+  const {
+    isLoading
+  } = state;
   const iframeRef = useRef(null);
   const iframeRefCallback = useCallback(node => {
     iframeRef.current = node;
@@ -58,10 +61,7 @@ const AboutUsView = props => {
   };
   useWindowEvent('blur', handleIFrameBlur);
   useEffect(() => {
-    const {
-      isLoading
-    } = state;
-    const retrieveSettingValues = async () => {
+    const pageSetup = async () => {
       const {
         firebase
       } = props;
@@ -74,14 +74,10 @@ const AboutUsView = props => {
     };
     defaultPageSetup(true);
     if (isLoading) {
-      retrieveSettingValues();
+      pageSetup();
     }
-    return () => {
-      if (!isLoading) {
-        defaultPageSetup();
-      }
-    };
-  }, [props, state]);
+    return defaultPageSetup;
+  }, [props, isLoading]);
   const {
     REACT_APP_WEB_BASE_URL
   } = process.env;

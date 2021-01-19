@@ -20,18 +20,26 @@ const ResourcesView = () => {
   const [state, setState] = useState({
     isLoading: true
   });
+  const {
+    isLoading
+  } = state;
   useEffect(() => {
+    const pageSetup = async () => {
+      setState(s => ({
+        ...s,
+        isLoading: false
+      }));
+    };
     defaultPageSetup(true);
-    setState(s => ({
-      ...s,
-      isLoading: false
-    }));
+    if (isLoading) {
+      pageSetup();
+    }
     return defaultPageSetup;
-  }, [setState]);
+  }, [isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <LoadingSpinner
             outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
             innerClassName="m-5 p-5 text-center"

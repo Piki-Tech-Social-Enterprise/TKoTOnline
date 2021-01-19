@@ -307,9 +307,11 @@ const getSize = imageResize => {
   }
   return size;
 };
-const getImageURLToUse = (imageResize, imageURL) => {
+const getImageURLToUse = (imageResizeOrSize, imageURL) => {
   let imageURLToUse = imageURL;
-  const size = getSize(imageResize); // debugger;
+  const size = isNumber(imageResizeOrSize)
+    ? Number(imageResizeOrSize)
+    : getSize(imageResizeOrSize); // debugger;
   const bucketFolder = dirname(imageURL);
   const fileName = imageURL.split('/').pop();
   const ext = fileName.split('.').pop();
