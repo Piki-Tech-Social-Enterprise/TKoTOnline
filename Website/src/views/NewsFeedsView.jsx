@@ -30,16 +30,23 @@ const NewsFeedsView = props => {
   } = match;
   const isTKoTMedia = path === mediaListPage;
   const [state, setState] = useState({
-    isLoading: true
+    isLoading: true,
+    dbNewsFeeds: []
   });
   const {
-    isLoading
+    isLoading,
+    dbNewsFeeds
   } = state;
   useEffect(() => {
     const pageSetup = async () => {
+      const {
+        firebase
+      } = props;
+      const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
       setState(s => ({
         ...s,
-        isLoading: false
+        isLoading: false,
+        dbNewsFeeds
       }));
     };
     defaultPageSetup(true);
@@ -47,7 +54,7 @@ const NewsFeedsView = props => {
       pageSetup();
     }
     return defaultPageSetup;
-  }, [isLoading]);
+  }, [props, isLoading]);
   return (
     <>
     {
@@ -64,6 +71,7 @@ const NewsFeedsView = props => {
           <NewsFeedSection
             containerClassName="mt-5"
             isTKoTMedia={isTKoTMedia}
+            dbNewsFeeds={dbNewsFeeds}
           />
           <HomeFooter />
         </>

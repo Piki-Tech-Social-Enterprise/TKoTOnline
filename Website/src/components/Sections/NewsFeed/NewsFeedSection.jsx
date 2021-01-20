@@ -22,8 +22,7 @@ import {
   draftToText,
   sortArray,
   handleBlockTextClick,
-  groupBy,
-  isBoolean
+  groupBy
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -45,7 +44,6 @@ const {
 const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,
-    dbSettings: {},
     dbNewsFeeds: [],
     availableCategoriesAsArray: []
   });
@@ -53,6 +51,7 @@ const NewsFeedSection = props => {
     containerClassName,
     showLearnMoreButton,
     isHomePage,
+    newsSectionDescription,
     isTKoTMedia
   } = props;
   const parsedQs = queryString.parse(window.location.search);
@@ -61,7 +60,6 @@ const NewsFeedSection = props => {
   } = parsedQs;
   const {
     isLoading,
-    dbSettings,
     dbNewsFeeds,
     availableCategoriesAsArray
   } = state;
@@ -85,28 +83,16 @@ const NewsFeedSection = props => {
   useEffect(() => {
     const getDbNewsFeeds = async () => {
       const {
-        firebase,
-        isHomePage,
-        isTKoTMedia
+        isTKoTMedia,
+        dbNewsFeeds
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true); // debugger;
-      const dbNewsFeeds = isHomePage
-        ? await firebase.getDbNewsFeedsAsArray(false, 'isFeatured')
-        : await firebase.getDbNewsFeedsAsArray();
       const filteredDbNewsFeeds = searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbNewsFeeds;
-      const dbEPanui = isHomePage
-        ? await firebase.getDbEPanuiListAsArray(false, 'isFeatured')
-        : await firebase.getDbEPanuiListAsArray();
-      const filteredDbEPanui = searchCategory
-        ? dbEPanui.filter(dbep => dbep.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
-        : dbEPanui;
       const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds
-        .concat(filteredDbEPanui)
         .filter(item =>
-          (!isTKoTMedia && (isBoolean(item.isTKoTMedia, false))) ||
-          (isTKoTMedia && (isBoolean(item.isTKoTMedia, true)))
+          (!isTKoTMedia && !item.isTKoTMedia) ||
+          (isTKoTMedia && item.isTKoTMedia)
         );
       const availableCategories = groupBy(filteredDbNewsFeedsAndEPanui, 'category');
       const availableCategoriesAsArray = [];
@@ -125,7 +111,6 @@ const NewsFeedSection = props => {
       setState(s => ({
         ...s,
         isLoading: false,
-        dbSettings,
         dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
         availableCategoriesAsArray
       }));
@@ -142,10 +127,10 @@ const NewsFeedSection = props => {
           <Col xs={12} className="mx-auto my-3">
             <h3 className="text-uppercase text-center">Our Latest {!isTKoTMedia ? 'Newsfeeds' : 'Media'}{searchCategory ? `: ${searchCategory}` : null}</h3>
             {
-              !isTKoTMedia && dbSettings.newsSectionDescription
+              !isTKoTMedia && newsSectionDescription
                 ? <>
                   <div
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(dbSettings.newsSectionDescription)) }}
+                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(newsSectionDescription)) }}
                   />
                 </>
                 : null

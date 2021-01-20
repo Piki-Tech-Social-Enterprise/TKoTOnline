@@ -45,7 +45,7 @@ class Firebase {
   deleteStorageFile = async path => await this.storageRepository.deleteStorageFile(path);
   getStorageFiles = async (path, listOptions) => await this.storageRepository.getStorageFiles(path, listOptions);
   getDbNewsFeeds = async () => await this.newsFeedRepository.getDbNewsFeeds();
-  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.newsFeedRepository.getDbNewsFeedsAsArray(includeInactive, childName, childValue);
+  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => await this.newsFeedRepository.getDbNewsFeedsAsArray(includeInactive, childName, childValue, topLimit);
   getDbNewsFeed = async nfid => await this.newsFeedRepository.getDbNewsFeed(nfid);
   getDbNewsFeedValue = async nfid => await this.newsFeedRepository.getDbNewsFeedValue(nfid);
   saveDbNewsFeed = async (newsFeed, saveDbNewsFeed_completed) => await this.newsFeedRepository.saveDbNewsFeed(newsFeed, saveDbNewsFeed_completed);
@@ -80,7 +80,7 @@ class Firebase {
   getDbIwiMember = async imid => await this.iwiMembersRepository.getDbIwiMember(imid);
   getDbIwiMemberValue = async imid => await this.iwiMembersRepository.getDbIwiMemberValue(imid);
   getDbEPanui = async () => await this.ePanuiListRepository.getDbEPanui();
-  getDbEPanuiListAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive, childName, childValue);
+  getDbEPanuiListAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => await this.ePanuiListRepository.getDbEPanuiListAsArray(includeInactive, childName, childValue, topLimit);
   getDbEPanuiValue = async eid => await this.ePanuiListRepository.getDbEPanuiValue(eid);
   getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.resourcesRepository.getDbResourcesAsArray(includeInactive, childName, childValue);
   getDbResourceValue = async rid => await this.resourcesRepository.getDbResourceValue(rid);

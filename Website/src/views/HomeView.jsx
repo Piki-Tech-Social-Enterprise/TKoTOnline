@@ -49,14 +49,16 @@ const HomeView = props => {
     isHomePage: true,
     dbSettings: null,
     homePageHeaderImageDownloadUrl: '',
-    homePageAboutImageDownloadUrl: ''
+    homePageAboutImageDownloadUrl: '',
+    dbNewsFeeds: []
   });
   const {
     isLoading,
     isHomePage,
     dbSettings,
     homePageHeaderImageDownloadUrl,
-    homePageAboutImageDownloadUrl
+    homePageAboutImageDownloadUrl,
+    dbNewsFeeds
   } = state;
   useEffect(() => {
     const pageSetup = async () => {
@@ -65,7 +67,8 @@ const HomeView = props => {
       } = props;
       const {
         getDbSettingsValues,
-        getStorageFileDownloadURL
+        getStorageFileDownloadURL,
+        getDbNewsFeedsAsArray
       } = firebase;
       const dbSettings = await getDbSettingsValues(true);
       const {
@@ -77,6 +80,7 @@ const HomeView = props => {
         : NaN;
       const homePageHeaderImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageHeaderImageUrl));
       const homePageAboutImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageAboutImageUrl));
+      const dbNewsFeeds = await getDbNewsFeedsAsArray(false, 'isFeatured', true);
       defaultPageSetup({
         isLoading: true,
         classNames: [
@@ -89,7 +93,8 @@ const HomeView = props => {
         isLoading: false,
         dbSettings,
         homePageHeaderImageDownloadUrl,
-        homePageAboutImageDownloadUrl
+        homePageAboutImageDownloadUrl,
+        dbNewsFeeds
       }));
     };
     if (isLoading) {
@@ -166,11 +171,14 @@ const HomeView = props => {
               <NewsFeedSection
                 showLearnMoreButton
                 isHomePage
+                newsSectionDescription={dbSettings.newsSectionDescription}
+                dbNewsFeeds={dbNewsFeeds}
               />
               <NewsFeedSection
                 showLearnMoreButton
                 isHomePage
                 isTKoTMedia
+                dbNewsFeeds={dbNewsFeeds}
               />
               <ResourcesSection
                 showLearnMoreButton

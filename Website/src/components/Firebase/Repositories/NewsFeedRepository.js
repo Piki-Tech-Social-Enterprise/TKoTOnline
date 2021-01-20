@@ -11,16 +11,16 @@ class NewsFeedRepository extends BaseRepository {
     return await this.db.ref('newsFeeds');
   }
 
-  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
+  getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
     const existingDbNewsFeeds = await this.getDbNewsFeeds();
-    const dbNewsFeedsRef = !includeInactive
-      ? await existingDbNewsFeeds
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbNewsFeeds
-        .orderByChild(childName)
-        .once('value');
+    let dbNewsFeedsQuery = existingDbNewsFeeds.orderByChild(childName);
+    if (!includeInactive) {
+      dbNewsFeedsQuery = dbNewsFeedsQuery.equalTo(childValue);
+    }
+    if (!isNaN(topLimit)) {
+      dbNewsFeedsQuery = dbNewsFeedsQuery.limitToFirst(topLimit);
+    }
+    const dbNewsFeedsRef = await dbNewsFeedsQuery.once('value');
     const dbNewsFeeds = await dbNewsFeedsRef.val();
     const dbNewsFeedsAsArray = [];
     if (dbNewsFeeds) {
