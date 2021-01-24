@@ -4,7 +4,7 @@ dependencies:
   chart.js: 2.9.4
   draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
   draftjs-to-html: 0.9.1
-  firebase: 8.2.3
+  firebase: 8.2.4
   googleapis: 67.0.0
   history: 4.10.0
   moment: 2.29.1
@@ -18,14 +18,14 @@ dependencies:
   react-dom: 17.0.1_react@17.0.1
   react-draft-wysiwyg: 1.14.5_225b2ecd41d4c6371fdfe59e40d86bbb
   react-google-maps: 9.4.5_38225d6bcf28bd36395914c951de14fe
-  react-notification-alert: 0.0.13_49daeac96a220a82252e67bf4739f9e9
+  react-notification-alert: 0.0.13_44f7e50c8f200321c526f83e6e4c0501
   react-router: 5.2.0_react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
   react-scripts: 3.4.3_e63ef16b0a30c60c9b8eb66ae58bfa55
   react-tagsinput-2: 3.19.8_react@17.0.1
-  reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
+  reactstrap: 8.9.0_react-dom@17.0.1+react@17.0.1
   recompose: 0.30.0_react@17.0.1
-  sweetalert2: 10.13.0
+  sweetalert2: 10.13.1
   sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
 devDependencies:
   babel-cli: 6.26.0
@@ -1395,7 +1395,7 @@ packages:
       '@firebase/util': 0.x
     resolution:
       integrity: sha512-/+gBHb1O9x/YlG7inXfxff/6X3BPZt4zgBv4kql6HEmdzNQCodIRlEYnI+/da+lN+dha7PjaFH7C7ewMmfV7rw==
-  /@firebase/auth/0.16.1_0dc33727bf3acedf92caf621e2889e7e:
+  /@firebase/auth/0.16.2_0dc33727bf3acedf92caf621e2889e7e:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/auth-types': 0.10.1_8006a2fb9a52d513340846aa4b6cf75b
@@ -1405,7 +1405,7 @@ packages:
       '@firebase/app-types': '*'
       '@firebase/util': '*'
     resolution:
-      integrity: sha512-7juD7D/kaxNti/xa5G+ZGJJs+bdJUWOW0MlNBtXwiG+TjMh69EDmwJnQmmc9h/32QVvXt1qo1OGWOoMMpF/2Gg==
+      integrity: sha512-68TlDL0yh3kF8PiCzI8m8RWd/bf/xCLUsdz1NZ2Dwea0sp6e2WAhu0sem1GfhwuEwL+Ns4jCdX7qbe/OQlkVEA==
   /@firebase/component/0.1.21:
     dependencies:
       '@firebase/util': 0.3.4
@@ -1419,7 +1419,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JtL3FUbWG+bM59iYuphfx9WOu2Mzf0OZNaqWiQ7lJR8wBe7bS9rIm9jlBFtksB7xcya1lZSQPA/GAy2jIlMIkA==
-  /@firebase/database/0.8.3_@firebase+app-types@0.6.1:
+  /@firebase/database/0.9.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/auth-interop-types': 0.1.5_8006a2fb9a52d513340846aa4b6cf75b
       '@firebase/component': 0.1.21
@@ -1432,7 +1432,7 @@ packages:
     peerDependencies:
       '@firebase/app-types': '*'
     resolution:
-      integrity: sha512-i29rr3kcPltIkA8La9M1lgsSxx9bfu5lCQ0T+tbJptZ3UpqpcL1NzCcZa24cJjiLgq3HQNPyLvUvCtcPSFDlRg==
+      integrity: sha512-j9NgRCsoahvAtQ8LPxMidGsiwsklbtUlDOQ6MhU6/Hk9DVYtEnVT3qSe42xOwBGDfMe191b1B2HsiEOsglWgag==
   /@firebase/firestore-types/2.1.0_@firebase+app-types@0.6.1:
     dependencies:
       '@firebase/app-types': 0.6.1
@@ -1441,7 +1441,7 @@ packages:
       '@firebase/app-types': 0.x
     resolution:
       integrity: sha512-jietErBWihMvJkqqEquQy5GgoEwzHnMXXC/TsVoe9FPysXm1/AeJS12taS7ZYvenAtyvL/AEJyKrRKRh4adcJQ==
-  /@firebase/firestore/2.1.2_e9d66a23fa701e65014ff8d410061da5:
+  /@firebase/firestore/2.1.3_e9d66a23fa701e65014ff8d410061da5:
     dependencies:
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
@@ -1461,7 +1461,7 @@ packages:
       '@firebase/app': 0.x
       '@firebase/app-types': 0.x
     resolution:
-      integrity: sha512-8yUdBLLr6UhE+IjPR+fxLBD0bDnEqF9GalohfURZeLQPaL3b+LtqqGCLvvXC4MKT0lJAHOV8J9LA6rHj8vI0/Q==
+      integrity: sha512-+No0hcaJ7hUYD/Vyv8xvEAnIqUQHJAFF5alL3clfyqmYa7bKtffjnZs2Pvm0fEIQ+LK4ovo2be2NmwK4iV0q5g==
   /@firebase/functions-types/0.4.0:
     dev: false
     resolution:
@@ -6094,14 +6094,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /firebase/8.2.3:
+  /firebase/8.2.4:
     dependencies:
       '@firebase/analytics': 0.6.2_e9d66a23fa701e65014ff8d410061da5
       '@firebase/app': 0.6.13
       '@firebase/app-types': 0.6.1
-      '@firebase/auth': 0.16.1_0dc33727bf3acedf92caf621e2889e7e
-      '@firebase/database': 0.8.3_@firebase+app-types@0.6.1
-      '@firebase/firestore': 2.1.2_e9d66a23fa701e65014ff8d410061da5
+      '@firebase/auth': 0.16.2_0dc33727bf3acedf92caf621e2889e7e
+      '@firebase/database': 0.9.0_@firebase+app-types@0.6.1
+      '@firebase/firestore': 2.1.3_e9d66a23fa701e65014ff8d410061da5
       '@firebase/functions': 0.6.1_e9d66a23fa701e65014ff8d410061da5
       '@firebase/installations': 0.4.19_e9d66a23fa701e65014ff8d410061da5
       '@firebase/messaging': 0.7.3_e9d66a23fa701e65014ff8d410061da5
@@ -6114,7 +6114,7 @@ packages:
     engines:
       node: ^8.13.0 || >=10.10.0
     resolution:
-      integrity: sha512-WdbcGSiLxiW/kGZT+EyqD9z3Md7kR35+k9qMjDn/twiIrm6Hh7Qi/Z69cqxhKW6+4uK5ghXIF28CjK67OyD9Qw==
+      integrity: sha512-+skMZY0kXKCFVAlbwoKnRDfOhmg9rp2lDZBJk/h4PYxh/joPNTXYCKFYqUkXfwSW4jQBlLP+PtjrZKeedg6mdA==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -11081,11 +11081,11 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16
     resolution:
       integrity: sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
-  /react-notification-alert/0.0.13_49daeac96a220a82252e67bf4739f9e9:
+  /react-notification-alert/0.0.13_44f7e50c8f200321c526f83e6e4c0501:
     dependencies:
       prop-types: 15.7.2
       react: 17.0.1
-      reactstrap: 8.8.1_react-dom@17.0.1+react@17.0.1
+      reactstrap: 8.9.0_react-dom@17.0.1+react@17.0.1
     dev: false
     peerDependencies:
       prop-types: 15.x.x
@@ -11266,7 +11266,7 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
-  /reactstrap/8.8.1_react-dom@17.0.1+react@17.0.1:
+  /reactstrap/8.9.0_react-dom@17.0.1+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.12.5
       classnames: 2.2.6
@@ -11280,7 +11280,7 @@ packages:
       react: '>=16.3.0'
       react-dom: '>=16.3.0'
     resolution:
-      integrity: sha512-Sv+JdQNrr0J96rUpI19slm21A1T++Xv97mhO5C9gq1bz8qdOQE0fXhF0/HxYcxyUops8Rdmwsli+8iu+yy9N/w==
+      integrity: sha512-pmf33YjpNZk1IfrjqpWCUMq9hk6GzSnMWBAofTBNIRJQB1zQ0Au2kzv3lPUAFsBYgWEuI9iYa/xKXHaboSiMkQ==
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2
@@ -12667,10 +12667,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.13.0:
+  /sweetalert2/10.13.1:
     dev: false
     resolution:
-      integrity: sha512-kF6Pnr7s7GDqVYRqqgyfxvG5vlUqfP+j+JF7oZ7DOs0/35jg6sTu8hyi6oD6Rb3fIKWIf1S9mCU7wR8iKa7dAA==
+      integrity: sha512-m5X9st+/yuuvrSNwsXhq0+Imh3qZx6y5jceaf8JrluiRUIGTuHe16YPOT9V6lD69RtMAdjG8ZfT2DaxW4Tx6yg==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -13803,7 +13803,7 @@ specifiers:
   draft-js: ^0.11.7
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
-  firebase: ^8.2.3
+  firebase: ^8.2.4
   googleapis: ^67.0.0
   history: 4.10.0
   jquery: 3.5.1
@@ -13825,8 +13825,8 @@ specifiers:
   react-router-sitemap: ^1.2.0
   react-scripts: 3.4.3
   react-tagsinput-2: ^3.19.8
-  reactstrap: 8.8.1
+  reactstrap: 8.9.0
   recompose: ^0.30.0
-  sweetalert2: ^10.13.0
+  sweetalert2: ^10.13.1
   sweetalert2-react: ^0.8.3
   typescript: 4.1.3
