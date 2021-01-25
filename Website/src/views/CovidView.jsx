@@ -5,7 +5,8 @@ import React, {
 import {
   Container,
   Row,
-  Col
+  Col,
+  Button
 } from 'reactstrap';
 import {
   withFirebase
@@ -18,6 +19,9 @@ import {
 import {
   lazy
 } from 'react-lazy-no-flicker';
+import {
+  sendEvent
+} from 'components/App/GoogleAnalytics';
 
 const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
@@ -91,6 +95,24 @@ const CovidView = props => {
                   dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbCovid.content)) }}
                 />
               </Row>
+              {
+                state.dbCovid.paMaiUrl
+                  ? <>
+                    <Row>
+                      <Col>
+                        <Button
+                          href={state.dbCovid.paMaiUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="tkot-primary-red-bg-color btn-outline-dark"
+                          color="white"
+                          onClick={() => sendEvent(`Covid page`, 'Clicked "Pā Mai" button', state.dbCovid.header)}
+                        >Pā Mai</Button>
+                      </Col>
+                    </Row>
+                  </>
+                  : null
+              }
             </Container>
             <HomeFooter />
           </div>

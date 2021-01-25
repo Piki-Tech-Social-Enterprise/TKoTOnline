@@ -48,6 +48,7 @@ const INITIAL_STATE = {
   imageUrl: '',
   imageUrlFile: null,
   isFeatured: false,
+  paMaiUrl: '',
   cvid: null
 };
 const AuthCovidView = props => {
@@ -94,7 +95,8 @@ const AuthCovidView = props => {
       externalUrl,
       header,
       imageUrlFile,
-      isFeatured
+      isFeatured,
+      paMaiUrl
     } = covid;
     let cvid = covid.cvid;
     let imageUrl = covid.imageUrl;
@@ -112,6 +114,9 @@ const AuthCovidView = props => {
         // eslint-disable-next-line
       } else if (externalUrl && !externalUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
         displayMessage = 'External URL is invalid.';
+        // eslint-disable-next-line
+      } else if (paMaiUrl && !paMaiUrl.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)) {
+        displayMessage = 'P1a Mai URL is invalid.';
       } else {
         if (isNew) {
           cvid = await firebase.saveDbCovid({});
@@ -130,6 +135,7 @@ const AuthCovidView = props => {
           header,
           imageUrl,
           isFeatured,
+          paMaiUrl,
           cvid: cvid,
           updated: now.toString(),
           updatedBy: uid
@@ -237,6 +243,7 @@ const AuthCovidView = props => {
         header,
         imageUrl,
         isFeatured,
+        paMaiUrl,
         cvid
       } = dbCovid;
       setCovid(nf => ({
@@ -252,6 +259,7 @@ const AuthCovidView = props => {
         header,
         imageUrl,
         isFeatured,
+        paMaiUrl,
         cvid
       }));
       setIsLoading(false);
@@ -295,6 +303,10 @@ const AuthCovidView = props => {
                           onChange={handleChange}
                           uploadCallback={handleUploadCallback}
                         />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Pā Mai URL</Label>
+                        <Input placeholder="Pā Mai URL" name="paMaiUrl" value={covid.paMaiUrl} onChange={handleChange} type="url" />
                       </FormGroup>
                       <FormGroup>
                         <CustomInput label="Is Featured" name="isFeatured" checked={covid.isFeatured || false} onChange={handleChange} type="switch" id="CovidIsFeatured" />

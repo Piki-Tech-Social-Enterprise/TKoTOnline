@@ -54,6 +54,7 @@ class CovidListRepository extends BaseRepository {
       header,
       imageUrl,
       isFeatured,
+      paMaiUrl,
       cvid,
       updated,
       updatedBy
@@ -72,10 +73,11 @@ class CovidListRepository extends BaseRepository {
         category: category || '',
         content: content || '',
         date: date || '',
-        externalUrl: externalUrl || '',
+        externalUrl: externalUrl,
         header: header || '',
         imageUrl: imageUrl || '',
         isFeatured: isFeatured || false,
+        paMaiUrl: paMaiUrl,
         updated: updated || now.toString(),
         updatedBy: updatedBy || '',
         cvid: await dbCovidRef.getKey()
@@ -90,10 +92,11 @@ class CovidListRepository extends BaseRepository {
           category: category || dbCovid.category || '',
           content: content || dbCovid.content || '',
           date: date || dbCovid.date || '',
-          externalUrl: externalUrl || dbCovid.externalUrl || '',
+          externalUrl: externalUrl,
           header: header || dbCovid.header || '',
           imageUrl: imageUrl || dbCovid.imageUrl || '',
           isFeatured: typeof isFeatured === 'boolean' ? isFeatured : dbCovid.isFeatured || false,
+          paMaiUrl: paMaiUrl,
           cvid: cvid,
           updated: updated || now.toString(),
           updatedBy: updatedBy || dbCovid.updatedBy
