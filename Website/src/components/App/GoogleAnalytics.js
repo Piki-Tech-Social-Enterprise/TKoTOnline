@@ -6,6 +6,9 @@ import {
   withRouter
 } from 'react-router-dom';
 import ReactGA from 'react-ga';
+import {
+  isBoolean
+} from 'components/App/Utilities';
 
 const GoogleAnalytics = props => {
   const [state, setState] = useState({
@@ -21,8 +24,9 @@ const GoogleAnalytics = props => {
         REACT_APP_GOOGLE_TRACKING_CODE: googleTrackingCode,
         REACT_APP_GOOGLE_TRACKING_DEBUG: googleTrackingDebug
       } = process.env;
+      // console.info(`googleTrackingCode: ${googleTrackingCode}, googleTrackingDebug: ${googleTrackingDebug}`);
       ReactGA.initialize(googleTrackingCode, {
-        debug: Boolean(googleTrackingDebug)
+        debug: isBoolean(googleTrackingDebug, true)
       });
       listener = history.listen(location => {
         const {
