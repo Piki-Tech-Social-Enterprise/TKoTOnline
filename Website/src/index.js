@@ -121,6 +121,14 @@ const appRoutes = [
     component: lazy(async () => await import('views/NewsFeedView'))
   },
   {
+    path: Routes.covidListPage,
+    component: lazy(async () => await import('views/CovidListView'))
+  },
+  {
+    path: Routes.covidPage,
+    component: lazy(async () => await import('views/CovidView'))
+  },
+  {
     path: '',
     component: lazy(async () => await import('views/Global404View'))
   }

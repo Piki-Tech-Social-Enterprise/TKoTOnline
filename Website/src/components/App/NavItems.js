@@ -121,7 +121,8 @@ const NavItems = props => {
                   );
                 };
                 const {
-                  menu
+                  menu,
+                  group
                 } = item;
                 return (
                   <Fragment key={index}>
@@ -130,7 +131,7 @@ const NavItems = props => {
                         ? !Boolean(subMenus[menu])
                           ? <>
                             {(subMenus[menu] = true)}
-                            <UncontrolledDropdown nav inNavbar className={!isNullOrEmpty(navItemClassName) ? 'ml-auto mr-5' : ''}>
+                            <UncontrolledDropdown nav inNavbar className={!isNullOrEmpty(navItemClassName) ? `ml-auto${group === 'right' ? ' mr-5' : ''}` : ''}>
                               <DropdownToggle nav caret>
                                 {menu}
                               </DropdownToggle>

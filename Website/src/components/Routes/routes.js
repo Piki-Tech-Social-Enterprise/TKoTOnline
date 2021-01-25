@@ -31,7 +31,10 @@ const Routes = {
   economicDevelopmentCardPage: '/EconomicDevelopmentCard',
   mediaListAnchor: '/#Media',
   mediaListPage: '/Media',
-  mediaPage: '/Media/:nfid'
+  mediaPage: '/Media/:nfid',
+  covidListAnchor: '/#Covid',
+  covidListPage: '/Covid',
+  covidPage: '/Covid/:cvid'
 };
 
 export default Routes;

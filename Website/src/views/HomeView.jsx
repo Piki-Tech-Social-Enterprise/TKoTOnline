@@ -30,6 +30,7 @@ const EventsSection = lazy(async () => await import('components/Sections/Events'
 const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
 const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
 const EconomicDevelopmentsSection = lazy(async () => await import('components/Sections/EconomicDevelopments'));
+const CovidSection = lazy(async () => await import('components/Sections/Covid'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const {
   home,
@@ -41,7 +42,8 @@ const {
   newsFeedAnchor,
   mediaListAnchor,
   resourcesAnchor,
-  economicDevelopmentsAnchor
+  economicDevelopmentsAnchor,
+  covidListAnchor
 } = Routes;
 const HomeView = props => {
   const [state, setState] = useState({
@@ -136,6 +138,7 @@ const HomeView = props => {
                 mediaListAnchor.replace('/#', ''),
                 resourcesAnchor.replace('/#', ''),
                 economicDevelopmentsAnchor.replace('/#', ''),
+                covidListAnchor.replace('/#', ''),
                 'HomeFooter'
               ]}
               homeIndex={1}
@@ -188,6 +191,10 @@ const HomeView = props => {
                 showLearnMoreButton
                 isFeatured
                 showViewTaitokerauEconomicSummit2020SiteButton
+              />
+              <CovidSection
+                showLearnMoreButton
+                isHomePage
               />
               <HomeFooter
                 isHomePage={isHomePage}

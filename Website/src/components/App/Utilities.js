@@ -177,7 +177,9 @@ const getNavItems = isHomePage => {
     economicDevelopmentsAnchor,
     economicDevelopmentsPage,
     mediaListAnchor,
-    mediaListPage
+    mediaListPage,
+    covidListAnchor,
+    covidListPage
   } = Routes;
   const navItems = [{
     id: `homeNavItem${(!isHomePage && '_alt') || ''}`,
@@ -190,7 +192,8 @@ const getNavItems = isHomePage => {
     route: iwiMembersAnchor,
     name: 'Iwi',
     tooltip: 'Iwi',
-    group: 'left'
+    group: 'left',
+    menu: 'Iwi'
   }, {
     id: `aboutNavItem${(!isHomePage && '_alt') || ''}`,
     route: aboutUs,
@@ -248,6 +251,13 @@ const getNavItems = isHomePage => {
     route: facebookLinks,
     name: 'FB Feeds',
     tooltip: 'FB Ngā Whāngai',
+    group: 'left',
+    menu: 'Iwi'
+  }, {
+    id: `covidListNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? covidListAnchor : covidListPage,
+    name: 'Covid',
+    tooltip: 'Kowheori',
     group: 'right'
   }];
   return navItems;

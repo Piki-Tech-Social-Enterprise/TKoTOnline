@@ -251,6 +251,30 @@ const authRoutes = [
     excludeFromAuthenticatedRoutes: false,
     excludeFromSidebar: true
   },
+  {
+    layout: '/auth',
+    path: '/CovidList',
+    name: 'COVID-19',
+    component: lazy(async () => await import('views/Auth/AuthCovidListView')),
+    exact: true,
+    iconLibrary: 'now-ui-icons',
+    icon: 'objects_support-17',
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: false
+  },
+  {
+    layout: '/auth',
+    path: '/CovidList/:cvid',
+    name: 'COVID-19',
+    component: lazy(async () => await import('views/Auth/AuthCovidView')),
+    exact: true,
+    iconLibrary: null,
+    icon: null,
+    roles: adminRoleUp,
+    excludeFromAuthenticatedRoutes: false,
+    excludeFromSidebar: true
+  },
   // {
   //   layout: '/auth',
   //   path: '/Volunteers',

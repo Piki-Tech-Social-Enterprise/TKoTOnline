@@ -13,7 +13,8 @@ import {
   IwiMembersRepository,
   EPanuiListRepository,
   ResourcesRepository,
-  EconomicDevelopmentsRepository
+  EconomicDevelopmentsRepository,
+  CovidListRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -37,6 +38,7 @@ class Firebase {
     this.ePanuiListRepository = new EPanuiListRepository(firebaseApp);
     this.resourcesRepository = new ResourcesRepository(firebaseApp);
     this.economicDevelopmentsRepository = new EconomicDevelopmentsRepository(firebaseApp);
+    this.covidListRepository = new CovidListRepository(firebaseApp);
   }
 
   getStorageFileRef = path => this.storageRepository.getStorageFileRef(path);
@@ -86,6 +88,8 @@ class Firebase {
   getDbResourceValue = async rid => await this.resourcesRepository.getDbResourceValue(rid);
   getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentsAsArray(includeInactive, childName, childValue);
   getDbEconomicDevelopmentValue = async edid => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentValue(edid);
+  getDbCovidListAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.covidListRepository.getDbCovidListAsArray(includeInactive, childName, childValue);
+  getDbCovidValue = async cvid => await this.covidListRepository.getDbCovidValue(cvid);
 }
 
 export default Firebase;

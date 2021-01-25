@@ -15,7 +15,8 @@ import {
   ProjectsRepository,
   IwiMembersRepository,
   ResourcesRepository,
-  EconomicDevelopmentsRepository
+  EconomicDevelopmentsRepository,
+  CovidListRepository
 } from './Repositories';
 import MasterFirebaseConfig from './Config/MasterFirebaseConfig';
 
@@ -41,6 +42,7 @@ class Firebase {
     this.iwiMembersRepository = new IwiMembersRepository(firebaseApp);
     this.resourcesRepository = new ResourcesRepository(firebaseApp);
     this.economicDevelopmentsRepository = new EconomicDevelopmentsRepository(firebaseApp);
+    this.covidListRepository = new CovidListRepository(firebaseApp);
   }
 
   createUserWithEmailAndPassword = async (email, password, role, displayName, createUserWithEmailAndPassword_Completed) => this.authenticationRepository.createUserWithEmailAndPassword(email, password, role, displayName, createUserWithEmailAndPassword_Completed);
@@ -156,6 +158,13 @@ class Firebase {
   getDbEconomicDevelopmentValue = async edid => await this.economicDevelopmentsRepository.getDbEconomicDevelopmentValue(edid);
   saveDbEconomicDevelopment = async (economicDevelopment, saveDbEconomicDevelopment_completed) => await this.economicDevelopmentsRepository.saveDbEconomicDevelopment(economicDevelopment, saveDbEconomicDevelopment_completed);
   deleteDbEconomicDevelopment = async edid => await this.economicDevelopmentsRepository.deleteDbEconomicDevelopment(edid);
+
+  getDbCovidList = async () => await this.covidListRepository.getDbCovidList();
+  getDbCovidListAsArray = async (includeInactive = false, childName = 'active', childValue = true) => await this.covidListRepository.getDbCovidListAsArray(includeInactive, childName, childValue);
+  getDbCovid = async cvid => await this.covidListRepository.getDbCovid(cvid);
+  getDbCovidValue = async cvid => await this.covidListRepository.getDbCovidValue(cvid);
+  saveDbCovid = async (covid, saveDbCovid_completed) => await this.covidListRepository.saveDbCovid(covid, saveDbCovid_completed);
+  deleteDbCovid = async cvid => await this.covidListRepository.deleteDbCovid(cvid);
 }
 
 export default Firebase;
