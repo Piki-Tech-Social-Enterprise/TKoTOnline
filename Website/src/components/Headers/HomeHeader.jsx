@@ -21,7 +21,7 @@ const HomeHeader = props => {
           pageHeaderImage
             ? <div className="page-header-image" style={{
               backgroundColor: 'gray',
-              backgroundImage: `url(${pageHeaderImage})`
+              backgroundImage: `url('${pageHeaderImage}')`
             }} />
             : null
         }
