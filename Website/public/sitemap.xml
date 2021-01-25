@@ -22,4 +22,6 @@
 <url> <loc>https://tkot.org.nz/EconomicDevelopmentCard</loc> </url>
 <url> <loc>https://tkot.org.nz/Media</loc> </url>
 <url> <loc>https://tkot.org.nz/Media/:nfid</loc> </url>
+<url> <loc>https://tkot.org.nz/Covid</loc> </url>
+<url> <loc>https://tkot.org.nz/Covid/:cvid</loc> </url>
 </urlset>
