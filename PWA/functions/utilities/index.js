@@ -153,6 +153,7 @@ const getFirebaseStorageURL = (projectId, source) => {
   return firebaseStorageURL;
 };
 const YEAR_AS_SECONDS = 31536000;
+const isNumber = value => value && !isNaN(value);
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -179,3 +180,4 @@ exports.isTrueOrFalse = isTrueOrFalse;
 exports.isBoolean = isBoolean;
 exports.getFirebaseStorageURL = getFirebaseStorageURL;
 exports.YEAR_AS_SECONDS = YEAR_AS_SECONDS;
+exports.isNumber = isNumber;

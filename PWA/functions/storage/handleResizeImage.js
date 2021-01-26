@@ -6,7 +6,9 @@
 const admin = require('firebase-admin');
 const {
   StorageBucketHelper,
-  isNullOrEmpty
+  isNullOrEmpty,
+  isBoolean,
+  isNumber
 } = require('../utilities');
 const sharp = require('sharp');
 const fs = require('fs');
@@ -69,7 +71,7 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
       const imgExists = await imgFile
         .exists()
         .then(data =>
-          Boolean(data[0])
+          isBoolean(data[0], true)
         )
         .catch(error => {
           console.log(`resizeImage.exists.error: ${JSON.stringify(error, null, 2)}`);
@@ -84,16 +86,25 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
           return null;
         }
       }
-      console.log(`resizeImage: Generateing... ${bucketImgName}`);
-      await imageFile
-        .resize({
-          width: size
-        })
-        .webp({
-          force: true,
-          lossless: true
-        })
-        .toFile(imgPath);
+      console.log(`resizeImage: Generating... ${bucketImgName}`);
+      if (isNumber(size)) {
+        await imageFile
+          .resize({
+            width: size
+          })
+          .webp({
+            force: true,
+            lossless: true
+          })
+          .toFile(imgPath);
+      } else {
+        await imageFile
+          .webp({
+            force: true,
+            lossless: true
+          })
+          .toFile(imgPath);
+      }
       console.log(`resizeImage: Generated ${bucketImgName}`);
       return await bucket
         .upload(imgPath, uploadOptions);
