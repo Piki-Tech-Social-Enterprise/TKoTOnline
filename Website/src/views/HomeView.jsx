@@ -132,13 +132,13 @@ const HomeView = props => {
                 iwiMembersAnchor.replace('/#', ''),
                 aboutAnchor.replace('/#', ''),
                 'TkotBgImgContainer',
-                projectsAnchor.replace('/#', ''),
-                eventsAnchor.replace('/#', ''),
+                covidListAnchor.replace('/#', ''),
                 newsFeedAnchor.replace('/#', ''),
                 mediaListAnchor.replace('/#', ''),
                 resourcesAnchor.replace('/#', ''),
                 economicDevelopmentsAnchor.replace('/#', ''),
-                covidListAnchor.replace('/#', ''),
+                projectsAnchor.replace('/#', ''),
+                eventsAnchor.replace('/#', ''),
                 'HomeFooter'
               ]}
               homeIndex={1}
@@ -162,13 +162,8 @@ const HomeView = props => {
               <div className="tkot-background-image-container" id="TkotBgImgContainer">
                 <div className="tkot-background-image" />
               </div>
-              <ProjectsSection
+              <CovidSection
                 showLearnMoreButton
-                isHomePage
-              />
-              <EventsSection
-                showLearnMoreButton
-                containerClassName="tkot-secondary-color-black-bg-color-61-pc"
                 isHomePage
               />
               <NewsFeedSection
@@ -192,8 +187,13 @@ const HomeView = props => {
                 isFeatured
                 showViewTaitokerauEconomicSummit2020SiteButton
               />
-              <CovidSection
+              <ProjectsSection
                 showLearnMoreButton
+                isHomePage
+              />
+              <EventsSection
+                showLearnMoreButton
+                containerClassName="tkot-secondary-color-black-bg-color-61-pc"
                 isHomePage
               />
               <HomeFooter

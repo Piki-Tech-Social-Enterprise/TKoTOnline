@@ -201,16 +201,10 @@ const getNavItems = isHomePage => {
     tooltip: 'Ko wai mātau',
     group: 'left'
   }, {
-    id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? projectsAnchor : projectsPage,
-    name: 'Projects',
-    tooltip: 'Kaupapa',
-    group: 'left'
-  }, {
-    id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? eventsAnchor : events,
-    name: 'Wānanga/Events',
-    tooltip: 'Wānanga',
+    id: `covidListNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? covidListAnchor : covidListPage,
+    name: 'Covid',
+    tooltip: 'Kowheori',
     group: 'right'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
@@ -241,6 +235,18 @@ const getNavItems = isHomePage => {
     group: 'right',
     menu: 'Resources'
   }, {
+    id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? projectsAnchor : projectsPage,
+    name: 'Projects',
+    tooltip: 'Kaupapa',
+    group: 'left'
+  }, {
+    id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
+    route: isHomePage ? eventsAnchor : events,
+    name: 'Wānanga/Events',
+    tooltip: 'Wānanga',
+    group: 'right'
+  }, {
     id: `contactUsNavItem${(!isHomePage && '_alt') || ''}`,
     route: contactUs,
     name: 'Contact',
@@ -253,12 +259,6 @@ const getNavItems = isHomePage => {
     tooltip: 'FB Ngā Whāngai',
     group: 'left',
     menu: 'Iwi'
-  }, {
-    id: `covidListNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? covidListAnchor : covidListPage,
-    name: 'Covid',
-    tooltip: 'Kowheori',
-    group: 'right'
   }];
   return navItems;
 };
