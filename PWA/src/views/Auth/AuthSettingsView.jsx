@@ -419,7 +419,7 @@ const AuthSettingsView = props => {
                             data-tab={5}
                             active={activeTab === 5}
                             onClick={handleTabClick}
-                            className="clickable"
+                            className="clickable d-none" // HACK: Disable usage until Resize Images function is fixed
                           >Misc.</NavLink>
                         </NavItem>
                       </Nav>
@@ -564,7 +564,7 @@ const AuthSettingsView = props => {
                             </Col>
                           </Row>
                         </TabPane>
-                        <TabPane tabId={5}>
+                        <TabPane tabId={5} className="d-none"> {/* // HACK: Disable usage until Resize Images function is fixed */}
                           <FormGroup>
                             <CustomInput
                               label="Overwrite Existing"

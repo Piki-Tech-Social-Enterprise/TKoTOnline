@@ -131,7 +131,7 @@ const NavItems = props => {
                         ? !Boolean(subMenus[menu])
                           ? <>
                             {(subMenus[menu] = true)}
-                            <UncontrolledDropdown nav inNavbar className={!isNullOrEmpty(navItemClassName) ? `ml-auto${group === 'right' ? ' mr-5' : ''}` : ''}>
+                            <UncontrolledDropdown nav inNavbar className={!isNullOrEmpty(navItemClassName) ? `ml-lg-auto${group === 'right' ? ' mr-lg-5' : ''}` : ''}>
                               <DropdownToggle nav caret>
                                 {menu}
                               </DropdownToggle>

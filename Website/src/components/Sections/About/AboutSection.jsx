@@ -16,6 +16,7 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import tkotImage from '../../../assets/img/tkot/tkot-white-logo.webp';
+import tkot20pcImage from '../../../assets/img/tkot/tkot-white-logo-20pc.webp';
 import {
   lazy
 } from 'react-lazy-no-flicker';
@@ -69,7 +70,7 @@ const AboutSection = props => {
                 <Container className="py-5 text-center">
                   <Row>
                     <Col xs={12} sm={6} className="bg-danger1">
-                      <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkotImage} width="300" height="267" />
+                      <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkot20pcImage} width="300" height="267" />
                     </Col>
                     <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
                       <div className="my-3">

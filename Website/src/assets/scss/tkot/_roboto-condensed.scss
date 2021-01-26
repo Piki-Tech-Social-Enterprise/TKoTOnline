@@ -1,7 +1,8 @@
 @font-face {
   font-family: 'Roboto Condensed';
-  src: url('/static/fonts/RobotoCondensed/RobotoCondensed-Regular.ttf') format('truetype'),
-    url('/static/fonts/RobotoCondensed/RobotoCondensed-Regular.ttf');
+  src: url('/static/fonts/RobotoCondensed/RobotoCondensed-Regular.woff2') format('woff2'),
+    url('/static/fonts/RobotoCondensed/RobotoCondensed-Regular.woff') format('woff'),
+    url('/static/fonts/RobotoCondensed/RobotoCondensed-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
