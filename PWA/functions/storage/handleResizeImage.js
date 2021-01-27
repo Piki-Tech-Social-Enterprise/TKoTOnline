@@ -28,6 +28,39 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
   if (admin.apps.length === 0) {
     admin.initializeApp();
   }
+  const db = admin.database();
+  const dbCorrelationsRef = db.ref('/correlations/');
+  const getCorrelationId = async filePath => {
+    const filePathAsLowercase = (filePath || '').toLowerCase();
+    const dbCorrelationsSnapshot = await dbCorrelationsRef
+      .orderByChild('filePath')
+      .equalTo(filePathAsLowercase)
+      .once('value');
+    const dbCorrelations = await dbCorrelationsSnapshot.val();
+    const dbCorrelationKeys = Object.keys(dbCorrelations || {});
+    const correlationId = dbCorrelationKeys.length
+      ? dbCorrelationKeys[0]
+      : undefined;
+    return correlationId;
+  };
+  const generateCorrelationId = async filePath => {
+    const filePathAsLowercase = (filePath || '').toLowerCase();
+    const newDbCorrelationRef = await dbCorrelationsRef.push();
+    const correlationId = await newDbCorrelationRef.getKey();
+    const now = new Date();
+    await newDbCorrelationRef.set({
+      correlationId,
+      created: now.toString(),
+      filePath: filePathAsLowercase
+    });
+    return correlationId;
+  };
+  const deleteCorrelationId = async correlationId => {
+    const dbCorrelationRef = db.ref(`/correlations/${correlationId}`);
+    if (dbCorrelationRef) {
+      await dbCorrelationRef.remove();
+    }
+  };
   const storage = admin.storage();
   const bucket = storage
     .bucket(objectMetadata.bucket);
@@ -38,23 +71,20 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
     .file(filePath)
     .download(downloadOptions);
   if (fs.existsSync(tmpFilePath)) {
+    let correlationId = await getCorrelationId(tmpFilePath);
+    if (correlationId) {
+      console.log(`Image '${filePath}' has already been processed. correlationId: '${correlationId}'`);
+      return null;
+    }
+    correlationId = await generateCorrelationId(tmpFilePath);
+    console.log(`resizeImage: correlationId '${correlationId}' generated...`);
     const imageFile = sharp(tmpFilePath);
     const metaData = await imageFile.metadata();
     const currentSize = metaData.width;
-    if (currentSize <= 100) {
-      throw new Error(`Image '${filePath}' with a width of '${currentSize}' is too small.`);
-    }
     const sizes = [150, 400, 768, NaN];
-    // if (currentSize <= 150) {
-    //   return false;
-    // }
-    // if (currentSize > 400) {
-    //   sizes.push(400);
-    // }
-    // if (currentSize > 768) {
-    //   sizes.push(768);
-    // }
     console.log(`resizeImage: Generating ${sizes.length} resized images for ${fileName} - image width of '${currentSize}'...`);
+    console.log(`resizeImage.overwriteExisting: ${overwriteExisting}`);
+    console.log(`resizeImage.deleteOnly: ${deleteOnly}`);
     const uploadPromises = sizes.map(async size => {
       const {
         imgPath,
@@ -63,7 +93,6 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
       const uploadOptions = {
         destination: bucketImgName
       };
-      // console.log(`resizeImage.calling: imgFile = bucket.file(imgPath);`);
       const imgFile = bucket.file(imgPath);
       if (!imgFile) {
         return null;
@@ -77,11 +106,14 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
           console.log(`resizeImage.exists.error: ${JSON.stringify(error, null, 2)}`);
           return false;
         });
+      console.log(`resizeImage.imgExists: ${imgExists}`);
       if (imgExists) {
+        console.log(`resizeImage.overwriteExisting: ${overwriteExisting}`);
         if (!overwriteExisting) {
           return null;
         }
         await imgFile.delete();
+        console.log(`resizeImage.deleteOnly: ${deleteOnly}`);
         if (deleteOnly) {
           return null;
         }
@@ -115,9 +147,12 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
           !isNullOrEmpty(up)
         )
       );
+    await deleteCorrelationId(correlationId);
+    console.log(`resizeImage: correlationId '${correlationId}' deleted`);
   }
+  await cleanUp();
   console.log('resizeImage: Completed.');
-  return await cleanUp();
+  return null;
 };
 
 exports.handleResizeImage = handleResizeImage;

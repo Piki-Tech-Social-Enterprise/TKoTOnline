@@ -42,6 +42,7 @@
     "serveLocal": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC serve\"",
     "serveDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC serve\"",
     "serveTest": "run-s -sn firebaseUseTest \"envCmdTest applyGAC serve\"",
+    "serveTestAll": "run-s -sn firebaseUseTest \"envCmdTest applyGAC serveAll\"",
     "serveProd": "run-s -sn firebaseUseProd \"envCmdProd applyGAC serve\"",
     "shellLocal": "run-s -sn firebaseUseDev \"envCmdLocal applyGAC shell\"",
     "shellDev": "run-s -sn firebaseUseDev \"envCmdDev applyGAC shell\"",
