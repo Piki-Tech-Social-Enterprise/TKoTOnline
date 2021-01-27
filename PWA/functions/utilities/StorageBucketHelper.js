@@ -35,12 +35,14 @@ class StorageBucketHelper {
       .bind(this);
     return this;
   }
-  handleIsValid(validContentType = 'image') {
-    const isValid = !this.fileName
-      .includes(resizedFileNamePrefix) &&
-      this.objectMetadata
-        .contentType
-        .includes(validContentType);
+  handleIsValid(validContentType = 'image', excludedContentType = 'image/webp') {
+    const includesResizedFileNamePrefix = this.fileName.includes(resizedFileNamePrefix);
+    const {
+      contentType
+    } = this.objectMetadata;
+    const startsWithValidContentType = contentType.startsWith(validContentType);
+    const isExcludedContentType = contentType.toLowerCase() === excludedContentType;
+    const isValid = !includesResizedFileNamePrefix && startsWithValidContentType && !isExcludedContentType;
     if (isValid && !fs.existsSync(this.workingDir)) {
       fs.mkdirSync(this.workingDir);
     }

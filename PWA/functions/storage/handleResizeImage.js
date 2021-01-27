@@ -7,21 +7,24 @@ const admin = require('firebase-admin');
 const {
   StorageBucketHelper,
   isNullOrEmpty,
-  isBoolean,
-  isNumber
+  isBoolean
 } = require('../utilities');
 const sharp = require('sharp');
 const fs = require('fs');
 const handleResizeImage = async (objectMetadata, overwriteExisting = true, deleteOnly = false) => {
   const storageBucketHelper = new StorageBucketHelper(objectMetadata);
   const {
+    isValid,
     filePath,
     fileName,
-    isValid,
     tmpFilePath,
     getImgPathAndBucketImgName,
     cleanUp
   } = storageBucketHelper;
+  if (!isValid()) {
+    console.log(`Image '${filePath}' is invalid.`);
+    return null;
+  }
   const downloadOptions = {
     destination: tmpFilePath
   };
@@ -64,9 +67,6 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
   const storage = admin.storage();
   const bucket = storage
     .bucket(objectMetadata.bucket);
-  if (!isValid()) {
-    return false;
-  }
   await bucket
     .file(filePath)
     .download(downloadOptions);
@@ -104,7 +104,7 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
         )
         .catch(error => {
           console.log(`resizeImage.exists.error: ${JSON.stringify(error, null, 2)}`);
-          return false;
+          return null;
         });
       console.log(`resizeImage.imgExists: ${imgExists}`);
       if (imgExists) {
@@ -119,24 +119,15 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
         }
       }
       console.log(`resizeImage: Generating... ${bucketImgName}`);
-      if (isNumber(size)) {
-        await imageFile
-          .resize({
-            width: size
-          })
-          .webp({
-            force: true,
-            lossless: true
-          })
-          .toFile(imgPath);
-      } else {
-        await imageFile
-          .webp({
-            force: true,
-            lossless: true
-          })
-          .toFile(imgPath);
-      }
+      await imageFile
+        .resize({
+          width: size || currentSize
+        })
+        .webp({
+          force: true,
+          lossless: true
+        })
+        .toFile(imgPath);
       console.log(`resizeImage: Generated ${bucketImgName}`);
       return await bucket
         .upload(imgPath, uploadOptions);
