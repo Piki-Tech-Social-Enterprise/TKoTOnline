@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "solid.css",
+	"sources": [
+		"../fontawesome-free-5.15.1-web/scss/solid.scss",
+		"../fontawesome-free-5.15.1-web/scss/_variables.scss"
+	],
+	"names": [],
+	"mappings": "AAAA;;;GAGG;AAGH,UAAU;EACR,WAAW,EAAE,qBAAqB;EAClC,UAAU,EAAE,MAAM;EAClB,WAAW,EAAE,GAAG;EAChB,YAAY,ECLS,KAAK;EDM1B,GAAG,EAAE,iDAAwC;EAC7C,GAAG,EAAE,wDAA+C,CAAC,2BAA2B,EAChF,mDAA0C,CAAC,eAAe,EAC1D,kDAAyC,CAAC,cAAc,EACxD,iDAAwC,CAAC,kBAAkB,EAC3D,6DAAoD,CAAC,aAAa;;AAGpE,AAAA,GAAG;AACH,IAAI,CAAC;EACH,WAAW,EAAE,qBAAqB;EAClC,WAAW,EAAE,GAAG,GACjB"
+}
