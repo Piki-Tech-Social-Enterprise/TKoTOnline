@@ -26,13 +26,6 @@ import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
 import LoadingSpinner from 'components/App/LoadingSpinner';
-import "assets/scss/now-ui-kit.scss";
-import 'assets/scss/tkot.scss';
-import 'assets/fontawesome-free-5.15.1-web/scss/fontawesome.scss';
-import 'assets/fontawesome-free-5.15.1-web/scss/brands.scss';
-import 'assets/fontawesome-free-5.15.1-web/scss/regular.scss';
-import 'assets/fontawesome-free-5.15.1-web/scss/solid.scss';
-import 'assets/fontawesome-free-5.15.1-web/scss/v4-shims.scss';
 import 'lazysizes';
 import Routes from 'components/Routes/routes';
 import {
