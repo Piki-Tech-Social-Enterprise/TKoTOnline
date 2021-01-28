@@ -230,7 +230,7 @@ const NewsFeedCarousel = props => {
         searchCategory
       } = props;
       // console.log('searchCategory: ', searchCategory);
-      const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
+      const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray();
       handleItems(searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbNewsFeeds);
@@ -241,7 +241,7 @@ const NewsFeedCarousel = props => {
   }, [props, handleItems, isLoading]);
   return (
     isLoading
-      ? <LoadingSpinner />
+      ? <LoadingSpinner caller="NewsFeedCarousel" />
       : <>
         {
           carouselItems && carouselItems.length

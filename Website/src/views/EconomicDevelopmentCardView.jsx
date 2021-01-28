@@ -73,7 +73,7 @@ const EconomicDevelopmentCardView = props => {
     <>
       {
         isLoading
-          ? <LoadingSpinner />
+          ? <LoadingSpinner caller="EconomicDevelopmentCardView" />
           : <>
             <Container>
               <Row noGutters>

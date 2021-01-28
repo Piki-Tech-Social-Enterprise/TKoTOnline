@@ -81,9 +81,15 @@ const CovidSection = props => {
         isHomePage,
         firebase
       } = props;
+      const {
+        covidListRepository
+      } = firebase;
+      const {
+        getDbCovidListAsArray
+      } = covidListRepository;
       const dbCovidList = isHomePage
-        ? await firebase.getDbCovidListAsArray(false, 'isFeatured', true)
-        : await firebase.getDbCovidListAsArray();
+        ? await getDbCovidListAsArray(false, 'isFeatured', true)
+        : await getDbCovidListAsArray();
       const filteredDbCovidList = searchCategory
         ? dbCovidList.filter(dbcv => dbcv.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbCovidList;

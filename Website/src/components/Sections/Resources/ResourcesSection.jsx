@@ -47,10 +47,20 @@ const ResourcesSection = props => {
       const {
         firebase,
         isHomePage
-      } = props; // debugger;
+      } = props;
+      const {
+        resourcesRepository,
+        storageRepository
+      } = firebase;
+      const {
+        getDbResourcesAsArray
+      } = resourcesRepository;
+      const {
+        getStorageFileDownloadURL
+      } = storageRepository;
       const dbResources = isHomePage
-        ? await firebase.getDbResourcesAsArray(false, 'isFeatured')
-        : await firebase.getDbResourcesAsArray();
+        ? await getDbResourcesAsArray(false, 'isFeatured')
+        : await getDbResourcesAsArray();
       const dbCategorisedResources = {};
       await Promise.all(dbResources.map(async dbResource => {
         const {
@@ -59,7 +69,7 @@ const ResourcesSection = props => {
         } = dbResource;
         const dbCategorisedResource = (dbCategorisedResources[category] || []);
         dbResource.resourceDownloadUrl = resourceUrl.startsWith('/resources')
-          ? await firebase.getStorageFileDownloadURL(resourceUrl)
+          ? await getStorageFileDownloadURL(resourceUrl)
           : resourceUrl;
         dbCategorisedResource.push(dbResource);
         dbCategorisedResources[category] = dbCategorisedResource;

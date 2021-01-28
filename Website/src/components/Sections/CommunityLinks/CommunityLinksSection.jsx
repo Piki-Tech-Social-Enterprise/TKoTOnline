@@ -107,8 +107,8 @@ const CommunityLinksSection = props => {
       const {
         firebase
       } = props;
-      const dbCommunityLinks = await firebase.getDbCommunityLinksAsArray();
-      const dbSettingsValues = await firebase.getDbSettingsValues(true);
+      const dbCommunityLinks = await firebase.communityLinksRepository.getDbCommunityLinksAsArray();
+      const dbSettingsValues = await firebase.settingsRepository.getDbSettingsValues(true);
       // debugger;
       setState(s => ({
         ...s,
@@ -147,7 +147,7 @@ const CommunityLinksSection = props => {
         <Col>
           {
             state.isLoading
-              ? <LoadingSpinner />
+              ? <LoadingSpinner caller="CommunityLinksSection" />
               : <CommunityLinksMegaMenu communityLinksMegaMenuItems={getCommunityLinksMegaMenuItems(state.communityLinks, state.columnCount)} />
           }
         </Col>

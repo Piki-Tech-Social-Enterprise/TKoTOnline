@@ -39,11 +39,11 @@ const ProjectView = props => {
       const {
         pid
       } = match.params;
-      const dbProject = await firebase.getDbProjectValue(pid);
+      const dbProject = await firebase.projectsRepository.getDbProjectValue(pid);
       const {
         imageUrl
       } = dbProject;
-      const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+      const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,

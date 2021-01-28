@@ -39,7 +39,7 @@ const EventView = props => {
       const {
         evid
       } = match.params;
-      const dbEvent = await firebase.getDbEventValue(evid);
+      const dbEvent = await firebase.eventsRepository.getDbEventValue(evid);
       const {
         externalUrl,
         imageUrl
@@ -47,7 +47,7 @@ const EventView = props => {
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
-        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
         setState(s => ({
           ...s,
           isLoading: false,

@@ -31,7 +31,7 @@ const FacebookLinkView = props => {
       const {
         fid
       } = match.params;
-      const dbFacebookLink = await firebase.getDbFacebookLinksValue(fid);
+      const dbFacebookLink = await firebase.facebookLinkRepository.getDbFacebookLinksValue(fid);
       setState(s => ({
         ...s,
         isLoading: false,
@@ -61,7 +61,7 @@ const FacebookLinkView = props => {
       <div id="fb-root"></div>
       {
         state.isLoading
-          ? <LoadingSpinner />
+          ? <LoadingSpinner caller="FacebookLinkView" />
           : <div
             className="fb-page"
             data-href={state.dbFacebookLink.url}

@@ -73,7 +73,7 @@ const ResourceCardView = props => {
     <>
       {
         isLoading
-          ? <LoadingSpinner />
+          ? <LoadingSpinner caller="ResourceCardView" />
           : <>
             <Container>
               <Row noGutters>

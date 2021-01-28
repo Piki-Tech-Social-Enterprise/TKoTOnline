@@ -149,31 +149,37 @@ updatePreloads();
 
 ReactDOM.render(
   <React.Suspense fallback={<PageLoadingSpinner caller="Root" />}>
-    <FirebaseContext.Provider value={new Firebase()}>
-      <BrowserRouter>
-        <Switch>
-          {
-            appRoutes.map((ar, index) => {
-              const {
-                path,
-                component: Component
-              } = ar;
-              return (
-                <Route
-                  path={path}
-                  render={props => <Component
-                    {...props}
-                  />}
-                  exact
-                  key={index}
-                />
-              );
-            })
-          }
-        </Switch>
-        <GoogleAnalytics />
-      </BrowserRouter>
-    </FirebaseContext.Provider>
+    <Firebase>
+      {
+        firebase => <>
+          <FirebaseContext.Provider value={firebase}>
+            <BrowserRouter>
+              <Switch>
+                {
+                  appRoutes.map((ar, index) => {
+                    const {
+                      path,
+                      component: Component
+                    } = ar;
+                    return (
+                      <Route
+                        path={path}
+                        render={props => <Component
+                          {...props}
+                        />}
+                        exact
+                        key={index}
+                      />
+                    );
+                  })
+                }
+              </Switch>
+              <GoogleAnalytics />
+            </BrowserRouter>
+          </FirebaseContext.Provider>
+        </>
+      }
+    </Firebase>
   </React.Suspense>,
   document.getElementById("root")
 );

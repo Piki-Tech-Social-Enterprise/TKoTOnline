@@ -41,7 +41,7 @@ const FacebookLinksSection = props => {
       const {
         firebase
       } = props;
-      const dbFacebookLinks = await firebase.getDbFacebookLinksAsArray();
+      const dbFacebookLinks = await firebase.facebookLinkRepository.getDbFacebookLinksAsArray();
       sortArray(dbFacebookLinks, 'sequence', 'desc');
       setState(s => ({
         ...s,
@@ -62,7 +62,7 @@ const FacebookLinksSection = props => {
             <h3 className="text-uppercase">FB Feeds</h3>
             {
               isLoading
-                ? <LoadingSpinner />
+                ? <LoadingSpinner caller="FacebookLinksSection" />
                 : <>
                   <Container className="my-3" fluid>
                     <Row className="cards-row">

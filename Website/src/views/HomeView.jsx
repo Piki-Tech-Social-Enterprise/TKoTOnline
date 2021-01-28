@@ -70,10 +70,19 @@ const HomeView = props => {
         firebase
       } = props;
       const {
-        getDbSettingsValues,
-        getStorageFileDownloadURL,
-        getDbNewsFeedsAsArray
+        settingsRepository,
+        storageRepository,
+        newsFeedRepository
       } = firebase;
+      const {
+        getDbSettingsValues
+      } = settingsRepository;
+      const {
+        getStorageFileDownloadURL
+      } = storageRepository;
+      const {
+        getDbNewsFeedsAsArray
+      } = newsFeedRepository;
       const dbSettings = await getDbSettingsValues(true);
       const {
         homePageHeaderImageUrl,

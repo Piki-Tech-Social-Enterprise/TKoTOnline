@@ -65,7 +65,7 @@ const AboutUsView = props => {
       const {
         firebase
       } = props;
-      const dbSettings = await firebase.getDbSettingsValues(true);
+      const dbSettings = await firebase.settingsRepository.getDbSettingsValues(true);
       setState(s => ({
         ...s,
         isLoading: false,

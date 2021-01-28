@@ -40,7 +40,7 @@ const NewsFeedView = props => {
       const {
         nfid
       } = match.params;
-      const dbNewsFeed = await firebase.getDbNewsFeedValue(nfid);
+      const dbNewsFeed = await firebase.newsFeedRepository.getDbNewsFeedValue(nfid);
       const {
         externalUrl,
         imageUrl
@@ -48,7 +48,7 @@ const NewsFeedView = props => {
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
-        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
         setState(s => ({
           ...s,
           isLoading: false,

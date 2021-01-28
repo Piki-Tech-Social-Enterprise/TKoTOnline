@@ -40,11 +40,11 @@ const IwiChairView = props => {
       const {
         imid
       } = match.params;
-      const dbIwiMember = await firebase.getDbIwiMemberValue(imid);
+      const dbIwiMember = await firebase.iwiMembersRepository.getDbIwiMemberValue(imid);
       const {
         iwiChairImageURL
       } = dbIwiMember;
-      const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, firebase.getStorageFileDownloadURL);
+      const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,

@@ -50,9 +50,15 @@ const EventsSection = props => {
         firebase,
         isHomePage
       } = props;
+      const {
+        eventsRepository
+      } = firebase;
+      const {
+        getDbEventsAsArray
+      } = eventsRepository;
       const dbEvents = isHomePage
-        ? await firebase.getDbEventsAsArray(false, 'isFeatured')
-        : await firebase.getDbEventsAsArray();
+        ? await getDbEventsAsArray(false, 'isFeatured')
+        : await getDbEventsAsArray();
       const now = new Date();
       setState(s => ({
         ...s,

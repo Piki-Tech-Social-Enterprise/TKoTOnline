@@ -42,7 +42,7 @@ const CovidListView = props => {
       const {
         firebase
       } = props;
-      const dbCovidList = await firebase.getDbCovidListAsArray();
+      const dbCovidList = await firebase.covidListRepository.getDbCovidListAsArray();
       setState(s => ({
         ...s,
         isLoading: false,

@@ -43,7 +43,7 @@ const IwiMembersSection = props => {
       const {
         firebase
       } = props;
-      const dbIwiMembers = await firebase.getDbIwiMembersAsArray();
+      const dbIwiMembers = await firebase.iwiMembersRepository.getDbIwiMembersAsArray();
       sortArray(dbIwiMembers, 'sequence', 'desc');
       // debugger;
       setState(s => ({

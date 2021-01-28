@@ -42,7 +42,7 @@ const NewsFeedsView = props => {
       const {
         firebase
       } = props;
-      const dbNewsFeeds = await firebase.getDbNewsFeedsAsArray();
+      const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray();
       setState(s => ({
         ...s,
         isLoading: false,

@@ -44,7 +44,7 @@ const CovidView = props => {
       const {
         cvid
       } = match.params;
-      const dbCovid = await firebase.getDbCovidValue(cvid);
+      const dbCovid = await firebase.covidListRepository.getDbCovidValue(cvid);
       const {
         externalUrl,
         imageUrl
@@ -52,7 +52,7 @@ const CovidView = props => {
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
-        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.getStorageFileDownloadURL);
+        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
         setState(s => ({
           ...s,
           isLoading: false,

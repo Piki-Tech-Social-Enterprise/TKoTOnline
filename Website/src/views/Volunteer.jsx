@@ -104,7 +104,7 @@ const Volunteer = props => {
         ignoreAuth: true
       }
     };
-    const result = await firebase.call(functionsRepositoryOptions);
+    const result = await firebase.functionsRepository.call(functionsRepositoryOptions);
     console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
     return result.data;
   };
@@ -150,7 +150,7 @@ const Volunteer = props => {
         }
       }
       if (displayMessage === defaultDisplayMesssage) {
-        await props.firebase.saveDbVolunteer({
+        await props.firebase.volunteersRepository.saveDbVolunteer({
           active: true,
           created: now.toString(),
           createdBy: firstName,
@@ -192,7 +192,7 @@ const Volunteer = props => {
   };
   useEffect(() => {
     const existingVolunteers = async () => {
-      const existingDbVolunteers = await props.firebase.getDbVolunteersAsArray(true);
+      const existingDbVolunteers = await props.firebase.volunteersRepository.getDbVolunteersAsArray(true);
       existingDbVolunteers.map((volunteer) => {
         existingEmails.push(volunteer.email);
         return existingEmails;

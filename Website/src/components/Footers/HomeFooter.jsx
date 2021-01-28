@@ -135,7 +135,7 @@ const HomeFooter = props => {
       } else if (!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
         displayMessage = 'Email is invalid.';
       } else {
-        await firebase.saveDbContact({
+        await firebase.contactRepository.saveDbContact({
           active: true,
           created: now.toString(),
           createdBy: email,

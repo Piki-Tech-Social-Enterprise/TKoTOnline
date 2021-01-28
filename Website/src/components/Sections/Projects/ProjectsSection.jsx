@@ -48,9 +48,15 @@ const ProjectsSection = props => {
         firebase,
         isHomePage
       } = props;
+      const {
+        projectsRepository
+      } = firebase;
+      const {
+        getDbProjectsAsArray
+      } = projectsRepository;
       const dbProjects = isHomePage
-        ? await firebase.getDbProjectsAsArray(false, 'isFeatured')
-        : await firebase.getDbProjectsAsArray();
+        ? await getDbProjectsAsArray(false, 'isFeatured')
+        : await getDbProjectsAsArray();
       setState(s => ({
         ...s,
         isLoading: false,

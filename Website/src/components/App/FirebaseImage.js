@@ -76,7 +76,7 @@ const FirebaseImage = props => {
       let imageSrc = src;
       if (isNullOrEmpty(imageSrc)) {
         try {
-          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.getStorageFileDownloadURL);
+          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.storageRepository.getStorageFileDownloadURL);
         } catch (error) {
           const {
             code,
@@ -84,7 +84,7 @@ const FirebaseImage = props => {
           } = error;
           console.error(`Firebase Image Get Src Error for '${imageURLToUse}': ${message} (${code})`);
           if (code === 'storage/object-not-found') {
-            imageSrc = await firebase.getStorageFileDownloadURL(imageURL);
+            imageSrc = await firebase.storageRepository.getStorageFileDownloadURL(imageURL);
           }
         }
         // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);

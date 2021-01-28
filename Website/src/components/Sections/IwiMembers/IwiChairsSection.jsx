@@ -128,7 +128,7 @@ const IwiChairSection = props => {
       const {
         firebase
       } = props;
-      const dbIwiMembers = await firebase.getDbIwiMembersAsArray();
+      const dbIwiMembers = await firebase.iwiMembersRepository.getDbIwiMembersAsArray();
       sortArray(dbIwiMembers, 'sequence', 'desc');
       setState(s => ({
         ...s,
@@ -150,7 +150,7 @@ const IwiChairSection = props => {
             <div className="my-3 iwi-chairs-carousel">
               {
                 state.isLoading
-                  ? <LoadingSpinner />
+                  ? <LoadingSpinner caller="IwiChairSection" />
                   : dbIwiMembers.length === 0
                     ? <NoDataToDisplayDiv name="Iwi Chairs" isHomePage={isHomePage} />
                     : <IwiChairCarousel
@@ -207,7 +207,7 @@ const IwiChairSection = props => {
               {/* <Row>
                 {
                   isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="IwiChairSection" />
                     : dbIwiMembers.map((dbIwiMember, index) => {
                       const {
                         iwiChairName,

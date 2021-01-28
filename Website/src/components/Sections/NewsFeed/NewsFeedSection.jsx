@@ -163,7 +163,7 @@ const NewsFeedSection = props => {
               <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
                 {
                   isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="NewsFeedSection" />
                     : dbNewsFeeds.length === 0
                       ? <NoDataToDisplayDiv name={!isTKoTMedia ? newsFeeds.replace('/', '') : mediaListPage.replace('/', '')} isHomePage={isHomePage} />
                       : dbNewsFeeds.map((dbNewsFeed, index) => {
