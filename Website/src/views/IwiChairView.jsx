@@ -60,7 +60,7 @@ const IwiChairView = props => {
     <>
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="IwiChairView" />
           : <div id="IwiChair">
             <TKoTHelmet
               name={state.dbIwiMember.iwiChairName}

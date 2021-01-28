@@ -6,6 +6,7 @@ import {
 
 const LoadingSpinner = props => {
   const {
+    caller,
     outerClassName,
     innerClassName,
     iconClassName,
@@ -22,6 +23,7 @@ const LoadingSpinner = props => {
         !hasPastDelay
           ? null
           : <>
+            {console.log(`LoadingSpinner.caller: ${caller}`)}
             <div className={outerClassName}>
               <h1 className={innerClassName}>
                 <i className={iconClassName} />
@@ -34,6 +36,7 @@ const LoadingSpinner = props => {
 };
 
 LoadingSpinner.propTypes = {
+  caller: PropTypes.string.isRequired,
   outerClassName: PropTypes.string,
   innerClassName: PropTypes.string,
   iconClassName: PropTypes.string,

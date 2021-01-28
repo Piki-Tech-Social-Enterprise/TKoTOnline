@@ -148,7 +148,7 @@ if (process.env.NODE_ENV === 'production') {
 updatePreloads();
 
 ReactDOM.render(
-  <React.Suspense fallback={<PageLoadingSpinner />}>
+  <React.Suspense fallback={<PageLoadingSpinner caller="Root" />}>
     <FirebaseContext.Provider value={new Firebase()}>
       <BrowserRouter>
         <Switch>

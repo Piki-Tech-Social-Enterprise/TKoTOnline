@@ -44,7 +44,7 @@ const TermsOfServiceView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="TermsOfServiceView" />
           : <>
             <HomeNavbar
               initalTransparent
@@ -53,7 +53,7 @@ const TermsOfServiceView = () => {
             <Container className="pt-5 px-5 mt-3">
               <Row>
                 <Col className="px-0 mt-5">
-                  <h3>TERMS OF USE ("Terms")</h3>
+                  <h3 className="text-uppercase text-center">Terms of Use ("T<span className="text-lowercase">erms</span>")</h3>
                   <p>Last updated: 30 April 2020</p>
                   <h5>Overview</h5>
                   <p>Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the website (the "Service") operated by Te Kahu o Taonui ("us", "we", or "our"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>

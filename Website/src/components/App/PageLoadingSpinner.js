@@ -4,6 +4,7 @@ import LoadingSpinner from 'components/App/LoadingSpinner';
 
 const PageLoadingSpinner = props => {
   const {
+    caller,
     outerClassName,
     innerClassName,
     iconClassName,
@@ -12,6 +13,7 @@ const PageLoadingSpinner = props => {
   return (
     <>
       <LoadingSpinner
+        caller={caller}
         outerClassName={outerClassName}
         innerClassName={innerClassName}
         iconClassName={iconClassName}
@@ -22,6 +24,7 @@ const PageLoadingSpinner = props => {
 };
 
 PageLoadingSpinner.propTypes = {
+  caller: PropTypes.string.isRequired,
   outerClassName: PropTypes.string,
   innerClassName: PropTypes.string,
   iconClassName: PropTypes.string,

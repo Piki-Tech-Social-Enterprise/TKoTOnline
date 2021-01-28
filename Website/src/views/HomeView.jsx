@@ -124,7 +124,7 @@ const HomeView = props => {
       />
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="HomeView" />
           : <>
             <Scrollspy
               names={[

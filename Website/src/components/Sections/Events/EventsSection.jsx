@@ -93,7 +93,7 @@ const EventsSection = props => {
               <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
                 {
                   isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="EventsSection" />
                     : dbEvents.length === 0
                       ? <NoDataToDisplayDiv name="Events" isHomePage={isHomePage} color={isHomePage ? 'light' : 'dark'} />
                       : dbEvents.map((dbEvent, index) => {

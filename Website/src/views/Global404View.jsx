@@ -47,7 +47,7 @@ const Global404View = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="Global404View" />
           : <>
             <HomeNavbar
               initalTransparent
@@ -63,7 +63,9 @@ const Global404View = () => {
                   />
                 </Col>
                 <Col xs={12} sm={9} className="mt-5">
-                  <h1>404 - Auē Taukuri Ē!</h1>
+                  <h1 className="font-weight-bold" style={{
+                    fontFamily: 'inherit'
+                  }}>404 - Auē Taukuri Ē!</h1>
                   <h3>Aroha mai e hoa, something went wrong?!</h3>
                   <p>If you entered a web address, please check it was correct.</p>
                   <p>Kia pai to ra!</p>

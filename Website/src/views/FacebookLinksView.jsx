@@ -40,7 +40,7 @@ const FacebookLinksView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="FacebookLinksView" />
           : <>
             <HomeNavbar
               initalTransparent

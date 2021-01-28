@@ -64,7 +64,7 @@ const EventView = props => {
     <>
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="EventView" />
           : <div id="Event">
             <TKoTHelmet
               name={state.dbEvent.header}

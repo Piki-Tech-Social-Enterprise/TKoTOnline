@@ -44,7 +44,7 @@ const PrivacyPolicyView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="PrivacyPolicyView" />
           : <>
             <HomeNavbar
               initalTransparent
@@ -53,7 +53,7 @@ const PrivacyPolicyView = () => {
             <Container className="pt-5 px-5 mt-3">
               <Row>
                 <Col className="px-0 mt-5">
-                  <h3>PRIVACY POLICY</h3>
+                  <h3 className="text-uppercase text-center">Privacy Policy</h3>
                   <p>We collect personal information from you, including information about your:</p>
                   <ul className="p">
                     <li>First Name</li>

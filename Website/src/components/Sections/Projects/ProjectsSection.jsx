@@ -72,7 +72,7 @@ const ProjectsSection = props => {
               <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
                 {
                   isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="ProjectsSection" />
                     : dbProjects.length === 0
                       ? <NoDataToDisplayDiv name="Projects" isHomePage={isHomePage} />
                       : dbProjects.map((dbProject, index) => {

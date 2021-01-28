@@ -67,7 +67,7 @@ const IwiMembersSection = props => {
               <Row>
                 {
                   state.isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="IwiMembersSection" />
                     : state.iwiMembers.length === 0
                       ? <NoDataToDisplayDiv name="Iwi Members" />
                       : state.iwiMembers.map((iwiMember, index) => {

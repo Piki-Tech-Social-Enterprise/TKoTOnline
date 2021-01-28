@@ -147,7 +147,7 @@ const CovidSection = props => {
               <Row className={`cards-row ${isHomePage ? 'flex-row flex-nowrap' : ''}`}>
                 {
                   isLoading
-                    ? <LoadingSpinner />
+                    ? <LoadingSpinner caller="CovidSection" />
                     : dbCovidList.length === 0
                       ? <NoDataToDisplayDiv name={covidListPage.replace('/', '')} isHomePage={isHomePage} />
                       : dbCovidList.map((dbCovid, index) => {

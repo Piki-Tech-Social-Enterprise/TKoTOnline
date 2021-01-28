@@ -65,7 +65,7 @@ const NewsFeedView = props => {
     <>
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="NewsFeedView" />
           : <div id="NewsFeed">
             <TKoTHelmet
               name={state.dbNewsFeed.header}

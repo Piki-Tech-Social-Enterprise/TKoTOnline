@@ -40,7 +40,7 @@ const ResourcesView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="ResourcesView" />
           : <>
             <HomeNavbar
               initalTransparent

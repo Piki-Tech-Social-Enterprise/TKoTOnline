@@ -40,7 +40,7 @@ const EventsView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="EventsView" />
           : <>
             <HomeNavbar
               initalTransparent

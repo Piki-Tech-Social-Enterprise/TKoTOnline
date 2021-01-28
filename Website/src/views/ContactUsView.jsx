@@ -125,8 +125,8 @@ const ContactUsView = props => {
       <Container className="pt-5 px-5 mt-3">
         <Row>
           <Col className="px-0 mt-5">
-            <span className="h3">CONTACT US</span>
-            <p>We would like to hear from you</p>
+            <h3 className="text-uppercase text-center">Contact Us</h3>
+            <p>We would like to hear from you.</p>
             <Container className="p-0">
               <Row noGutters>
                 <Col>

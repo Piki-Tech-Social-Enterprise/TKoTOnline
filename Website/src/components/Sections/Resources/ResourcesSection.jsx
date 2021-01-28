@@ -84,7 +84,7 @@ const ResourcesSection = props => {
             <h3 className="text-uppercase">Our Resources &amp; Downloads</h3>
             {
               isLoading
-                ? <LoadingSpinner />
+                ? <LoadingSpinner caller="ResourcesSection" />
                 : <>
                   {
                     dbCategorisedResourcesAsArray.length === 0

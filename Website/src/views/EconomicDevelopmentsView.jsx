@@ -40,7 +40,7 @@ const EconomicDevelopmentsView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="EconomicDevelopmentsView" />
           : <>
             <HomeNavbar
               initalTransparent

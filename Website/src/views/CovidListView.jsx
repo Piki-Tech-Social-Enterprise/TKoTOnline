@@ -59,7 +59,7 @@ const CovidListView = props => {
     <>
     {
       isLoading
-        ? <PageLoadingSpinner />
+        ? <PageLoadingSpinner caller="CovidListView" />
         : <>
           <HomeNavbar
             initalTransparent

@@ -40,7 +40,7 @@ const ProjectsView = () => {
     <>
       {
         isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="ProjectsView" />
           : <>
             <HomeNavbar
               initalTransparent

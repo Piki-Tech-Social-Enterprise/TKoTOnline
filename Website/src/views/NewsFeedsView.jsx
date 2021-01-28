@@ -59,7 +59,7 @@ const NewsFeedsView = props => {
     <>
     {
       isLoading
-        ? <PageLoadingSpinner />
+        ? <PageLoadingSpinner caller="NewsFeedsView" />
         : <>
           <HomeNavbar
             initalTransparent

@@ -59,7 +59,7 @@ const ProjectView = props => {
     <>
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="ProjectView" />
           : <div id="Project">
             <TKoTHelmet
               name={state.dbProject.header}

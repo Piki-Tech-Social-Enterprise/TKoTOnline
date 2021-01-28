@@ -86,7 +86,7 @@ const EconomicDevelopmentsSection = props => {
             <h3 className="text-uppercase">Our Economic Development</h3>
             {
               isLoading
-                ? <LoadingSpinner />
+                ? <LoadingSpinner caller="EconomicDevelopmentsSection" />
                 : <>
                   {
                     dbCategorisedEconomicDevelopmentsAsArray.length === 0

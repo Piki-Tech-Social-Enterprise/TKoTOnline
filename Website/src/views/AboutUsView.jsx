@@ -93,7 +93,7 @@ const AboutUsView = props => {
       />
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="AboutUsView" />
           : <>
             <HomeNavbar
               initalTransparent
@@ -102,7 +102,7 @@ const AboutUsView = props => {
             <Container className="p-5 mt-5">
               <Row>
                 <Col className="px-0 mt-5">
-                  <h3>ABOUT US</h3>
+                  <h3 className="text-uppercase text-center">About Us</h3>
                   {
                     state.settings.homePageVideoSourceUrl
                       ? <iframe

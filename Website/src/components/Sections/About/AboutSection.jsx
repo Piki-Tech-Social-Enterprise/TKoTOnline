@@ -60,7 +60,7 @@ const AboutSection = props => {
     <>
       {
         isLoading
-          ? <LoadingSpinner />
+          ? <LoadingSpinner caller="AboutSection" />
           : <>
             <div className="tkot-section">
               <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>

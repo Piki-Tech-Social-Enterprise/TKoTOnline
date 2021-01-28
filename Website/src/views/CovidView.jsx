@@ -69,7 +69,7 @@ const CovidView = props => {
     <>
       {
         state.isLoading
-          ? <PageLoadingSpinner />
+          ? <PageLoadingSpinner caller="CovidView" />
           : <div id="Covid">
             <TKoTHelmet
               name={state.dbCovid.header}
