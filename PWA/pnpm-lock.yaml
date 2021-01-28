@@ -25,7 +25,7 @@ dependencies:
   react-tagsinput-2: 3.19.8_react@17.0.1
   reactstrap: 8.9.0_react-dom@17.0.1+react@17.0.1
   recompose: 0.30.0_react@17.0.1
-  sweetalert2: 10.13.3
+  sweetalert2: 10.14.0
   sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
 devDependencies:
   babel-cli: 6.26.0
@@ -12667,10 +12667,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.13.3:
+  /sweetalert2/10.14.0:
     dev: false
     resolution:
-      integrity: sha512-kSvTkXvc59+vPf9CfZ/wc/uvFkccxoOMLK1aUibN0mXU4hbYg/NylBTlmfvuUjJQ5SWL3X6s8w7AG5croH8U1w==
+      integrity: sha512-EBUh4k9qyRRsttm9X9j7WUhLExetvTJpcbp1VTMJCpuI2UwHLesXMIw9M+UeuqBywv0UjNMR5PKH7Qnv65m8rw==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -13827,6 +13827,6 @@ specifiers:
   react-tagsinput-2: ^3.19.8
   reactstrap: 8.9.0
   recompose: ^0.30.0
-  sweetalert2: ^10.13.3
+  sweetalert2: ^10.14.0
   sweetalert2-react: ^0.8.3
   typescript: 4.1.3
