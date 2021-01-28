@@ -13,7 +13,7 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const CovidSection = lazy(async () => await import('components/Sections/Covid'));
@@ -59,10 +59,7 @@ const CovidListView = props => {
     <>
     {
       isLoading
-        ? <LoadingSpinner
-          outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
-          innerClassName="m-5 p-5 text-center"
-        />
+        ? <PageLoadingSpinner />
         : <>
           <HomeNavbar
             initalTransparent

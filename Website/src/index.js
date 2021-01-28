@@ -25,7 +25,7 @@ import {
 import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
-import LoadingSpinner from 'components/App/LoadingSpinner';
+import PageLoadingSpinner from 'components/App/PageLoadingSpinner';
 import 'lazysizes';
 import Routes from 'components/Routes/routes';
 import {
@@ -148,10 +148,7 @@ if (process.env.NODE_ENV === 'production') {
 updatePreloads();
 
 ReactDOM.render(
-  <React.Suspense fallback={<LoadingSpinner
-    outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
-    innerClassName="m-5 p-5 text-center"
-  />}>
+  <React.Suspense fallback={<PageLoadingSpinner />}>
     <FirebaseContext.Provider value={new Firebase()}>
       <BrowserRouter>
         <Switch>

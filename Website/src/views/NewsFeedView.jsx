@@ -19,7 +19,7 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
@@ -65,10 +65,7 @@ const NewsFeedView = props => {
     <>
       {
         state.isLoading
-          ? <LoadingSpinner
-            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
-            innerClassName="m-5 p-5 text-center"
-          />
+          ? <PageLoadingSpinner />
           : <div id="NewsFeed">
             <TKoTHelmet
               name={state.dbNewsFeed.header}

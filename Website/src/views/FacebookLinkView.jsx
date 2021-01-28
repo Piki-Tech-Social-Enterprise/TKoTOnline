@@ -61,7 +61,7 @@ const FacebookLinkView = props => {
       <div id="fb-root"></div>
       {
         state.isLoading
-          ? <LoadingSpinner outerClassName="ignore" innerClassName="ignore" />
+          ? <LoadingSpinner />
           : <div
             className="fb-page"
             data-href={state.dbFacebookLink.url}

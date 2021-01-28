@@ -33,7 +33,7 @@ import {
 const {
   aboutUs
 } = Routes;
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
@@ -93,10 +93,7 @@ const AboutUsView = props => {
       />
       {
         state.isLoading
-          ? <LoadingSpinner
-            outerClassName="p-5 tkot-secondary-color-black-bg-color-20-pc vh-100"
-            innerClassName="m-5 p-5 text-center"
-          />
+          ? <PageLoadingSpinner />
           : <>
             <HomeNavbar
               initalTransparent
