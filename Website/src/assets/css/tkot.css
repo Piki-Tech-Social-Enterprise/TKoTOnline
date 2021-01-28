@@ -519,7 +519,7 @@
     width: 100%; }
 
 .tkot-logo {
-  background: url("../img/tkot/tkot-logo-only-black.webp") no-repeat;
+  background: url("/static/img/tkot-logo-only-black.webp") no-repeat;
   min-height: 64px;
   min-width: 32px; }
 

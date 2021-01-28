@@ -5,12 +5,17 @@ import {
 } from 'react-lazy-no-flicker';
 
 const LoadingSpinner = props => {
-  const hasPastDelay = usePastDelay(800);
   const {
     outerClassName,
     innerClassName,
-    iconClassName
+    iconClassName,
+    delayMs
   } = props;
+  const {
+    REACT_APP_FLICKER_DELAY
+  } = process.env;
+  const DEFAULT_FLICKER_DELAY = 800;
+  const hasPastDelay = usePastDelay(Number(delayMs || REACT_APP_FLICKER_DELAY || DEFAULT_FLICKER_DELAY));
   return (
     <>
       {
@@ -31,12 +36,14 @@ const LoadingSpinner = props => {
 LoadingSpinner.propTypes = {
   outerClassName: PropTypes.string,
   innerClassName: PropTypes.string,
-  iconClassName: PropTypes.string
+  iconClassName: PropTypes.string,
+  delayMs: PropTypes.number
 };
 LoadingSpinner.defaultProps = {
   outerClassName: 'my-5 p-5',
   innerClassName: 'my-5 p-5',
-  iconClassName: 'fas tkot-logo fa-spin'
+  iconClassName: 'fas tkot-logo fa-spin',
+  delayMs: 0
 };
 
 export default LoadingSpinner;
