@@ -12,7 +12,6 @@ import {
   defaultPageSetup
 } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
-import tkotLogoOnlyBlackImage from 'assets/img/tkot/tkot-logo-only-black.png';
 import {
   lazy
 } from 'react-lazy-no-flicker';
@@ -58,7 +57,7 @@ const Global404View = () => {
                 <Col sm={3} className="d-none d-sm-block mt-5">
                   <img
                     alt="404"
-                    src={tkotLogoOnlyBlackImage}
+                    src="/static/img/tkot-logo-only-black.png"
                     className="global-404-image"
                   />
                 </Col>

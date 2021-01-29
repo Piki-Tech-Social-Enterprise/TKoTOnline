@@ -89,22 +89,22 @@ const appRoutes = [
     path: Routes.facebookLinks,
     component: lazy(async () => await import('views/FacebookLinksView'))
   },
-  {
-    path: Routes.facebookLink,
-    component: lazy(async () => await import('views/FacebookLinkView'))
-  },
-  {
-    path: Routes.resourceCardPage,
-    component: lazy(async () => await import('views/ResourceCardView'))
-  },
+  // {
+  //   path: Routes.facebookLink,
+  //   component: lazy(async () => await import('views/FacebookLinkView'))
+  // },
+  // {
+  //   path: Routes.resourceCardPage,
+  //   component: lazy(async () => await import('views/ResourceCardView'))
+  // },
   {
     path: Routes.economicDevelopmentsPage,
     component: lazy(async () => await import('views/EconomicDevelopmentsView'))
   },
-  {
-    path: Routes.economicDevelopmentCardPage,
-    component: lazy(async () => await import('views/EconomicDevelopmentCardView'))
-  },
+  // {
+  //   path: Routes.economicDevelopmentCardPage,
+  //   component: lazy(async () => await import('views/EconomicDevelopmentCardView'))
+  // },
   {
     path: Routes.mediaListPage,
     component: lazy(async () => await import('views/NewsFeedsView'))
@@ -121,10 +121,10 @@ const appRoutes = [
     path: Routes.covidPage,
     component: lazy(async () => await import('views/CovidView'))
   },
-  {
-    path: '',
-    component: lazy(async () => await import('views/Global404View'))
-  }
+  // {
+  //   path: '',
+  //   component: lazy(async () => await import('views/Global404View'))
+  // }
 ];
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
 const updatePreloads = async () => {

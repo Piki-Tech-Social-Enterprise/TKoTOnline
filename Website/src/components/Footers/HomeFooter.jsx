@@ -289,7 +289,7 @@ const HomeFooter = props => {
             {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
             <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={meaLogo} src={meaLogo} width="95" height="95" />
             {/* </a> */}
-            <a href="https://PikiTech.co.nz" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
+            <a href="https://facebook.com/pikitec" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
               <img className="ml-3 created-by-logo-image lazyload" alt="Piki Tech Limited" data-src={pikitechLogo} src={pikitechLogo} width="95" height="95" />
             </a>
           </Col>
