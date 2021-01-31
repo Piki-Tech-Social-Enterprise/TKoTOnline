@@ -1,22 +1,33 @@
 const initSettings = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'settings'
+  });
   const getDbSettings = async () => {
-    return await database.ref('settings');
+    return await dbRepository.getDbItems();
   };
-  const getDbSettingsValues = async (includeInactive, childValue = true) => {
-    const existingDbSettings = await getDbSettings();
-    const dbSettingRef = !includeInactive
-      ? await existingDbSettings
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbSettings
-        .once('value');
-    const dbSettings = await dbSettingRef.val();
-    return dbSettings && Object.entries(dbSettings)[0][1];
+  const getDbSettingsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
+  };
+  const getDbSetting = async sid => {
+    return await dbRepository.getDbItem(sid);
+  };
+  const getDbSettingValue = async sid => {
+    return await dbRepository.getDbItemValue(sid);
+  };
+  const getDbSettingsValues = async () => {
+    const dbSettingsAsArray = await getDbSettingsAsArray()
+    return dbSettingsAsArray[0];
   };
   return {
+    dbRepository,
     getDbSettings,
+    getDbSettingsAsArray,
+    getDbSetting,
+    getDbSettingValue,
     getDbSettingsValues
   };
 };

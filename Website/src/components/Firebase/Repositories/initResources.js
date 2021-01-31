@@ -1,38 +1,25 @@
 const initResources = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'resources'
+  });
   const getDbResources = async () => {
-    return await database.ref('resources');
+    return await dbRepository.getDbItems();
   };
-  const getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbResources = await getDbResources();
-    const dbResourcesRef = !includeInactive
-      ? await existingDbResources
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbResources
-        .orderByChild(childName)
-        .once('value');
-    const dbResources = await dbResourcesRef.val();
-    const dbResourcesAsArray = [];
-    if (dbResources) {
-      Object.keys(dbResources).map(key =>
-        dbResourcesAsArray.push(dbResources[key])
-      );
-    }
-    return dbResourcesAsArray.filter(c => includeInactive || c.active);
+  const getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
-  const getDbResource = async pid => {
-    return await database.ref(`resources/${pid}`);
+  const getDbResource = async rid => {
+    return await dbRepository.getDbItem(rid);
   };
-  const getDbResourceValue = async pid => {
-    const existingDbResource = await getDbResource(pid);
-    const dbResourceRef = await existingDbResource.once('value');
-    const dbResource = await dbResourceRef.val();
-    return dbResource;
+  const getDbResourceValue = async rid => {
+    return await dbRepository.getDbItemValue(rid);
   };
   return {
+    dbRepository,
     getDbResources,
     getDbResourcesAsArray,
     getDbResource,

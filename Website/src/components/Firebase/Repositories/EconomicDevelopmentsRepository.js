@@ -30,17 +30,6 @@ class EconomicDevelopmentsRepository extends BaseRepository {
     }
     return dbEconomicDevelopmentAsArray.filter(ed => includeInactive || ed.active);
   }
-
-  getDbEconomicDevelopment = async edid => {
-    return await this.db.ref(`economicDevelopments/${edid}`);
-  }
-
-  getDbEconomicDevelopmentValue = async edid => {
-    const existingDbEconomicDevelopment = await this.getDbEconomicDevelopment(edid);
-    const dbEconomicDevelopmentRef = await existingDbEconomicDevelopment.once('value');
-    const dbEconomicDevelopment = await dbEconomicDevelopmentRef.val();
-    return dbEconomicDevelopment;
-  }
 }
 
 export default EconomicDevelopmentsRepository;

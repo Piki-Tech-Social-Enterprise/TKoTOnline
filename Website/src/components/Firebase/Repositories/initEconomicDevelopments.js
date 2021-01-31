@@ -1,38 +1,25 @@
-const initEconomicDevelopments = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+const initEconomicDevelopment = async initialisedFirebaseApp => {
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'economicDevelopments'
+  });
   const getDbEconomicDevelopments = async () => {
-    return await database.ref('economicDevelopments');
+    return await dbRepository.getDbItems();
   };
-  const getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbEconomicDevelopments = await getDbEconomicDevelopments();
-    const dbEconomicDevelopmentsRef = !includeInactive
-      ? await existingDbEconomicDevelopments
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbEconomicDevelopments
-        .orderByChild(childName)
-        .once('value');
-    const dbEconomicDevelopments = await dbEconomicDevelopmentsRef.val();
-    const dbEconomicDevelopmentsAsArray = [];
-    if (dbEconomicDevelopments) {
-      Object.keys(dbEconomicDevelopments).map(key =>
-        dbEconomicDevelopmentsAsArray.push(dbEconomicDevelopments[key])
-      );
-    }
-    return dbEconomicDevelopmentsAsArray.filter(c => includeInactive || c.active);
+  const getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
   const getDbEconomicDevelopment = async edid => {
-    return await database.ref(`economicDevelopments/${edid}`);
+    return await dbRepository.getDbItem(edid);
   };
   const getDbEconomicDevelopmentValue = async edid => {
-    const existingDbEconomicDevelopment = await getDbEconomicDevelopment(edid);
-    const dbEconomicDevelopmentRef = await existingDbEconomicDevelopment.once('value');
-    const dbEconomicDevelopment = await dbEconomicDevelopmentRef.val();
-    return dbEconomicDevelopment;
+    return await dbRepository.getDbItemValue(edid);
   };
   return {
+    dbRepository,
     getDbEconomicDevelopments,
     getDbEconomicDevelopmentsAsArray,
     getDbEconomicDevelopment,
@@ -40,4 +27,4 @@ const initEconomicDevelopments = async initialisedFirebaseApp => {
   };
 };
 
-export default initEconomicDevelopments;
+export default initEconomicDevelopment;

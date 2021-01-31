@@ -1,38 +1,25 @@
 const initProjects = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'projects'
+  });
   const getDbProjects = async () => {
-    return await database.ref('projects');
+    return await dbRepository.getDbItems();
   };
-  const getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbProjects = await getDbProjects();
-    const dbProjectsRef = !includeInactive
-      ? await existingDbProjects
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbProjects
-        .orderByChild(childName)
-        .once('value');
-    const dbProjects = await dbProjectsRef.val();
-    const dbProjectsAsArray = [];
-    if (dbProjects) {
-      Object.keys(dbProjects).map(key =>
-        dbProjectsAsArray.push(dbProjects[key])
-      );
-    }
-    return dbProjectsAsArray.filter(c => includeInactive || c.active);
+  const getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
   const getDbProject = async pid => {
-    return await database.ref(`projects/${pid}`);
+    return await dbRepository.getDbItem(pid);
   };
   const getDbProjectValue = async pid => {
-    const existingDbProject = await getDbProject(pid);
-    const dbProjectRef = await existingDbProject.once('value');
-    const dbProject = await dbProjectRef.val();
-    return dbProject;
+    return await dbRepository.getDbItemValue(pid);
   };
   return {
+    dbRepository,
     getDbProjects,
     getDbProjectsAsArray,
     getDbProject,

@@ -1,38 +1,25 @@
 const initEvents = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'events'
+  });
   const getDbEvents = async () => {
-    return await database.ref('events');
+    return await dbRepository.getDbItems();
   };
-  const getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbEvents = await getDbEvents();
-    const dbEventsRef = !includeInactive
-      ? await existingDbEvents
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbEvents
-        .orderByChild(childName)
-        .once('value');
-    const dbEvents = await dbEventsRef.val();
-    const dbEventsAsArray = [];
-    if (dbEvents) {
-      Object.keys(dbEvents).map(key =>
-        dbEventsAsArray.push(dbEvents[key])
-      );
-    }
-    return dbEventsAsArray.filter(c => includeInactive || c.active);
+  const getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
-  const getDbEvent = async pid => {
-    return await database.ref(`events/${pid}`);
+  const getDbEvent = async eid => {
+    return await dbRepository.getDbItem(eid);
   };
-  const getDbEventValue = async pid => {
-    const existingDbEvent = await getDbEvent(pid);
-    const dbEventRef = await existingDbEvent.once('value');
-    const dbEvent = await dbEventRef.val();
-    return dbEvent;
+  const getDbEventValue = async eid => {
+    return await dbRepository.getDbItemValue(eid);
   };
   return {
+    dbRepository,
     getDbEvents,
     getDbEventsAsArray,
     getDbEvent,

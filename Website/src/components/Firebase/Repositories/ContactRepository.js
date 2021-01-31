@@ -7,30 +7,6 @@ class ContactRepository extends BaseRepository {
     this.db = firebaseApp.database();
   }
 
-  getDbContacts = async () => {
-    return await this.db.ref('contacts');
-  }
-
-  getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbContact = await this.getDbContacts();
-    const dbContactRef = !includeInactive
-      ? await existingDbContact
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbContact
-        .orderByChild(childName)
-        .once('value');
-    const dbContact = await dbContactRef.val();
-    const dbContactsAsArray = [];
-    if (dbContact) {
-      Object.keys(dbContact).map(key =>
-        dbContactsAsArray.push(dbContact[key])
-      );
-    }
-    return dbContactsAsArray.filter(c => includeInactive || c.active);
-  }
-
   getDbContact = async cid => {
     return await this.db.ref(`contacts/${cid}`);
   }

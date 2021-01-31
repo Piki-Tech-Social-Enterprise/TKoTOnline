@@ -30,17 +30,6 @@ class ResourcesRepository extends BaseRepository {
     }
     return dbResourceAsArray.filter(r => includeInactive || r.active);
   }
-
-  getDbResource = async rid => {
-    return await this.db.ref(`resources/${rid}`);
-  }
-
-  getDbResourceValue = async rid => {
-    const existingDbResource = await this.getDbResource(rid);
-    const dbResourceRef = await existingDbResource.once('value');
-    const dbResource = await dbResourceRef.val();
-    return dbResource;
-  }
 }
 
 export default ResourcesRepository;

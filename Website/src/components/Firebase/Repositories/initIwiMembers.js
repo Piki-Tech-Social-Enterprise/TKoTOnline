@@ -1,38 +1,25 @@
-const initIwiMembers = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+const initIwiMember = async initialisedFirebaseApp => {
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'iwiMembers'
+  });
   const getDbIwiMembers = async () => {
-    return await database.ref('iwiMembers');
+    return await dbRepository.getDbItems();
   };
-  const getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbIwiMembers = await getDbIwiMembers();
-    const dbIwiMembersRef = !includeInactive
-      ? await existingDbIwiMembers
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbIwiMembers
-        .orderByChild(childName)
-        .once('value');
-    const dbIwiMembers = await dbIwiMembersRef.val();
-    const dbIwiMembersAsArray = [];
-    if (dbIwiMembers) {
-      Object.keys(dbIwiMembers).map(key =>
-        dbIwiMembersAsArray.push(dbIwiMembers[key])
-      );
-    }
-    return dbIwiMembersAsArray.filter(c => includeInactive || c.active);
+  const getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
   const getDbIwiMember = async imid => {
-    return await database.ref(`iwiMembers/${imid}`);
+    return await dbRepository.getDbItem(imid);
   };
   const getDbIwiMemberValue = async imid => {
-    const existingDbIwiMember = await getDbIwiMember(imid);
-    const dbIwiMemberRef = await existingDbIwiMember.once('value');
-    const dbIwiMember = await dbIwiMemberRef.val();
-    return dbIwiMember;
+    return await dbRepository.getDbItemValue(imid);
   };
   return {
+    dbRepository,
     getDbIwiMembers,
     getDbIwiMembersAsArray,
     getDbIwiMember,
@@ -40,4 +27,4 @@ const initIwiMembers = async initialisedFirebaseApp => {
   };
 };
 
-export default initIwiMembers;
+export default initIwiMember;

@@ -1,30 +1,22 @@
 const initContact = async initialisedFirebaseApp => {
-  await import('firebase/database');
-  const database = initialisedFirebaseApp.database();
+  const {
+    default: initDbRepository
+  } = await import('./initDbRepository');
+  const dbRepository = await initDbRepository({
+    initialisedFirebaseApp,
+    dbTableName: 'contacts'
+  });
   const getDbContacts = async () => {
-    return await database.ref('contacts');
+    return await dbRepository.getDbItems();
   };
-  const getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true) => {
-    const existingDbContact = await getDbContacts();
-    const dbContactRef = !includeInactive
-      ? await existingDbContact
-        .orderByChild(childName)
-        .equalTo(childValue)
-        .once('value')
-      : await existingDbContact
-        .orderByChild(childName)
-        .once('value');
-    const dbContact = await dbContactRef.val();
-    const dbContactsAsArray = [];
-    if (dbContact) {
-      Object.keys(dbContact).map(key =>
-        dbContactsAsArray.push(dbContact[key])
-      );
-    }
-    return dbContactsAsArray.filter(c => includeInactive || c.active);
+  const getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
   };
   const getDbContact = async cid => {
-    return await database.ref(`contacts/${cid}`);
+    return await dbRepository.getDbItem(cid);
+  };
+  const getDbContactValue = async cid => {
+    return await dbRepository.getDbItemValue(cid);
   };
   const saveDbContact = async (contact, saveDbContact_completed) => {
     const {
@@ -40,13 +32,11 @@ const initContact = async initialisedFirebaseApp => {
       updated,
       updatedBy
     } = contact;
-
     const now = new Date();
     let errorMessage = null;
     let existingDbContact = await getDbContact(cid || '')
     let dbContactRef = null;
     let dbContact = null;
-
     if (!cid) {
       dbContactRef = await existingDbContact.push();
       contact = {
@@ -92,9 +82,11 @@ const initContact = async initialisedFirebaseApp => {
     return contact.cid;
   }
   return {
+    dbRepository,
     getDbContacts,
     getDbContactsAsArray,
     getDbContact,
+    getDbContactValue,
     saveDbContact
   };
 };
