@@ -44,21 +44,29 @@ const EconomicDevelopmentsSection = props => {
   const dbCategorisedEconomicDevelopmentsAsArray = Object.keys(dbCategorisedEconomicDevelopments);
   sortArray(dbCategorisedEconomicDevelopmentsAsArray, null, 'asc');
   useEffect(() => {
-    const getDbEconomicDevelopments = async () => {
+    const getEconomicDevelopments = async () => {
+      const getDbEconomicDevelopments = async fieldName => {
+        const dbEconomicDevelopmentsFieldNames = [
+          'category',
+          'header',
+          'imageUrl',
+          'content',
+          'economicDevelopmentUrl',
+          'economicDevelopmentDownloadUrl'
+        ];
+        const dbEconomicDevelopments = await props.firebase.economicDevelopmentsRepository.getDbEconomicDevelopmentsAsArray(false, fieldName, true, NaN, dbEconomicDevelopmentsFieldNames);
+        return dbEconomicDevelopments;
+      };
       const {
-        firebase,
         isHomePage,
-        isFeatured
+        isFeatured,
+        dbEconomicDevelopments: dbEconomicDevelopmentsPassedIn
       } = props;
-      const {
-        economicDevelopmentsRepository
-      } = firebase;
-      const {
-        getDbEconomicDevelopmentsAsArray
-      } = economicDevelopmentsRepository;
-      const dbEconomicDevelopments = isHomePage || isFeatured
-        ? await getDbEconomicDevelopmentsAsArray(false, 'isFeatured')
-        : await getDbEconomicDevelopmentsAsArray();
+      const dbEconomicDevelopments = dbEconomicDevelopmentsPassedIn
+        ? dbEconomicDevelopmentsPassedIn
+        : await getDbEconomicDevelopments(isHomePage || isFeatured
+          ? 'isFeatured'
+          : 'active');
       const dbCategorisedEconomicDevelopments = {};
       await Promise.all(dbEconomicDevelopments.map(async dbEconomicDevelopment => {
         const {
@@ -67,7 +75,7 @@ const EconomicDevelopmentsSection = props => {
         } = dbEconomicDevelopment;
         const dbCategorisedEconomicDevelopment = (dbCategorisedEconomicDevelopments[category] || []);
         dbEconomicDevelopment.economicDevelopmentDownloadUrl = economicDevelopmentUrl.startsWith('/economicDevelopments')
-          ? await firebase.storageRepository.getStorageFileDownloadURL(economicDevelopmentUrl)
+          ? await props.firebase.storageRepository.getStorageFileDownloadURL(economicDevelopmentUrl)
           : economicDevelopmentUrl;
         dbCategorisedEconomicDevelopment.push(dbEconomicDevelopment);
         dbCategorisedEconomicDevelopments[category] = dbCategorisedEconomicDevelopment;
@@ -80,7 +88,7 @@ const EconomicDevelopmentsSection = props => {
       }));
     };
     if (isLoading) {
-      getDbEconomicDevelopments();
+      getEconomicDevelopments();
     }
   }, [props, isLoading]);
   return (

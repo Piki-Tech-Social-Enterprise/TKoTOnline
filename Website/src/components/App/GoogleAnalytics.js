@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import {
-  isBoolean
+  isBoolean,
+  isNumber
 } from 'components/App/Utilities';
 
 const GoogleAnalytics = props => {
@@ -22,11 +23,21 @@ const GoogleAnalytics = props => {
     if (state.isLoading) {
       const {
         REACT_APP_GOOGLE_TRACKING_CODE: googleTrackingCode,
-        REACT_APP_GOOGLE_TRACKING_DEBUG: googleTrackingDebug
+        REACT_APP_GOOGLE_TRACKING_DEBUG: googleTrackingDebug,
+        REACT_APP_GOOGLE_TRACKING_SITE_SPEED_SAMPLE_RATE: googleTrackingSiteSpeedSampleRate
       } = process.env;
-      // console.info(`googleTrackingCode: ${googleTrackingCode}, googleTrackingDebug: ${googleTrackingDebug}`);
+      // console.info(JSON.stringify({
+      //   googleTrackingCode,
+      //   googleTrackingDebug,
+      //   googleTrackingSiteSpeedSampleRate
+      // }));
       ReactGA.initialize(googleTrackingCode, {
-        debug: isBoolean(googleTrackingDebug, true)
+        debug: isBoolean(googleTrackingDebug, true),
+        gaOptions: {
+          siteSpeedSampleRate: isNumber(googleTrackingSiteSpeedSampleRate)
+            ? Number(googleTrackingSiteSpeedSampleRate)
+            : 100
+        }
       });
       listener = history.listen(location => {
         const {

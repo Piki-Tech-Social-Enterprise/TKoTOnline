@@ -62,6 +62,7 @@ const AuthSettingsView = props => {
   const [overwriteExisting, setOverwriteExisting] = useState(true);
   const [deleteOnly, setDeleteOnly] = useState(false);
   const [isResizingImages, setIsResizingImages] = useState(false);
+  const [isUpdateSettingImages, setIsUpdateSettingImages] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = async e => {
     e.preventDefault();
@@ -155,6 +156,7 @@ const AuthSettingsView = props => {
           aboutPageTKoTBackOfficeStructureImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, aboutPageTKoTBackOfficeStructureImageUrlFile.name, '');
         }
         await firebase.saveDbSettings({
+          active: true,
           created: now.toString(),
           createdBy: uid,
           homePageHeaderImageUrl: homePageHeaderImageUrl,
@@ -303,13 +305,47 @@ const AuthSettingsView = props => {
       console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
       displayIcon = 'success';
       displayTitle = 'Resize Images Successful';
-      displayMessage = `Resizing images have finished.`;
+      displayMessage = `Resizing images has finished.`;
       // return result.data;
     } catch (error) {
       console.log('handleResizeImagesClick.error: ', error);
       displayMessage = error;
     } finally {
       setIsResizingImages(false);
+      if (displayMessage) {
+        swal.fire({
+          icon: displayIcon,
+          title: displayTitle,
+          html: displayMessage
+        });
+      }
+    }
+  };
+  const handleUpdateSettingImagesClick = async e => {
+    e.preventDefault();
+    let displayIcon = 'error';
+    let displayTitle = 'Update Setting Images Failed';
+    let displayMessage = '';
+    try {
+      setIsUpdateSettingImages(true);
+      const {
+        firebase
+      } = props;
+      const functionsRepositoryOptions = {
+        functionName: 'updateSettingImages',
+        data: {}
+      };
+      const result = firebase.call(functionsRepositoryOptions);
+      console.log(`${functionsRepositoryOptions.functionName}.result: ${JSON.stringify(result, null, 2)}`);
+      displayIcon = 'success';
+      displayTitle = 'Update Setting Images Successful';
+      displayMessage = `Updating setting images has finished.`;
+      // return result.data;
+    } catch (error) {
+      console.log('handleUpdateSettingImagesClick.error: ', error);
+      displayMessage = error;
+    } finally {
+      setIsUpdateSettingImages(false);
       if (displayMessage) {
         swal.fire({
           icon: displayIcon,
@@ -419,7 +455,7 @@ const AuthSettingsView = props => {
                             data-tab={5}
                             active={activeTab === 5}
                             onClick={handleTabClick}
-                            className="clickable d-none" // HACK: Disable usage until Resize Images function is fixed
+                            className="clickable d-none1" // HACK: Disable usage until Resize Images function is fixed
                           >Misc.</NavLink>
                         </NavItem>
                       </Nav>
@@ -564,7 +600,8 @@ const AuthSettingsView = props => {
                             </Col>
                           </Row>
                         </TabPane>
-                        <TabPane tabId={5} className="d-none"> {/* // HACK: Disable usage until Resize Images function is fixed */}
+                        <TabPane tabId={5} className="d-none1"> {/* // HACK: Disable usage until Resize Images function is fixed */}
+                          <h5>Resize Images</h5>
                           <FormGroup>
                             <CustomInput
                               label="Overwrite Existing"
@@ -593,7 +630,18 @@ const AuthSettingsView = props => {
                               className="btn-round w-25 px-0 mr-3"
                               disabled={isSubmitting || isResizingImages}
                               onClick={handleResizeImagesClick}
-                            >Resize Images</Button>
+                            >Resize</Button>
+                          </FormGroup>
+                          <h5>Update Setting Images</h5>
+                          <FormGroup>
+                            <Button
+                              type="button"
+                              color="success"
+                              size="lg"
+                              className="btn-round w-25 px-0 mr-3"
+                              disabled={isSubmitting || isUpdateSettingImages}
+                              onClick={handleUpdateSettingImagesClick}
+                            >Update</Button>
                           </FormGroup>
                         </TabPane>
                       </TabContent>

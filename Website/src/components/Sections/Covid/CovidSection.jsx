@@ -76,20 +76,30 @@ const CovidSection = props => {
     );
   };
   useEffect(() => {
-    const getDbCovidList = async () => {
+    const getCovidList = async () => {
+      const getDbCovidList = async fieldName => {
+        const dbCovidListFieldNames = [
+          'category',
+          'content',
+          'header',
+          'imageUrl',
+          'externalUrl',
+          'cvid',
+          'name',
+          'url'
+        ];
+        const dbCovidList = await props.firebase.covidListRepository.getDbCovidListAsArray(false, fieldName, true, NaN, dbCovidListFieldNames);
+        return dbCovidList;
+      };
       const {
         isHomePage,
-        firebase
+        dbCovidList: dbCovidListPassedIn
       } = props;
-      const {
-        covidListRepository
-      } = firebase;
-      const {
-        getDbCovidListAsArray
-      } = covidListRepository;
-      const dbCovidList = isHomePage
-        ? await getDbCovidListAsArray(false, 'isFeatured', true)
-        : await getDbCovidListAsArray();
+      const dbCovidList = dbCovidListPassedIn
+        ? dbCovidListPassedIn
+        : await getDbCovidList(isHomePage
+          ? 'isFeatured'
+          : 'active');
       const filteredDbCovidList = searchCategory
         ? dbCovidList.filter(dbcv => dbcv.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbCovidList;
@@ -115,9 +125,9 @@ const CovidSection = props => {
       }));
     };
     if (isLoading) {
-      getDbCovidList();
+      getCovidList();
     }
-  }, [props, isLoading, setState, searchCategory]);
+  }, [props, isLoading, searchCategory]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>

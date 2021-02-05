@@ -20,7 +20,7 @@ const LoadingSpinner = props => {
   return (
     <>
       {
-        !hasPastDelay
+        hasPastDelay
           ? null
           : <>
             {console.log(`LoadingSpinner.caller: ${caller}`)}

@@ -26,7 +26,7 @@ import Firebase, {
   FirebaseContext
 } from 'components/Firebase';
 import PageLoadingSpinner from 'components/App/PageLoadingSpinner';
-import 'lazysizes';
+import LazySizes from 'components/App/LazySizes';
 import Routes from 'components/Routes/routes';
 import {
   lazy
@@ -127,28 +127,14 @@ const appRoutes = [
   // }
 ];
 const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
-const updatePreloads = async () => {
-  // console.log(`navigator.userAgent: ${navigator.userAgent}`);
-  const navigatorUserAgentAsLowerCase = navigator.userAgent.toLowerCase();
-  const isFirefox = navigatorUserAgentAsLowerCase.indexOf('firefox') > -1 || navigatorUserAgentAsLowerCase.indexOf('mozilla') > -1;
-  if (isFirefox) {
-    const links = document.getElementsByTagName('link');
-    for (let i = 0; i < links.length; i++) {
-      const link = links[i];
-      if (link.rel === 'preload' && typeof link.onload === 'function') {
-        link.rel = 'stylesheet';
-      }
-    }
-  }
-};
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };
 }
-updatePreloads();
 
 ReactDOM.render(
   <React.Suspense fallback={<PageLoadingSpinner caller="Root" />}>
+    <LazySizes />
     <Firebase>
       {
         firebase => <>

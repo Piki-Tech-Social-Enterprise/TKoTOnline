@@ -34,6 +34,12 @@ const {
 const {
   handleResizeImages
 } = require('./handleResizeImages');
+const {
+  handleDbFunctions
+} = require('./handleDbFunctions');
+const {
+  handleUpdateSettingImages
+} = require('./handleUpdateSettingImages');
 
 exports.handleGetServerDateTime = functions
   .https
@@ -74,3 +80,9 @@ exports.handleSendEmailAlt = functions
 exports.handleResizeImages = functions
   .https
   .onCall(handleResizeImages);
+exports.handleDbFunctions = functions
+  .https
+  .onRequest(handleDbFunctions);
+exports.handleUpdateSettingImages = functions
+  .https
+  .onCall(handleUpdateSettingImages);

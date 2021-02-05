@@ -24,12 +24,23 @@ const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const INITAL_STATE = {
+  isLoading: true,
+  dbEvent: {},
+  imageDownloadURL: ''
+};
 const EventView = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    dbEvent: null,
-    imageDownloadURL: ''
-  });
+  const [state, setState] = useState(INITAL_STATE);
+  const {
+    isLoading,
+    dbEvent,
+    imageDownloadURL
+  } = state;
+  const {
+    header,
+    evid,
+    content
+  } = dbEvent;
   useEffect(() => {
     const retrieveEventValue = async () => {
       const {
@@ -39,7 +50,14 @@ const EventView = props => {
       const {
         evid
       } = match.params;
-      const dbEvent = await firebase.eventsRepository.getDbEventValue(evid);
+      const dbEventFieldNames = [
+        'externalUrl',
+        'imageUrl',
+        'header',
+        'evid',
+        'content'
+      ];
+      const dbEvent = await firebase.eventsRepository.getDbEventValue(evid, dbEventFieldNames);
       const {
         externalUrl,
         imageUrl
@@ -51,40 +69,40 @@ const EventView = props => {
         setState(s => ({
           ...s,
           isLoading: false,
-          dbEvent: dbEvent,
-          imageDownloadURL: imageDownloadURL
+          dbEvent,
+          imageDownloadURL
         }));
       }
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveEventValue();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="EventView" />
           : <div id="Event">
             <TKoTHelmet
-              name={state.dbEvent.header}
-              path={`/Wananga/${state.dbEvent.evid}`}
-              description={draftToText(state.dbEvent.content, '')}
-              image={`${state.imageDownloadURL}`}
+              name={header}
+              path={`/Wananga/${evid}`}
+              description={draftToText(content, '')}
+              image={`${imageDownloadURL}`}
             />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}
             />
             <HomeHeader
-              pageHeaderImage={state.imageDownloadURL}
-              pageHeaderTitle={state.dbEvent.header}
+              pageHeaderImage={imageDownloadURL}
+              pageHeaderTitle={header}
               pageHeaderCaption=""
             />
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbEvent.content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
                 />
               </Row>
             </Container>

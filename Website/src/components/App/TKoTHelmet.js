@@ -17,21 +17,25 @@ import {
 } from 'components/App/Utilities';
 
 const MAX_DESCRIPTION_LENGTH = 160;
+const INITAL_STATE = {
+  isLoading: true,
+  title: '',
+  canonicalHref: '',
+  robotsContent: '',
+  descriptionContent: '',
+  subjectContent: '',
+  keywordsContent: '',
+  imageContent: '',
+  imageTypeContent: '',
+  siteNameContent: ''
+};
 const TKoTHelmet = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    title: '',
-    canonicalHref: '',
-    robotsContent: '',
-    descriptionContent: '',
-    subjectContent: '',
-    keywordsContent: '',
-    imageContent: '',
-    imageTypeContent: '',
-    siteNameContent: ''
-  });
+  const [state, setState] = useState(INITAL_STATE);
   const {
-    // isLoading,
+    preloadImages
+  } = props;
+  const {
+    isLoading,
     title,
     canonicalHref,
     robotsContent,
@@ -43,9 +47,6 @@ const TKoTHelmet = props => {
     siteNameContent
   } = state;
   useEffect(() => {
-    const {
-      isLoading
-    } = state;
     if (isLoading) {
       const {
         name,
@@ -90,7 +91,7 @@ const TKoTHelmet = props => {
       }));
     }
     return () => { };
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       <Helmet>
@@ -106,13 +107,24 @@ const TKoTHelmet = props => {
         <meta property="og:site_name" content={siteNameContent} />
         <meta property="og:title" content={title} />
         <meta property="og:url" content={canonicalHref} />
+        {
+          preloadImages.map((preloadImage, index) =>
+            <link
+              rel="preload"
+              as="image"
+              importance="high"
+              href={preloadImage}
+              key={index}
+            />
+          )
+        }
       </Helmet>
     </>
   );
 };
 
 TKoTHelmet.propTypes = {
-  name: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   subject: PropTypes.string,
@@ -121,10 +133,11 @@ TKoTHelmet.propTypes = {
   robotsNoIndex: PropTypes.bool,
   robotsNoFollow: PropTypes.bool,
   websiteNameOverride: PropTypes.string,
-  websiteUrlOverride: PropTypes.string
+  websiteUrlOverride: PropTypes.string,
+  preloadImages: PropTypes.array
 };
 TKoTHelmet.defaultProps = {
-
+        preloadImages: []
 };
 
 export default TKoTHelmet;

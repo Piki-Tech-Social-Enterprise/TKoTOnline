@@ -25,13 +25,11 @@ class ContactRepository extends BaseRepository {
       updated,
       updatedBy
     } = contact;
-
     const now = new Date();
     let errorMessage = null;
     let existingDbContact = await this.getDbContact(cid || '')
     let dbContactRef = null;
     let dbContact = null;
-
     if (!cid) {
       dbContactRef = await existingDbContact.push();
       contact = {

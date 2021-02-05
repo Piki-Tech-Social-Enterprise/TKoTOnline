@@ -13,7 +13,8 @@ import {
   indexPageClassName,
   sidebarCollapseClassName,
   defaultPageSetup,
-  getImageURLToUse
+  getSize,
+  isNumber
 } from 'components/App/Utilities';
 import {
   lazy
@@ -25,45 +26,72 @@ const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'
 const AboutSection = lazy(async () => await import('components/Sections/About'));
 const IwiMembers = lazy(async () => await import('components/Sections/IwiMembers'));
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
-const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
-const EventsSection = lazy(async () => await import('components/Sections/Events'));
+const CovidSection = lazy(async () => await import('components/Sections/Covid'));
 const NewsFeedSection = lazy(async () => await import('components/Sections/NewsFeed'));
 const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
 const EconomicDevelopmentsSection = lazy(async () => await import('components/Sections/EconomicDevelopments'));
-const CovidSection = lazy(async () => await import('components/Sections/Covid'));
+const ProjectsSection = lazy(async () => await import('components/Sections/Projects'));
+const EventsSection = lazy(async () => await import('components/Sections/Events'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const {
   home,
   homeAnchor,
   iwiMembersAnchor,
   aboutAnchor,
-  projectsAnchor,
-  eventsAnchor,
+  covidListAnchor,
   newsFeedAnchor,
   mediaListAnchor,
   resourcesAnchor,
   economicDevelopmentsAnchor,
-  covidListAnchor
+  projectsAnchor,
+  eventsAnchor
 } = Routes;
 const HomeView = props => {
   const [state, setState] = useState({
     isLoading: true,
     isHomePage: true,
-    dbSettings: null,
-    homePageHeaderImageDownloadUrl: '',
-    homePageAboutImageDownloadUrl: '',
-    dbNewsFeedsByIsFeatured: [],
-    dbNewsFeedsByIsTKoTMedia: []
+    multipleDbItemsAsArrays: {},
+    // dbSettings: null,
+    // homePageHeaderImageDownloadUrl: '',
+    // homePageAboutImageDownloadUrl: '',
+    // dbNewsFeedsByIsFeatured: [],
+    // dbNewsFeedsByIsTKoTMedia: []
   });
   const {
     isLoading,
     isHomePage,
-    dbSettings,
-    homePageHeaderImageDownloadUrl,
-    homePageAboutImageDownloadUrl,
-    dbNewsFeedsByIsFeatured,
-    dbNewsFeedsByIsTKoTMedia
+    multipleDbItemsAsArrays
+    // dbSettings,
+    // homePageHeaderImageDownloadUrl,
+    // homePageAboutImageDownloadUrl,
+    // dbNewsFeedsByIsFeatured,
+    // dbNewsFeedsByIsTKoTMedia
   } = state;
+  const {
+    dbSettings: dbSettingsAsArray,
+    dbIwiMembers,
+    dbCovidList,
+    dbNewsFeedsByIsFeatured,
+    dbNewsFeedsByIsTKoTMedia,
+    dbResources,
+    dbEconomicDevelopments,
+    dbProjects,
+    dbEvents
+  } = multipleDbItemsAsArrays;
+  const dbSettings = dbSettingsAsArray
+    ? dbSettingsAsArray[0]
+    : {};
+  const {
+    REACT_APP_FIREBASE_STORAGE_BUCKET
+  } = process.env;
+  const size = getSize(window.screen.width <= 400 && 'md');
+  const sizeAsString = isNumber(size)
+    ? `@s_${size}`
+    : '';
+  const homePageAboutImageUrl = `https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIREBASE_STORAGE_BUCKET}/o/images%2Fstatic%2FhomePageAboutImage${sizeAsString}.webp?alt=media`;
+  const homePageHeaderImageUrl = `https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIREBASE_STORAGE_BUCKET}/o/images%2Fstatic%2FhomePageHeaderImage${sizeAsString}.webp?alt=media`;
+  const tkot20pcImage = '/static/img/tkot-white-logo-20pc.webp';
+  const tkotImage = '/static/img/tkot-white-logo.webp';
   useEffect(() => {
     const pageSetup = async () => {
       const {
@@ -71,30 +99,165 @@ const HomeView = props => {
       } = props;
       const {
         settingsRepository,
-        storageRepository,
-        newsFeedRepository
+        // storageRepository,
+        // newsFeedRepository
       } = firebase;
       const {
-        getDbSettingsValues
+        // getDbSettingsValues,
+        dbRepository
       } = settingsRepository;
       const {
-        getStorageFileDownloadURL
-      } = storageRepository;
-      const {
-        getDbNewsFeedsAsArray
-      } = newsFeedRepository;
-      const dbSettings = await getDbSettingsValues(true);
-      const {
-        homePageHeaderImageUrl,
-        homePageAboutImageUrl
-      } = dbSettings;
-      const imageSize = window.screen.width <= 400
-        ? 'md'
-        : NaN;
-      const homePageHeaderImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageHeaderImageUrl));
-      const homePageAboutImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageAboutImageUrl));
-      const dbNewsFeedsByIsFeatured = await getDbNewsFeedsAsArray(false, 'isFeatured', true);
-      const dbNewsFeedsByIsTKoTMedia = await getDbNewsFeedsAsArray(false, 'isTKoTMedia', true);
+        getMultipleDbItemsAsArrays
+      } = dbRepository;
+      // const {
+      //   getStorageFileDownloadURL
+      // } = storageRepository;
+      // const {
+      //   getDbNewsFeedsAsArray
+      // } = newsFeedRepository;
+      // const dbSettings = await getDbSettingsValues([
+      //   // 'homePageHeaderImageUrl',
+      //   // 'homePageAboutImageUrl',
+      //   'homePageAboutDescription',
+      //   // 'newsSectionDescription'
+      // ]);
+      const queryItems = {
+        dbSettings: {
+          dbTableName: 'settings',
+          fieldNames: [
+            'homePageAboutDescription'
+          ]
+        },
+        dbIwiMembers: {
+          dbTableName: 'iwiMembers',
+          fieldNames: [
+            'sequence',
+            'imid',
+            'iwiMemberImageURL',
+            'iwiMemberName',
+            'iwiMemberURL'
+          ]
+        },
+        dbCovidList: {
+          dbTableName: 'covidList',
+          childName: 'isFeatured',
+          fieldNames: [
+            'category',
+            'content',
+            'header',
+            'imageUrl',
+            'externalUrl',
+            'cvid',
+            'name',
+            'url'
+          ]
+        },
+        dbNewsFeedsByIsFeatured: {
+          dbTableName: 'newsFeeds',
+          childName: 'isFeatured',
+          fieldNames: [
+            'category',
+            'isFeatured',
+            'isTKoTMedia',
+            'date',
+            'content',
+            'header',
+            'imageUrl',
+            'externalUrl',
+            'nfid',
+            'name',
+            'url'
+          ]
+        },
+        dbNewsFeedsByIsTKoTMedia: {
+          dbTableName: 'newsFeeds',
+          childName: 'isTKoTMedia',
+          fieldNames: [
+            'category',
+            'isFeatured',
+            'isTKoTMedia',
+            'date',
+            'content',
+            'header',
+            'imageUrl',
+            'externalUrl',
+            'nfid',
+            'name',
+            'url'
+          ]
+        },
+        dbResources: {
+          dbTableName: 'resources',
+          childName: 'isFeatured',
+          fieldNames: [
+            'category',
+            'header',
+            'imageUrl',
+            'content',
+            'resourceUrl',
+            'resourceDownloadUrl'
+          ]
+        },
+        dbEconomicDevelopments: {
+          dbTableName: 'economicDevelopments',
+          childName: 'isFeatured',
+          fieldNames: [
+            'category',
+            'header',
+            'imageUrl',
+            'content',
+            'economicDevelopmentUrl',
+            'economicDevelopmentDownloadUrl'
+          ]
+        },
+        dbProjects: {
+          dbTableName: 'projects',
+          childName: 'isFeatured',
+          fieldNames: [
+            'header',
+            'imageUrl',
+            'pid'
+          ]
+        },
+        dbEvents: {
+          dbTableName: 'events',
+          childName: 'isFeatured',
+          fieldNames: [
+            'startDateTime',
+            'endDateTime',
+            'imageUrl',
+            'header',
+            'externalUrl',
+            'evid'
+          ]
+        }
+      };
+      const multipleDbItemsAsArrays = await getMultipleDbItemsAsArrays(queryItems);
+      // console.log(`multipleDbItemsAsArrays: ${JSON.stringify(multipleDbItemsAsArrays, null, 2)}`);
+      // const {
+      //   homePageHeaderImageUrl,
+      //   homePageAboutImageUrl
+      // } = dbSettings;
+      // const imageSize = window.screen.width <= 400
+      //   ? 'md'
+      //   : NaN;
+      // const homePageHeaderImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageHeaderImageUrl));
+      // const homePageAboutImageDownloadUrl = await getStorageFileDownloadURL(getImageURLToUse(imageSize, homePageAboutImageUrl));
+      // const dbNewsFeedsFieldNames = [
+      //   'category',
+      //   'isFeatured',
+      //   'isTKoTMedia',
+      //   'date',
+      //   'content',
+      //   'header',
+      //   'imageUrl',
+      //   'externalUrl',
+      //   'nfid',
+      //   'name',
+      //   'url'
+      // ];
+      // const dbNewsFeedsByIsFeatured = await getDbNewsFeedsAsArray(false, 'isFeatured', true, NaN, dbNewsFeedsFieldNames);
+      // const dbNewsFeedsByIsTKoTMedia = await getDbNewsFeedsAsArray(false, 'isTKoTMedia', true, NaN, dbNewsFeedsFieldNames);
       defaultPageSetup({
         isLoading: true,
         classNames: [
@@ -105,17 +268,19 @@ const HomeView = props => {
       setState(s => ({
         ...s,
         isLoading: false,
-        dbSettings,
-        homePageHeaderImageDownloadUrl,
-        homePageAboutImageDownloadUrl,
-        dbNewsFeedsByIsFeatured,
-        dbNewsFeedsByIsTKoTMedia
+        multipleDbItemsAsArrays,
+        // dbSettings,
+        // homePageHeaderImageDownloadUrl,
+        // homePageAboutImageDownloadUrl,
+        // dbNewsFeedsByIsFeatured,
+        // dbNewsFeedsByIsTKoTMedia
       }));
     };
     if (isLoading) {
       pageSetup();
     }
     return defaultPageSetup;
+    // return () => { };
   }, [props, isLoading]);
   const scrollspyTopOffset = '10%';
   const {
@@ -130,6 +295,14 @@ const HomeView = props => {
           ? 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'
           : dbSettings.homePageAboutDescription}
         image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
+        preloadImages={[
+          homePageHeaderImageUrl,
+          homePageAboutImageUrl,
+          '/static/img/tkot-background-image.webp',
+          '/static/img/tkot-logo-only-black.webp',
+          tkot20pcImage,
+          tkotImage
+        ]}
       />
       {
         isLoading
@@ -159,14 +332,17 @@ const HomeView = props => {
                 isHomePage={isHomePage}
               />
               <AboutSection
-                pageAboutImage={homePageAboutImageDownloadUrl}
+                // pageAboutImage={homePageAboutImageDownloadUrl || dbSettings.homePageAboutImageUrl}
+                pageAboutImage={homePageAboutImageUrl}
                 pageAboutDescription={dbSettings.homePageAboutDescription}
               />
               <IwiMembers
                 containerClassName="bg-white"
+                dbIwiMembers={dbIwiMembers}
               />
               <HomeHeader
-                pageHeaderImage={homePageHeaderImageDownloadUrl}
+                // pageHeaderImage={homePageHeaderImageDownloadUrl || dbSettings.homePageHeaderImageUrl}
+                pageHeaderImage={homePageHeaderImageUrl}
                 showClickScrollDownForMoreLink={false}
               />
               <div className="tkot-background-image-container" id="TkotBgImgContainer">
@@ -175,6 +351,7 @@ const HomeView = props => {
               <CovidSection
                 showLearnMoreButton
                 isHomePage
+                dbCovidList={dbCovidList}
               />
               <NewsFeedSection
                 showLearnMoreButton
@@ -191,20 +368,24 @@ const HomeView = props => {
               <ResourcesSection
                 showLearnMoreButton
                 isHomePage
+                dbResources={dbResources}
               />
               <EconomicDevelopmentsSection
                 showLearnMoreButton
                 isFeatured
                 showViewTaitokerauEconomicSummit2020SiteButton
+                dbEconomicDevelopments={dbEconomicDevelopments}
               />
               <ProjectsSection
                 showLearnMoreButton
                 isHomePage
+                dbProjects={dbProjects}
               />
               <EventsSection
                 showLearnMoreButton
                 containerClassName="tkot-secondary-color-black-bg-color-61-pc"
                 isHomePage
+                dbEvents={dbEvents}
               />
               <HomeFooter
                 isHomePage={isHomePage}

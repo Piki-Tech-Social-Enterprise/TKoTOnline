@@ -139,7 +139,7 @@ const IwiChairSection = props => {
     if (isLoading) {
       getDbIwiMembers();
     }
-  }, [props, isLoading, setState]);
+  }, [props, isLoading]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       {/* <a id="IwiChair" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a> */}

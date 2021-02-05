@@ -154,6 +154,24 @@ const getFirebaseStorageURL = (projectId, source) => {
 };
 const YEAR_AS_SECONDS = 31536000;
 const isNumber = value => value && !isNaN(value);
+const Nz = (value, ifNullValue = undefined) => {
+  return isNullOrEmpty(value)
+    ? typeof ifNullValue === 'undefined'
+      ? ''
+      : ifNullValue
+    : value;
+};
+const refactorObject = async rest => {
+  const refactoredObject = {};
+  await Promise.all(Object.keys(rest).map(async k => {
+    const refactoredValue = Nz(rest[k], null);
+    if (refactoredValue !== null) {
+      refactoredObject[k] = refactoredValue;
+    }
+    return null;
+  }));
+  return refactoredObject;
+};
 
 exports.assert = assert;
 exports.httpResponseCodes = httpResponseCodes;
@@ -181,3 +199,5 @@ exports.isBoolean = isBoolean;
 exports.getFirebaseStorageURL = getFirebaseStorageURL;
 exports.YEAR_AS_SECONDS = YEAR_AS_SECONDS;
 exports.isNumber = isNumber;
+exports.Nz = Nz;
+exports.refactorObject = refactorObject;

@@ -26,11 +26,24 @@ const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const INITAL_STATE = {
+  isLoading: true,
+  dbIwiMember: {},
+  iwiChairImageDownloadURL: ''
+};
 const IwiChairView = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    dbIwiMember: null
-  });
+  const [state, setState] = useState(INITAL_STATE);
+  const {
+    isLoading,
+    dbIwiMember,
+    iwiChairImageDownloadURL
+  } = state;
+  const {
+    iwiChairName,
+    imid,
+    iwiChairProfile,
+    iwiMemberName
+  } = dbIwiMember;
   useEffect(() => {
     const retrieveIwiChairValue = async () => {
       const {
@@ -38,35 +51,46 @@ const IwiChairView = props => {
         match
       } = props;
       const {
+        iwiMembersRepository,
+        storageRepository
+      } = firebase;
+      const {
         imid
       } = match.params;
-      const dbIwiMember = await firebase.iwiMembersRepository.getDbIwiMemberValue(imid);
+      const dbIwiMemberFieldNames = [
+        'iwiChairImageURL',
+        'iwiChairName',
+        'imid',
+        'iwiChairProfile',
+        'iwiMemberName'
+      ];
+      const dbIwiMember = await iwiMembersRepository.getDbIwiMemberValue(imid, dbIwiMemberFieldNames);
       const {
         iwiChairImageURL
       } = dbIwiMember;
-      const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
+      const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, storageRepository.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,
-        dbIwiMember: dbIwiMember,
-        iwiChairImageDownloadURL: iwiChairImageDownloadURL
+        dbIwiMember,
+        iwiChairImageDownloadURL
       }));
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveIwiChairValue();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="IwiChairView" />
           : <div id="IwiChair">
             <TKoTHelmet
-              name={state.dbIwiMember.iwiChairName}
-              path={`/AboutUs/${state.dbIwiMember.imid}`}
-              description={draftToText(state.dbIwiMember.iwiChairProfile, '')}
-              image={`${state.iwiChairImageDownloadURL}`}
+              name={iwiChairName}
+              path={`/AboutUs/${imid}`}
+              description={draftToText(iwiChairProfile, '')}
+              image={`${iwiChairImageDownloadURL}`}
             />
             <HomeNavbar
               initalTransparent={false}
@@ -74,25 +98,25 @@ const IwiChairView = props => {
             />
             <HomeHeader
               pageHeaderImage={''}
-              pageHeaderTitle={state.dbIwiMember.iwiChairName}
+              pageHeaderTitle={iwiChairName}
               pageHeaderCaption={() => (<>
                 <FirebaseImage
                   className="rounded-circle iwi-chair-image"
-                  imageURL={state.dbIwiMember.iwiChairImageURL}
+                  src={iwiChairImageDownloadURL}
                   width="250"
                   lossless={true}
-                  alt={state.dbIwiMember.iwiChairName}
+                  alt={iwiChairName}
                   loadingIconSize="lg"
                   imageResize="md"
                 />
-                <p className="h4 font-weight-bold text-center">{state.dbIwiMember.iwiMemberName}</p>
+                <p className="h4 font-weight-bold text-center">{iwiMemberName}</p>
               </>)}
               pageHeaderFilterColour="blue-alt"
             />
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbIwiMember.iwiChairProfile)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(iwiChairProfile)) }}
                 />
               </Row>
             </Container>

@@ -43,20 +43,25 @@ const ProjectsSection = props => {
     dbProjects
   } = state;
   useEffect(() => {
-    const getDbProjects = async () => {
+    const getProjects = async () => {
+      const getDbProjects = async fieldName => {
+        const dbProjectsFieldNames = [
+          'header',
+          'imageUrl',
+          'pid'
+        ];
+        const dbProjects = await props.firebase.projectsRepository.getDbProjectsAsArray(false, fieldName, true, NaN, dbProjectsFieldNames);
+        return dbProjects;
+      };
       const {
-        firebase,
-        isHomePage
+        isHomePage,
+        dbProjects: dbProjectsPassedIn
       } = props;
-      const {
-        projectsRepository
-      } = firebase;
-      const {
-        getDbProjectsAsArray
-      } = projectsRepository;
-      const dbProjects = isHomePage
-        ? await getDbProjectsAsArray(false, 'isFeatured')
-        : await getDbProjectsAsArray();
+      const dbProjects = dbProjectsPassedIn
+        ? dbProjectsPassedIn
+        : await getDbProjects(isHomePage
+          ? 'isFeatured'
+          : 'active');
       setState(s => ({
         ...s,
         isLoading: false,
@@ -64,9 +69,9 @@ const ProjectsSection = props => {
       }));
     };
     if (isLoading) {
-      getDbProjects();
+      getProjects();
     }
-  }, [props, isLoading, setState]);
+  }, [props, isLoading]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
@@ -82,15 +87,20 @@ const ProjectsSection = props => {
                     : dbProjects.length === 0
                       ? <NoDataToDisplayDiv name="Projects" isHomePage={isHomePage} />
                       : dbProjects.map((dbProject, index) => {
+                        const {
+                          header,
+                          imageUrl,
+                          pid
+                        } = dbProject;
                         return (
                           <Col xs={12} sm={6} lg={4} key={index}>
                             <Card className="card-block">
                               <FirebaseImage
                                 className="card-img-max-height"
-                                imageURL={dbProject.imageUrl}
+                                imageURL={imageUrl}
                                 width="340"
                                 lossless={true}
-                                alt={dbProject.header}
+                                alt={header}
                                 loadingIconSize="lg"
                                 imageResize="md"
                               />
@@ -98,12 +108,12 @@ const ProjectsSection = props => {
                                 <CardTitle
                                   className="h5 text-uppercase my-3 mx-2 project-header clickable header-with-text"
                                   onClick={async e => await handleBlockTextClick(e, 'div.project-header', 'header-with-text')}
-                                >{dbProject.header}&nbsp;</CardTitle>
+                                >{header}&nbsp;</CardTitle>
                                 <Button
-                                  href={`/Projects/${dbProject.pid}`}
+                                  href={`/Projects/${pid}`}
                                   className="tkot-primary-red-bg-color btn-outline-dark"
                                   color="white"
-                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Projects page`, 'Clicked "Pānui Mai..." button', dbProject.header)}
+                                  onClick={() => sendEvent(`${isHomePage ? 'Home -' : ''} Projects page`, 'Clicked "Pānui Mai..." button', header)}
                                 >Pānui Mai...</Button>
                               </CardBody>
                             </Card>

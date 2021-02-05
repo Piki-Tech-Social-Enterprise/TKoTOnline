@@ -6,23 +6,15 @@ const initIwiMember = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'iwiMembers'
   });
-  const getDbIwiMembers = async () => {
-    return await dbRepository.getDbItems();
+  const getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbIwiMembersAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbIwiMember = async imid => {
-    return await dbRepository.getDbItem(imid);
-  };
-  const getDbIwiMemberValue = async imid => {
-    return await dbRepository.getDbItemValue(imid);
+  const getDbIwiMemberValue = async (imid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(imid, fieldNames);
   };
   return {
     dbRepository,
-    getDbIwiMembers,
     getDbIwiMembersAsArray,
-    getDbIwiMember,
     getDbIwiMemberValue
   };
 };

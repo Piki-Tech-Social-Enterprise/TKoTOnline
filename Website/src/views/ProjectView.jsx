@@ -24,12 +24,23 @@ const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const INITAL_STATE = {
+  isLoading: true,
+  dbProject: {},
+  imageDownloadURL: ''
+};
 const ProjectView = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    dbProject: null,
-    imageDownloadURL: ''
-  });
+  const [state, setState] = useState(INITAL_STATE);
+  const {
+    isLoading,
+    dbProject,
+    imageDownloadURL
+  } = state;
+  const {
+    header,
+    pid,
+    content
+  } = dbProject;
   useEffect(() => {
     const retrieveProjectValue = async () => {
       const {
@@ -37,51 +48,61 @@ const ProjectView = props => {
         match
       } = props;
       const {
+        projectsRepository,
+        storageRepository
+      } = firebase;
+      const {
         pid
       } = match.params;
-      const dbProject = await firebase.projectsRepository.getDbProjectValue(pid);
+      const dbProjectFieldNames = [
+        'imageUrl',
+        'header',
+        'pid',
+        'content'
+      ];
+      const dbProject = await projectsRepository.getDbProjectValue(pid, dbProjectFieldNames); debugger;
       const {
         imageUrl
       } = dbProject;
-      const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
+      const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, storageRepository.getStorageFileDownloadURL);
       setState(s => ({
         ...s,
         isLoading: false,
-        dbProject: dbProject,
-        imageDownloadURL: imageDownloadURL
+        dbProject,
+        imageDownloadURL
       }));
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveProjectValue();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="ProjectView" />
           : <div id="Project">
             <TKoTHelmet
-              name={state.dbProject.header}
-              path={`/Projects/${state.dbProject.pid}`}
-              description={draftToText(state.dbProject.content, '')}
-              image={`${state.imageDownloadURL}`}
+              name={header}
+              path={`/Projects/${pid}`}
+              description={draftToText(content, '')}
+              image={`${imageDownloadURL}`}
             />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}
             />
             <HomeHeader
-              pageHeaderImage={state.imageDownloadURL}
+              pageHeaderImage={imageDownloadURL}
               pageHeaderTitle=""
               pageHeaderCaption=""
               pageHeaderFilterColour=""
             />
             <Container className="bg-warning1 mt-1 pt-5">
-              <div className="h1 py-3 mb-0 font-weight-bold text-center">{state.dbProject.header}</div>
+              <div className="h1 py-3 mb-0 font-weight-bold text-center">{header}</div>
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbProject.content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
                 />
               </Row>
             </Container>

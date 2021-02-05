@@ -6,27 +6,23 @@ const initSettings = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'settings'
   });
-  const getDbSettings = async () => {
-    return await dbRepository.getDbItems();
+  const getDbSettingsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbSettingsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
+  const getDbSettingValue = async (sid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(sid, fieldNames);
   };
-  const getDbSetting = async sid => {
-    return await dbRepository.getDbItem(sid);
-  };
-  const getDbSettingValue = async sid => {
-    return await dbRepository.getDbItemValue(sid);
-  };
-  const getDbSettingsValues = async () => {
-    const dbSettingsAsArray = await getDbSettingsAsArray()
+  const getDbSettingsValues = async (fieldNames = []) => {
+    const includeInactive = false;
+    const childName = 'active';
+    const childValue = true;
+    const topLimit = NaN;
+    const dbSettingsAsArray = await getDbSettingsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
     return dbSettingsAsArray[0];
   };
   return {
     dbRepository,
-    getDbSettings,
     getDbSettingsAsArray,
-    getDbSetting,
     getDbSettingValue,
     getDbSettingsValues
   };

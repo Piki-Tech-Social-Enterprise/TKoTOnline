@@ -6,23 +6,15 @@ const initEvents = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'events'
   });
-  const getDbEvents = async () => {
-    return await dbRepository.getDbItems();
+  const getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbEventsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbEvent = async eid => {
-    return await dbRepository.getDbItem(eid);
-  };
-  const getDbEventValue = async eid => {
-    return await dbRepository.getDbItemValue(eid);
+  const getDbEventValue = async (eid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(eid, fieldNames);
   };
   return {
     dbRepository,
-    getDbEvents,
     getDbEventsAsArray,
-    getDbEvent,
     getDbEventValue
   };
 };

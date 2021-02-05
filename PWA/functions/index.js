@@ -22,7 +22,9 @@ const {
   handleImageTransform,
   handleSendEmail,
   handleSendEmailAlt,
-  handleResizeImages
+  handleResizeImages,
+  handleDbFunctions,
+  handleUpdateSettingImages
 } = require('./https');
 /*
 --- Get Server Date ---
@@ -259,9 +261,34 @@ https://us-central1-tkot-online-dev.cloudfunctions.net/resizeImages
 */
 exports.resizeImages = handleResizeImages;
 
+/*
+--- Db Functions ---
+Usage:
+Local
+http://localhost:5001/tkot-online-test/us-central1/dbFunctions?dbFunctionName=getDbItemsAsArray&dbTableName=settings
+
+Remote
+https://us-central1-tkot-online-test.cloudfunctions.net/dbFunctions?dbFunctionName=getDbItemsAsArray&dbTableName=settings
+*/
+exports.dbFunctions = handleDbFunctions;
+
+/*
+--- Update Setting Images ---
+Usage:
+Local
+http://localhost:5001/tkot-online-dev/us-central1/updateSettingImages
+{
+}
+
+Remote
+https://us-central1-tkot-online-dev.cloudfunctions.net/updateSettingImages
+*/
+exports.updateSettingImages = handleUpdateSettingImages;
+
 const {
   handleCreateVolunteer,
-  handleCreateContact
+  handleCreateContact,
+  handleWriteSetting
 } = require('./database');
 /*
 --- Create Volunteer ---
@@ -275,3 +302,9 @@ exports.createVolunteer = handleCreateVolunteer;
 Usage: createContact(snap, context)
 */
 exports.createContact = handleCreateContact;
+
+/*
+-- Write Setting ---
+Usage: writeSetting(snap, context)
+*/
+exports.writeSetting = handleWriteSetting;

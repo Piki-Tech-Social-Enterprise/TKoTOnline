@@ -18,7 +18,7 @@ const propTypes = {
   isLoading: PropTypes.bool,
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
-  imageURL: PropTypes.string.isRequired,
+  imageURL: PropTypes.string,
   loadingIconSize: PropTypes.oneOf([
     '',
     'sm',
@@ -72,9 +72,9 @@ const FirebaseImage = props => {
         height,
         lossless
       } = props;
-      const imageURLToUse = getImageURLToUse(imageResize, imageURL);
       let imageSrc = src;
       if (isNullOrEmpty(imageSrc)) {
+        const imageURLToUse = getImageURLToUse(imageResize, imageURL);
         try {
           imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.storageRepository.getStorageFileDownloadURL);
         } catch (error) {

@@ -6,23 +6,15 @@ const initResources = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'resources'
   });
-  const getDbResources = async () => {
-    return await dbRepository.getDbItems();
+  const getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbResourcesAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbResource = async rid => {
-    return await dbRepository.getDbItem(rid);
-  };
-  const getDbResourceValue = async rid => {
-    return await dbRepository.getDbItemValue(rid);
+  const getDbResourceValue = async (rid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(rid, fieldNames);
   };
   return {
     dbRepository,
-    getDbResources,
     getDbResourcesAsArray,
-    getDbResource,
     getDbResourceValue
   };
 };

@@ -29,12 +29,24 @@ const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const NewsFeedCaption = lazy(async () => await import('components/App/NewsFeedCaption'));
+const INITAL_STATE = {
+  isLoading: true,
+  dbCovid: {},
+  imageDownloadURL: ''
+};
 const CovidView = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    dbCovid: null,
-    imageDownloadURL: ''
-  });
+  const [state, setState] = useState(INITAL_STATE);
+  const {
+    isLoading,
+    dbCovid,
+    imageDownloadURL
+  } = state;
+  const {
+    header,
+    cvid,
+    content,
+    paMaiUrl
+  } = dbCovid;
   useEffect(() => {
     const retrieveCovidValue = async () => {
       const {
@@ -44,7 +56,16 @@ const CovidView = props => {
       const {
         cvid
       } = match.params;
-      const dbCovid = await firebase.covidListRepository.getDbCovidValue(cvid);
+      const dbCovidFieldNames = [
+        'externalUrl',
+        'imageUrl',
+        'category',
+        'header',
+        'cid',
+        'content',
+        'paMaiUrl'
+      ];
+      const dbCovid = await firebase.covidListRepository.getDbCovidValue(cvid, dbCovidFieldNames);
       const {
         externalUrl,
         imageUrl
@@ -57,53 +78,53 @@ const CovidView = props => {
           ...s,
           isLoading: false,
           dbCovid: dbCovid,
-          imageDownloadURL: imageDownloadURL
+          imageDownloadURL
         }));
       }
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveCovidValue();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="CovidView" />
           : <div id="Covid">
             <TKoTHelmet
-              name={state.dbCovid.header}
-              path={`/Covid/${state.dbCovid.cvid}`}
-              description={draftToText(state.dbCovid.content, '')}
-              image={`${state.imageDownloadURL}`}
+              name={header}
+              path={`/Covid/${cvid}`}
+              description={draftToText(content, '')}
+              image={`${imageDownloadURL}`}
             />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}
             />
             <HomeHeader
-              pageHeaderImage={state.imageDownloadURL}
-              pageHeaderTitle={state.dbCovid.header}
-              pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbCovid} key="temp" />}
+              pageHeaderImage={imageDownloadURL}
+              pageHeaderTitle={header}
+              pageHeaderCaption={() => <NewsFeedCaption newsFeed={dbCovid} key="temp" />}
             />
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbCovid.content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
                 />
               </Row>
               {
-                state.dbCovid.paMaiUrl
+                paMaiUrl
                   ? <>
                     <Row>
                       <Col>
                         <Button
-                          href={state.dbCovid.paMaiUrl}
+                          href={paMaiUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="tkot-primary-red-bg-color btn-outline-dark"
                           color="white"
-                          onClick={() => sendEvent(`Covid page`, 'Clicked "Pā Mai" button', state.dbCovid.header)}
+                          onClick={() => sendEvent(`Covid page`, 'Clicked "Pā Mai" button', header)}
                         >Pā Mai</Button>
                       </Col>
                     </Row>

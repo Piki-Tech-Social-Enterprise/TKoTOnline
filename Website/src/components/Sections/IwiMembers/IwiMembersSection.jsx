@@ -39,11 +39,24 @@ const IwiMembersSection = props => {
     const {
       isLoading
     } = state;
-    const getData = async () => {
+    const getIwiMembers = async () => {
+      const getDbIwiMembers = async () => {
+        const dbIwiMembersFieldNames = [
+          'sequence',
+          'imid',
+          'iwiMemberImageURL',
+          'iwiMemberName',
+          'iwiMemberURL'
+        ];
+        const dbIwiMembers = await props.firebase.iwiMembersRepository.getDbIwiMembersAsArray(false, 'active', true, NaN, dbIwiMembersFieldNames);
+        return dbIwiMembers;
+      };
       const {
-        firebase
+        dbIwiMembers: dbIwiMembersPassedIn
       } = props;
-      const dbIwiMembers = await firebase.iwiMembersRepository.getDbIwiMembersAsArray();
+      const dbIwiMembers = dbIwiMembersPassedIn
+        ? dbIwiMembersPassedIn
+        : await getDbIwiMembers();
       sortArray(dbIwiMembers, 'sequence', 'desc');
       // debugger;
       setState(s => ({
@@ -53,11 +66,13 @@ const IwiMembersSection = props => {
       }));
     };
     if (isLoading) {
-      getData();
+      getIwiMembers();
     }
   }, [props, state]);
   return (
-    <div className={`tkot-section ${containerClassName || ''}`}>
+    <div className={`tkot-section ${containerClassName || ''}`} style={{
+      minHeight: '33.75rem'
+    }}>
       <Container>
         <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         <Row className="debug-outline">

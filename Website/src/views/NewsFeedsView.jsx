@@ -21,6 +21,11 @@ const {
   // newsFeeds,
   mediaListPage
 } = Routes;
+const INITIAL_STATE = {
+  isLoading: true,
+  dbSettings: {},
+  dbNewsFeeds: []
+};
 const NewsFeedsView = props => {
   const {
     match
@@ -29,12 +34,10 @@ const NewsFeedsView = props => {
     path
   } = match;
   const isTKoTMedia = path === mediaListPage;
-  const [state, setState] = useState({
-    isLoading: true,
-    dbNewsFeeds: []
-  });
+  const [state, setState] = useState(INITIAL_STATE);
   const {
     isLoading,
+    dbSettings,
     dbNewsFeeds
   } = state;
   useEffect(() => {
@@ -42,10 +45,29 @@ const NewsFeedsView = props => {
       const {
         firebase
       } = props;
-      const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray();
+      const dbSettings = !isTKoTMedia
+        ? await firebase.settingsRepository.getDbSettingsValues([
+          'newsSectionDescription'
+        ])
+        : INITIAL_STATE.dbSettings;
+      const dbNewsFeedsFieldNames = [
+        'category',
+        'isFeatured',
+        'isTKoTMedia',
+        'date',
+        'content',
+        'header',
+        'imageUrl',
+        'externalUrl',
+        'nfid',
+        'name',
+        'url'
+      ];
+      const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, 'isTKoTMedia', isTKoTMedia, NaN, dbNewsFeedsFieldNames);
       setState(s => ({
         ...s,
         isLoading: false,
+        dbSettings,
         dbNewsFeeds
       }));
     };
@@ -54,25 +76,28 @@ const NewsFeedsView = props => {
       pageSetup();
     }
     return defaultPageSetup;
-  }, [props, isLoading]);
+  }, [props, isLoading, isTKoTMedia]);
   return (
     <>
-    {
-      isLoading
-        ? <PageLoadingSpinner caller="NewsFeedsView" />
-        : <>
-          <HomeNavbar
-            initalTransparent
-            colorOnScrollValue={25}
-          />
-          <NewsFeedSection
-            containerClassName="mt-5"
-            isTKoTMedia={isTKoTMedia}
-            dbNewsFeeds={dbNewsFeeds}
-          />
-          <HomeFooter />
-        </>
-    }
+      {
+        isLoading
+          ? <PageLoadingSpinner caller="NewsFeedsView" />
+          : <>
+            <HomeNavbar
+              initalTransparent
+              colorOnScrollValue={25}
+            />
+            <NewsFeedSection
+              containerClassName="mt-5"
+              isTKoTMedia={isTKoTMedia}
+              newsSectionDescription={!isTKoTMedia
+                ? dbSettings.newsSectionDescription
+                : null}
+              dbNewsFeeds={dbNewsFeeds}
+            />
+            <HomeFooter />
+          </>
+      }
     </>
   );
 };

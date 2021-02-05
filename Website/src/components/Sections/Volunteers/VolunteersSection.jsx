@@ -16,7 +16,7 @@ const VolunteersSection = props => {
   const [volunteersDescription, setVolunteersDescription] = useState([]);
   useEffect(() => {
     const getSettings = async () => {
-      const settings = await props.firebase.settingsRepository.getDbSettingsValues(true);
+      const settings = await props.firebase.settingsRepository.getDbSettingsValues();
       return settings;
     };
     const getDescription = async () => {

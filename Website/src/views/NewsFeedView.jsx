@@ -25,12 +25,23 @@ const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'
 const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
 const NewsFeedCaption = lazy(async () => await import('components/App/NewsFeedCaption'));
+const INITAL_STATE = {
+  isLoading: true,
+  dbNewsFeed: {},
+  imageDownloadURL: ''
+};
 const NewsFeedView = props => {
-  const [state, setState] = useState({
-    isLoading: true,
-    dbNewsFeed: null,
-    imageDownloadURL: ''
-  });
+  const [state, setState] = useState(INITAL_STATE);
+  const {
+    isLoading,
+    dbNewsFeed,
+    imageDownloadURL
+  } = state;
+  const {
+    header,
+    nfid,
+    content
+  } = dbNewsFeed;
   useEffect(() => {
     const retrieveNewsFeedValue = async () => {
       const {
@@ -38,9 +49,18 @@ const NewsFeedView = props => {
         match
       } = props;
       const {
+        newsFeedRepository,
+        storageRepository
+      } = firebase;
+      const {
         nfid
       } = match.params;
-      const dbNewsFeed = await firebase.newsFeedRepository.getDbNewsFeedValue(nfid);
+      const dbNewsFeedFieldNames = [
+        'externalUrl',
+        'imageUrl',
+        'header'
+      ];
+      const dbNewsFeed = await newsFeedRepository.getDbNewsFeedValue(nfid, dbNewsFeedFieldNames);
       const {
         externalUrl,
         imageUrl
@@ -48,44 +68,44 @@ const NewsFeedView = props => {
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
-        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
+        const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, storageRepository.getStorageFileDownloadURL);
         setState(s => ({
           ...s,
           isLoading: false,
-          dbNewsFeed: dbNewsFeed,
-          imageDownloadURL: imageDownloadURL
+          dbNewsFeed,
+          imageDownloadURL
         }));
       }
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveNewsFeedValue();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="NewsFeedView" />
           : <div id="NewsFeed">
             <TKoTHelmet
-              name={state.dbNewsFeed.header}
-              path={`/NewsFeeds/${state.dbNewsFeed.nfid}`}
-              description={draftToText(state.dbNewsFeed.content, '')}
-              image={`${state.imageDownloadURL}`}
+              name={header}
+              path={`/NewsFeeds/${nfid}`}
+              description={draftToText(content, '')}
+              image={`${imageDownloadURL}`}
             />
             <HomeNavbar
               initalTransparent={false}
               colorOnScrollValue={25}
             />
             <HomeHeader
-              pageHeaderImage={state.imageDownloadURL}
-              pageHeaderTitle={state.dbNewsFeed.header}
-              pageHeaderCaption={() => <NewsFeedCaption newsFeed={state.dbNewsFeed} key="temp" />}
+              pageHeaderImage={imageDownloadURL}
+              pageHeaderTitle={header}
+              pageHeaderCaption={() => <NewsFeedCaption newsFeed={dbNewsFeed} key="temp" />}
             />
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.dbNewsFeed.content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
                 />
               </Row>
             </Container>

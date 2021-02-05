@@ -4,6 +4,7 @@ if (admin.apps.length === 0) {
   admin.initializeApp();
 }
 const storage = admin.storage();
+const bucket = storage.bucket();
 const {
   handleResizeImage
 } = require('../storage/handleResizeImage');
@@ -45,10 +46,8 @@ const validateParameters = async (data, context) => {
   }
   return errorMessages.join('\n');
 };
-const getFiles = async () => {
-  const files = await storage
-    .bucket()
-    .getFiles();
+const getFiles = async getFilesOptions => {
+  const files = await bucket.getFiles(getFilesOptions);
   return files[0];
 };
 const handleResizeImages = async (data, context, source = 'handleResizeImages') => {

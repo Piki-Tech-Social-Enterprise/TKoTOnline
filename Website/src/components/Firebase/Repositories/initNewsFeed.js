@@ -6,23 +6,15 @@ const initNewsFeed = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'newsFeeds'
   });
-  const getDbNewsFeeds = async () => {
-    return await dbRepository.getDbItems();
+  const getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbNewsFeedsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbNewsFeed = async nfid => {
-    return await dbRepository.getDbItem(nfid);
-  };
-  const getDbNewsFeedValue = async nfid => {
-    return await dbRepository.getDbItemValue(nfid);
+  const getDbNewsFeedValue = async (nfid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(nfid, fieldNames);
   };
   return {
     dbRepository,
-    getDbNewsFeeds,
     getDbNewsFeedsAsArray,
-    getDbNewsFeed,
     getDbNewsFeedValue
   };
 };

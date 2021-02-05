@@ -108,7 +108,7 @@ const CommunityLinksSection = props => {
         firebase
       } = props;
       const dbCommunityLinks = await firebase.communityLinksRepository.getDbCommunityLinksAsArray();
-      const dbSettingsValues = await firebase.settingsRepository.getDbSettingsValues(true);
+      const dbSettingsValues = await firebase.settingsRepository.getDbSettingsValues();
       // debugger;
       setState(s => ({
         ...s,

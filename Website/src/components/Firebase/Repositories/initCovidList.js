@@ -6,23 +6,15 @@ const initCovid = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'covidList'
   });
-  const getDbCovidList = async () => {
-    return await dbRepository.getDbItems();
+  const getDbCovidListAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbCovidListAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbCovid = async cvid => {
-    return await dbRepository.getDbItem(cvid);
-  };
-  const getDbCovidValue = async cvid => {
-    return await dbRepository.getDbItemValue(cvid);
+  const getDbCovidValue = async (cvid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(cvid, fieldNames);
   };
   return {
     dbRepository,
-    getDbCovidList,
     getDbCovidListAsArray,
-    getDbCovid,
     getDbCovidValue
   };
 };

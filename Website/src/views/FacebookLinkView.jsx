@@ -31,7 +31,7 @@ const FacebookLinkView = props => {
       const {
         fid
       } = match.params;
-      const dbFacebookLink = await firebase.facebookLinkRepository.getDbFacebookLinksValue(fid);
+      const dbFacebookLink = await firebase.facebookLinkRepository.getDbFacebookLinksValue(fid, fieldNames);
       setState(s => ({
         ...s,
         isLoading: false,

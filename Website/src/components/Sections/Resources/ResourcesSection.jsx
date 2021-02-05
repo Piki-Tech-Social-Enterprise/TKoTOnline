@@ -43,24 +43,35 @@ const ResourcesSection = props => {
   const dbCategorisedResourcesAsArray = Object.keys(dbCategorisedResources);
   sortArray(dbCategorisedResourcesAsArray, null, 'asc');
   useEffect(() => {
-    const getDbResources = async () => {
+    const getResources = async () => {
+      const getDbResources = async fieldName => {
+        const dbResourcesFieldNames = [
+          'category',
+          'header',
+          'imageUrl',
+          'content',
+          'resourceUrl',
+          'resourceDownloadUrl'
+        ];
+        const dbResources = await props.firebase.resourcesRepository.getDbResourcesAsArray(false, fieldName, true, NaN, dbResourcesFieldNames);
+        return dbResources;
+      };
       const {
         firebase,
-        isHomePage
+        isHomePage,
+        dbResources: dbResourcesPassedIn
       } = props;
       const {
-        resourcesRepository,
         storageRepository
       } = firebase;
       const {
-        getDbResourcesAsArray
-      } = resourcesRepository;
-      const {
         getStorageFileDownloadURL
       } = storageRepository;
-      const dbResources = isHomePage
-        ? await getDbResourcesAsArray(false, 'isFeatured')
-        : await getDbResourcesAsArray();
+      const dbResources = dbResourcesPassedIn
+        ? dbResourcesPassedIn
+        : await getDbResources(isHomePage
+          ? 'isFeatured'
+          : 'active');
       const dbCategorisedResources = {};
       await Promise.all(dbResources.map(async dbResource => {
         const {
@@ -82,7 +93,7 @@ const ResourcesSection = props => {
       }));
     };
     if (isLoading) {
-      getDbResources();
+      getResources();
     }
   }, [props, isLoading]);
   return (

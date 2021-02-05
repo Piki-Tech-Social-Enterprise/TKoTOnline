@@ -45,20 +45,28 @@ const EventsSection = props => {
     dbEvents
   } = state;
   useEffect(() => {
-    const getDbEvents = async () => {
+    const getEvents = async () => {
+      const getDbEvents = async fieldName => {
+        const dbEventsFieldNames = [
+          'startDateTime',
+          'endDateTime',
+          'imageUrl',
+          'header',
+          'externalUrl',
+          'evid'
+        ];
+        const dbEvents = await props.firebase.eventsRepository.getDbEventsAsArray(false, fieldName, true, NaN, dbEventsFieldNames);
+        return dbEvents;
+      };
       const {
-        firebase,
-        isHomePage
+        isHomePage,
+        dbEvents: dbEventsPassedIn
       } = props;
-      const {
-        eventsRepository
-      } = firebase;
-      const {
-        getDbEventsAsArray
-      } = eventsRepository;
-      const dbEvents = isHomePage
-        ? await getDbEventsAsArray(false, 'isFeatured')
-        : await getDbEventsAsArray();
+      const dbEvents = dbEventsPassedIn
+        ? dbEventsPassedIn
+        : await getDbEvents(isHomePage
+          ? 'isFeatured'
+          : 'active');
       const now = new Date();
       setState(s => ({
         ...s,
@@ -85,9 +93,9 @@ const EventsSection = props => {
       }));
     };
     if (isLoading) {
-      getDbEvents();
+      getEvents();
     }
-  }, [props, isLoading, setState]);
+  }, [props, isLoading]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>

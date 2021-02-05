@@ -15,13 +15,14 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import tkotImage from '../../../assets/img/tkot/tkot-white-logo.webp';
-import tkot20pcImage from '../../../assets/img/tkot/tkot-white-logo-20pc.webp';
+// import {
+//   lazy
+// } from 'react-lazy-no-flicker';
 import {
-  lazy
-} from 'react-lazy-no-flicker';
+  getImageURLToUse
+} from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+// const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
 const {
   aboutUs,
   projectsAnchor
@@ -40,11 +41,17 @@ const AboutSection = props => {
     isLoading,
     backgroundImage
   } = state;
+  const tkot20pcImage = '/static/img/tkot-white-logo-20pc.webp';
+  const tkotImage = '/static/img/tkot-white-logo.webp';
   useEffect(() => {
     const pageSetup = async () => {
-      const {
-        pageAboutImage
-      } = props;
+      let pageAboutImage = props.pageAboutImage;
+      if (pageAboutImage.startsWith('/images')) {
+        const imageSize = window.screen.width <= 400
+          ? 'md'
+          : NaN;
+        pageAboutImage = await props.firebase.storageRepository.getStorageFileDownloadURL(getImageURLToUse(imageSize, pageAboutImage));
+      }
       const backgroundImage = `${INITIAL_STATE.backgroundImage}, url(${pageAboutImage})`;
       setState(s => ({
         ...s,
@@ -58,13 +65,17 @@ const AboutSection = props => {
   }, [props, isLoading]);
   return (
     <>
-      {
-        isLoading
-          ? <LoadingSpinner caller="AboutSection" />
-          : <>
-            <div className="tkot-section">
-              <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
+      <div className="tkot-section" style={{
+        height: '100%',
+        minHeight: '30rem'
+      }}>
+        <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
+        {
+          isLoading
+            ? null /* <LoadingSpinner caller="AboutSection" /> */
+            : <>
               <div className="about-image" style={{
+                backgroundColor: 'gray',
                 backgroundImage
               }}>
                 <Container className="py-5 text-center">
@@ -93,9 +104,9 @@ const AboutSection = props => {
                   }
                 </Container>
               </div>
-            </div>
-          </>
-      }
+            </>
+        }
+      </div>
     </>
   );
 };

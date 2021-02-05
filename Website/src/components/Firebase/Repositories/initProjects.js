@@ -6,23 +6,15 @@ const initProjects = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'projects'
   });
-  const getDbProjects = async () => {
-    return await dbRepository.getDbItems();
+  const getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbProjectsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbProject = async pid => {
-    return await dbRepository.getDbItem(pid);
-  };
-  const getDbProjectValue = async pid => {
-    return await dbRepository.getDbItemValue(pid);
+  const getDbProjectValue = async (pid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(pid, fieldNames);
   };
   return {
     dbRepository,
-    getDbProjects,
     getDbProjectsAsArray,
-    getDbProject,
     getDbProjectValue
   };
 };

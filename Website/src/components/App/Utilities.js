@@ -332,6 +332,24 @@ const getImageURLToUse = (imageResizeOrSize, imageURL) => {
   return imageURLToUse;
 };
 const fromCamelcaseToTitlecase = camelCase => camelCase.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase());
+const Nz = (value, ifNullValue = undefined) => {
+  return isNullOrEmpty(value)
+    ? typeof ifNullValue === 'undefined'
+      ? ''
+      : ifNullValue
+    : value;
+};
+const refactorObject = async rest => {
+  const refactoredObject = {};
+  await Promise.all(Object.keys(rest).map(async k => {
+    const refactoredValue = Nz(rest[k], null);
+    if (refactoredValue !== null) {
+      refactoredObject[k] = refactoredValue;
+    }
+    return null;
+  }));
+  return refactoredObject;
+};
 
 export {
   useWindowEvent,
@@ -369,5 +387,7 @@ export {
   groupBy,
   getSize,
   getImageURLToUse,
-  fromCamelcaseToTitlecase
+  fromCamelcaseToTitlecase,
+  Nz,
+  refactorObject
 };

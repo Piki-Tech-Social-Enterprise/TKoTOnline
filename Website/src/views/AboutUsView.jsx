@@ -65,7 +65,13 @@ const AboutUsView = props => {
       const {
         firebase
       } = props;
-      const dbSettings = await firebase.settingsRepository.getDbSettingsValues(true);
+      const dbSettings = await firebase.settingsRepository.getDbSettingsValues([
+        'aboutPageDescription',
+        'homePageVideoSourceUrl',
+        'aboutPageTKoTBackOfficeStructureDescription',
+        'aboutPageTKoTBackOfficeStructureImageUrl',
+        'aboutPageExtraDescription'
+      ]);
       setState(s => ({
         ...s,
         isLoading: false,

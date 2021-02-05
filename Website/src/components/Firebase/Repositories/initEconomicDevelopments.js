@@ -6,23 +6,15 @@ const initEconomicDevelopment = async initialisedFirebaseApp => {
     initialisedFirebaseApp,
     dbTableName: 'economicDevelopments'
   });
-  const getDbEconomicDevelopments = async () => {
-    return await dbRepository.getDbItems();
+  const getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
+    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
   };
-  const getDbEconomicDevelopmentsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN) => {
-    return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit);
-  };
-  const getDbEconomicDevelopment = async edid => {
-    return await dbRepository.getDbItem(edid);
-  };
-  const getDbEconomicDevelopmentValue = async edid => {
-    return await dbRepository.getDbItemValue(edid);
+  const getDbEconomicDevelopmentValue = async (edid, fieldNames = []) => {
+    return await dbRepository.getDbItemValue(edid, fieldNames);
   };
   return {
     dbRepository,
-    getDbEconomicDevelopments,
     getDbEconomicDevelopmentsAsArray,
-    getDbEconomicDevelopment,
     getDbEconomicDevelopmentValue
   };
 };

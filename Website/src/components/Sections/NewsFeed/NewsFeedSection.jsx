@@ -81,11 +81,33 @@ const NewsFeedSection = props => {
     );
   };
   useEffect(() => {
-    const getDbNewsFeeds = async () => {
+    const getNewsFeeds = async () => {
+      const getDbNewsFeeds = async fieldName => {
+        const dbNewsFeedsFieldNames = [
+          'category',
+          'isFeatured',
+          'isTKoTMedia',
+          'date',
+          'content',
+          'header',
+          'imageUrl',
+          'externalUrl',
+          'nfid',
+          'name',
+          'url'
+        ];
+        const dbNewsFeeds = await props.firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, fieldName, true, NaN, dbNewsFeedsFieldNames);
+        return dbNewsFeeds;
+      };
       const {
         isTKoTMedia,
-        dbNewsFeeds
+        dbNewsFeeds: dbNewsFeedsPassedIn
       } = props;
+      const dbNewsFeeds = dbNewsFeedsPassedIn
+        ? dbNewsFeedsPassedIn
+        : await getDbNewsFeeds(isTKoTMedia
+          ? 'isTKoTMedia'
+          : 'isFeatured');
       const filteredDbNewsFeeds = searchCategory
         ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
         : dbNewsFeeds;
@@ -116,9 +138,9 @@ const NewsFeedSection = props => {
       }));
     };
     if (isLoading) {
-      getDbNewsFeeds();
+      getNewsFeeds();
     }
-  }, [props, isLoading, setState, searchCategory]);
+  }, [props, isLoading, searchCategory]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
