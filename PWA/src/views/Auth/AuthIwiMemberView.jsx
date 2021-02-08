@@ -43,6 +43,7 @@ const INITIAL_STATE = {
   iwiMemberImageURLFile: null,
   iwiMemberName: '',
   iwiMemberURL: '',
+  iwiMemberRegistrationLink: '',
   imid: null,
   sequence: Number.MAX_SAFE_INTEGER
 };
@@ -90,6 +91,7 @@ const AuthIwiMemberView = props => {
       iwiMemberImageURLFile,
       iwiMemberName,
       iwiMemberURL,
+      iwiMemberRegistrationLink,
       sequence
     } = iwiMember;
     let imid = iwiMember.imid;
@@ -113,6 +115,8 @@ const AuthIwiMemberView = props => {
         throw new Error(`Images greater than ${formatBytes(maxImageFileSize)} (${formatInteger(maxImageFileSize)} bytes) cannot be uploaded.<br /><br />Actual image size: ${formatBytes(size)} (${formatInteger(size)} bytes)`);
       } else if (!iwiMemberURL.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
         displayMessage = 'Must be a valid Iwi Member URL';
+      } else if (!iwiMemberRegistrationLink.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
+        displayMessage = 'Must be a valid Iwi Member Registration Link';
       } else {
         if (isNew) {
           imid = await firebase.saveDbIwiMember({});
@@ -133,6 +137,7 @@ const AuthIwiMemberView = props => {
           iwiMemberImageURL,
           iwiMemberName,
           iwiMemberURL,
+          iwiMemberRegistrationLink,
           imid: imid,
           sequence: sequence,
           updated: now.toString(),
@@ -246,6 +251,7 @@ const AuthIwiMemberView = props => {
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
+        iwiMemberRegistrationLink,
         imid,
         sequence
       } = dbIwiMember;
@@ -258,6 +264,7 @@ const AuthIwiMemberView = props => {
         iwiMemberImageURL,
         iwiMemberName,
         iwiMemberURL,
+        iwiMemberRegistrationLink,
         imid,
         sequence
       }));
@@ -325,6 +332,10 @@ const AuthIwiMemberView = props => {
                       <FormGroup>
                         <Label>Iwi Member URL</Label>
                         <Input placeholder="Iwi Member URL" name="iwiMemberURL" value={iwiMember.iwiMemberURL} onChange={handleChange} type="text" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Iwi Member Registration Link</Label>
+                        <Input placeholder="Iwi Member Registration Link" name="iwiMemberRegistrationLink" value={iwiMember.iwiMemberRegistrationLink} onChange={handleChange} type="text" />
                       </FormGroup>
                       <FormGroup>
                         <Label>Sequence</Label>

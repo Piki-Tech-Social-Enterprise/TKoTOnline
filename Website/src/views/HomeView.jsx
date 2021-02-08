@@ -135,7 +135,8 @@ const HomeView = props => {
             'imid',
             'iwiMemberImageURL',
             'iwiMemberName',
-            'iwiMemberURL'
+            'iwiMemberURL',
+            'iwiMemberRegistrationLink'
           ]
         },
         dbCovidList: {

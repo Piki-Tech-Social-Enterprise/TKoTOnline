@@ -6,7 +6,8 @@ import React, {
 import {
   Container,
   Row,
-  Col
+  Col,
+  Button
 } from 'reactstrap';
 import {
   withFirebase
@@ -15,7 +16,7 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import { 
+import {
   sortArray
 } from 'components/App/Utilities';
 import {
@@ -46,7 +47,8 @@ const IwiMembersSection = props => {
           'imid',
           'iwiMemberImageURL',
           'iwiMemberName',
-          'iwiMemberURL'
+          'iwiMemberURL',
+          'iwiMemberRegistrationLink'
         ];
         const dbIwiMembers = await props.firebase.iwiMembersRepository.getDbIwiMembersAsArray(false, 'active', true, NaN, dbIwiMembersFieldNames);
         return dbIwiMembers;
@@ -90,7 +92,8 @@ const IwiMembersSection = props => {
                           imid,
                           iwiMemberImageURL,
                           iwiMemberName,
-                          iwiMemberURL
+                          iwiMemberURL,
+                          iwiMemberRegistrationLink
                         } = iwiMember;
                         return (
                           <Fragment key={imid}>
@@ -116,8 +119,18 @@ const IwiMembersSection = props => {
                                   lossless={true}
                                   imageResize="sm"
                                 /><br />
-                                <span className="iwi-member-name">{iwiMemberName}</span>
+                                <span className="iwi-member-name">{iwiMemberName}{iwiMemberName.length < 15 ? <><br /><br /></> : <></>}</span>
                               </a>
+                              <div className="text-center mt-3">
+                                <Button
+                                  href={iwiMemberRegistrationLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="tkot-primary-red-bg-color btn-outline-dark"
+                                  color="white"
+                                  onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName} Register" button`)}
+                                >Register</Button>
+                              </div>
                             </Col>
                           </Fragment>
                         );
