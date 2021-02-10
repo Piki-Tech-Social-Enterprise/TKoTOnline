@@ -14,7 +14,8 @@ import {
   sidebarCollapseClassName,
   defaultPageSetup,
   getSize,
-  isNumber
+  isNumber,
+  getImageURLToUse
 } from 'components/App/Utilities';
 import {
   lazy
@@ -51,6 +52,7 @@ const HomeView = props => {
     isLoading: true,
     isHomePage: true,
     multipleDbItemsAsArrays: {},
+    dbIwiMemberDownloadURLs: [],
     // dbSettings: null,
     // homePageHeaderImageDownloadUrl: '',
     // homePageAboutImageDownloadUrl: '',
@@ -60,7 +62,8 @@ const HomeView = props => {
   const {
     isLoading,
     isHomePage,
-    multipleDbItemsAsArrays
+    multipleDbItemsAsArrays,
+    dbIwiMemberDownloadURLs
     // dbSettings,
     // homePageHeaderImageDownloadUrl,
     // homePageAboutImageDownloadUrl,
@@ -260,6 +263,7 @@ const HomeView = props => {
       // ];
       // const dbNewsFeedsByIsFeatured = await getDbNewsFeedsAsArray(false, 'isFeatured', true, NaN, dbNewsFeedsFieldNames);
       // const dbNewsFeedsByIsTKoTMedia = await getDbNewsFeedsAsArray(false, 'isTKoTMedia', true, NaN, dbNewsFeedsFieldNames);
+      const dbIwiMemberDownloadURLs = await Promise.all(multipleDbItemsAsArrays.dbIwiMembers.map(async dbIwiMember => await props.firebase.storageRepository.getStorageFileDownloadURL(getImageURLToUse('sm', dbIwiMember.iwiMemberImageURL))));
       defaultPageSetup({
         isLoading: true,
         classNames: [
@@ -271,6 +275,7 @@ const HomeView = props => {
         ...s,
         isLoading: false,
         multipleDbItemsAsArrays,
+        dbIwiMemberDownloadURLs
         // dbSettings,
         // homePageHeaderImageDownloadUrl,
         // homePageAboutImageDownloadUrl,
@@ -305,7 +310,7 @@ const HomeView = props => {
           tkotLogoOnlyBlackUrl,
           tkot20pcImage,
           tkotImage
-        ]}
+        ].concat(dbIwiMemberDownloadURLs)}
       />
       {
         isLoading
