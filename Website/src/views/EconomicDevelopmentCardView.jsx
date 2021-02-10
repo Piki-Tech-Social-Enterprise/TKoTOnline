@@ -14,8 +14,8 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
-const EconomicDevelopmentCard = lazy(async () => await import('components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const EconomicDevelopmentCard = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));
 const INITIAL_STATE = {
   isLoading: true,
   dbEconomicDevelopment: {

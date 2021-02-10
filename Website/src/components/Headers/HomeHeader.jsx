@@ -10,14 +10,14 @@ import Routes from 'components/Routes/routes';
 import {
   withFirebase
 } from 'components/Firebase';
-// import {
-//   lazy
-// } from 'react-lazy-no-flicker';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 import {
   getImageURLToUse
 } from 'components/App/Utilities';
 
-// const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
 const INITIAL_STATE = {
   isLoading: true,
   backgroundImage: 'linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0))'
@@ -59,7 +59,7 @@ const HomeHeader = props => {
     <>
       {
         isLoading
-          ? null /* <LoadingSpinner caller="HomeHeader" /> */
+          ? <LoadingSpinner caller="HomeHeader" />
           : <>
             {/* <a id="About" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a> */}
             <div className="page-header clear-filter tkot-section" filter-color={pageHeaderFilterColour} style={{

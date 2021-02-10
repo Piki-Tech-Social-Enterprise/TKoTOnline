@@ -15,14 +15,14 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-// import {
-//   lazy
-// } from 'react-lazy-no-flicker';
+import {
+  lazy
+} from 'react-lazy-no-flicker';
 import {
   getImageURLToUse
 } from 'components/App/Utilities';
 
-// const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
 const {
   aboutUs,
   projectsAnchor
@@ -72,7 +72,7 @@ const AboutSection = props => {
         <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         {
           isLoading
-            ? null /* <LoadingSpinner caller="AboutSection" /> */
+            ? <LoadingSpinner caller="AboutSection" />
             : <>
               <div className="about-image" style={{
                 backgroundColor: 'gray',

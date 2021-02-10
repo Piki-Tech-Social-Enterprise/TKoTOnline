@@ -12,10 +12,10 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
-const ResourcesSection = lazy(async () => await import('components/Sections/Resources'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
+const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
+const ResourcesSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Resources'));
 const ResourcesView = () => {
   const [state, setState] = useState({
     isLoading: true

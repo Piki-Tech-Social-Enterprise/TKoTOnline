@@ -26,8 +26,8 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
+const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const ContactUsView = props => {
   const INITIAL_STATE = {
     active: true,

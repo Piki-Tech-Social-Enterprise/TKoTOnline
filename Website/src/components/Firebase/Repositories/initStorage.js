@@ -1,5 +1,5 @@
 const initStorage = async initialisedFirebaseApp => {
-  await import('firebase/storage');
+  await import(/* webpackPreload: true */'firebase/storage');
   const storage = initialisedFirebaseApp.storage();
   const getStorageFileRef = path => {
     return storage.ref().child(path);

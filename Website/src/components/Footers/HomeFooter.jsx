@@ -32,8 +32,8 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const NavItems = lazy(async () => await import('components/App/NavItems'));
-const SocialMedia = lazy(async () => await import('./SocialMedia'));
+const NavItems = lazy(async () => await import(/* webpackPreload: true */'components/App/NavItems'));
+const SocialMedia = lazy(async () => await import(/* webpackPreload: true */'./SocialMedia'));
 const HomeFooterLink = props => {
   const {
     to,

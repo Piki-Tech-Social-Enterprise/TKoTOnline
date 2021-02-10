@@ -15,7 +15,7 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
 const EconomicDevelopmentCard = props => {
   const {
     dbEconomicDevelopment,

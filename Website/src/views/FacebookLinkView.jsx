@@ -10,7 +10,7 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
 const FacebookLinkView = props => {
   const [state, setState] = useState({
     isLoading: true,

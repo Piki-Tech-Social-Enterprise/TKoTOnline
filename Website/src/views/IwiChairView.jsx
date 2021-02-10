@@ -20,12 +20,12 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
-const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
-const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
+const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
+const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
 const INITAL_STATE = {
   isLoading: true,
   dbIwiMember: {},

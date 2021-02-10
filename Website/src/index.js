@@ -35,98 +35,98 @@ import {
 const appRoutes = [
   {
     path: Routes.home,
-    component: lazy(async () => await import('views/HomeView'))
+    component: lazy(async () => await import(/* webpackPreload: true */'views/HomeView'))
   },
   {
     path: Routes.privacyPolicy,
-    component: lazy(async () => await import('views/PrivacyPolicyView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/PrivacyPolicyView'))
   },
   {
     path: Routes.termsOfUse,
-    component: lazy(async () => await import('views/TermsOfServiceView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/TermsOfServiceView'))
   },
   {
     path: Routes.aboutUs,
-    component: lazy(async () => await import('views/AboutUsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/AboutUsView'))
   },
   {
     path: Routes.contactUs,
-    component: lazy(async () => await import('views/ContactUsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/ContactUsView'))
   },
   {
     path: Routes.projectsPage,
-    component: lazy(async () => await import('views/ProjectsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/ProjectsView'))
   },
   {
     path: Routes.projectPage,
-    component: lazy(async () => await import('views/ProjectView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/ProjectView'))
   },
   {
     path: Routes.newsFeeds,
-    component: lazy(async () => await import('views/NewsFeedsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/NewsFeedsView'))
   },
   {
     path: Routes.newsFeed,
-    component: lazy(async () => await import('views/NewsFeedView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/NewsFeedView'))
   },
   {
     path: Routes.events,
-    component: lazy(async () => await import('views/EventsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/EventsView'))
   },
   {
     path: Routes.event,
-    component: lazy(async () => await import('views/EventView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/EventView'))
   },
   {
     path: Routes.iwiChair,
-    component: lazy(async () => await import('views/IwiChairView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/IwiChairView'))
   },
   {
     path: Routes.resourcesPage,
-    component: lazy(async () => await import('views/ResourcesView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/ResourcesView'))
   },
   {
     path: Routes.facebookLinks,
-    component: lazy(async () => await import('views/FacebookLinksView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/FacebookLinksView'))
   },
   // {
   //   path: Routes.facebookLink,
-  //   component: lazy(async () => await import('views/FacebookLinkView'))
+  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/FacebookLinkView'))
   // },
   // {
   //   path: Routes.resourceCardPage,
-  //   component: lazy(async () => await import('views/ResourceCardView'))
+  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/ResourceCardView'))
   // },
   {
     path: Routes.economicDevelopmentsPage,
-    component: lazy(async () => await import('views/EconomicDevelopmentsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/EconomicDevelopmentsView'))
   },
   // {
   //   path: Routes.economicDevelopmentCardPage,
-  //   component: lazy(async () => await import('views/EconomicDevelopmentCardView'))
+  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/EconomicDevelopmentCardView'))
   // },
   {
     path: Routes.mediaListPage,
-    component: lazy(async () => await import('views/NewsFeedsView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/NewsFeedsView'))
   },
   {
     path: Routes.mediaPage,
-    component: lazy(async () => await import('views/NewsFeedView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/NewsFeedView'))
   },
   {
     path: Routes.covidListPage,
-    component: lazy(async () => await import('views/CovidListView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/CovidListView'))
   },
   {
     path: Routes.covidPage,
-    component: lazy(async () => await import('views/CovidView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/CovidView'))
   },
   // {
   //   path: '',
-  //   component: lazy(async () => await import('views/Global404View'))
+  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/Global404View'))
   // }
 ];
-const GoogleAnalytics = lazy(async () => await import('components/App/GoogleAnalytics'));
+const GoogleAnalytics = lazy(async () => await import(/* webpackPreload: true */'components/App/GoogleAnalytics'));
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };

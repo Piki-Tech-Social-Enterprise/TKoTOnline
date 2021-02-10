@@ -23,12 +23,12 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
-const PageLoadingSpinner = lazy(async () => await import('components/App/PageLoadingSpinner'));
-const TKoTHelmet = lazy(async () => await import('components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import('components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import('components/Headers/HomeHeader'));
-const HomeFooter = lazy(async () => await import('components/Footers/HomeFooter'));
-const NewsFeedCaption = lazy(async () => await import('components/App/NewsFeedCaption'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
+const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
+const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NewsFeedCaption'));
 const INITAL_STATE = {
   isLoading: true,
   dbCovid: {},

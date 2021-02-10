@@ -32,9 +32,9 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
-const NoDataToDisplayDiv = lazy(async () => await import('components/App/NoDataToDisplayDiv'));
-const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
+const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
 const getIwiMembersAsChunks = (iwiMembers, columnCount) => {
   const iwiMembersMegaMenuItems = {};
   const chunks = intoChunks(iwiMembers, columnCount);

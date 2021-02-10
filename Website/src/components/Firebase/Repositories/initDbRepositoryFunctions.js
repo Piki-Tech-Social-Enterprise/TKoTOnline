@@ -5,7 +5,7 @@ import {
 const initDbRepositoryFunctions = async initOptions => {
   const {
     default: axios
-  } = await import('axios');
+  } = await import(/* webpackPreload: true */'axios');
   const {
     REACT_APP_FIREBASE_USE_FUNCTIONS_EMULATOR_URL,
     REACT_APP_FIREBASE_FUNCTIONS_EMULATOR_URL,

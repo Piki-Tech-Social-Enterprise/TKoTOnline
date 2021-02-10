@@ -59,7 +59,7 @@ const dbTables = {
   }
 };
 const initDbRepository = async initOptions => {
-  await import('firebase/database');
+  await import(/* webpackPreload: true */'firebase/database');
   const {
     initialisedFirebaseApp,
     dbTableName: dbTableNamePassedIn

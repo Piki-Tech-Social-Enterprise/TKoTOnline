@@ -1,7 +1,7 @@
 const initEvents = async initialisedFirebaseApp => {
   const {
     default: initDbRepository
-  } = await import('./initDbRepository');
+  } = await import(/* webpackPreload: true */'./initDbRepository');
   const dbRepository = await initDbRepository({
     initialisedFirebaseApp,
     dbTableName: 'events'

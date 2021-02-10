@@ -21,53 +21,53 @@ const Firebase = props => {
       } = props;
       const {
         default: firebaseApp
-      } = await import('firebase/app');
+      } = await import(/* webpackPreload: true */'firebase/app');
       const initialisedFirebaseApp = firebaseApp.apps.length
         ? firebaseApp.app()
         : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);
       const {
         default: initStorage
-      } = await import('./Repositories/initStorage');
+      } = await import(/* webpackPreload: true */'./Repositories/initStorage');
       const storage = await initStorage(initialisedFirebaseApp);
       const {
         default: initNewsFeed
-      } = await import('./Repositories/initNewsFeed');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initNewsFeed');
       const newsFeed = await initNewsFeed(initialisedFirebaseApp);
       const {
         default: initSettings
-      } = await import('./Repositories/initSettings');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initSettings');
       const settings = await initSettings(initialisedFirebaseApp);
       const {
         default: initContact
-      } = await import('./Repositories/initContact');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initContact');
       const contact = await initContact(initialisedFirebaseApp);
       const {
         default: initIwiMembers
-      } = await import('./Repositories/initIwiMembers');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initIwiMembers');
       const iwiMembers = await initIwiMembers(initialisedFirebaseApp);
       const {
         default: initCovidList
-      } = await import('./Repositories/initCovidList');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initCovidList');
       const covidList = await initCovidList(initialisedFirebaseApp);
       const {
         default: initEconomicDevelopments
-      } = await import('./Repositories/initEconomicDevelopments');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initEconomicDevelopments');
       const economicDevelopments = await initEconomicDevelopments(initialisedFirebaseApp);
       const {
         default: initProjects
-      } = await import('./Repositories/initProjects');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initProjects');
       const projects = await initProjects(initialisedFirebaseApp);
       const {
         default: initEvents
-      } = await import('./Repositories/initEvents');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initEvents');
       const events = await initEvents(initialisedFirebaseApp);
       const {
         default: initResources
-      } = await import('./Repositories/initResources');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initResources');
       const resources = await initResources(initialisedFirebaseApp);
       const {
         default: initFacebookLinks
-      } = await import('./Repositories/initFacebookLinks');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initFacebookLinks');
       const facebookLinks = await initFacebookLinks(initialisedFirebaseApp);
       const firebase = {
         app: initialisedFirebaseApp,

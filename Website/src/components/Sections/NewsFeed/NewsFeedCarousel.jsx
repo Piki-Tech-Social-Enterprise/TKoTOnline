@@ -33,8 +33,8 @@ import {
   lazy
 } from 'react-lazy-no-flicker';
 
-const LoadingSpinner = lazy(async () => await import('components/App/LoadingSpinner'));
-const FirebaseImage = lazy(async () => await import('components/App/FirebaseImage'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
 const INITIAL_STATE = {
   isLoading: true,
   carouselItems: [],
