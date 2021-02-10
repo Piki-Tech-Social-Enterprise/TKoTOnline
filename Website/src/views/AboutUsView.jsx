@@ -87,6 +87,7 @@ const AboutUsView = props => {
   const {
     REACT_APP_WEB_BASE_URL
   } = process.env;
+  const tkotLogoOnlyBlackUrl = new URL('/static/img/tkot-logo-only-black.webp', REACT_APP_WEB_BASE_URL).toString();
   return (
     <>
       <TKoTHelmet
@@ -95,7 +96,10 @@ const AboutUsView = props => {
         description={state.isLoading
           ? 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'
           : draftToText(state.settings.aboutPageDescription, '')}
-        image={`${REACT_APP_WEB_BASE_URL}${require("assets/img/tkot/tkot-logo-only-black.webp")}`}
+        image={tkotLogoOnlyBlackUrl}
+        preloadImages={[
+          tkotLogoOnlyBlackUrl
+        ]}
       />
       {
         state.isLoading

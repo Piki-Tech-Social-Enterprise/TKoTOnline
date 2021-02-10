@@ -12,7 +12,6 @@ import {
   useWindowEvent,
   getNavItems
 } from 'components/App/Utilities';
-import tkotLogoOnlyBlack from 'assets/img/tkot/tkot-logo-only-black.webp';
 import {
   lazy
 } from 'react-lazy-no-flicker';
@@ -61,6 +60,10 @@ const HomeNavbar = props => {
         : !state.collapseOpen
     }));
   };
+  const {
+    REACT_APP_WEB_BASE_URL
+  } = process.env;
+  const tkotLogoOnlyBlackUrl = new URL('/static/img/tkot-logo-only-black.webp', REACT_APP_WEB_BASE_URL).toString();
   useWindowEvent('scroll', updateNavbarColor);
   return (
     <>
@@ -80,7 +83,7 @@ const HomeNavbar = props => {
           </div>
           <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
             <a href="/">
-              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlack} src={tkotLogoOnlyBlack} width="32" height="62" />
+              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlackUrl} src={tkotLogoOnlyBlackUrl} width="32" height="62" />
             </a>
             <Nav navbar>
               <NavItems
