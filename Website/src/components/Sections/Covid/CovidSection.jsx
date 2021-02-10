@@ -80,6 +80,7 @@ const CovidSection = props => {
       const getDbCovidList = async fieldName => {
         const dbCovidListFieldNames = [
           'category',
+          'date',
           'content',
           'header',
           'imageUrl',

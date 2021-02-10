@@ -144,6 +144,7 @@ const HomeView = props => {
           childName: 'isFeatured',
           fieldNames: [
             'category',
+            'date',
             'content',
             'header',
             'imageUrl',
