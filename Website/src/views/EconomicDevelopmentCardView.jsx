@@ -2,7 +2,9 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import withRouter from 'react-router-dom/withRouter';
+import {
+  withRouter
+} from 'react-router-dom';
 // import {
 //   Container,
 //   Row,
