@@ -11,19 +11,19 @@ exports.resizeImage = handleResizeImage;
 
 const {
   handleGetServerDateTime,
-  handleGetAnalytics,
-  handleGetAccessTokenFromServiceAccount,
-  handleGetDataFromFirebase,
+  // handleGetAnalytics,
+  // handleGetAccessTokenFromServiceAccount,
+  // handleGetDataFromFirebase,
   handleSetProfile,
   handleUpdateProfile,
   handleDeleteProfile,
-  handleIsUnique,
-  handleIsUniqueAlt,
-  handleImageTransform,
+  // handleIsUnique,
+  // handleIsUniqueAlt,
+  // handleImageTransform,
   handleSendEmail,
-  handleSendEmailAlt,
+  // handleSendEmailAlt,
   handleResizeImages,
-  handleDbFunctions,
+  // handleDbFunctions,
   handleUpdateSettingImages
 } = require('./https');
 /*
@@ -46,7 +46,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getAnalytics?uid=xqHlH4QKJFeMi
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAnalytics?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1&viewId=215256322&startDate=2019-10-12&endDate=2019-10-18&alias=Users&expression=ga:users
 */
-exports.getAnalytics = handleGetAnalytics;
+// exports.getAnalytics = handleGetAnalytics;
 
 /*
 --- Get Access Token From Service Account ---
@@ -57,7 +57,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getAccessTokenFromServiceAccou
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getAccessTokenFromServiceAccount?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
-exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
+// exports.getAccessTokenFromServiceAccount = handleGetAccessTokenFromServiceAccount;
 
 /*
 --- Get Data From Firebase ---
@@ -68,7 +68,7 @@ http://localhost:5001/tkot-online-dev/us-central1/getDataFromFirebase?uid=xqHlH4
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/getDataFromFirebase?uid=xqHlH4QKJFeMibQKHOWPwUrxLOm1
 */
-exports.getDataFromFirebase = handleGetDataFromFirebase;
+// exports.getDataFromFirebase = handleGetDataFromFirebase;
 
 /*
 --- Set Profile ---
@@ -154,7 +154,7 @@ http://localhost:5001/tkot-online-dev/us-central1/isUnique
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/isUnique
 */
-exports.isUnique = handleIsUnique;
+// exports.isUnique = handleIsUnique;
 /*
 --- Is Unique Alt ---
 Usage:
@@ -176,7 +176,7 @@ http://localhost:5001/tkot-online-dev/us-central1/isUniqueAlt
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/isUniqueAlt
 */
-exports.isUniqueAlt = handleIsUniqueAlt;
+// exports.isUniqueAlt = handleIsUniqueAlt;
 
 /*
 --- Image Transform ---
@@ -189,7 +189,7 @@ Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/imageTransform/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
 https://web-dev.tkot.org.nz/cdn/image/?s=images/iwiMembers/-MBcnZKWJsTMG0Eu4OnE/Kahukuraariki-250x250.png&w=250&h=250&l=1
 */
-exports.imageTransform = handleImageTransform;
+// exports.imageTransform = handleImageTransform;
 
 /*
 --- Send Email ---
@@ -246,7 +246,7 @@ http://localhost:5001/tkot-online-dev/us-central1/sendEmailAlt
 Remote
 https://us-central1-tkot-online-dev.cloudfunctions.net/sendEmailAlt
 */
-exports.sendEmailAlt = handleSendEmailAlt;
+// exports.sendEmailAlt = handleSendEmailAlt;
 
 /*
 --- Resize Images ---
@@ -270,7 +270,7 @@ http://localhost:5001/tkot-online-test/us-central1/dbFunctions?dbFunctionName=ge
 Remote
 https://us-central1-tkot-online-test.cloudfunctions.net/dbFunctions?dbFunctionName=getDbItemsAsArray&dbTableName=settings
 */
-exports.dbFunctions = handleDbFunctions;
+// exports.dbFunctions = handleDbFunctions;
 
 /*
 --- Update Setting Images ---
@@ -295,7 +295,7 @@ const {
 Usage:
 createVolunteer(snap, context)
 */
-exports.createVolunteer = handleCreateVolunteer;
+// exports.createVolunteer = handleCreateVolunteer;
 
 /*
 -- Create Contact ---
