@@ -1,7 +1,7 @@
 const initResources = async initialisedFirebaseApp => {
   const {
     default: initDbRepository
-  } = await import(/* webpackPreload: true */'./initDbRepository');
+  } = await import(/* webpackPrefetch: true */'./initDbRepository');
   const dbRepository = await initDbRepository({
     initialisedFirebaseApp,
     dbTableName: 'resources'

@@ -15,18 +15,16 @@ import {
   Button,
   CustomInput
 } from 'reactstrap';
-import swal from 'sweetalert2';
+// import swal from 'sweetalert2';
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  defaultPageSetup
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import {
+//   defaultPageSetup
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const ContactUsView = props => {
   const INITIAL_STATE = {
@@ -105,6 +103,7 @@ const ContactUsView = props => {
       setIsSubmitting(false);
     }
     if (displayMessage) {
+      const swal = await import('sweetalert2').then(x => x.default);
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
@@ -113,9 +112,17 @@ const ContactUsView = props => {
     }
   };
   useEffect(() => {
-    defaultPageSetup(true);
+    let defaultPageSetup = {};
+    const pageSetup = async () => {
+      const {
+        defaultPageSetup: defaultPageSetupImported
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      defaultPageSetup = defaultPageSetupImported;
+      defaultPageSetup(true);
+    };
+    pageSetup();
     return defaultPageSetup;
-  });
+  }, []);
   return (
     <>
       <HomeNavbar

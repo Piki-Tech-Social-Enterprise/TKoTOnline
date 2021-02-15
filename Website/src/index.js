@@ -28,14 +28,12 @@ import Firebase, {
 import PageLoadingSpinner from 'components/App/PageLoadingSpinner';
 import LazySizes from 'components/App/LazySizes';
 import Routes from 'components/Routes/routes';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const appRoutes = [
   {
     path: Routes.home,
-    component: lazy(async () => await import(/* webpackPreload: true */'views/HomeView'))
+    component: lazy(async () => await import(/* webpackPrefetch: true */'views/HomeView'))
   },
   {
     path: Routes.privacyPolicy,
@@ -126,7 +124,7 @@ const appRoutes = [
   //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/Global404View'))
   // }
 ];
-const GoogleAnalytics = lazy(async () => await import(/* webpackPreload: true */'components/App/GoogleAnalytics'));
+const GoogleAnalytics = lazy(async () => await import(/* webpackPrefetch: true */'components/App/GoogleAnalytics'));
 
 if (process.env.NODE_ENV === 'production') {
   window['console']['log'] = () => { };

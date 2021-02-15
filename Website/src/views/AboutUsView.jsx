@@ -4,17 +4,17 @@ import React, {
   useRef,
   useCallback
 } from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-import draftToHtml from 'draftjs-to-html';
+// import draftToHtml from 'draftjs-to-html';
 import {
-  defaultPageSetup,
+  // defaultPageSetup,
   draftToText,
   useWindowEvent,
   fromCamelcaseToTitlecase
@@ -26,25 +26,32 @@ import {
   IwiChairsSection
 } from 'components/Sections/IwiMembers';
 import Routes from 'components/Routes/routes';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const {
   aboutUs
 } = Routes;
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
-const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
 const AboutUsView = props => {
   const [state, setState] = useState({
     isLoading: true,
-    settings: {}
+    aboutPageDescriptionAsHtml: '',
+    aboutPageTKoTBackOfficeStructureDescriptionAsHtml: '',
+    aboutPageExtraDescriptionAsHtml: ''
   });
   const {
-    isLoading
+    isLoading,
+    settings,
+    aboutPageDescriptionAsHtml,
+    aboutPageTKoTBackOfficeStructureDescriptionAsHtml,
+    aboutPageExtraDescriptionAsHtml
   } = state;
   const iframeRef = useRef(null);
   const iframeRefCallback = useCallback(node => {
@@ -61,6 +68,7 @@ const AboutUsView = props => {
   };
   useWindowEvent('blur', handleIFrameBlur);
   useEffect(() => {
+    let defaultPageSetup = {};
     const pageSetup = async () => {
       const {
         firebase
@@ -72,13 +80,31 @@ const AboutUsView = props => {
         'aboutPageTKoTBackOfficeStructureImageUrl',
         'aboutPageExtraDescription'
       ]);
+      const {
+        aboutPageDescription,
+        aboutPageTKoTBackOfficeStructureDescription,
+        aboutPageExtraDescription
+      } = dbSettings;
+      const {
+        default: draftToHtml
+      } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+      const aboutPageDescriptionAsHtml = draftToHtml(JSON.parse(aboutPageDescription || '{}'));
+      const aboutPageTKoTBackOfficeStructureDescriptionAsHtml = draftToHtml(JSON.parse(aboutPageTKoTBackOfficeStructureDescription || '{}'));
+      const aboutPageExtraDescriptionAsHtml = draftToHtml(JSON.parse(aboutPageExtraDescription || '{}'));
+      const {
+        defaultPageSetup: defaultPageSetupImported
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      defaultPageSetup = defaultPageSetupImported;
+      defaultPageSetup(true);
       setState(s => ({
         ...s,
         isLoading: false,
-        settings: dbSettings
+        settings: dbSettings,
+        aboutPageDescriptionAsHtml,
+        aboutPageTKoTBackOfficeStructureDescriptionAsHtml,
+        aboutPageExtraDescriptionAsHtml
       }));
     };
-    defaultPageSetup(true);
     if (isLoading) {
       pageSetup();
     }
@@ -93,16 +119,16 @@ const AboutUsView = props => {
       <TKoTHelmet
         name={fromCamelcaseToTitlecase(aboutUs.replace('/', ''))}
         path={aboutUs}
-        description={state.isLoading
+        description={isLoading
           ? 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'
-          : draftToText(state.settings.aboutPageDescription, '')}
+          : draftToText(settings.aboutPageDescription, '')}
         image={tkotLogoOnlyBlackUrl}
         preloadImages={[
           tkotLogoOnlyBlackUrl
         ]}
       />
       {
-        state.isLoading
+        isLoading
           ? <PageLoadingSpinner caller="AboutUsView" />
           : <>
             <HomeNavbar
@@ -114,12 +140,12 @@ const AboutUsView = props => {
                 <Col className="px-0 mt-5">
                   <h3 className="text-uppercase text-center">About Us</h3>
                   {
-                    state.settings.homePageVideoSourceUrl
+                    settings.homePageVideoSourceUrl
                       ? <iframe
                         title="TKoT"
                         width="100%"
                         height="320"
-                        src={state.settings.homePageVideoSourceUrl}
+                        src={settings.homePageVideoSourceUrl}
                         frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
@@ -129,16 +155,16 @@ const AboutUsView = props => {
                       : null
                   }
                   <div
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageDescription)) }}
+                    dangerouslySetInnerHTML={{ __html: aboutPageDescriptionAsHtml }}
                   />
                   <IwiChairsSection />
                   <div
                     className="mt-5 pt-5"
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageTKoTBackOfficeStructureDescription || '{}')) }}
+                    dangerouslySetInnerHTML={{ __html: aboutPageTKoTBackOfficeStructureDescriptionAsHtml }}
                   />
                   <FirebaseImage
                     className="my-3 w-100"
-                    imageURL={state.settings.aboutPageTKoTBackOfficeStructureImageUrl}
+                    imageURL={settings.aboutPageTKoTBackOfficeStructureImageUrl}
                     width="1074"
                     lossless={true}
                     alt="TKoT Back Office Structure"
@@ -146,7 +172,7 @@ const AboutUsView = props => {
                     imageResize="lg"
                   />
                   <div
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(state.settings.aboutPageExtraDescription)) }}
+                    dangerouslySetInnerHTML={{ __html: aboutPageExtraDescriptionAsHtml }}
                   />
                 </Col>
               </Row>

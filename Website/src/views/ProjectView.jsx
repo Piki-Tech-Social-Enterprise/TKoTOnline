@@ -2,47 +2,55 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-import draftToHtml from 'draftjs-to-html';
-import {
-  draftToText,
-  getSrc
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import draftToHtml from 'draftjs-to-html';
+// import {
+//   draftToText,
+//   getSrc
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true */'components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const INITAL_STATE = {
   isLoading: true,
   dbProject: {},
-  imageDownloadURL: ''
+  imageDownloadURL: '',
+  contentAsText: '',
+  contentAsHtml: ''
 };
 const ProjectView = props => {
   const [state, setState] = useState(INITAL_STATE);
   const {
     isLoading,
     dbProject,
-    imageDownloadURL
+    imageDownloadURL,
+    contentAsText,
+    contentAsHtml
   } = state;
   const {
     header,
-    pid,
-    content
+    pid
   } = dbProject;
   useEffect(() => {
     const retrieveProjectValue = async () => {
+      const {
+        getSrc,
+        draftToText
+      } = await import('components/App/Utilities');
       const {
         firebase,
         match
@@ -60,16 +68,24 @@ const ProjectView = props => {
         'pid',
         'content'
       ];
-      const dbProject = await projectsRepository.getDbProjectValue(pid, dbProjectFieldNames); debugger;
+      const dbProject = await projectsRepository.getDbProjectValue(pid, dbProjectFieldNames);
       const {
-        imageUrl
+        imageUrl,
+        content
       } = dbProject;
       const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, storageRepository.getStorageFileDownloadURL);
+      const contentAsText = draftToText(content, '');
+      const {
+        default: draftToHtml
+      } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+      const contentAsHtml = draftToHtml(JSON.parse(content || '{}'));
       setState(s => ({
         ...s,
         isLoading: false,
         dbProject,
-        imageDownloadURL
+        imageDownloadURL,
+        contentAsText,
+        contentAsHtml
       }));
     };
     if (isLoading) {
@@ -85,7 +101,7 @@ const ProjectView = props => {
             <TKoTHelmet
               name={header}
               path={`/Projects/${pid}`}
-              description={draftToText(content, '')}
+              description={contentAsText}
               image={`${imageDownloadURL}`}
             />
             <HomeNavbar
@@ -102,7 +118,7 @@ const ProjectView = props => {
               <div className="h1 py-3 mb-0 font-weight-bold text-center">{header}</div>
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
+                  dangerouslySetInnerHTML={{ __html: contentAsHtml }}
                 />
               </Row>
             </Container>

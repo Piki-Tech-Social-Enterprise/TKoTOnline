@@ -8,11 +8,11 @@ import {
 import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
 // import LoadingIcon from './LoadingIcon';
 import PropTypes from 'prop-types';
-import {
-  getSrc,
-  isNullOrEmpty,
-  getImageURLToUse
-} from './Utilities';
+// import {
+//   getSrc,
+//   isNullOrEmpty,
+//   getImageURLToUse
+// } from './Utilities';
 
 const propTypes = {
   isLoading: PropTypes.bool,
@@ -63,6 +63,11 @@ const FirebaseImage = props => {
   useEffect(() => {
     const retrieveData = async () => {
       const {
+        getSrc,
+        isNullOrEmpty,
+        getImageURLToUse
+      } = await import('./Utilities');
+      const {
         firebase,
         alt,
         imageResize,
@@ -72,11 +77,17 @@ const FirebaseImage = props => {
         height,
         lossless
       } = props;
+      const {
+        storageRepository
+      } = firebase;
+      const {
+        getStorageFileDownloadURL
+      } = storageRepository;
       let imageSrc = src;
       if (isNullOrEmpty(imageSrc)) {
         const imageURLToUse = getImageURLToUse(imageResize, imageURL);
         try {
-          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, firebase.storageRepository.getStorageFileDownloadURL);
+          imageSrc = await getSrc(imageURLToUse, width, height, lossless, noImageAvailable, getStorageFileDownloadURL);
         } catch (error) {
           const {
             code,
@@ -84,7 +95,7 @@ const FirebaseImage = props => {
           } = error;
           console.error(`Firebase Image Get Src Error for '${imageURLToUse}': ${message} (${code})`);
           if (code === 'storage/object-not-found') {
-            imageSrc = await firebase.storageRepository.getStorageFileDownloadURL(imageURL);
+            imageSrc = await getStorageFileDownloadURL(imageURL);
           }
         }
         // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);

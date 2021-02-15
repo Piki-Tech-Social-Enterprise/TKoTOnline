@@ -1,22 +1,37 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardHeader
-} from 'reactstrap';
-import draftToHtml from 'draftjs-to-html';
+// import {
+//   Button,
+//   Card,
+//   CardBody,
+//   CardTitle,
+//   CardHeader
+// } from 'reactstrap';
+// import draftToHtml from 'draftjs-to-html';
 import {
   handleBlockTextClick
 } from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
+const CardTitle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardTitle'));
+const CardHeader = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardHeader'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
+const INITIAL_STATE = {
+  isLoading: true,
+  contentAsHtml: ''
+};
 const EconomicDevelopmentCard = props => {
+  const [state, setState] = useState(INITIAL_STATE);
+  const {
+    isLoading,
+    contentAsHtml
+  } = state;
   const {
     dbEconomicDevelopment,
     onButtonClick
@@ -24,10 +39,32 @@ const EconomicDevelopmentCard = props => {
   const {
     header,
     imageUrl,
-    content,
     economicDevelopmentUrl,
     economicDevelopmentDownloadUrl
   } = dbEconomicDevelopment;
+  useEffect(() => {
+    const retrieveData = async () => {
+      const {
+        dbEconomicDevelopment
+      } = props;
+      const {
+        content
+      } = dbEconomicDevelopment;
+      const {
+        default: draftToHtml
+      } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+      const contentAsHtml = draftToHtml(JSON.parse(content || '{}'));
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        contentAsHtml
+      }));
+    };
+    if (isLoading) {
+      retrieveData();
+    }
+    return () => { }
+  }, [props, isLoading]);
   return (
     <>
       <Card className="card-block economicDevelopment-card">
@@ -53,7 +90,7 @@ const EconomicDevelopmentCard = props => {
         <CardBody className="bg-white text-dark text-left">
           <div
             className="economicDevelopment-content clickable block-with-text"
-            dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content || '{}')) }}
+            dangerouslySetInnerHTML={{ __html: contentAsHtml }}
             onClick={async e => await handleBlockTextClick(e, 'div.economicDevelopment-content', 'block-with-text')}
           />
           <div className="text-center mt-3">

@@ -5,15 +5,13 @@ import React, {
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  defaultPageSetup
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import {
+//   defaultPageSetup
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const EventsSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Events'));
 const EventsView = () => {
@@ -24,13 +22,18 @@ const EventsView = () => {
     isLoading
   } = state;
   useEffect(() => {
+    let defaultPageSetup = {};
     const pageSetup = async () => {
+      const {
+        defaultPageSetup: defaultPageSetupImported
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      defaultPageSetup = defaultPageSetupImported;
+      defaultPageSetup(true);
       setState(s => ({
         ...s,
         isLoading: false
       }));
     };
-    defaultPageSetup(true);
     if (isLoading) {
       pageSetup();
     }

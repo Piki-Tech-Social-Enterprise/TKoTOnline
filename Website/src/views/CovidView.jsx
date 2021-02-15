@@ -2,53 +2,62 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-import draftToHtml from 'draftjs-to-html';
-import {
-  draftToText,
-  getSrc
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import draftToHtml from 'draftjs-to-html';
+// import {
+//   draftToText,
+//   getSrc
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true */'components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NewsFeedCaption'));
 const INITAL_STATE = {
   isLoading: true,
   dbCovid: {},
-  imageDownloadURL: ''
+  imageDownloadURL: '',
+  contentAsText: '',
+  contentAsHtml: ''
 };
 const CovidView = props => {
   const [state, setState] = useState(INITAL_STATE);
   const {
     isLoading,
     dbCovid,
-    imageDownloadURL
+    imageDownloadURL,
+    contentAsText,
+    contentAsHtml
   } = state;
   const {
     header,
     cvid,
-    content,
     paMaiUrl
   } = dbCovid;
   useEffect(() => {
     const retrieveCovidValue = async () => {
+      const {
+        getSrc,
+        draftToText
+      } = await import('components/App/Utilities');
       const {
         firebase,
         match
@@ -68,17 +77,25 @@ const CovidView = props => {
       const dbCovid = await firebase.covidListRepository.getDbCovidValue(cvid, dbCovidFieldNames);
       const {
         externalUrl,
-        imageUrl
+        imageUrl,
+        content
       } = dbCovid;
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
         const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
+        const contentAsText = draftToText(content, '');
+        const {
+          default: draftToHtml
+        } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+        const contentAsHtml = draftToHtml(JSON.parse(content || '{}'));
         setState(s => ({
           ...s,
           isLoading: false,
           dbCovid: dbCovid,
-          imageDownloadURL
+          imageDownloadURL,
+          contentAsText,
+          contentAsHtml
         }));
       }
     };
@@ -95,7 +112,7 @@ const CovidView = props => {
             <TKoTHelmet
               name={header}
               path={`/Covid/${cvid}`}
-              description={draftToText(content, '')}
+              description={contentAsText}
               image={`${imageDownloadURL}`}
             />
             <HomeNavbar
@@ -110,7 +127,7 @@ const CovidView = props => {
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
+                  dangerouslySetInnerHTML={{ __html: contentAsHtml }}
                 />
               </Row>
               {

@@ -2,24 +2,26 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button
-} from 'reactstrap';
-import {
-  defaultPageSetup
-} from 'components/App/Utilities';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button
+// } from 'reactstrap';
+// import {
+//   defaultPageSetup
+// } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
 const {
   home
 } = Routes;
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const Global404View = () => {
@@ -30,13 +32,18 @@ const Global404View = () => {
     isLoading
   } = state;
   useEffect(() => {
+    let defaultPageSetup = {};
     const pageSetup = async () => {
+      const {
+        defaultPageSetup: defaultPageSetupImported
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      defaultPageSetup = defaultPageSetupImported;
+      defaultPageSetup(true);
       setState(s => ({
         ...s,
         isLoading: false
       }));
     };
-    defaultPageSetup(true);
     if (isLoading) {
       pageSetup();
     }

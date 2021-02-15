@@ -2,39 +2,42 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
-import {
-  draftToText,
-  getSrc
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import {
+//   draftToText,
+//   getSrc
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true */'components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const INITAL_STATE = {
   isLoading: true,
   dbEvent: {},
-  imageDownloadURL: ''
+  imageDownloadURL: '',
+  contentAsText: ''
 };
 const EventView = props => {
   const [state, setState] = useState(INITAL_STATE);
   const {
     isLoading,
     dbEvent,
-    imageDownloadURL
+    imageDownloadURL,
+    contentAsText
   } = state;
   const {
     header,
@@ -43,6 +46,10 @@ const EventView = props => {
   } = dbEvent;
   useEffect(() => {
     const retrieveEventValue = async () => {
+      const {
+        getSrc,
+        draftToText
+      } = await import('components/App/Utilities');
       const {
         firebase,
         match
@@ -60,17 +67,20 @@ const EventView = props => {
       const dbEvent = await firebase.eventsRepository.getDbEventValue(evid, dbEventFieldNames);
       const {
         externalUrl,
-        imageUrl
+        imageUrl,
+        content
       } = dbEvent;
       if (externalUrl) {
         window.location.href = externalUrl;
       } else {
         const imageDownloadURL = await getSrc(imageUrl, null, null, true, null, firebase.storageRepository.getStorageFileDownloadURL);
+        const contentAsText = draftToText(content, '');
         setState(s => ({
           ...s,
           isLoading: false,
           dbEvent,
-          imageDownloadURL
+          imageDownloadURL,
+          contentAsText
         }));
       }
     };
@@ -87,7 +97,7 @@ const EventView = props => {
             <TKoTHelmet
               name={header}
               path={`/Wananga/${evid}`}
-              description={draftToText(content, '')}
+              description={contentAsText}
               image={`${imageDownloadURL}`}
             />
             <HomeNavbar
@@ -102,7 +112,7 @@ const EventView = props => {
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content)) }}
+                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content || '{}')) }}
                 />
               </Row>
             </Container>

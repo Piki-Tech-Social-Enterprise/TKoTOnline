@@ -2,29 +2,38 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  InputGroup,
-  Button
-} from 'reactstrap';
-import swal from 'sweetalert2';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Card,
+//   CardBody,
+//   Form,
+//   FormGroup,
+//   Label,
+//   Input,
+//   InputGroup,
+//   Button
+// } from 'reactstrap';
+// import swal from 'sweetalert2';
 import * as Roles from '../components/Domains/VolunteerRoles';
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
+const Label = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
+const InputGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/InputGroup'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const Volunteer = props => {
   const INITIAL_STATE = {
@@ -78,6 +87,7 @@ const Volunteer = props => {
     }
   };
   const handleCancel = async () => {
+    const swal = await import('sweetalert2').then(x => x.default);
     swal.fire({
       title: 'Cancel',
       icon: 'warning',
@@ -173,6 +183,7 @@ const Volunteer = props => {
       setIsSubmitting(false);
     }
     if (displayIcon !== 'error') {
+      const swal = await import('sweetalert2').then(x => x.default);
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
@@ -183,6 +194,7 @@ const Volunteer = props => {
         }
       });
     } else {
+      const swal = await import('sweetalert2').then(x => x.default);
       swal.fire({
         icon: displayIcon,
         title: displayTitle,

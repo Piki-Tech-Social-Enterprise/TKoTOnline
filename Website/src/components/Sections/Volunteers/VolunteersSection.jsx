@@ -2,16 +2,20 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
 const VolunteersSection = props => {
   const [volunteersDescription, setVolunteersDescription] = useState([]);
   useEffect(() => {

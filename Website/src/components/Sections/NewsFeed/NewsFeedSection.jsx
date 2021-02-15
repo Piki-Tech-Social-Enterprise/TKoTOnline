@@ -2,24 +2,24 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardHeader,
-  Badge
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button,
+//   Card,
+//   CardBody,
+//   CardTitle,
+//   CardHeader,
+//   Badge
+// } from 'reactstrap';
 // import NewsFeedCarousel from './NewsFeedCarousel';
 import queryString from 'query-string';
 import {
   withFirebase
 } from 'components/Firebase';
 import {
-  draftToText,
+  // draftToText,
   sortArray,
   handleBlockTextClick,
   groupBy
@@ -27,16 +27,23 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import draftToHtml from 'draftjs-to-html';
+// import draftToHtml from 'draftjs-to-html';
 import Routes from 'components/Routes/routes';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
+const CardTitle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardTitle'));
+const CardHeader = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardHeader'));
+const Badge = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Badge'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
 const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NewsFeedCaption'));
-const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
 const {
   newsFeeds,
   mediaListPage
@@ -45,13 +52,14 @@ const NewsFeedSection = props => {
   const [state, setState] = useState({
     isLoading: true,
     dbNewsFeeds: [],
-    availableCategoriesAsArray: []
+    availableCategoriesAsArray: [],
+    newsSectionDescriptionAsHtml: '',
+    draftToText: () => {}
   });
   const {
     containerClassName,
     showLearnMoreButton,
     isHomePage,
-    newsSectionDescription,
     isTKoTMedia
   } = props;
   const parsedQs = queryString.parse(window.location.search);
@@ -61,7 +69,9 @@ const NewsFeedSection = props => {
   const {
     isLoading,
     dbNewsFeeds,
-    availableCategoriesAsArray
+    availableCategoriesAsArray,
+    newsSectionDescriptionAsHtml,
+    draftToText
   } = state;
   const routeToUse = !isTKoTMedia ? newsFeeds : mediaListPage;
   const CategoryBadge = props => {
@@ -81,8 +91,11 @@ const NewsFeedSection = props => {
     );
   };
   useEffect(() => {
-    const getNewsFeeds = async () => {
-      const getDbNewsFeeds = async fieldName => {
+    const retrieveData = async () => {
+      const {
+        draftToText
+      } = await import('components/App/Utilities');
+      const getNewsFeeds = async fieldName => {
         const dbNewsFeedsFieldNames = [
           'category',
           'isFeatured',
@@ -96,16 +109,17 @@ const NewsFeedSection = props => {
           'name',
           'url'
         ];
-        const dbNewsFeeds = await props.firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, fieldName, true, NaN, dbNewsFeedsFieldNames);
+        const dbNewsFeeds = await props.firebase.newsFeedRepository.getNewsFeedsAsArray(false, fieldName, true, NaN, dbNewsFeedsFieldNames);
         return dbNewsFeeds;
       };
       const {
         isTKoTMedia,
-        dbNewsFeeds: dbNewsFeedsPassedIn
+        dbNewsFeeds: dbNewsFeedsPassedIn,
+        newsSectionDescription
       } = props;
       const dbNewsFeeds = dbNewsFeedsPassedIn
         ? dbNewsFeedsPassedIn
-        : await getDbNewsFeeds(isTKoTMedia
+        : await getNewsFeeds(isTKoTMedia
           ? 'isTKoTMedia'
           : 'isFeatured');
       const filteredDbNewsFeeds = searchCategory
@@ -130,15 +144,21 @@ const NewsFeedSection = props => {
       });
       // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
       sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'desc');
+      const {
+        default: draftToHtml
+      } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+      const newsSectionDescriptionAsHtml = draftToHtml(JSON.parse(newsSectionDescription || '{}'));
       setState(s => ({
         ...s,
         isLoading: false,
         dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
-        availableCategoriesAsArray
+        availableCategoriesAsArray,
+        newsSectionDescriptionAsHtml,
+        draftToText
       }));
     };
     if (isLoading) {
-      getNewsFeeds();
+      retrieveData();
     }
   }, [props, isLoading, searchCategory]);
   return (
@@ -149,10 +169,10 @@ const NewsFeedSection = props => {
           <Col xs={12} className="mx-auto my-3">
             <h3 className="text-uppercase text-center">Our Latest {!isTKoTMedia ? 'Newsfeeds' : 'Media'}{searchCategory ? `: ${searchCategory}` : null}</h3>
             {
-              !isTKoTMedia && newsSectionDescription
+              !isTKoTMedia && newsSectionDescriptionAsHtml
                 ? <>
                   <div
-                    dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(newsSectionDescription)) }}
+                    dangerouslySetInnerHTML={{ __html: newsSectionDescriptionAsHtml }}
                   />
                 </>
                 : null

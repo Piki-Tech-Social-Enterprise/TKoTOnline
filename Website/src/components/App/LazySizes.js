@@ -13,7 +13,7 @@ const LazySizes = props => {
   } = state;
   useEffect(() => {
     const pageSetup = async () => {
-      await import(/* webpackPreload: true */'lazysizes');
+      await import(/* webpackPrefetch: true */'lazysizes');
       setState(s => ({
         ...s,
         isLoading: false,

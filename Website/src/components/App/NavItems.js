@@ -1,24 +1,34 @@
 import React, {
+  useRef,
   useState,
   useEffect,
   Fragment
 } from 'react';
-import {
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  UncontrolledTooltip
-} from 'reactstrap';
-import {
-  ScrollspyNavLink
-} from 'reactstrap-scrollspy';
-import {
-  isNullOrEmpty
-} from 'components/App/Utilities';
+// import {
+//   DropdownItem,
+//   DropdownMenu,
+//   DropdownToggle,
+//   NavItem,
+//   NavLink,
+//   UncontrolledDropdown,
+//   UncontrolledTooltip
+// } from 'reactstrap';
+// import {
+//   ScrollspyNavLink
+// } from 'reactstrap-scrollspy';
+// import {
+//   isNullOrEmpty
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const DropdownItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownItem'));
+const DropdownMenu = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownMenu'));
+const DropdownToggle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownToggle'));
+const NavItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavItem'));
+const NavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavLink'));
+const UncontrolledDropdown = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledDropdown'));
+const UncontrolledTooltip = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledTooltip'));
+// const ScrollspyNavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap-scrollspy/lib/scrollspyNavLink'));
 const NavItems = props => {
   const {
     useScrollspyNavLinks,
@@ -30,7 +40,9 @@ const NavItems = props => {
     includeTooltips
   } = props;
   const [state, setState] = useState({
-    isLoading: true
+    isLoading: true,
+    ScrollspyNavLink: null,
+    isNullOrEmpty: null
   });
   const isActive = (pathname, hash, route) => {
     const parameterIsActive = hash
@@ -40,15 +52,28 @@ const NavItems = props => {
     return parameterIsActive;
   };
   const {
-    isLoading
+    isLoading,
+    ScrollspyNavLink,
+    isNullOrEmpty
   } = state;
   const subMenus = {};
   useEffect(() => {
-    if (state.isLoading) {
+    const retrieveData = async () => {
+      const {
+        ScrollspyNavLink
+      } = await import(/* webpackPrefetch: true */'reactstrap-scrollspy');
+      const {
+        isNullOrEmpty
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
       setState(s => ({
         ...s,
-        isLoading: false
+        isLoading: false,
+        ScrollspyNavLink,
+        isNullOrEmpty
       }));
+    };
+    if (state.isLoading) {
+      retrieveData();
     }
     return () => { };
   }, [props, state]);
@@ -65,25 +90,36 @@ const NavItems = props => {
                     item
                   } = props;
                   const {
-                    id,
+                    // id,
                     route,
                     name,
                     tooltip
                   } = item;
+                  const [ready, setReady] = useState(false);
+                  const navLinkRef = useRef();
+                  const {
+                    current: navLinkRefCurrent
+                  } = navLinkRef;
+                  useEffect(() => {
+                    if (!ready && navLinkRefCurrent) {
+                      setReady(true);
+                    }
+                  }, [ready, navLinkRefCurrent]);
                   return (
                     <>
                       <NavLink
-                        id={id}
+                        // id={id}
                         href={route}
                         active={isActive(pathname, hash, route)}
                         className={navLinkClassName || ''}
                       >{name}</NavLink>
                       {
-                        includeTooltips
+                        includeTooltips && ready
                           ? <UncontrolledTooltip
                             innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
                             placement="top"
-                            target={`${id}`}
+                            // target={`${id}`}
+                            target={navLinkRefCurrent}
                           >{tooltip}</UncontrolledTooltip>
                           : null
                       }
@@ -95,25 +131,37 @@ const NavItems = props => {
                     item
                   } = props;
                   const {
-                    id,
+                    // id,
                     route,
                     name,
                     tooltip
                   } = item;
+                  const [ready, setReady] = useState(false);
+                  const dropdownItemRef = useRef();
+                  const {
+                    current: dropdownItemRefCurrent
+                  } = dropdownItemRef;
+                  useEffect(() => {
+                    if (!ready && dropdownItemRefCurrent) {
+                      setReady(true);
+                    }
+                  }, [ready, dropdownItemRefCurrent]);
                   return (
                     <>
                       <DropdownItem
-                        id={id}
+                        // id={id}
                         href={route}
                         active={isActive(pathname, hash, route)}
                         className={`text-uppercase ${navLinkClassName || ''}`}
+                        ref={dropdownItemRef}
                       >{name}</DropdownItem>
                       {
-                        includeTooltips
+                        includeTooltips && ready
                           ? <UncontrolledTooltip
                             innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
                             placement="top"
-                            target={`${id}`}
+                            // target={`${id}`}
+                            target={dropdownItemRefCurrent}
                           >{tooltip}</UncontrolledTooltip>
                           : null
                       }

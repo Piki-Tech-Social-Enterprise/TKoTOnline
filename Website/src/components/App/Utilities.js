@@ -164,21 +164,21 @@ const getNavItems = isHomePage => {
     home,
     iwiMembersAnchor,
     aboutUs,
-    newsFeedAnchor,
+    // newsFeedAnchor,
     newsFeeds,
-    eventsAnchor,
+    // eventsAnchor,
     events,
-    projectsAnchor,
+    // projectsAnchor,
     projectsPage,
-    resourcesAnchor,
+    // resourcesAnchor,
     resourcesPage,
     contactUs,
     facebookLinks,
-    economicDevelopmentsAnchor,
+    // economicDevelopmentsAnchor,
     economicDevelopmentsPage,
-    mediaListAnchor,
+    // mediaListAnchor,
     mediaListPage,
-    covidListAnchor,
+    // covidListAnchor,
     covidListPage
   } = Routes;
   const navItems = [{
@@ -202,47 +202,54 @@ const getNavItems = isHomePage => {
     group: 'left'
   }, {
     id: `covidListNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? covidListAnchor : covidListPage,
+    // route: isHomePage ? covidListAnchor : covidListPage,
+    route: covidListPage,
     name: 'Covid',
     tooltip: 'Kowheori',
     group: 'right'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? newsFeedAnchor : newsFeeds,
+    // route: isHomePage ? newsFeedAnchor : newsFeeds,
+    route: newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
     group: 'right',
     menu: 'News'
   }, {
     id: `mediaListNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? mediaListAnchor : mediaListPage,
+    // route: isHomePage ? mediaListAnchor : mediaListPage,
+    route: mediaListPage,
     name: 'Media',
     tooltip: 'Toirau',
     group: 'right',
     menu: 'News'
   }, {
     id: `resourcesNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? resourcesAnchor : resourcesPage,
+    // route: isHomePage ? resourcesAnchor : resourcesPage,
+    route: resourcesPage,
     name: 'Resources',
     tooltip: 'Rauemi Ipurangi',
     group: 'right',
     menu: 'Resources'
   }, {
     id: `economicDevelopmentsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
+    // route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
+    route: economicDevelopmentsPage,
     name: 'Economic Development',
     tooltip: 'Whanaketanga Ohaoha',
     group: 'right',
     menu: 'Resources'
   }, {
     id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? projectsAnchor : projectsPage,
+    // route: isHomePage ? projectsAnchor : projectsPage,
+    route: projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
     group: 'left'
   }, {
     id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
-    route: isHomePage ? eventsAnchor : events,
+    // route: isHomePage ? eventsAnchor : events,
+    route: events,
     name: 'Wānanga/Events',
     tooltip: 'Wānanga',
     group: 'right'

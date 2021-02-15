@@ -1,10 +1,13 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const InteractiveMapSection = () => {
   return (
     <Container className="tkot-section" id="InteractiveMap">

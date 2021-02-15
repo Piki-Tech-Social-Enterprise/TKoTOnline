@@ -2,15 +2,15 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  CardBody,
-  CardTitle
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button,
+//   Card,
+//   CardBody,
+//   CardTitle
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -21,13 +21,18 @@ import {
 import {
   handleBlockTextClick
 } from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
+const CardTitle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardTitle'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
-const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
 const ProjectsSection = props => {
   const [state, setState] = useState({
     isLoading: true,

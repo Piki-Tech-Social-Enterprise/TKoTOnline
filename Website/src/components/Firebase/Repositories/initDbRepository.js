@@ -1,10 +1,10 @@
 
-import initDbRepositoryFunctions from './initDbRepositoryFunctions';
-import {
-  isBoolean,
-  isNullOrEmpty,
-  refactorObject
-} from 'components/App/Utilities';
+// import initDbRepositoryFunctions from './initDbRepositoryFunctions';
+// import {
+//   isBoolean,
+//   isNullOrEmpty,
+//   refactorObject
+// } from 'components/App/Utilities';
 
 const dbTables = {
   contacts: {
@@ -59,7 +59,12 @@ const dbTables = {
   }
 };
 const initDbRepository = async initOptions => {
-  await import(/* webpackPreload: true */'firebase/database');
+  await import(/* webpackPrefetch: true */'firebase/database');
+  const {
+    isBoolean,
+    isNullOrEmpty,
+    refactorObject
+  } = await import(/* webpackPrefetch: true */'components/App/Utilities');
   const {
     initialisedFirebaseApp,
     dbTableName: dbTableNamePassedIn
@@ -234,11 +239,12 @@ const initDbRepository = async initOptions => {
     saveDbItem
   };
 };
-const {
-  REACT_APP_USE_DB_REPOSITORY_FUNCTIONS: useDbRepositoryFunctions
-} = process.env;
-const dbRepositoryToUse = isBoolean(useDbRepositoryFunctions, true)
-  ? initDbRepositoryFunctions
-  : initDbRepository
+// const {
+//   REACT_APP_USE_DB_REPOSITORY_FUNCTIONS: useDbRepositoryFunctions
+// } = process.env;
+// const dbRepositoryToUse = isBoolean(useDbRepositoryFunctions, true)
+//   ? initDbRepositoryFunctions
+//   : initDbRepository
 
-export default dbRepositoryToUse;
+// export default dbRepositoryToUse;
+export default initDbRepository;

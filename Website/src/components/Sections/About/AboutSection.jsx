@@ -2,12 +2,12 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Button
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -15,14 +15,16 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
-import {
-  getImageURLToUse
-} from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
+// import {
+//   getImageURLToUse
+// } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const {
   aboutUs,
   projectsAnchor
@@ -47,12 +49,15 @@ const AboutSection = props => {
     const pageSetup = async () => {
       let pageAboutImage = props.pageAboutImage;
       if (pageAboutImage.startsWith('/images')) {
+        const {
+          getImageURLToUse
+        } = await import(/* webpackPrefetch: true */'components/App/Utilities');
         const imageSize = window.screen.width <= 400
           ? 'md'
           : NaN;
         pageAboutImage = await props.firebase.storageRepository.getStorageFileDownloadURL(getImageURLToUse(imageSize, pageAboutImage));
       }
-      const backgroundImage = `${INITIAL_STATE.backgroundImage}, url(${pageAboutImage})`;
+      const backgroundImage = `${INITIAL_STATE.backgroundImage}, url('${pageAboutImage}')`;
       setState(s => ({
         ...s,
         isLoading: false,

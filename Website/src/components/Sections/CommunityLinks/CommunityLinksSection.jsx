@@ -2,28 +2,35 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Nav,
-  NavItem,
-  NavLink
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Form,
+//   FormGroup,
+//   Input,
+//   Nav,
+//   NavItem,
+//   NavLink
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 import {
   intoChunks
 } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
+const Nav = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Nav'));
+const NavItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavItem'));
+const NavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavLink'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const getCommunityLinksMegaMenuItems = (communityLinks, columnCount) => {
   const communityLinksMegaMenuItems = {};
   const chunks = intoChunks(communityLinks, columnCount);

@@ -2,50 +2,59 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-import draftToHtml from 'draftjs-to-html';
-import {
-  draftToText,
-  getSrc,
-  getImageURLToUse
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import draftToHtml from 'draftjs-to-html';
+// import {
+//   draftToText,
+//   getSrc,
+//   getImageURLToUse
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
-const HomeHeader = lazy(async () => await import(/* webpackPreload: true */'components/Headers/HomeHeader'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
+const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true */'components/Headers/HomeHeader'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
-const FirebaseImage = lazy(async () => await import(/* webpackPreload: true */'components/App/FirebaseImage'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
 const INITAL_STATE = {
   isLoading: true,
   dbIwiMember: {},
-  iwiChairImageDownloadURL: ''
+  iwiChairImageDownloadURL: '',
+  iwiChairProfileAsText: '',
+  iwiChairProfileAsHtml: ''
 };
 const IwiChairView = props => {
   const [state, setState] = useState(INITAL_STATE);
   const {
     isLoading,
     dbIwiMember,
-    iwiChairImageDownloadURL
+    iwiChairImageDownloadURL,
+    iwiChairProfileAsText,
+    iwiChairProfileAsHtml
   } = state;
   const {
     iwiChairName,
     imid,
-    iwiChairProfile,
     iwiMemberName
   } = dbIwiMember;
   useEffect(() => {
     const retrieveIwiChairValue = async () => {
+      const {
+        getSrc,
+        getImageURLToUse,
+        draftToText
+      } = await import('components/App/Utilities');
       const {
         firebase,
         match
@@ -66,14 +75,22 @@ const IwiChairView = props => {
       ];
       const dbIwiMember = await iwiMembersRepository.getDbIwiMemberValue(imid, dbIwiMemberFieldNames);
       const {
-        iwiChairImageURL
+        iwiChairImageURL,
+        iwiChairProfile
       } = dbIwiMember;
       const iwiChairImageDownloadURL = await getSrc(getImageURLToUse(NaN, iwiChairImageURL), null, null, true, null, storageRepository.getStorageFileDownloadURL);
+      const iwiChairProfileAsText = draftToText(iwiChairProfile, '');
+      const {
+        default: draftToHtml
+      } = await import(/* webpackPrefetch: true */'draftjs-to-html');
+      const iwiChairProfileAsHtml = draftToHtml(JSON.parse(iwiChairProfile || '{}'));
       setState(s => ({
         ...s,
         isLoading: false,
         dbIwiMember,
-        iwiChairImageDownloadURL
+        iwiChairImageDownloadURL,
+        iwiChairProfileAsText,
+        iwiChairProfileAsHtml
       }));
     };
     if (isLoading) {
@@ -89,7 +106,7 @@ const IwiChairView = props => {
             <TKoTHelmet
               name={iwiChairName}
               path={`/AboutUs/${imid}`}
-              description={draftToText(iwiChairProfile, '')}
+              description={iwiChairProfileAsText}
               image={`${iwiChairImageDownloadURL}`}
             />
             <HomeNavbar
@@ -116,7 +133,7 @@ const IwiChairView = props => {
             <Container className="bg-warning1 mt-5 pt-5">
               <Row>
                 <Col
-                  dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(iwiChairProfile)) }}
+                  dangerouslySetInnerHTML={{ __html: iwiChairProfileAsHtml }}
                 />
               </Row>
             </Container>

@@ -1,17 +1,20 @@
-import {
-  isBoolean
-} from 'components/App/Utilities';
+// import {
+//   isBoolean
+// } from 'components/App/Utilities';
 
 const initDbRepositoryFunctions = async initOptions => {
   const {
     default: axios
-  } = await import(/* webpackPreload: true */'axios');
+  } = await import(/* webpackPrefetch: true */'axios');
   const {
     REACT_APP_FIREBASE_USE_FUNCTIONS_EMULATOR_URL,
     REACT_APP_FIREBASE_FUNCTIONS_EMULATOR_URL,
     REACT_APP_GOOGLE_BASE_CLOUD_FUNCTIONS_URL,
     REACT_APP_FIREBASE_PROJECT_ID
   } = process.env;
+  const {
+    isBoolean
+  } = await import(/* webpackPrefetch: true */'components/App/Utilities');
   const useFunctionsEmulatorUrl = isBoolean(REACT_APP_FIREBASE_USE_FUNCTIONS_EMULATOR_URL, true);
   const baseUrl = useFunctionsEmulatorUrl
     ? `${REACT_APP_FIREBASE_FUNCTIONS_EMULATOR_URL}/${REACT_APP_FIREBASE_PROJECT_ID}/us-central1`

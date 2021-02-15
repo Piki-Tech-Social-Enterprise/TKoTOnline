@@ -2,20 +2,22 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Helmet
-} from 'react-helmet';
+// import {
+//   Helmet
+// } from 'react-helmet';
 import PropTypes from 'prop-types';
-import {
-  extname,
-  join
-} from 'path';
-import {
-  isBoolean,
-  isNullOrEmpty,
-  getFirstCharacters
-} from 'components/App/Utilities';
+// import {
+//   extname,
+//   join
+// } from 'path';
+// import {
+//   isBoolean,
+//   isNullOrEmpty,
+//   getFirstCharacters
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Helmet = lazy(async () => await import(/* webpackPrefetch: true */'react-helmet/es/Helmet'));
 const MAX_DESCRIPTION_LENGTH = 160;
 const INITAL_STATE = {
   isLoading: true,
@@ -32,7 +34,8 @@ const INITAL_STATE = {
 const TKoTHelmet = props => {
   const [state, setState] = useState(INITAL_STATE);
   const {
-    preloadImages
+    preloadImages,
+    prefetchImages
   } = props;
   const {
     isLoading,
@@ -47,7 +50,12 @@ const TKoTHelmet = props => {
     siteNameContent
   } = state;
   useEffect(() => {
-    if (isLoading) {
+    const retrieveData = async () => {
+      const {
+        isBoolean,
+        isNullOrEmpty,
+        getFirstCharacters
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
       const {
         name,
         path,
@@ -64,21 +72,25 @@ const TKoTHelmet = props => {
         REACT_APP_WEB_BASE_URL,
         REACT_APP_WEB_NAME
       } = process.env;
+      const canonicalHref = new URL(path, (websiteUrlOverride || REACT_APP_WEB_BASE_URL));
       const robotsIndexText = isBoolean(robotsNoIndex, true)
         ? 'noindex'
         : 'index'
       const robotsFollowText = isBoolean(robotsNoFollow, true)
         ? 'nofollow'
         : 'follow';
+      const {
+        extname
+      } = await import('path');
       const imageType = !isNullOrEmpty(image)
         ? extname(image).substring(1).split('&')[0]
         : null;
       const siteNameContent = websiteNameOverride || REACT_APP_WEB_NAME;
-      setState(s => ({
+      setState(async s => ({
         ...s,
         isLoading: false,
         title: `${(name ? `${name} | ` : '')}${siteNameContent}`,
-        canonicalHref: join((websiteUrlOverride || REACT_APP_WEB_BASE_URL), path),
+        canonicalHref: canonicalHref.toString(),
         robotsContent: `noodp,${robotsIndexText},${robotsFollowText}`,
         descriptionContent: getFirstCharacters(description, MAX_DESCRIPTION_LENGTH, false),
         subjectContent: subject,
@@ -89,6 +101,9 @@ const TKoTHelmet = props => {
           : null,
         siteNameContent: siteNameContent
       }));
+    };
+    if (isLoading) {
+      retrieveData();
     }
     return () => { };
   }, [props, isLoading]);
@@ -118,13 +133,24 @@ const TKoTHelmet = props => {
             />
           )
         }
+        {
+          prefetchImages.map((prefetchImage, index) =>
+            <link
+              rel="prefetch"
+              as="image"
+              importance="high"
+              href={prefetchImage}
+              key={index}
+            />
+          )
+        }
       </Helmet>
     </>
   );
 };
 
 TKoTHelmet.propTypes = {
-        name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   subject: PropTypes.string,
@@ -134,10 +160,12 @@ TKoTHelmet.propTypes = {
   robotsNoFollow: PropTypes.bool,
   websiteNameOverride: PropTypes.string,
   websiteUrlOverride: PropTypes.string,
-  preloadImages: PropTypes.array
+  preloadImages: PropTypes.array,
+  prefetchImages: PropTypes.array
 };
 TKoTHelmet.defaultProps = {
-        preloadImages: []
+  preloadImages: [],
+  prefetchImages: []
 };
 
 export default TKoTHelmet;

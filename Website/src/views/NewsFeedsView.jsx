@@ -5,16 +5,14 @@ import React, {
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  defaultPageSetup
-} from 'components/App/Utilities';
+// import {
+//   defaultPageSetup
+// } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPreload: true */'components/Navbars/HomeNavbar'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const NewsFeedSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/NewsFeed'));
 const {
@@ -41,6 +39,7 @@ const NewsFeedsView = props => {
     dbNewsFeeds
   } = state;
   useEffect(() => {
+    let defaultPageSetup = {};
     const pageSetup = async () => {
       const {
         firebase
@@ -64,6 +63,11 @@ const NewsFeedsView = props => {
         'url'
       ];
       const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, 'isTKoTMedia', isTKoTMedia, NaN, dbNewsFeedsFieldNames);
+      const {
+        defaultPageSetup: defaultPageSetupImported
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      defaultPageSetup = defaultPageSetupImported;
+      defaultPageSetup(true);
       setState(s => ({
         ...s,
         isLoading: false,
@@ -71,7 +75,6 @@ const NewsFeedsView = props => {
         dbNewsFeeds
       }));
     };
-    defaultPageSetup(true);
     if (isLoading) {
       pageSetup();
     }

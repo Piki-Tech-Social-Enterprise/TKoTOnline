@@ -2,22 +2,21 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import {
-  Container
-} from 'reactstrap';
+// import {
+//   Container
+// } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Routes from 'components/Routes/routes';
 import {
   withFirebase
 } from 'components/Firebase';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
-import {
-  getImageURLToUse
-} from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
+// import {
+//   getImageURLToUse
+// } from 'components/App/Utilities';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const INITIAL_STATE = {
   isLoading: true,
   backgroundImage: 'linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0))'
@@ -39,12 +38,15 @@ const HomeHeader = props => {
     const pageSetup = async () => {
       let pageHeaderImage = props.pageHeaderImage;
       if (pageHeaderImage.startsWith('/images')) {
+        const {
+          getImageURLToUse
+        } = await import(/* webpackPrefetch: true */'components/App/Utilities');
         const imageSize = window.screen.width <= 400
           ? 'md'
           : NaN;
         pageHeaderImage = await props.firebase.storageRepository.getStorageFileDownloadURL(getImageURLToUse(imageSize, pageHeaderImage));
       }
-      const backgroundImage = `url(${pageHeaderImage})`;
+      const backgroundImage = `url('${pageHeaderImage}')`;
       setState(s => ({
         ...s,
         isLoading: false,

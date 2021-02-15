@@ -1,39 +1,47 @@
 import React, {
+  useEffect,
   useState
 } from 'react';
 import {
   Link
 } from 'react-router-dom';
-import {
-  Container,
-  Col,
-  Row,
-  Form,
-  FormGroup,
-  Input,
-  Button,
-  Nav
-} from 'reactstrap';
+// import {
+//   Container,
+//   Col,
+//   Row,
+//   Form,
+//   FormGroup,
+//   Input,
+//   Button,
+//   Nav
+// } from 'reactstrap';
 import PropTypes from 'prop-types';
 import {
   withFirebase
 } from 'components/Firebase';
-import swal from 'sweetalert2';
-import {
-  getNavItems
-} from 'components/App/Utilities';
+// import swal from 'sweetalert2';
+// import {
+//   getNavItems
+// } from 'components/App/Utilities';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import tkotLogo from 'assets/img/tkot/tkot-logo-white.webp';
 import meaLogo from 'assets/img/tkot/mea-logo-165x165.webp';
 import pikitechLogo from 'assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const NavItems = lazy(async () => await import(/* webpackPreload: true */'components/App/NavItems'));
-const SocialMedia = lazy(async () => await import(/* webpackPreload: true */'./SocialMedia'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const Nav = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Nav'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
+const NavItems = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NavItems'));
+const SocialMedia = lazy(async () => await import(/* webpackPrefetch: true */'./SocialMedia'));
 const HomeFooterLink = props => {
   const {
     to,
@@ -73,6 +81,19 @@ const CopyrightYear = props => {
     </>
   );
 };
+const INITIAL_STATE = {
+  isLoading: true,
+  navItems: [],
+  contact: {
+    active: true,
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: 'Sign Up to Newsletter',
+    cid: null,
+  },
+  isSubmitting: false
+};
 const HomeFooter = props => {
   const {
     isDefault,
@@ -86,17 +107,13 @@ const HomeFooter = props => {
     REACT_APP_WEB_NAME,
     REACT_APP_WEB_BUILD_VERSION
   } = process.env;
-  const navItems = getNavItems(isHomePage);
-  const INITIAL_STATE = {
-    active: true,
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: 'Sign Up to Newsletter',
-    cid: null
-  };
-  const [contact, setContact] = useState(INITIAL_STATE);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [state, setState] = useState(INITIAL_STATE);
+  const {
+    isLoading,
+    navItems,
+    contact,
+    isSubmitting
+  } = state;
   const handleChange = async e => {
     const {
       name,
@@ -106,8 +123,8 @@ const HomeFooter = props => {
     const checkedNames = ['active'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     console.log(`name: ${name}, value: ${value}`);
-    setContact(c => ({
-      ...c,
+    setState(s => ({
+      ...s,
       [name]: useChecked
         ? checked
         : value
@@ -115,7 +132,10 @@ const HomeFooter = props => {
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setState(s => ({
+      ...s,
+      isSubmitting: true
+    }));
     const now = new Date();
     const {
       firebase
@@ -150,8 +170,8 @@ const HomeFooter = props => {
         displayIcon = 'success';
         displayTitle = 'Sign Up successful';
         displayMessage = `Thank you ${firstName} ${lastName}, your sign up was successful. We will send an email to ${email} soon.`;
-        setContact(c => ({
-          ...c,
+        setState(s => ({
+          ...s,
           ...INITIAL_STATE
         }));
         sendEvent(`${window.location.pathname} page`, `Signed up "${firstName} ${lastName}, ${email}"`);
@@ -159,9 +179,13 @@ const HomeFooter = props => {
     } catch (error) {
       displayMessage = `${error.message}`;
     } finally {
-      setIsSubmitting(false);
+      setState(s => ({
+        ...s,
+        isSubmitting: false
+      }));
     }
     if (displayMessage) {
+      const swal = await import('sweetalert2').then(x => x.default);
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
@@ -169,132 +193,158 @@ const HomeFooter = props => {
       });
     }
   };
+  useEffect(() => {
+    const retrieveData = async () => {
+      const {
+        isHomePage
+      } = props;
+      const {
+        getNavItems
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      const navItems = getNavItems(isHomePage);
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        navItems
+      }))
+    };
+    if (isLoading) {
+      retrieveData();
+    }
+    return () => { }
+  }, [props, isLoading]);
   return (
     <>
-      <div className="bg-dark text-light home-footer-container">
-        <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
-          {/* <Container> */}
-          <Row className="footer-content px-0 mx-0">
-            <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
-              <a href="/">
-                <img alt="..." className="footer-tkot-logo py-3 lazyload" width="289" height="164" data-src={tkotLogo} src={tkotLogo} />
-              </a>
-            </Col>
-            <Col xs={12} lg={3} className="bg-light1 text-dark1">
-              <Container className="mx-0 px-0 py-3 pt-sm-0">
-                <Row noGutters>
-                  <Col xs={12}>
-                    <p className="text-uppercase font-weight-bolder text-lg-center">Rārangi Tono - Menu</p>
-                    <Container className="p-0">
+      {
+        isLoading
+          ? <LoadingSpinner caller="HomeFooter" />
+          : <>
+            <div className="bg-dark text-light home-footer-container">
+              <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
+                {/* <Container> */}
+                <Row className="footer-content px-0 mx-0">
+                  <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
+                    <a href="/">
+                      <img alt="..." className="footer-tkot-logo py-3 lazyload" width="289" height="164" data-src={tkotLogo} src={tkotLogo} />
+                    </a>
+                  </Col>
+                  <Col xs={12} lg={3} className="bg-light1 text-dark1">
+                    <Container className="mx-0 px-0 py-3 pt-sm-0">
                       <Row noGutters>
-                        <Col xs={6}>
-                          <Nav navbar>
-                            <NavItems
-                              useScrollspyNavLinks={isHomePage}
-                              pathname={pathname}
-                              hash={hash}
-                              items={navItems.filter(navItem => navItem.group === 'left')}
-                              navItemClassName="left"
-                              navLinkClassName="text-lg-center py-2 ml-0 ml-xl-5 box-social-text"
-                              includeTooltips={true}
-                            />
-                          </Nav>
+                        <Col xs={12}>
+                          <p className="text-uppercase font-weight-bolder text-lg-center">Rārangi Tono - Menu</p>
+                          <Container className="p-0">
+                            <Row noGutters>
+                              <Col xs={6}>
+                                <Nav navbar>
+                                  <NavItems
+                                    useScrollspyNavLinks={isHomePage}
+                                    pathname={pathname}
+                                    hash={hash}
+                                    items={navItems.filter(navItem => navItem.group === 'left')}
+                                    navItemClassName="left"
+                                    navLinkClassName="text-lg-center py-2 ml-0 ml-xl-5 box-social-text"
+                                    includeTooltips={true}
+                                  />
+                                </Nav>
+                              </Col>
+                              <Col xs={6}>
+                                <Nav navbar>
+                                  <NavItems
+                                    useScrollspyNavLinks={isHomePage}
+                                    pathname={pathname}
+                                    hash={hash}
+                                    items={navItems.filter(navItem => navItem.group === 'right')}
+                                    navItemClassName="right"
+                                    navLinkClassName="text-lg-center py-2 mr-0 mr-xl-5 box-social-text"
+                                    includeTooltips={true}
+                                  />
+                                </Nav>
+                              </Col>
+                            </Row>
+                          </Container>
                         </Col>
-                        <Col xs={6}>
-                          <Nav navbar>
-                            <NavItems
-                              useScrollspyNavLinks={isHomePage}
-                              pathname={pathname}
-                              hash={hash}
-                              items={navItems.filter(navItem => navItem.group === 'right')}
-                              navItemClassName="right"
-                              navLinkClassName="text-lg-center py-2 mr-0 mr-xl-5 box-social-text"
-                              includeTooltips={true}
-                            />
-                          </Nav>
+                      </Row>
+                    </Container>
+                  </Col>
+                  <Col xs={12} lg={3} className="bg-warning1">
+                    <Container className="mx-0 pl-0 py-3 pt-sm-0">
+                      <Row>
+                        <Col>
+                          <p className="text-uppercase font-weight-bolder text-lg-center">Hono Mai - We’ll Keep You Updated</p>
+                          <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
+                          <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
+                            <Row noGutters>
+                              <Col xs={12} sm={6} className="pr-0 pr-sm-1">
+                                <FormGroup>
+                                  <Input className="text-dark" placeholder="First Name/Ingoa Tuatahi" name="contact.firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                                </FormGroup>
+                              </Col>
+                              <Col xs={12} sm={6} className="pl-0 pl-sm-1">
+                                <FormGroup>
+                                  <Input className="text-dark" placeholder="Last Name/Ingoa Tuarua" name="contact.lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <FormGroup>
+                              <Input className="text-dark" placeholder="Email/Īmēra" name="contact.email" value={contact.email} onChange={handleChange} type="email" />
+                            </FormGroup>
+                            <FormGroup>
+                              <Button type="submit" color="light" size="lg" className="tkot-primary-red-bg-color btn-outline-dark my-2" block disabled={isSubmitting}>Sign Up/Hono Mai</Button>
+                            </FormGroup>
+                          </Form>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </Col>
+                  <Col xs={12} lg={3} className="bg-success1">
+                    <Container className="mx-0 px-0 py-3 pt-sm-0">
+                      <Row noGutters>
+                        <Col xs={12}>
+                          <p className="text-uppercase font-weight-bolder text-lg-center">Whakapā Mai - Contact Us</p>
+                          <SocialMedia
+                            links={[{
+                              href: 'https://www.facebook.com/TeKahuOTaonui',
+                              iconFaName: 'fab fa-facebook-f text-dark',
+                              text: 'Facebook'
+                            }, {
+                              href: '/ContactUs',
+                              iconFaName: 'fas fa-envelope text-dark',
+                              text: 'admin@tkot.org.nz'
+                            }, {
+                              href: '',
+                              iconFaName: 'fas fa-building text-dark',
+                              text: 'PO Box 88, Kaeo\nNorthland 0448'
+                            }]}
+                            margin="my-2"
+                            size="16"
+                          />
                         </Col>
                       </Row>
                     </Container>
                   </Col>
                 </Row>
-              </Container>
-            </Col>
-            <Col xs={12} lg={3} className="bg-warning1">
-              <Container className="mx-0 pl-0 py-3 pt-sm-0">
-                <Row>
-                  <Col>
-                    <p className="text-uppercase font-weight-bolder text-lg-center">Hono Mai - We’ll Keep You Updated</p>
-                    <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
-                    <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
-                      <Row noGutters>
-                        <Col xs={12} sm={6} className="pr-0 pr-sm-1">
-                          <FormGroup>
-                            <Input className="text-dark" placeholder="First Name/Ingoa Tuatahi" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
-                          </FormGroup>
-                        </Col>
-                        <Col xs={12} sm={6} className="pl-0 pl-sm-1">
-                          <FormGroup>
-                            <Input className="text-dark" placeholder="Last Name/Ingoa Tuarua" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <FormGroup>
-                        <Input className="text-dark" placeholder="Email/Īmēra" name="email" value={contact.email} onChange={handleChange} type="email" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Button type="submit" color="light" size="lg" className="tkot-primary-red-bg-color btn-outline-dark my-2" block disabled={isSubmitting}>Sign Up/Hono Mai</Button>
-                      </FormGroup>
-                    </Form>
-                  </Col>
-                </Row>
-              </Container>
-            </Col>
-            <Col xs={12} lg={3} className="bg-success1">
-              <Container className="mx-0 px-0 py-3 pt-sm-0">
-                <Row noGutters>
-                  <Col xs={12}>
-                    <p className="text-uppercase font-weight-bolder text-lg-center">Whakapā Mai - Contact Us</p>
-                    <SocialMedia
-                      links={[{
-                        href: 'https://www.facebook.com/TeKahuOTaonui',
-                        iconFaName: 'fab fa-facebook-f text-dark',
-                        text: 'Facebook'
-                      }, {
-                        href: '/ContactUs',
-                        iconFaName: 'fas fa-envelope text-dark',
-                        text: 'admin@tkot.org.nz'
-                      }, {
-                        href: '',
-                        iconFaName: 'fas fa-building text-dark',
-                        text: 'PO Box 88, Kaeo\nNorthland 0448'
-                      }]}
-                      margin="my-2"
-                      size="16"
-                    />
-                  </Col>
-                </Row>
-              </Container>
-            </Col>
-          </Row>
-          {/* </Container> */}
-        </footer>
-      </div>
-      <div className="bg-black text-light footer-copyright-container">
-        <Row className="copyright p-0 m-0">
-          <Col xs={12} lg={6} className="my-auto bg-danger1">
-            <span className="my-0 mt-3 mt-sm-0 mt-lg-3"><CopyrightYear text={`${REACT_APP_WEB_NAME} v${REACT_APP_WEB_BUILD_VERSION}`} startYear="2020" /> <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
-          </Col>
-          <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
-            <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />
-            {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
-            <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={meaLogo} src={meaLogo} width="95" height="95" />
-            {/* </a> */}
-            <a href="https://facebook.com/pikitec" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
-              <img className="ml-3 created-by-logo-image lazyload" alt="Piki Tech Limited" data-src={pikitechLogo} src={pikitechLogo} width="95" height="95" />
-            </a>
-          </Col>
-        </Row>
-      </div>
+                {/* </Container> */}
+              </footer>
+            </div>
+            <div className="bg-black text-light footer-copyright-container">
+              <Row className="copyright p-0 m-0">
+                <Col xs={12} lg={6} className="my-auto bg-danger1">
+                  <span className="my-0 mt-3 mt-sm-0 mt-lg-3"><CopyrightYear text={`${REACT_APP_WEB_NAME} v${REACT_APP_WEB_BUILD_VERSION}`} startYear="2020" /> <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
+                </Col>
+                <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
+                  <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />
+                  {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
+                  <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={meaLogo} src={meaLogo} width="95" height="95" />
+                  {/* </a> */}
+                  <a href="https://facebook.com/pikitec" title="Piki Tech Limited" target="_blank" rel="noopener noreferrer" onClick={() => sendEvent(`${window.location.pathname} page`, 'Clicked "PikiTech.co.nz" link')}>
+                    <img className="ml-3 created-by-logo-image lazyload" alt="Piki Tech Limited" data-src={pikitechLogo} src={pikitechLogo} width="95" height="95" />
+                  </a>
+                </Col>
+              </Row>
+            </div>
+          </>
+      }
     </>
   );
 };

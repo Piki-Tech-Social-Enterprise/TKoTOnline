@@ -21,13 +21,13 @@ const Firebase = props => {
       } = props;
       const {
         default: firebaseApp
-      } = await import(/* webpackPreload: true */'firebase/app');
+      } = await import(/* webpackPrefetch: true */'firebase/app');
       const initialisedFirebaseApp = firebaseApp.apps.length
         ? firebaseApp.app()
         : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);
       const {
         default: initStorage
-      } = await import(/* webpackPreload: true */'./Repositories/initStorage');
+      } = await import(/* webpackPrefetch: true */'./Repositories/initStorage');
       const storage = await initStorage(initialisedFirebaseApp);
       const {
         default: initNewsFeed

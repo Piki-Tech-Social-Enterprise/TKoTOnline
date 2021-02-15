@@ -2,19 +2,18 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import {
-  withRouter
-} from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import withRouter from 'react-router-dom/es/withRouter';
+// import {
+//   Container,
+//   Row,
+//   Col
+// } from 'reactstrap';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const ResourceCard = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Resources/ResourceCard'));
 const INITIAL_STATE = {
   isLoading: true,

@@ -1,55 +1,45 @@
 import React, {
-  useState
+  useState,
+  useEffect
 } from 'react';
-import {
-  Collapse,
-  Navbar,
-  Nav,
-  Container
-} from 'reactstrap';
+// import {
+//   Collapse,
+//   Navbar,
+//   Nav,
+//   Container
+// } from 'reactstrap';
 import PropTypes from 'prop-types';
-import {
-  useWindowEvent,
-  getNavItems
-} from 'components/App/Utilities';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+// import {
+//   useWindowEvent,
+//   getNavItems
+// } from 'components/App/Utilities';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const NavItems = lazy(async () => await import(/* webpackPreload: true */'components/App/NavItems'));
+const NavItems = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NavItems'));
+const Collapse = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Collapse'));
+const Navbar = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Navbar'));
+const Nav = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Nav'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
+const INITIAL_STATE = {
+  isLoading: true,
+  navItems: [],
+  collapseOpen: false,
+  navbarColor: 'tkot-background-white'
+};
 const HomeNavbar = props => {
   const {
-    initalTransparent,
-    colorOnScrollValue,
     isHomePage
   } = props;
-  const tkotBackgroundTransparent = 'tkot-background-transparent';
-  const tkotBackgroundWhite = 'tkot-background-white';
-  const defaultTkotBackground = initalTransparent || false
-    ? tkotBackgroundTransparent
-    : tkotBackgroundWhite;
-  const [state, setState] = useState({
-    collapseOpen: false,
-    navbarColor: defaultTkotBackground
-  });
+  const [state, setState] = useState(INITIAL_STATE);
+  const {
+    isLoading,
+    navItems
+  } = state;
   const {
     pathname,
     hash
   } = window.location;
-  const navItems = getNavItems(isHomePage); // debugger;
-  const updateNavbarColor = () => {
-    let navbarColor = defaultTkotBackground;
-    if (
-      document.documentElement.scrollTop >= colorOnScrollValue ||
-      document.body.scrollTop >= colorOnScrollValue
-    ) {
-      navbarColor = tkotBackgroundWhite;
-    }
-    setState(s => ({
-      ...s,
-      navbarColor: navbarColor
-    }));
-  };
   const handleTogglerClick = async (e, isButtonClick = false) => {
     e.preventDefault();
     document.documentElement.classList.toggle("nav-open");
@@ -64,7 +54,52 @@ const HomeNavbar = props => {
     REACT_APP_WEB_BASE_URL
   } = process.env;
   const tkotLogoOnlyBlackUrl = new URL('/static/img/tkot-logo-only-black.webp', REACT_APP_WEB_BASE_URL).toString();
-  useWindowEvent('scroll', updateNavbarColor);
+  useEffect(() => {
+    const scrollEventName = 'scroll';
+    const updateNavbarColor = () => {
+      const {
+        initalTransparent,
+        colorOnScrollValue
+      } = props;
+      const tkotBackgroundTransparent = 'tkot-background-transparent';
+      const tkotBackgroundWhite = 'tkot-background-white';
+      const defaultTkotBackground = initalTransparent || false
+        ? tkotBackgroundTransparent
+        : tkotBackgroundWhite;
+      let navbarColor = defaultTkotBackground;
+      if (
+        document.documentElement.scrollTop >= colorOnScrollValue ||
+        document.body.scrollTop >= colorOnScrollValue
+      ) {
+        navbarColor = tkotBackgroundWhite;
+      }
+      setState(s => ({
+        ...s,
+        navbarColor: navbarColor
+      }));
+    };
+    const retrieveData = async () => {
+      const {
+        isHomePage
+      } = props;
+      const {
+        getNavItems
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      const navItems = getNavItems(isHomePage);
+      window.addEventListener(scrollEventName, updateNavbarColor);
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        navItems
+      }));
+    };
+    if (isLoading) {
+      retrieveData();
+    }
+    return () => {
+      !isLoading && window.removeEventListener(scrollEventName, updateNavbarColor);
+    }
+  }, [props, isLoading]);
   return (
     <>
       {
@@ -72,31 +107,37 @@ const HomeNavbar = props => {
           ? <div id="bodyClick" onClick={handleTogglerClick} />
           : null
       }
-      <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg" id="HomeNavbar">
-        <Container className="pl-0">
-          <div className="navbar-translate">
-            <button className="navbar-toggler navbar-toggler" aria-expanded={state.collapseOpen} type="button" onClick={async e => handleTogglerClick(e, true)}>
-              <span className="navbar-toggler-bar top-bar"></span>
-              <span className="navbar-toggler-bar middle-bar"></span>
-              <span className="navbar-toggler-bar bottom-bar"></span>
-            </button>
-          </div>
-          <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
-            <a href="/">
-              <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlackUrl} src={tkotLogoOnlyBlackUrl} width="32" height="62" />
-            </a>
-            <Nav navbar>
-              <NavItems
-                useScrollspyNavLinks={isHomePage}
-                pathname={pathname}
-                hash={hash}
-                items={navItems}
-                includeTooltips={true}
-              />
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
+      {
+        isLoading
+          ? <LoadingSpinner caller="HomeNavbar" />
+          : <>
+            <Navbar className={`fixed-top ${state.navbarColor}`} expand="lg" id="HomeNavbar">
+              <Container className="pl-0">
+                <div className="navbar-translate">
+                  <button className="navbar-toggler navbar-toggler" aria-expanded={state.collapseOpen} type="button" onClick={async e => handleTogglerClick(e, true)}>
+                    <span className="navbar-toggler-bar top-bar"></span>
+                    <span className="navbar-toggler-bar middle-bar"></span>
+                    <span className="navbar-toggler-bar bottom-bar"></span>
+                  </button>
+                </div>
+                <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
+                  <a href="/">
+                    <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlackUrl} src={tkotLogoOnlyBlackUrl} width="32" height="62" />
+                  </a>
+                  <Nav navbar>
+                    <NavItems
+                      useScrollspyNavLinks={isHomePage}
+                      pathname={pathname}
+                      hash={hash}
+                      items={navItems}
+                      includeTooltips={true}
+                    />
+                  </Nav>
+                </Collapse>
+              </Container>
+            </Navbar>
+          </>
+      }
     </>
   );
 };

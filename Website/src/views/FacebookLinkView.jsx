@@ -6,11 +6,9 @@ import {
   withFirebase
 } from 'components/Firebase';
 // import useScript from 'components/App/useScript';
-import {
-  lazy
-} from 'react-lazy-no-flicker';
+import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const LoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/LoadingSpinner'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
 const FacebookLinkView = props => {
   const [state, setState] = useState({
     isLoading: true,

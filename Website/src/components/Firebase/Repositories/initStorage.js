@@ -1,11 +1,21 @@
 const initStorage = async initialisedFirebaseApp => {
-  await import(/* webpackPreload: true */'firebase/storage');
+  await import(/* webpackPrefetch: true */'firebase/storage');
   const storage = initialisedFirebaseApp.storage();
   const getStorageFileRef = path => {
     return storage.ref().child(path);
   };
   const getStorageFileDownloadURL = async path => {
-    return await getStorageFileRef(path).getDownloadURL();
+    const {
+      join
+    } = await import('path');
+    const {
+      REACT_APP_FIREBASE_STORAGE_BUCKET,
+      REACT_APP_FIREBASE_STORAGE_PUBLIC_BASEURL
+    } = process.env;
+    const storagePath = join(REACT_APP_FIREBASE_STORAGE_BUCKET, path);
+    const storageFileDownloadURL = new URL(storagePath, REACT_APP_FIREBASE_STORAGE_PUBLIC_BASEURL);
+    return storageFileDownloadURL.toString();
+    // return await getStorageFileRef(path).getDownloadURL();
   };
   const saveStorageFile = async (path, file) => {
     return await getStorageFileRef(path).put(file);
