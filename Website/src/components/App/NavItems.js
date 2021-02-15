@@ -28,7 +28,7 @@ const NavItem = lazy(async () => await import(/* webpackPrefetch: true */'reacts
 const NavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavLink'));
 const UncontrolledDropdown = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledDropdown'));
 const UncontrolledTooltip = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledTooltip'));
-// const ScrollspyNavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap-scrollspy/lib/scrollspyNavLink'));
+const ScrollspyNavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap-scrollspy/lib/scrollspyNavLink'));
 const NavItems = props => {
   const {
     useScrollspyNavLinks,
@@ -41,7 +41,6 @@ const NavItems = props => {
   } = props;
   const [state, setState] = useState({
     isLoading: true,
-    ScrollspyNavLink: null,
     isNullOrEmpty: null
   });
   const isActive = (pathname, hash, route) => {
@@ -53,22 +52,17 @@ const NavItems = props => {
   };
   const {
     isLoading,
-    ScrollspyNavLink,
     isNullOrEmpty
   } = state;
   const subMenus = {};
   useEffect(() => {
     const retrieveData = async () => {
       const {
-        ScrollspyNavLink
-      } = await import(/* webpackPrefetch: true */'reactstrap-scrollspy');
-      const {
         isNullOrEmpty
       } = await import(/* webpackPrefetch: true */'components/App/Utilities');
       setState(s => ({
         ...s,
         isLoading: false,
-        ScrollspyNavLink,
         isNullOrEmpty
       }));
     };
