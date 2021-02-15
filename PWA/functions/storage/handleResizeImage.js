@@ -91,7 +91,10 @@ const handleResizeImage = async (objectMetadata, overwriteExisting = true, delet
         bucketImgName
       } = getImgPathAndBucketImgName(size, 'webp');
       const uploadOptions = {
-        destination: bucketImgName
+        destination: bucketImgName,
+        metadata: {
+          cacheControl: 'public, max-age=31536000'
+        }
       };
       const imgFile = bucket.file(imgPath);
       if (!imgFile) {
