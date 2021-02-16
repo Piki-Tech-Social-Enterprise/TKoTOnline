@@ -206,7 +206,7 @@ const getNavItems = isHomePage => {
     route: covidListPage,
     name: 'Covid',
     tooltip: 'Kowheori',
-    group: 'right'
+    group: 'left'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
     // route: isHomePage ? newsFeedAnchor : newsFeeds,
@@ -245,7 +245,7 @@ const getNavItems = isHomePage => {
     route: projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
-    group: 'left'
+    group: 'right'
   }, {
     id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
     // route: isHomePage ? eventsAnchor : events,

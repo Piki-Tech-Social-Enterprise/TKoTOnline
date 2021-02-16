@@ -257,13 +257,13 @@ const HomeView = props => {
           : dbSettings.homePageAboutDescription}
         image={tkotLogoOnlyBlackUrl}
         preloadImages={[
-          homePageAboutImageUrl,
           tkotLogoOnlyBlackUrl,
+          homePageAboutImageUrl,
           tkot20pcImage,
-          tkotImage
+          tkotImage,
+          homePageHeaderImageUrl
         ]}
         prefetchImages={[
-          homePageHeaderImageUrl,
           // '/static/img/tkot-background-image.webp',
         ].concat(dbIwiMemberDownloadURLs)}
       />

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  usePastDelay
-} from 'react-lazy-no-flicker';
+import usePastDelay from 'react-lazy-no-flicker/es/usePastDelay';
 
 const LoadingSpinner = props => {
   const {
@@ -16,14 +14,17 @@ const LoadingSpinner = props => {
     REACT_APP_FLICKER_DELAY
   } = process.env;
   const DEFAULT_FLICKER_DELAY = 800;
-  const hasPastDelay = usePastDelay(Number(delayMs || REACT_APP_FLICKER_DELAY || DEFAULT_FLICKER_DELAY));
+  const delayAsNumber = Number(delayMs || REACT_APP_FLICKER_DELAY || DEFAULT_FLICKER_DELAY);
+  const hasPastDelay = usePastDelay(delayAsNumber);
   return (
     <>
       {
         hasPastDelay
-          ? null
+          ? <>
+          {console.log(`LoadingSpinner.hasPastDelay: ${hasPastDelay}`)}
+          </>
           : <>
-            {console.log(`LoadingSpinner.caller: ${caller}`)}
+            {console.log(`LoadingSpinner.caller (delay: ${delayAsNumber}): ${caller}`)}
             <div className={outerClassName}>
               <h1 className={innerClassName}>
                 <i className={iconClassName} />
