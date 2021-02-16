@@ -42,9 +42,6 @@ const IwiMembersSection = props => {
     iwiMembers
   } = state;
   useEffect(() => {
-    const {
-      isLoading
-    } = state;
     const getIwiMembers = async () => {
       const getDbIwiMembers = async () => {
         const dbIwiMembersFieldNames = [
