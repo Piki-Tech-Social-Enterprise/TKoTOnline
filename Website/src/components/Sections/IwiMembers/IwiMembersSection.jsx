@@ -16,9 +16,9 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import {
-  sortArray
-} from 'components/App/Utilities';
+// import {
+//   sortArray
+// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
@@ -35,9 +35,12 @@ const IwiMembersSection = props => {
   } = props;
   const [state, setState] = useState({
     isLoading: true,
-    iwiMembers: [],
-    columnCount: 4
+    iwiMembers: []
   });
+  const {
+    isLoading,
+    iwiMembers
+  } = state;
   useEffect(() => {
     const {
       isLoading
@@ -61,6 +64,9 @@ const IwiMembersSection = props => {
       const dbIwiMembers = dbIwiMembersPassedIn
         ? dbIwiMembersPassedIn
         : await getDbIwiMembers();
+      const {
+        sortArray
+      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
       sortArray(dbIwiMembers, 'sequence', 'desc');
       // debugger;
       setState(s => ({
@@ -72,7 +78,7 @@ const IwiMembersSection = props => {
     if (isLoading) {
       getIwiMembers();
     }
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <div className={`tkot-section ${containerClassName || ''}`} style={{
       minHeight: '33.75rem'
@@ -85,11 +91,11 @@ const IwiMembersSection = props => {
             <Container className="my-3">
               <Row>
                 {
-                  state.isLoading
+                  isLoading
                     ? <LoadingSpinner caller="IwiMembersSection" />
-                    : state.iwiMembers.length === 0
+                    : iwiMembers.length === 0
                       ? <NoDataToDisplayDiv name="Iwi Members" />
-                      : state.iwiMembers.map((iwiMember, index) => {
+                      : iwiMembers.map((iwiMember, index) => {
                         const {
                           imid,
                           iwiMemberImageURL,
