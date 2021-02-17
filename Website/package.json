@@ -25,7 +25,7 @@
     "sweetalert2": "^10.15.1"
   },
   "scripts": {
-    "updateDependencies": "ncu -x react-scripts,node-sass -u && pnpm i",
+    "updateDependencies": "ncu -u && pnpm i",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "pnpm run startLocal-p",
     "start:og": "react-scripts start",
@@ -155,11 +155,12 @@
     "babel-register": "^6.26.0",
     "chalk": "^4.1.0",
     "env-cmd": "^10.1.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "npm-run-all": "^4.1.5",
     "react-router-sitemap": "^1.2.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.2",
     "source-map-explorer": "^2.5.2",
+    "unused-webpack-plugin": "^2.4.0",
     "webpack-bundle-analyzer": "^4.4.0"
   }
 }

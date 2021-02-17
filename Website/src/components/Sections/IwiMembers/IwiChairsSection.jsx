@@ -2,18 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Row,
-//   Col,
-//   Button,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardHeader,
-//   Carousel,
-//   CarouselItem,
-//   CarouselControl
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';

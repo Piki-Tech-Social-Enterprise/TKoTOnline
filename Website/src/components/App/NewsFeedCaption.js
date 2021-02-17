@@ -2,12 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import moment from 'moment-mini';
-// import {
-//   DATE_MOMENT_FORMAT,
-//   NEWSFEED_DATE_MOMENT_FORMAT,
-//   TAG_SEPARATOR
-// } from 'components/App/Utilities';
 
 const INITIAL_STATE = {
   isLoading: true,
@@ -35,7 +29,9 @@ const NewsFeedCaption = props => {
         date,
         category
       } = newsFeed;
-      const moment = await import(/* webpackPrefetch: true */'moment-mini').then(x => x.default);
+      const {
+        default: moment
+      } = await import(/* webpackPrefetch: true */'moment-mini');
       const {
         DATE_MOMENT_FORMAT,
         NEWSFEED_DATE_MOMENT_FORMAT,

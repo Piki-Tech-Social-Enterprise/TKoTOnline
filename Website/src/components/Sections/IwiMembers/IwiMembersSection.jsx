@@ -3,12 +3,6 @@ import React, {
   useEffect,
   Fragment
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -16,9 +10,6 @@ import Routes from 'components/Routes/routes';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-// import {
-//   sortArray
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));

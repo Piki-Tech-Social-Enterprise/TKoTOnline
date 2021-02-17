@@ -4,17 +4,10 @@ import React, {
   useRef,
   useCallback
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
-// import draftToHtml from 'draftjs-to-html';
 import {
-  // defaultPageSetup,
   draftToText,
   useWindowEvent,
   fromCamelcaseToTitlecase

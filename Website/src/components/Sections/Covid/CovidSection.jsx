@@ -2,17 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardHeader,
-//   Badge
-// } from 'reactstrap';
 import queryString from 'query-string';
 import {
   withFirebase

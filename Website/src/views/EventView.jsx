@@ -2,19 +2,10 @@ import React, {
   useEffect,
   useState
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
 import draftToHtml from 'draftjs-to-html';
-// import {
-//   draftToText,
-//   getSrc
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));

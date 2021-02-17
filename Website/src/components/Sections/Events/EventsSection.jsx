@@ -2,15 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button,
-//   Card,
-//   CardBody,
-//   CardTitle
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';

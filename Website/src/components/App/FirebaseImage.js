@@ -6,13 +6,7 @@ import {
   withFirebase
 } from 'components/Firebase';
 import noImageAvailable from 'assets/img/tkot/no-image-available.svg';
-// import LoadingIcon from './LoadingIcon';
 import PropTypes from 'prop-types';
-// import {
-//   getSrc,
-//   isNullOrEmpty,
-//   getImageURLToUse
-// } from './Utilities';
 
 const propTypes = {
   isLoading: PropTypes.bool,
@@ -45,12 +39,10 @@ const FirebaseImage = props => {
   const [state, setState] = useState({
     isLoading: true,
     src: '',
-    // src: noImageAvailable,
     alt: ''
   });
   const {
     className,
-    // loadingIconSize
   } = props;
   const {
     isLoading,
@@ -59,7 +51,6 @@ const FirebaseImage = props => {
     width,
     height
   } = state;
-  // !isLoading && console.log(`src: ${src}`);
   useEffect(() => {
     const retrieveData = async () => {
       const {
@@ -98,7 +89,6 @@ const FirebaseImage = props => {
             imageSrc = await getStorageFileDownloadURL(imageURL);
           }
         }
-        // console.log(`imageURL: ${imageURL}, imageSrc: ${imageSrc}`);
       }
       setState(s => ({
         ...s,
@@ -109,18 +99,13 @@ const FirebaseImage = props => {
         height
       }));
     };
-    if (state.isLoading) {
+    if (isLoading) {
       retrieveData();
     }
     return () => { };
-  }, [props, state]);
+  }, [props, isLoading]);
   return (
     <>
-      {/* {
-        isLoading
-          ? <LoadingIcon size={loadingIconSize} />
-          : null
-      } */}
       <img
         className={`lazyload ${className} ${isLoading ? 'invisible' : ''}`}
         alt={alt}

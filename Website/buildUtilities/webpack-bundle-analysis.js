@@ -1,13 +1,20 @@
 process.env.NODE_ENV = 'production';
-const webpack = require('webpack');
+const path = require('path');
 const {
   BundleAnalyzerPlugin
 } = require('webpack-bundle-analyzer');
+const UnusedWebpackPlugin = require('unused-webpack-plugin');
 const bundleAnalyzerPluginOptions = {
   analyzerMode: 'static',
   reportFilename: 'report.html',
 };
 const bundleAnalyzerPlugin = new BundleAnalyzerPlugin(bundleAnalyzerPluginOptions);
+const unusedWebpackPluginOptions = {
+  directories: [path.join(__dirname, 'src')],
+  exclude: ['*.test.js'],
+  root: __dirname,
+};
+const unusedWebpackPlugin = new UnusedWebpackPlugin(unusedWebpackPluginOptions);
 const WebpackConfig = require('react-scripts/config/webpack.config');
 const webpackConfig = new WebpackConfig(process.env.NODE_ENV);
 const {
@@ -38,6 +45,7 @@ const callExecAsync = async (command, execOptions) => {
   console.log(`stderr: ${stderr}`);
 };
 const scriptName = process.argv[2];
+const webpack = require('webpack');
 // console.log('process.argv: ', JSON.stringify(process.argv, null, 2));
 // console.log(JSON.stringify({
 //   bundleAnalyzerPluginOptions,
@@ -46,6 +54,7 @@ const scriptName = process.argv[2];
 // }, null, 2));
 
 webpackConfig.plugins.push(bundleAnalyzerPlugin);
+webpackConfig.plugins.push(unusedWebpackPlugin);
 // callExecAsync('ls', execOptions);
 if (scriptName && scriptName.length) {
   callExecAsync(`npm run "${scriptName}"`, execOptions);

@@ -2,18 +2,12 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Container
-// } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Routes from 'components/Routes/routes';
 import {
   withFirebase
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
-// import {
-//   getImageURLToUse
-// } from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
 const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
@@ -63,7 +57,6 @@ const HomeHeader = props => {
         isLoading
           ? <LoadingSpinner caller="HomeHeader" />
           : <>
-            {/* <a id="About" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a> */}
             <div className="page-header clear-filter tkot-section" filter-color={pageHeaderFilterColour} style={{
               minHeight: '24.188rem'
             }}>

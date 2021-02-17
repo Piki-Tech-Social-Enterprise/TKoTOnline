@@ -5,9 +5,6 @@ import React, {
 import {
   withFirebase
 } from 'components/Firebase';
-// import {
-//   defaultPageSetup
-// } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 

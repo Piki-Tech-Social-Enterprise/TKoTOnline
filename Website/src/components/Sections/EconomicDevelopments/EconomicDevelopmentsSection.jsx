@@ -3,12 +3,6 @@ import React, {
   useEffect,
   Fragment
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';

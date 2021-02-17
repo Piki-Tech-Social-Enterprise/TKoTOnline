@@ -1,11 +1,3 @@
-
-// import initDbRepositoryFunctions from './initDbRepositoryFunctions';
-// import {
-//   isBoolean,
-//   isNullOrEmpty,
-//   refactorObject
-// } from 'components/App/Utilities';
-
 const dbTables = {
   contacts: {
     name: 'contacts',
@@ -239,12 +231,5 @@ const initDbRepository = async initOptions => {
     saveDbItem
   };
 };
-// const {
-//   REACT_APP_USE_DB_REPOSITORY_FUNCTIONS: useDbRepositoryFunctions
-// } = process.env;
-// const dbRepositoryToUse = isBoolean(useDbRepositoryFunctions, true)
-//   ? initDbRepositoryFunctions
-//   : initDbRepository
 
-// export default dbRepositoryToUse;
 export default initDbRepository;

@@ -2,24 +2,11 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardHeader,
-//   Badge
-// } from 'reactstrap';
-// import NewsFeedCarousel from './NewsFeedCarousel';
 import queryString from 'query-string';
 import {
   withFirebase
 } from 'components/Firebase';
 import {
-  // draftToText,
   sortArray,
   handleBlockTextClick,
   groupBy
@@ -27,7 +14,7 @@ import {
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-// import draftToHtml from 'draftjs-to-html';
+
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 

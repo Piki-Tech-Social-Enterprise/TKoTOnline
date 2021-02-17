@@ -87,22 +87,10 @@ const appRoutes = [
     path: Routes.facebookLinks,
     component: lazy(async () => await import(/* webpackPrefetch: true */'views/FacebookLinksView'))
   },
-  // {
-  //   path: Routes.facebookLink,
-  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/FacebookLinkView'))
-  // },
-  // {
-  //   path: Routes.resourceCardPage,
-  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/ResourceCardView'))
-  // },
   {
     path: Routes.economicDevelopmentsPage,
     component: lazy(async () => await import(/* webpackPrefetch: true */'views/EconomicDevelopmentsView'))
   },
-  // {
-  //   path: Routes.economicDevelopmentCardPage,
-  //   component: lazy(async () => await import(/* webpackPrefetch: true */'views/EconomicDevelopmentCardView'))
-  // },
   {
     path: Routes.mediaListPage,
     component: lazy(async () => await import(/* webpackPrefetch: true */'views/NewsFeedsView'))

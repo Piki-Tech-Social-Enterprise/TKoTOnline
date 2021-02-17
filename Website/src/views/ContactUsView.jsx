@@ -3,27 +3,21 @@ import React, {
   useState
 } from 'react';
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  CustomInput
-} from 'reactstrap';
-// import swal from 'sweetalert2';
-import {
   withFirebase
 } from 'components/Firebase';
-// import {
-//   defaultPageSetup
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
+const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
+const Label = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Label'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const CustomInput = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CustomInput'));
 const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
 const ContactUsView = props => {
@@ -103,7 +97,9 @@ const ContactUsView = props => {
       setIsSubmitting(false);
     }
     if (displayMessage) {
-      const swal = await import('sweetalert2').then(x => x.default);
+      const {
+        default: swal
+      } = await import('sweetalert2');
       swal.fire({
         icon: displayIcon,
         title: displayTitle,

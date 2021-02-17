@@ -2,22 +2,10 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Helmet
-// } from 'react-helmet';
 import PropTypes from 'prop-types';
-// import {
-//   extname,
-//   join
-// } from 'path';
-// import {
-//   isBoolean,
-//   isNullOrEmpty,
-//   getFirstCharacters
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Helmet = lazy(async () => await import(/* webpackPrefetch: true */'react-helmet/es/Helmet'));
+const Helmet = lazy(async () => await import(/* webpackPreload: true */'react-helmet/es/Helmet'));
 const MAX_DESCRIPTION_LENGTH = 160;
 const INITAL_STATE = {
   isLoading: true,

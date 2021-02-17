@@ -6,10 +6,6 @@ import {
   withRouter
 } from 'react-router-dom';
 import ReactGA from 'react-ga';
-// import {
-//   isBoolean,
-//   isNumber
-// } from 'components/App/Utilities';
 
 const GoogleAnalytics = props => {
   const [state, setState] = useState({
@@ -30,11 +26,6 @@ const GoogleAnalytics = props => {
           REACT_APP_GOOGLE_TRACKING_ADDRESS: googleTrackingAddress,
           REACT_APP_GOOGLE_TRACKING_SITE_SPEED_SAMPLE_RATE: googleTrackingSiteSpeedSampleRate
         } = process.env;
-        // console.info(JSON.stringify({
-        //   googleTrackingCode,
-        //   googleTrackingDebug,
-        //   googleTrackingSiteSpeedSampleRate
-        // }));
         const {
           isBoolean,
           isNumber

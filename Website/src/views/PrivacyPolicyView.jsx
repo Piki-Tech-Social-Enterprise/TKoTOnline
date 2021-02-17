@@ -2,14 +2,6 @@ import React, {
   useEffect,
   useState
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col
-// } from 'reactstrap';
-// import {
-//   defaultPageSetup
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));

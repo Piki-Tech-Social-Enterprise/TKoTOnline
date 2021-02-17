@@ -2,17 +2,7 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Collapse,
-//   Navbar,
-//   Nav,
-//   Container
-// } from 'reactstrap';
 import PropTypes from 'prop-types';
-// import {
-//   useWindowEvent,
-//   getNavItems
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const NavItems = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NavItems'));

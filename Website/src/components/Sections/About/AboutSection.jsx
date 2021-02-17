@@ -2,12 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';
@@ -16,9 +10,6 @@ import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
-// import {
-//   getImageURLToUse
-// } from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
 const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));

@@ -5,24 +5,10 @@ import React, {
 import {
   Link
 } from 'react-router-dom';
-// import {
-//   Container,
-//   Col,
-//   Row,
-//   Form,
-//   FormGroup,
-//   Input,
-//   Button,
-//   Nav
-// } from 'reactstrap';
 import PropTypes from 'prop-types';
 import {
   withFirebase
 } from 'components/Firebase';
-// import swal from 'sweetalert2';
-// import {
-//   getNavItems
-// } from 'components/App/Utilities';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
@@ -32,8 +18,8 @@ import pikitechLogo from 'assets/img/tkot/piki-tech-logo-white-transparent-165x1
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
 const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
 const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
 const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
@@ -185,7 +171,9 @@ const HomeFooter = props => {
       }));
     }
     if (displayMessage) {
-      const swal = await import('sweetalert2').then(x => x.default);
+      const {
+        default: swal
+      } = await import('sweetalert2');
       swal.fire({
         icon: displayIcon,
         title: displayTitle,

@@ -4,23 +4,6 @@ import React, {
   useEffect,
   useMemo
 } from 'react';
-// import {
-//   Carousel,
-//   CarouselItem,
-//   CarouselIndicators,
-//   CarouselCaption,
-//   Form,
-//   FormGroup,
-//   Input,
-//   Container,
-//   Row,
-//   Col,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardHeader,
-//   CardLink
-// } from 'reactstrap';
 import {
   withFirebase
 } from 'components/Firebase';

@@ -2,15 +2,6 @@ import React, {
   useEffect,
   useState
 } from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button
-// } from 'reactstrap';
-// import {
-//   defaultPageSetup
-// } from 'components/App/Utilities';
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 

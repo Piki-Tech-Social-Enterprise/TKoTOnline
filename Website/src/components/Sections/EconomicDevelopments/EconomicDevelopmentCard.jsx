@@ -3,14 +3,7 @@ import React, {
   useEffect
 } from 'react';
 import PropTypes from 'prop-types';
-// import {
-//   Button,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardHeader
-// } from 'reactstrap';
-// import draftToHtml from 'draftjs-to-html';
+
 import {
   handleBlockTextClick
 } from 'components/App/Utilities';

@@ -4,21 +4,6 @@ import React, {
   useEffect,
   Fragment
 } from 'react';
-// import {
-//   DropdownItem,
-//   DropdownMenu,
-//   DropdownToggle,
-//   NavItem,
-//   NavLink,
-//   UncontrolledDropdown,
-//   UncontrolledTooltip
-// } from 'reactstrap';
-// import {
-//   ScrollspyNavLink
-// } from 'reactstrap-scrollspy';
-// import {
-//   isNullOrEmpty
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const DropdownItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownItem'));
@@ -47,7 +32,6 @@ const NavItems = props => {
     const parameterIsActive = hash
       ? route.endsWith(hash) || (pathname === '/' && !hash && route === '/#Home')
       : pathname.startsWith(route) && pathname.length > 1 && route.length > 1
-    // console.log(`pathname: ${pathname}, hash: ${hash}, route: ${route}, parameterIsActive: ${parameterIsActive}`);
     return parameterIsActive;
   };
   const {
@@ -84,7 +68,6 @@ const NavItems = props => {
                     item
                   } = props;
                   const {
-                    // id,
                     route,
                     name,
                     tooltip
@@ -102,7 +85,6 @@ const NavItems = props => {
                   return (
                     <>
                       <NavLink
-                        // id={id}
                         href={route}
                         active={isActive(pathname, hash, route)}
                         className={navLinkClassName || ''}
@@ -112,7 +94,6 @@ const NavItems = props => {
                           ? <UncontrolledTooltip
                             innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
                             placement="top"
-                            // target={`${id}`}
                             target={navLinkRefCurrent}
                           >{tooltip}</UncontrolledTooltip>
                           : null
@@ -125,7 +106,6 @@ const NavItems = props => {
                     item
                   } = props;
                   const {
-                    // id,
                     route,
                     name,
                     tooltip
@@ -143,7 +123,6 @@ const NavItems = props => {
                   return (
                     <>
                       <DropdownItem
-                        // id={id}
                         href={route}
                         active={isActive(pathname, hash, route)}
                         className={`text-uppercase ${navLinkClassName || ''}`}
@@ -154,7 +133,6 @@ const NavItems = props => {
                           ? <UncontrolledTooltip
                             innerClassName="tkot-secondary-color-black-bg-color text-light text-uppercase"
                             placement="top"
-                            // target={`${id}`}
                             target={dropdownItemRefCurrent}
                           >{tooltip}</UncontrolledTooltip>
                           : null

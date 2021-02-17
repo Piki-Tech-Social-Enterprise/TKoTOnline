@@ -5,9 +5,6 @@ import React, {
 import {
   withFirebase
 } from 'components/Firebase';
-// import {
-//   defaultPageSetup
-// } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
 const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
