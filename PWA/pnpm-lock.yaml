@@ -5,7 +5,7 @@ dependencies:
   draft-js: 0.11.7_react-dom@17.0.1+react@17.0.1
   draftjs-to-html: 0.9.1
   firebase: 8.2.7
-  googleapis: 67.0.0
+  googleapis: 67.1.0
   history: 4.10.0
   moment: 2.29.1
   node-sass: 4.14.1
@@ -25,7 +25,7 @@ dependencies:
   react-tagsinput-2: 3.19.8_react@17.0.1
   reactstrap: 8.9.0_react-dom@17.0.1+react@17.0.1
   recompose: 0.30.0_react@17.0.1
-  sweetalert2: 10.15.1
+  sweetalert2: 10.15.2
   sweetalert2-react: 0.8.3_react-dom@17.0.1+react@17.0.1
 devDependencies:
   babel-cli: 6.26.0
@@ -6325,18 +6325,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-LANAXHU4w51+s3sxcCLjJfsBi/c=
-  /gaxios/3.1.0:
-    dependencies:
-      abort-controller: 3.0.0
-      extend: 3.0.2
-      https-proxy-agent: 5.0.0
-      is-stream: 2.0.0
-      node-fetch: 2.6.1
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-DDTn3KXVJJigtz+g0J3vhcfbDbKtAroSTxauWsdnP57sM5KZ3d2c/3D9RKFJ86s43hfw6WULg6TXYw/AYiBlpA==
   /gaxios/4.0.1:
     dependencies:
       abort-controller: 3.0.0
@@ -6357,15 +6345,15 @@ packages:
       node: '>= 4.0.0'
     resolution:
       integrity: sha512-BRdNm8hbWzFzWHERTrejLqwHDfS4GibPoq5wjTPIoJHoBtKGPg3xAFfxmM+9ztbXelxcf2hwQcaz1PtmFeue8g==
-  /gcp-metadata/4.1.4:
+  /gcp-metadata/4.2.1:
     dependencies:
-      gaxios: 3.1.0
+      gaxios: 4.0.1
       json-bigint: 1.0.0
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-5J/GIH0yWt/56R3dNaNWPGQ/zXsZOddYECfJaqxFWgrZ9HC2Kvc5vl9upOgUUHKzURjAVf2N+f6tEJiojqXUuA==
+      integrity: sha512-tSk+REe5iq/N+K+SK1XjZJUrFPuDqGZVzCy2vocIHIGmPlTGsa8owXMJwGkrXr73NO0AzhPW4MF2DEHz7P2AVw==
   /gensync/1.0.0-beta.1:
     dev: false
     engines:
@@ -6527,40 +6515,40 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-7IDTQTIu2xzXkT+6mlluidnWo+BypnbSoEVVQCGfzqnl5Ik8d3e1d4wycb8Rj9tWW+Z39uPWsdlquqiqPCd/pA==
-  /google-auth-library/6.0.6:
+  /google-auth-library/7.0.2:
     dependencies:
       arrify: 2.0.1
       base64-js: 1.3.1
       ecdsa-sig-formatter: 1.0.11
       fast-text-encoding: 1.0.3
-      gaxios: 3.1.0
-      gcp-metadata: 4.1.4
-      gtoken: 5.0.3
+      gaxios: 4.0.1
+      gcp-metadata: 4.2.1
+      gtoken: 5.2.1
       jws: 4.0.0
       lru-cache: 6.0.0
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-fWYdRdg55HSJoRq9k568jJA1lrhg9i2xgfhVIMJbskUmbDpJGHsbv9l41DGhCDXM21F9Kn4kUwdysgxSYBYJUw==
+      integrity: sha512-vjyNZR3pDLC0u7GHLfj+Hw9tGprrJwoMwkYGqURCXYITjCrP9HprOyxVV+KekdLgATtWGuDkQG2MTh0qpUPUgg==
   /google-maps-infobox/2.0.0:
     dev: false
     resolution:
       integrity: sha512-hTuWmWZZSOxf5D/z7l3/hTF1grgRvLG53BEKMdjiKOG+FcK/kH7vqseUeyIU9Zj2ZIqKTOaro0nknxpAuRq4Vw==
-  /google-p12-pem/3.0.2:
+  /google-p12-pem/3.0.3:
     dependencies:
-      node-forge: 0.9.1
+      node-forge: 0.10.0
     dev: false
     engines:
       node: '>=10'
     hasBin: true
     resolution:
-      integrity: sha512-tbjzndQvSIHGBLzHnhDs3cL4RBjLbLXc2pYvGH+imGVu5b4RMAttUTdnmW2UH0t11QeBTXZ7wlXPS7hrypO/tg==
-  /googleapis-common/4.4.3:
+      integrity: sha512-wS0ek4ZtFx/ACKYF3JhyGe5kzH7pgiQ7J5otlumqR9psmWMYc+U9cErKlCYVYHoUaidXHdZ2xbo34kB+S+24hA==
+  /googleapis-common/5.0.1:
     dependencies:
       extend: 3.0.2
       gaxios: 4.0.1
-      google-auth-library: 6.0.6
+      google-auth-library: 7.0.2
       qs: 6.9.4
       url-template: 2.0.8
       uuid: 8.3.0
@@ -6568,16 +6556,16 @@ packages:
     engines:
       node: '>=10.10.0'
     resolution:
-      integrity: sha512-W46WKCk3QtlCCfmZyQIH5zxmDOyeV5Qj+qs7nr2ox08eRkEJMWp6iwv542R/PsokXaGUSrmif4vCC4+rGzRSsQ==
-  /googleapis/67.0.0:
+      integrity: sha512-b6SfpxLKVxFM7EQkRjhMrSWKLnRXf7r3Y4L4PZI8Yu8SWsGzfw+0ar7eqdwXnjZ2s+jwRHmxwnHaSP8anlgN5w==
+  /googleapis/67.1.0:
     dependencies:
-      google-auth-library: 6.0.6
-      googleapis-common: 4.4.3
+      google-auth-library: 7.0.2
+      googleapis-common: 5.0.1
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-luhulHrk42DruR+c12W2sY2rrEVoKVdjaZDuHWSxcp1qz+VxvWQpuiK2QDLCXmo36/VFPMaa+Y7rRUR+Qqzd7w==
+      integrity: sha512-FBjPY9a4HBwb47E1M49ziPChhvox5jQkhgmVDkPBHuiAK14iXKk/qenoClDWaqZisqdLMZ/jvwq68t974oBcXA==
   /graceful-fs/4.2.4:
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -6585,17 +6573,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
-  /gtoken/5.0.3:
+  /gtoken/5.2.1:
     dependencies:
-      gaxios: 3.1.0
-      google-p12-pem: 3.0.2
+      gaxios: 4.0.1
+      google-p12-pem: 3.0.3
       jws: 4.0.0
-      mime: 2.4.6
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-Nyd1wZCMRc2dj/mAD0LlfQLcAO06uKdpKJXvK85SGrF5+5+Bpfil9u/2aw35ltvEHjvl0h5FMKN5knEU+9JrOg==
+      integrity: sha512-OY0BfPKe3QnMsY9MzTHTSKn+Vl2l1CcLe6BwDEQj00mbbkl5nyQ/7EUREstg4fQNZ8iYE7br4JJ7TdKeDOPWmw==
   /gud/1.0.0:
     dev: false
     resolution:
@@ -9040,18 +9027,18 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+  /node-forge/0.10.0:
+    dev: false
+    engines:
+      node: '>= 6.0.0'
+    resolution:
+      integrity: sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
   /node-forge/0.9.0:
     dev: false
     engines:
       node: '>= 4.5.0'
     resolution:
       integrity: sha512-7ASaDa3pD+lJ3WvXFsxekJQelBKRpne+GOVbLbtHYdd7pFspyeuJHnWfLplGf3SwKGbfs/aYl5V/JCIaHVUKKQ==
-  /node-forge/0.9.1:
-    dev: false
-    engines:
-      node: '>= 4.5.0'
-    resolution:
-      integrity: sha512-G6RlQt5Sb4GMBzXvhfkeFmbqR6MzhtnT7VTHuLadjkii3rdYHNdw0m8zA4BTxVIh68FicCQ2NSUANpsqkr9jvQ==
   /node-gyp/3.8.0:
     dependencies:
       fstream: 1.0.12
@@ -12667,10 +12654,10 @@ packages:
       react-dom: ^16.0.0
     resolution:
       integrity: sha512-l960IJWHE6BHDEImcn//thzQOY9moVccf6xgg42HDyLwpU/2wLvv9P82fD0sQn0WGAUwbjDz3Xfuj9oQI4iFzQ==
-  /sweetalert2/10.15.1:
+  /sweetalert2/10.15.2:
     dev: false
     resolution:
-      integrity: sha512-TEORDjJGD3956aPK61DpHvgT8sHisQHPdsqXlYzWmza/oMAsrVj+RyYpAOD45ew3RBrGzjQ1uNq6m4FjZ0WLZg==
+      integrity: sha512-PQyFnkfURWyDRXeSmk0bojvdxnhqGj0xbjtecAPtzDMAHSuJeVd8jr0/AdR/nkyzGV9HNEjRXk8b5hyWinhf9w==
   /sweetalert2/8.19.0:
     dev: false
     resolution:
@@ -13804,7 +13791,7 @@ specifiers:
   draftjs-to-html: ^0.9.1
   env-cmd: ^10.1.0
   firebase: ^8.2.7
-  googleapis: ^67.0.0
+  googleapis: ^67.1.0
   history: 4.10.0
   jquery: 3.5.1
   moment: ^2.29.1
@@ -13827,6 +13814,6 @@ specifiers:
   react-tagsinput-2: ^3.19.8
   reactstrap: 8.9.0
   recompose: ^0.30.0
-  sweetalert2: ^10.15.1
+  sweetalert2: ^10.15.2
   sweetalert2-react: ^0.8.3
   typescript: 4.1.5
