@@ -41,7 +41,7 @@ const IwiMembersSection = props => {
           'iwiMemberImageURL',
           'iwiMemberName',
           'iwiMemberURL',
-          // 'iwiMemberRegistrationLink'
+          'iwiMemberRegistrationLink'
         ];
         const dbIwiMembers = await props.firebase.iwiMembersRepository.getDbIwiMembersAsArray(false, 'active', true, NaN, dbIwiMembersFieldNames);
         return dbIwiMembers;

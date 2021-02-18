@@ -120,7 +120,7 @@ const HomeView = props => {
             'iwiMemberImageURL',
             'iwiMemberName',
             'iwiMemberURL',
-            // 'iwiMemberRegistrationLink'
+            'iwiMemberRegistrationLink'
           ]
         },
         // dbCovidList: {
