@@ -20,8 +20,9 @@ const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackCh
 const CustomInput = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-custominput' */'reactstrap/es/CustomInput'));
 const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
 const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
-const ContactUsView = props => {
-  const INITIAL_STATE = {
+const INITIAL_STATE = {
+  isLoading: true,
+  contact: {
     active: true,
     firstName: '',
     lastName: '',
@@ -29,9 +30,16 @@ const ContactUsView = props => {
     message: '',
     subscribed: false,
     cid: null
-  };
-  const [contact, setContact] = useState(INITIAL_STATE);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  },
+  isSubmitting: false
+};
+const ContactUsView = props => {
+  const [state, setState] = useState(INITIAL_STATE);
+  const {
+    isLoading,
+    contact,
+    isSubmitting
+  } = state;
   const handleChange = async e => {
     const {
       name,
@@ -41,8 +49,8 @@ const ContactUsView = props => {
     const checkedNames = ['subscribed'];
     const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
     console.log(`name: ${name}, value: ${value}`);
-    setContact(c => ({
-      ...c,
+    setState(s => ({
+      ...s,
       [name]: useChecked
         ? checked
         : value
@@ -53,7 +61,10 @@ const ContactUsView = props => {
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setState(s => ({
+      ...s,
+      isSubmitting: true
+    }));
     const now = new Date();
     const {
       firebase
@@ -94,7 +105,10 @@ const ContactUsView = props => {
     } catch (error) {
       displayMessage = `${error.message}`;
     } finally {
-      setIsSubmitting(false);
+      setState(s => ({
+        ...s,
+        isSubmitting: false
+      }));
     }
     if (displayMessage) {
       const {
@@ -117,8 +131,12 @@ const ContactUsView = props => {
       defaultPageSetup(true);
     };
     pageSetup();
-    return defaultPageSetup;
-  }, []);
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
+  }, [props, isLoading]);
   return (
     <>
       <HomeNavbar

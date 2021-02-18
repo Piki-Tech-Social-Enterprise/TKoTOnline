@@ -75,7 +75,11 @@ const NewsFeedsView = props => {
     if (isLoading) {
       pageSetup();
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
   }, [props, isLoading, isTKoTMedia]);
   return (
     <>

@@ -34,7 +34,11 @@ const EconomicDevelopmentsView = () => {
     if (isLoading) {
       pageSetup();
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
   }, [isLoading]);
   return (
     <>

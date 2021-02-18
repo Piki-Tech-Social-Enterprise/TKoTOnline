@@ -101,7 +101,11 @@ const AboutUsView = props => {
     if (isLoading) {
       pageSetup();
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
   }, [props, isLoading]);
   const {
     REACT_APP_WEB_BASE_URL

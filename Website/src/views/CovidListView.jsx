@@ -53,7 +53,11 @@ const CovidListView = props => {
     if (isLoading) {
       pageSetup();
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
   }, [props, isLoading]);
   return (
     <>
