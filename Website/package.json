@@ -22,7 +22,7 @@
     "react-router-dom": "5.2.0",
     "reactstrap": "8.9.0",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.15.2"
+    "sweetalert2": "^10.15.3"
   },
   "scripts": {
     "updateDependencies": "ncu -u && pnpm i",
