@@ -625,3 +625,16 @@ $tkot-home-footer-x-padding: 1rem;
   max-width: 180px;
   width: 100%;
 }
+
+.page-about-description-div {
+  min-height: 10.938rem;
+}
+
+.iwi-members-row {
+  min-height: 33.75rem;
+}
+
+.blurred-text {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}

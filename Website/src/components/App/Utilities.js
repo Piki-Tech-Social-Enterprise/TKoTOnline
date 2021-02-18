@@ -79,9 +79,16 @@ const defaultPageSetup = async (init = defaultInit) => {
     document.documentElement.classList.remove(navOpenClassName);
     window.scrollTo(0, 0);
     body.scrollTop = 0;
-    // } else {
-    //   bodyClassNames.remove(indexPageClassName);
-    //   bodyClassNames.remove(sidebarCollapseClassName);
+  } else {
+    if (bodyClassNames) {
+      const {
+        remove
+      } = bodyClassNames;
+      if (typeof remove === 'function') {
+        remove(indexPageClassName);
+        remove(sidebarCollapseClassName);
+      }
+    }
   }
 };
 const isNumber = value => value && !isNaN(value);

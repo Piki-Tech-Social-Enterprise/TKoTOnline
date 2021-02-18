@@ -68,16 +68,14 @@ const IwiMembersSection = props => {
     }
   }, [props, isLoading]);
   return (
-    <div className={`tkot-section ${containerClassName || ''}`} style={{
-      minHeight: '33.75rem'
-    }}>
+    <div className={`tkot-section ${containerClassName || ''}`}>
       <Container>
         <a id="IwiMembers" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
         <Row className="debug-outline">
           <Col className="mx-auto text-center my-3">
             <h3 className="text-uppercase">Our Iwi Members</h3>
             <Container className="my-3">
-              <Row>
+              <Row className="iwi-members-row">
                 {
                   isLoading
                     ? <LoadingSpinner caller="IwiMembersSection" />
@@ -95,10 +93,10 @@ const IwiMembersSection = props => {
                           <Fragment key={imid}>
                             {
                               index > 0 && index % 6 === 0
-                                ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-warning1 iwi-member-col">&nbsp;</Col>
+                                ? <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase iwi-member-col">&nbsp;</Col>
                                 : null
                             }
-                            <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase bg-success1">
+                            <Col xs={6} sm={2} md={3} lg={2} className="h5 text-center text-uppercase">
                               <a
                                 href={iwiMemberURL}
                                 className="text-dark text-decoration-none tkot-primary-blue-color"

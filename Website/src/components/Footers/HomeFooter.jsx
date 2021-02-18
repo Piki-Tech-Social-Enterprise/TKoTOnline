@@ -211,12 +211,12 @@ const HomeFooter = props => {
               <footer className={`footer${((isDefault && ' footer-default') || '')} bg-dark p-0 m-0 pt-5`} id="HomeFooter">
                 {/* <Container> */}
                 <Row className="footer-content px-0 mx-0">
-                  <Col xs={12} lg={3} className="footer-logo text-left text-lg-right bg-danger1">
+                  <Col xs={12} lg={3} className="footer-logo text-left text-lg-right">
                     <a href="/">
                       <img alt="..." className="footer-tkot-logo py-3 lazyload" width="289" height="164" data-src={tkotLogo} src={tkotLogo} />
                     </a>
                   </Col>
-                  <Col xs={12} lg={3} className="bg-light1 text-dark1">
+                  <Col xs={12} lg={3}>
                     <Container className="mx-0 px-0 py-3 pt-sm-0">
                       <Row noGutters>
                         <Col xs={12}>
@@ -255,13 +255,13 @@ const HomeFooter = props => {
                       </Row>
                     </Container>
                   </Col>
-                  <Col xs={12} lg={3} className="bg-warning1">
+                  <Col xs={12} lg={3}>
                     <Container className="mx-0 pl-0 py-3 pt-sm-0">
                       <Row>
                         <Col>
                           <p className="text-uppercase font-weight-bolder text-lg-center">Hono Mai - We’ll Keep You Updated</p>
                           <p className="small">Sign up to our newsletter to be informed of upcoming wānanga, events and pānui.</p>
-                          <Form className="bg-warning1" noValidate onSubmit={handleSubmit}>
+                          <Form noValidate onSubmit={handleSubmit}>
                             <Row noGutters>
                               <Col xs={12} sm={6} className="pr-0 pr-sm-1">
                                 <FormGroup>
@@ -285,7 +285,7 @@ const HomeFooter = props => {
                       </Row>
                     </Container>
                   </Col>
-                  <Col xs={12} lg={3} className="bg-success1">
+                  <Col xs={12} lg={3}>
                     <Container className="mx-0 px-0 py-3 pt-sm-0">
                       <Row noGutters>
                         <Col xs={12}>
@@ -317,10 +317,10 @@ const HomeFooter = props => {
             </div>
             <div className="bg-black text-light footer-copyright-container">
               <Row className="copyright p-0 m-0">
-                <Col xs={12} lg={6} className="my-auto bg-danger1">
+                <Col xs={12} lg={6} className="my-auto">
                   <span className="my-0 mt-3 mt-sm-0 mt-lg-3"><CopyrightYear text={`${REACT_APP_WEB_NAME} v${REACT_APP_WEB_BUILD_VERSION}`} startYear="2020" /> <HomePrivacyLink /> &amp; <HomeTermsLink /></span>
                 </Col>
-                <Col xs={12} lg={6} className="my-auto text-lg-right bg-success1">
+                <Col xs={12} lg={6} className="my-auto text-lg-right">
                   <span className="text-uppercase font-weight-bolder my-0 mt-3 mt-sm-0 mt-lg-3 mr-3 mr-sm-0 mr-lg-5">Website co-curated by</span> <br className="d-md-none" />
                   {/* <a href="#TKoTOnline" title="Making Everything Achievable Limited" target="_blank" rel="noopener noreferrer"> */}
                   <img className="ml-0 ml-sm-3 created-by-logo-image lazyload" alt="Making Everything Achievable Limited" data-src={meaLogo} src={meaLogo} width="95" height="95" />

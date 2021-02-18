@@ -16,7 +16,6 @@ import {
 } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
 const Scrollspy = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-scrollspy' */'reactstrap-scrollspy/lib/scrollspy'));
 const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-tkot-helmet' */'components/App/TKoTHelmet'));
 const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
@@ -53,7 +52,13 @@ const HomeView = props => {
     homePageHeaderImageDownloadUrl: '',
     homePageAboutImageDownloadUrl: '',
     dbNewsFeedsByIsFeatured: [],
-    dbNewsFeedsByIsTKoTMedia: []
+    dbNewsFeedsByIsTKoTMedia: [],
+    dbIwiMembers: [],
+    dbCovidList: [],
+    dbResources: [],
+    dbEconomicDevelopments: [],
+    dbProjects: [],
+    dbEvents: []
   });
   const {
     isLoading,
@@ -240,7 +245,11 @@ const HomeView = props => {
     if (isLoading) {
       pageSetup();
     }
-    return defaultPageSetup;
+    return () => {
+      if (!isLoading) {
+        defaultPageSetup();
+      }
+    };
   }, [props, isLoading]);
   const scrollspyTopOffset = '10%';
   const {
@@ -267,93 +276,87 @@ const HomeView = props => {
           // '/static/img/tkot-background-image.webp',
         ].concat(dbIwiMemberDownloadURLs)}
       />
-      {
-        isLoading
-          ? <PageLoadingSpinner caller="HomeView" />
-          : <>
-            <Scrollspy
-              names={[
-                'HomeNavbar',
-                homeAnchor.replace('/#', ''),
-                iwiMembersAnchor.replace('/#', ''),
-                aboutAnchor.replace('/#', ''),
-                // 'TkotBgImgContainer',
-                // covidListAnchor.replace('/#', ''),
-                // newsFeedAnchor.replace('/#', ''),
-                // mediaListAnchor.replace('/#', ''),
-                // resourcesAnchor.replace('/#', ''),
-                // economicDevelopmentsAnchor.replace('/#', ''),
-                // projectsAnchor.replace('/#', ''),
-                // eventsAnchor.replace('/#', ''),
-                'HomeFooter'
-              ]}
-              homeIndex={1}
-              topOffset={scrollspyTopOffset}
-            >
-              <HomeNavbar
-                initalTransparent={false}
-                isHomePage={isHomePage}
-              />
-              <AboutSection
-                pageAboutImage={homePageAboutImageUrl}
-                pageAboutDescription={dbSettings.homePageAboutDescription}
-              />
-              <IwiMembers
-                containerClassName="bg-white"
-                dbIwiMembers={dbIwiMembers}
-              />
-              <HomeHeader
-                pageHeaderImage={homePageHeaderImageUrl}
-                showClickScrollDownForMoreLink={false}
-              />
-              {/* <div className="tkot-background-image-container" id="TkotBgImgContainer">
-                <div className="tkot-background-image" />
-              </div>
-              <CovidSection
-                showLearnMoreButton
-                isHomePage
-                dbCovidList={dbCovidList}
-              />
-              <NewsFeedSection
-                showLearnMoreButton
-                isHomePage
-                newsSectionDescription={dbSettings.newsSectionDescription}
-                dbNewsFeeds={dbNewsFeedsByIsFeatured}
-              />
-              <NewsFeedSection
-                showLearnMoreButton
-                isHomePage
-                isTKoTMedia
-                dbNewsFeeds={dbNewsFeedsByIsTKoTMedia}
-              />
-              <ResourcesSection
-                showLearnMoreButton
-                isHomePage
-                dbResources={dbResources}
-              />
-              <EconomicDevelopmentsSection
-                showLearnMoreButton
-                isFeatured
-                showViewTaitokerauEconomicSummit2020SiteButton
-                dbEconomicDevelopments={dbEconomicDevelopments}
-              />
-              <ProjectsSection
-                showLearnMoreButton
-                isHomePage
-                dbProjects={dbProjects}
-              />
-              <EventsSection
-                showLearnMoreButton
-                containerClassName="tkot-secondary-color-black-bg-color-61-pc"
-                isHomePage
-                dbEvents={dbEvents}
-              /> */}
-              <HomeFooter
-                isHomePage={isHomePage}
-              />
-            </Scrollspy>
-          </>
-      }
+      <Scrollspy
+        names={[
+          'HomeNavbar',
+          homeAnchor.replace('/#', ''),
+          iwiMembersAnchor.replace('/#', ''),
+          aboutAnchor.replace('/#', ''),
+          // 'TkotBgImgContainer',
+          // covidListAnchor.replace('/#', ''),
+          // newsFeedAnchor.replace('/#', ''),
+          // mediaListAnchor.replace('/#', ''),
+          // resourcesAnchor.replace('/#', ''),
+          // economicDevelopmentsAnchor.replace('/#', ''),
+          // projectsAnchor.replace('/#', ''),
+          // eventsAnchor.replace('/#', ''),
+          'HomeFooter'
+        ]}
+        homeIndex={1}
+        topOffset={scrollspyTopOffset}
+      >
+        <HomeNavbar
+          initalTransparent={false}
+          isHomePage={isHomePage}
+        />
+        <AboutSection
+          pageAboutImage={homePageAboutImageUrl}
+          pageAboutDescription={dbSettings.homePageAboutDescription}
+        />
+        <IwiMembers
+          containerClassName="bg-white"
+          dbIwiMembers={dbIwiMembers}
+        />
+        <HomeHeader
+          pageHeaderImage={homePageHeaderImageUrl}
+          showClickScrollDownForMoreLink={false}
+        />
+        {/* <div className="tkot-background-image-container" id="TkotBgImgContainer">
+          <div className="tkot-background-image" />
+        </div>
+        <CovidSection
+          showLearnMoreButton
+          isHomePage
+          dbCovidList={dbCovidList}
+        />
+        <NewsFeedSection
+          showLearnMoreButton
+          isHomePage
+          newsSectionDescription={dbSettings.newsSectionDescription}
+          dbNewsFeeds={dbNewsFeedsByIsFeatured}
+        />
+        <NewsFeedSection
+          showLearnMoreButton
+          isHomePage
+          isTKoTMedia
+          dbNewsFeeds={dbNewsFeedsByIsTKoTMedia}
+        />
+        <ResourcesSection
+          showLearnMoreButton
+          isHomePage
+          dbResources={dbResources}
+        />
+        <EconomicDevelopmentsSection
+          showLearnMoreButton
+          isFeatured
+          showViewTaitokerauEconomicSummit2020SiteButton
+          dbEconomicDevelopments={dbEconomicDevelopments}
+        />
+        <ProjectsSection
+          showLearnMoreButton
+          isHomePage
+          dbProjects={dbProjects}
+        />
+        <EventsSection
+          showLearnMoreButton
+          containerClassName="tkot-secondary-color-black-bg-color-61-pc"
+          isHomePage
+          dbEvents={dbEvents}
+        /> */}
+        <HomeFooter
+          isHomePage={isHomePage}
+        />
+      </Scrollspy>
     </>
   );
 };

@@ -76,12 +76,12 @@ const AboutSection = props => {
               }}>
                 <Container className="py-5 text-center">
                   <Row>
-                    <Col xs={12} sm={6} className="bg-danger1">
+                    <Col xs={12} sm={6}>
                       <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkot20pcImage} width="300" height="267" />
                     </Col>
-                    <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto bg-warning1">
+                    <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto">
                       <div className="my-3">
-                        <span>{pageAboutDescription}</span><br />
+                        <div className={`page-about-description-div${pageAboutDescription ? '' : ' blurred-text'}`}>{pageAboutDescription ? pageAboutDescription : 'Formed in 2006/7, the purpose of Te Kāhu o Taonui was to create a taumata for our Taitokerau Iwi Chairs to come together, to wānanga, share ideas and concerns with each other. To utilise the power of our collective Iwi to create more opportunities to benefit all of our whānau, hapū and Marae.'}</div>
                         <Button
                           href={aboutUs}
                           className="tkot-primary-red-bg-color-50-pc btn-outline-light my-3 mt-lg-5 mb-lg-1"

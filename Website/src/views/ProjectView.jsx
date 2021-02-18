@@ -105,7 +105,7 @@ const ProjectView = props => {
               pageHeaderCaption=""
               pageHeaderFilterColour=""
             />
-            <Container className="bg-warning1 mt-1 pt-5">
+            <Container className="mt-1 pt-5">
               <div className="h1 py-3 mb-0 font-weight-bold text-center">{header}</div>
               <Row>
                 <Col

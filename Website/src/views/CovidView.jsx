@@ -113,7 +113,7 @@ const CovidView = props => {
               pageHeaderTitle={header}
               pageHeaderCaption={() => <NewsFeedCaption newsFeed={dbCovid} key="temp" />}
             />
-            <Container className="bg-warning1 mt-5 pt-5">
+            <Container className="mt-5 pt-5">
               <Row>
                 <Col
                   dangerouslySetInnerHTML={{ __html: contentAsHtml }}

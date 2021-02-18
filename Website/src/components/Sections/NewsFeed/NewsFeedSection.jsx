@@ -95,7 +95,7 @@ const NewsFeedSection = props => {
           'name',
           'url'
         ];
-        const dbNewsFeeds = await props.firebase.newsFeedRepository.getNewsFeedsAsArray(false, fieldName, true, NaN, dbNewsFeedsFieldNames);
+        const dbNewsFeeds = await props.firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, fieldName, true, NaN, dbNewsFeedsFieldNames);
         return dbNewsFeeds;
       };
       const {

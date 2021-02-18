@@ -100,7 +100,7 @@ const EventView = props => {
               pageHeaderTitle={header}
               pageHeaderCaption=""
             />
-            <Container className="bg-warning1 mt-5 pt-5">
+            <Container className="mt-5 pt-5">
               <Row>
                 <Col
                   dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(content || '{}')) }}
