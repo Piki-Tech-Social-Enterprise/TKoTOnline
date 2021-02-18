@@ -16,19 +16,19 @@ import {
 } from 'components/App/GoogleAnalytics';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
-const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
-const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
-const CardTitle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardTitle'));
-const CardHeader = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardHeader'));
-const Carousel = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Carousel'));
-const CarouselItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CarouselItem'));
-const CarouselControl = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CarouselControl'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
-const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
-const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-card' */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-cardbody' */'reactstrap/es/CardBody'));
+const CardTitle = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-cardtitle' */'reactstrap/es/CardTitle'));
+const CardHeader = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-cardheader' */'reactstrap/es/CardHeader'));
+const Carousel = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-carousel' */'reactstrap/es/Carousel'));
+const CarouselItem = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-carousel-item' */'reactstrap/es/CarouselItem'));
+const CarouselControl = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-carousel-control' */'reactstrap/es/CarouselControl'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
 const getIwiMembersAsChunks = (iwiMembers, columnCount) => {
   const iwiMembersMegaMenuItems = {};
   const chunks = intoChunks(iwiMembers, columnCount);

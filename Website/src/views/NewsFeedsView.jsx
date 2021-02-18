@@ -8,10 +8,10 @@ import {
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
-const NewsFeedSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/NewsFeed'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
+const NewsFeedSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-section' */'components/Sections/NewsFeed'));
 const {
   // newsFeeds,
   mediaListPage
@@ -62,7 +62,7 @@ const NewsFeedsView = props => {
       const dbNewsFeeds = await firebase.newsFeedRepository.getDbNewsFeedsAsArray(false, 'isTKoTMedia', isTKoTMedia, NaN, dbNewsFeedsFieldNames);
       const {
         defaultPageSetup: defaultPageSetupImported
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       defaultPageSetup = defaultPageSetupImported;
       defaultPageSetup(true);
       setState(s => ({

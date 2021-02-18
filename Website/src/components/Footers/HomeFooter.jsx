@@ -17,17 +17,17 @@ import meaLogo from 'assets/img/tkot/mea-logo-165x165.webp';
 import pikitechLogo from 'assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
-const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
-const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
-const Nav = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Nav'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
-const NavItems = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NavItems'));
-const SocialMedia = lazy(async () => await import(/* webpackPrefetch: true */'./SocialMedia'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-form' */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-form-group' */'reactstrap/es/FormGroup'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-input' */'reactstrap/es/Input'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
+const Nav = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-nav' */'reactstrap/es/Nav'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
+const NavItems = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-nav-items' */'components/App/NavItems'));
+const SocialMedia = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-social-media' */'./SocialMedia'));
 const HomeFooterLink = props => {
   const {
     to,
@@ -173,7 +173,7 @@ const HomeFooter = props => {
     if (displayMessage) {
       const {
         default: swal
-      } = await import('sweetalert2');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'sweetalert2' */'sweetalert2/dist/sweetalert2');
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
@@ -188,7 +188,7 @@ const HomeFooter = props => {
       } = props;
       const {
         getNavItems
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       const navItems = getNavItems(isHomePage);
       setState(s => ({
         ...s,

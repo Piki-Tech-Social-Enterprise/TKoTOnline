@@ -5,16 +5,16 @@ import React, {
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
 const {
   home
 } = Routes;
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
 const Global404View = () => {
   const [state, setState] = useState({
     isLoading: true
@@ -27,7 +27,7 @@ const Global404View = () => {
     const pageSetup = async () => {
       const {
         defaultPageSetup: defaultPageSetupImported
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       defaultPageSetup = defaultPageSetupImported;
       defaultPageSetup(true);
       setState(s => ({

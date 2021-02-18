@@ -1,5 +1,5 @@
 const initStorage = async initialisedFirebaseApp => {
-  await import(/* webpackPrefetch: true */'firebase/storage');
+  await import(/* webpackPrefetch: true, webpackChunkName: 'firebase-storage' */'firebase/storage');
   const storage = initialisedFirebaseApp.storage();
   const getStorageFileRef = path => {
     return storage.ref().child(path);
@@ -7,7 +7,7 @@ const initStorage = async initialisedFirebaseApp => {
   const getStorageFileDownloadURL = async path => {
     const {
       join
-    } = await import('path');
+    } = await import(/* webpackPrefetch: true, webpackChunkName: 'path' */'path');
     const {
       REACT_APP_FIREBASE_STORAGE_BUCKET,
       REACT_APP_FIREBASE_STORAGE_PUBLIC_BASEURL

@@ -5,7 +5,7 @@ import React, {
 import PropTypes from 'prop-types';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Helmet = lazy(async () => await import(/* webpackPreload: true */'react-helmet/es/Helmet'));
+const Helmet = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'react-helmet' */'react-helmet/es/Helmet'));
 const MAX_DESCRIPTION_LENGTH = 160;
 const INITAL_STATE = {
   isLoading: true,
@@ -43,7 +43,7 @@ const TKoTHelmet = props => {
         isBoolean,
         isNullOrEmpty,
         getFirstCharacters
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       const {
         name,
         path,
@@ -69,7 +69,7 @@ const TKoTHelmet = props => {
         : 'follow';
       const {
         extname
-      } = await import('path');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'path' */'path');
       const imageType = !isNullOrEmpty(image)
         ? extname(image).substring(1).split('&')[0]
         : null;

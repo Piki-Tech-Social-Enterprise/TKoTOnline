@@ -57,7 +57,7 @@ const FirebaseImage = props => {
         getSrc,
         isNullOrEmpty,
         getImageURLToUse
-      } = await import('./Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'./Utilities');
       const {
         firebase,
         alt,

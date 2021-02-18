@@ -15,13 +15,13 @@ import {
 } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
-const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
-const EconomicDevelopmentCard = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
+const EconomicDevelopmentCard = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-economic-development-card' */'components/Sections/EconomicDevelopments/EconomicDevelopmentCard'));
 const EconomicDevelopmentsSection = props => {
   const [state, setState] = useState({
     isLoading: true,

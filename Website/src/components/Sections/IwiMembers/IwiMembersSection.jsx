@@ -12,13 +12,13 @@ import {
 } from 'components/App/GoogleAnalytics';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
-const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NoDataToDisplayDiv'));
-const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true */'components/App/FirebaseImage'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
+const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
+const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
 const IwiMembersSection = props => {
   const {
     containerClassName,
@@ -54,7 +54,7 @@ const IwiMembersSection = props => {
         : await getDbIwiMembers();
       const {
         sortArray
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       sortArray(dbIwiMembers, 'sequence', 'desc');
       // debugger;
       setState(s => ({
@@ -117,16 +117,22 @@ const IwiMembersSection = props => {
                                 /><br />
                                 <span className="iwi-member-name">{iwiMemberName}{iwiMemberName.length < 15 ? <><br /><br /></> : <></>}</span>
                               </a>
-                              <div className="text-center mt-3">
-                                <Button
-                                  href={iwiMemberRegistrationLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="tkot-primary-red-bg-color btn-outline-dark"
-                                  color="white"
-                                  onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName} Register" button`)}
-                                >Register</Button>
-                              </div>
+                              {
+                                iwiMemberRegistrationLink
+                                  ? <>
+                                    <div className="text-center mt-3">
+                                      <Button
+                                        href={iwiMemberRegistrationLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="tkot-primary-red-bg-color btn-outline-dark"
+                                        color="white"
+                                        onClick={() => sendEvent('Home page', `Clicked "${iwiMemberName} Register" button`)}
+                                      >Register</Button>
+                                    </div>
+                                  </>
+                                  : null
+                              }
                             </Col>
                           </Fragment>
                         );

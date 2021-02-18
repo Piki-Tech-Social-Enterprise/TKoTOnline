@@ -6,14 +6,14 @@ import React, {
 } from 'react';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const DropdownItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownItem'));
-const DropdownMenu = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownMenu'));
-const DropdownToggle = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/DropdownToggle'));
-const NavItem = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavItem'));
-const NavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/NavLink'));
-const UncontrolledDropdown = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledDropdown'));
-const UncontrolledTooltip = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/UncontrolledTooltip'));
-const ScrollspyNavLink = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap-scrollspy/lib/scrollspyNavLink'));
+const DropdownItem = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-dropdown-item' */'reactstrap/es/DropdownItem'));
+const DropdownMenu = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-dropdown-menu' */'reactstrap/es/DropdownMenu'));
+const DropdownToggle = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-dropdown-toggle' */'reactstrap/es/DropdownToggle'));
+const NavItem = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-nav-item' */'reactstrap/es/NavItem'));
+const NavLink = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-nav-link' */'reactstrap/es/NavLink'));
+const UncontrolledDropdown = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-uncontrolled-dropdown' */'reactstrap/es/UncontrolledDropdown'));
+const UncontrolledTooltip = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-uncontrolled-tooltip' */'reactstrap/es/UncontrolledTooltip'));
+const ScrollspyNavLink = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-scrollspy-nav-link' */'reactstrap-scrollspy/lib/scrollspyNavLink'));
 const NavItems = props => {
   const {
     useScrollspyNavLinks,
@@ -43,7 +43,7 @@ const NavItems = props => {
     const retrieveData = async () => {
       const {
         isNullOrEmpty
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       setState(s => ({
         ...s,
         isLoading: false,

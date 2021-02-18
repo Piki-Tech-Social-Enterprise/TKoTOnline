@@ -5,12 +5,12 @@ import React, {
 import PropTypes from 'prop-types';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const NavItems = lazy(async () => await import(/* webpackPrefetch: true */'components/App/NavItems'));
-const Collapse = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Collapse'));
-const Navbar = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Navbar'));
-const Nav = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Nav'));
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
+const NavItems = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-nav-items' */'components/App/NavItems'));
+const Collapse = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-collapse' */'reactstrap/es/Collapse'));
+const Navbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-navbar' */'reactstrap/es/Navbar'));
+const Nav = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-nav' */'reactstrap/es/Nav'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
 const INITIAL_STATE = {
   isLoading: true,
   navItems: [],
@@ -74,7 +74,7 @@ const HomeNavbar = props => {
       } = props;
       const {
         getNavItems
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       const navItems = getNavItems(isHomePage);
       window.addEventListener(scrollEventName, updateNavbarColor);
       setState(s => ({

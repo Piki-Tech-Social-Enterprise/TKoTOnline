@@ -16,20 +16,20 @@ import {
 } from 'components/App/Utilities';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
-const Scrollspy = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap-scrollspy/lib/scrollspy'));
-const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
-const AboutSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/About'));
-const IwiMembers = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/IwiMembers'));
-const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true */'components/Headers/HomeHeader'));
-// const CovidSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Covid'));
-// const NewsFeedSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/NewsFeed'));
-// const ResourcesSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Resources'));
-// const EconomicDevelopmentsSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/EconomicDevelopments'));
-// const ProjectsSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Projects'));
-// const EventsSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Events'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
+const Scrollspy = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-scrollspy' */'reactstrap-scrollspy/lib/scrollspy'));
+const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-tkot-helmet' */'components/App/TKoTHelmet'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
+const AboutSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-about-section' */'components/Sections/About'));
+const IwiMembers = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-iwi-members-section' */'components/Sections/IwiMembers'));
+const HomeHeader = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-header' */'components/Headers/HomeHeader'));
+// const CovidSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-covid-section' */'components/Sections/Covid'));
+// const NewsFeedSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-section' */'components/Sections/NewsFeed'));
+// const ResourcesSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-resources-section' */'components/Sections/Resources'));
+// const EconomicDevelopmentsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-economic-development-section' */'components/Sections/EconomicDevelopments'));
+// const ProjectsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-projects-section' */'components/Sections/Projects'));
+// const EventsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-events-section' */'components/Sections/Events'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
 const {
   home,
   homeAnchor,

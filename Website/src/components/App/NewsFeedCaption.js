@@ -31,12 +31,12 @@ const NewsFeedCaption = props => {
       } = newsFeed;
       const {
         default: moment
-      } = await import(/* webpackPrefetch: true */'moment-mini');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'moment-mini' */'moment-mini');
       const {
         DATE_MOMENT_FORMAT,
         NEWSFEED_DATE_MOMENT_FORMAT,
         TAG_SEPARATOR
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       const formattedDate = moment(date, DATE_MOMENT_FORMAT).format(NEWSFEED_DATE_MOMENT_FORMAT);
       const categoryTags = category.split(TAG_SEPARATOR);
       setState(s => ({

@@ -29,7 +29,7 @@ const GoogleAnalytics = props => {
         const {
           isBoolean,
           isNumber
-        } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+        } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
         ReactGA.initialize(googleTrackingCode, {
           debug: isBoolean(googleTrackingDebug, true),
           gaAddress: googleTrackingAddress,

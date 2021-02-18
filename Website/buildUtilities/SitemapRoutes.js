@@ -1,5 +1,7 @@
 import React from 'react';
-import Route from 'react-router/es/Route';
+import {
+  Route
+} from 'react-router';
 import Routes from '../src/components/Routes/routes';
 
 export default (

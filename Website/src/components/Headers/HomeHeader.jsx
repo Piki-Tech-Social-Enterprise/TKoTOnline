@@ -9,8 +9,8 @@ import {
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true */'components/App/LoadingSpinner'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
 const INITIAL_STATE = {
   isLoading: true,
   backgroundImage: 'linear-gradient(183deg, rgba(0, 0, 0, 0.83), rgba(0, 0, 0, 0))'
@@ -34,7 +34,7 @@ const HomeHeader = props => {
       if (pageHeaderImage.startsWith('/images')) {
         const {
           getImageURLToUse
-        } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+        } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
         const imageSize = window.screen.width <= 400
           ? 'md'
           : NaN;

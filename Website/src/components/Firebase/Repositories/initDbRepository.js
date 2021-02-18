@@ -51,12 +51,12 @@ const dbTables = {
   }
 };
 const initDbRepository = async initOptions => {
-  await import(/* webpackPrefetch: true */'firebase/database');
+  await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
   const {
     isBoolean,
     isNullOrEmpty,
     refactorObject
-  } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+  } = await import(/* webpackPreload: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
   const {
     initialisedFirebaseApp,
     dbTableName: dbTableNamePassedIn

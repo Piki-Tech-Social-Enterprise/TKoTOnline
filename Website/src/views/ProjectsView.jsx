@@ -7,10 +7,10 @@ import {
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
-const ProjectsSection = lazy(async () => await import(/* webpackPrefetch: true */'components/Sections/Projects'));
+const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
+const ProjectsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-projects-section' */'components/Sections/Projects'));
 const ProjectsView = () => {
   const [state, setState] = useState({
     isLoading: true
@@ -23,7 +23,7 @@ const ProjectsView = () => {
     const pageSetup = async () => {
       const {
         defaultPageSetup: defaultPageSetupImported
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       defaultPageSetup = defaultPageSetupImported;
       defaultPageSetup(true);
       setState(s => ({

@@ -1,7 +1,7 @@
 const initEconomicDevelopment = async initialisedFirebaseApp => {
   const {
     default: initDbRepository
-  } = await import(/* webpackPrefetch: true */'./initDbRepository');
+  } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-repositories-db-repository' */'./initDbRepository');
   const dbRepository = await initDbRepository({
     initialisedFirebaseApp,
     dbTableName: 'economicDevelopments'

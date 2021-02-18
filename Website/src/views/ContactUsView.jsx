@@ -7,19 +7,19 @@ import {
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
-const Container = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Container'));
-const Row = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Row'));
-const Col = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Col'));
-const Card = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Card'));
-const CardBody = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CardBody'));
-const Form = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Form'));
-const FormGroup = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/FormGroup'));
-const Label = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Label'));
-const Input = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Input'));
-const Button = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/Button'));
-const CustomInput = lazy(async () => await import(/* webpackPrefetch: true */'reactstrap/es/CustomInput'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true */'components/Footers/HomeFooter'));
+const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
+const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
+const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-col' */'reactstrap/es/Col'));
+const Card = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-card' */'reactstrap/es/Card'));
+const CardBody = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-cardbody' */'reactstrap/es/CardBody'));
+const Form = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-form' */'reactstrap/es/Form'));
+const FormGroup = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-form-group' */'reactstrap/es/FormGroup'));
+const Label = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-label' */'reactstrap/es/Label'));
+const Input = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-input' */'reactstrap/es/Input'));
+const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
+const CustomInput = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-custominput' */'reactstrap/es/CustomInput'));
+const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
+const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
 const ContactUsView = props => {
   const INITIAL_STATE = {
     active: true,
@@ -99,7 +99,7 @@ const ContactUsView = props => {
     if (displayMessage) {
       const {
         default: swal
-      } = await import('sweetalert2');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'sweetalert2' */'sweetalert2/dist/sweetalert2');
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
@@ -112,7 +112,7 @@ const ContactUsView = props => {
     const pageSetup = async () => {
       const {
         defaultPageSetup: defaultPageSetupImported
-      } = await import(/* webpackPrefetch: true */'components/App/Utilities');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       defaultPageSetup = defaultPageSetupImported;
       defaultPageSetup(true);
     };
