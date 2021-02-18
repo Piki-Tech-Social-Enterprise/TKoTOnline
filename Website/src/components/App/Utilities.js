@@ -2,7 +2,7 @@ import {
   useEffect
 } from 'react';
 import draftToHtml from 'draftjs-to-html';
-import moment from 'moment-mini';
+import moment from 'moment-mini/moment.min';
 import Routes from 'components/Routes/routes';
 import {
   dirname

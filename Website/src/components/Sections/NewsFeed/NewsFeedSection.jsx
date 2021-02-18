@@ -7,14 +7,8 @@ import {
   withFirebase
 } from 'components/Firebase';
 import {
-  sortArray,
-  handleBlockTextClick,
-  groupBy
-} from 'components/App/Utilities';
-import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
@@ -41,7 +35,8 @@ const NewsFeedSection = props => {
     dbNewsFeeds: [],
     availableCategoriesAsArray: [],
     newsSectionDescriptionAsHtml: '',
-    draftToText: () => {}
+    draftToText: () => {},
+    handleBlockTextClick: () => {}
   });
   const {
     containerClassName,
@@ -58,7 +53,8 @@ const NewsFeedSection = props => {
     dbNewsFeeds,
     availableCategoriesAsArray,
     newsSectionDescriptionAsHtml,
-    draftToText
+    draftToText,
+    handleBlockTextClick
   } = state;
   const routeToUse = !isTKoTMedia ? newsFeeds : mediaListPage;
   const CategoryBadge = props => {
@@ -80,7 +76,10 @@ const NewsFeedSection = props => {
   useEffect(() => {
     const retrieveData = async () => {
       const {
-        draftToText
+        sortArray,
+        groupBy,
+        draftToText,
+        handleBlockTextClick
       } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
       const getNewsFeeds = async fieldName => {
         const dbNewsFeedsFieldNames = [
@@ -141,7 +140,8 @@ const NewsFeedSection = props => {
         dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
         availableCategoriesAsArray,
         newsSectionDescriptionAsHtml,
-        draftToText
+        draftToText,
+        handleBlockTextClick
       }));
     };
     if (isLoading) {

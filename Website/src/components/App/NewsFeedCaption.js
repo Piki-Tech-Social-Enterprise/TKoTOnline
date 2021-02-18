@@ -31,7 +31,7 @@ const NewsFeedCaption = props => {
       } = newsFeed;
       const {
         default: moment
-      } = await import(/* webpackPrefetch: true, webpackChunkName: 'moment-mini' */'moment-mini');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'moment-mini' */'moment-mini/moment.min');
       const {
         DATE_MOMENT_FORMAT,
         NEWSFEED_DATE_MOMENT_FORMAT,

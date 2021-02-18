@@ -5,7 +5,7 @@ import React, {
 import {
   withRouter
 } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga/dist/esm/core';
 
 const GoogleAnalytics = props => {
   const [state, setState] = useState({
@@ -70,12 +70,20 @@ const GoogleAnalytics = props => {
   return (<></>);
 };
 const sendEvent = (category, action, label = null, value = null) => {
-  const args = {
+  const params = {
     category,
     action,
     label,
     value
   };
+  const args = {};
+  Object.keys(params).map(key => {
+    const param = params[key];
+    if (param) {
+      args[key] = param.toString().trim();
+    }
+    return null;
+  });
   ReactGA.event(args);
   console.log('ReactGA.event: ', JSON.stringify(args, null, 2));
 };
