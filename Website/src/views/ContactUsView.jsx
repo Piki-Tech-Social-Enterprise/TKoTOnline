@@ -113,7 +113,7 @@ const ContactUsView = props => {
     if (displayMessage) {
       const {
         default: swal
-      } = await import(/* webpackPrefetch: true, webpackChunkName: 'sweetalert2' */'sweetalert2/dist/sweetalert2');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'sweetalert2' */'sweetalert2/dist/sweetalert2.all');
       swal.fire({
         icon: displayIcon,
         title: displayTitle,
