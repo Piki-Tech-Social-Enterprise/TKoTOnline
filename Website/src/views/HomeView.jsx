@@ -109,7 +109,7 @@ const HomeView = props => {
           dbTableName: 'settings',
           fieldNames: [
             'homePageAboutDescription',
-            'newsSectionDescription'
+            // 'newsSectionDescription'
           ]
         },
         dbIwiMembers: {
@@ -120,7 +120,7 @@ const HomeView = props => {
             'iwiMemberImageURL',
             'iwiMemberName',
             'iwiMemberURL',
-            'iwiMemberRegistrationLink'
+            // 'iwiMemberRegistrationLink'
           ]
         },
         // dbCovidList: {
