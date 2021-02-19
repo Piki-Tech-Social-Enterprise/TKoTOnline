@@ -56,37 +56,40 @@ const EventsSection = props => {
       };
       const {
         isHomePage,
-        dbEvents: dbEventsPassedIn
+        dbEvents: dbEventsPassedIn,
+        doNotRetrieveData
       } = props;
-      const dbEvents = dbEventsPassedIn
-        ? dbEventsPassedIn
-        : await getDbEvents(isHomePage
-          ? 'isFeatured'
-          : 'active');
-      const now = new Date();
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbEvents: dbEvents.filter(dbEvent => {
-          const {
-            startDateTime,
-            endDateTime
-          } = dbEvent;
-          if (isDate(startDateTime)) {
-            const startDateTimeAsMoment = toMoment(startDateTime);
-            if (startDateTimeAsMoment.isAfter(now)) {
-              return false;
+      if (!doNotRetrieveData) {
+        const dbEvents = dbEventsPassedIn
+          ? dbEventsPassedIn
+          : await getDbEvents(isHomePage
+            ? 'isFeatured'
+            : 'active');
+        const now = new Date();
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbEvents: dbEvents.filter(dbEvent => {
+            const {
+              startDateTime,
+              endDateTime
+            } = dbEvent;
+            if (isDate(startDateTime)) {
+              const startDateTimeAsMoment = toMoment(startDateTime);
+              if (startDateTimeAsMoment.isAfter(now)) {
+                return false;
+              }
             }
-          }
-          if (isDate(endDateTime)) {
-            const endDateTimeAsMoment = toMoment(endDateTime);
-            if (endDateTimeAsMoment.isBefore(now)) {
-              return false;
+            if (isDate(endDateTime)) {
+              const endDateTimeAsMoment = toMoment(endDateTime);
+              if (endDateTimeAsMoment.isBefore(now)) {
+                return false;
+              }
             }
-          }
-          return true;
-        })
-      }));
+            return true;
+          })
+        }));
+      }
     };
     if (isLoading) {
       getEvents();

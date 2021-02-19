@@ -51,19 +51,22 @@ const ProjectsSection = props => {
       };
       const {
         isHomePage,
-        dbProjects: dbProjectsPassedIn
+        dbProjects: dbProjectsPassedIn,
+        doNotRetrieveData
       } = props;
-      const dbProjects = dbProjectsPassedIn
-        ? dbProjectsPassedIn
-        : await getDbProjects(isHomePage
-          ? 'isFeatured'
-          : 'active');
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbProjects
-      }));
-    };
+      if (!doNotRetrieveData) {
+        const dbProjects = dbProjectsPassedIn
+          ? dbProjectsPassedIn
+          : await getDbProjects(isHomePage
+            ? 'isFeatured'
+            : 'active');
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbProjects
+        }));
+      };
+    }
     if (isLoading) {
       getProjects();
     }

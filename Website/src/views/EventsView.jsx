@@ -6,11 +6,13 @@ import {
   withFirebase
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  withSuspense
+} from 'components/App/Utilities';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
-const EventsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-events-section' */'components/Sections/Events'));
+const HomeNavbar = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar')), 'app-home-navbar');
+const HomeFooter = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter')), 'components/Footers/HomeFooter');
+const EventsSection = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-events-section' */'components/Sections/Events')), 'app-events-section');
 const EventsView = () => {
   const [state, setState] = useState({
     isLoading: true
@@ -42,21 +44,15 @@ const EventsView = () => {
   }, [isLoading]);
   return (
     <>
-      {
-        isLoading
-          ? <PageLoadingSpinner caller="EventsView" />
-          : <>
-            <HomeNavbar
-              initalTransparent
-              colorOnScrollValue={25}
-            />
-            <EventsSection
-              containerClassName="mt-5"
-              titleClassName="text-dark"
-            />
-            <HomeFooter />
-          </>
-      }
+      <HomeNavbar
+        initalTransparent
+        colorOnScrollValue={25}
+      />
+      <EventsSection
+        containerClassName="mt-5"
+        titleClassName="text-dark"
+      />
+      <HomeFooter />
     </>
   );
 };

@@ -6,11 +6,13 @@ import {
   withFirebase
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  withSuspense
+} from 'components/App/Utilities';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
-const EconomicDevelopmentsSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-economic-development-section' */'components/Sections/EconomicDevelopments'));
+const HomeNavbar = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar')), 'app-home-navbar');
+const HomeFooter = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter')), 'components/Footers/HomeFooter');
+const EconomicDevelopmentsSection = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-economic-development-section' */'components/Sections/EconomicDevelopments')), 'app-economic-development-section');
 const EconomicDevelopmentsView = () => {
   const [state, setState] = useState({
     isLoading: true
@@ -42,18 +44,12 @@ const EconomicDevelopmentsView = () => {
   }, [isLoading]);
   return (
     <>
-      {
-        isLoading
-          ? <PageLoadingSpinner caller="EconomicDevelopmentsView" />
-          : <>
-            <HomeNavbar
-              initalTransparent
-              colorOnScrollValue={25}
-            />
-            <EconomicDevelopmentsSection containerClassName="mt-0 mt-lg-3" showViewTaitokerauEconomicSummit2020SiteButton />
-            <HomeFooter />
-          </>
-      }
+      <HomeNavbar
+        initalTransparent
+        colorOnScrollValue={25}
+      />
+      <EconomicDevelopmentsSection containerClassName="mt-0 mt-lg-3" showViewTaitokerauEconomicSummit2020SiteButton />
+      <HomeFooter />
     </>
   );
 };

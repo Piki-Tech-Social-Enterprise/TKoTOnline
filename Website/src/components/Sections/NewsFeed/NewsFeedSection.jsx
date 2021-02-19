@@ -11,6 +11,9 @@ import {
 } from 'components/App/GoogleAnalytics';
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  withSuspense
+} from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
 const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
@@ -23,7 +26,7 @@ const CardHeader = lazy(async () => await import(/* webpackPrefetch: true, webpa
 const Badge = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-badge' */'reactstrap/es/Badge'));
 const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
-const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption'));
+const NewsFeedCaption = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption')), 'app-newsfeed-caption');
 const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
 const {
   newsFeeds,
@@ -35,8 +38,8 @@ const NewsFeedSection = props => {
     dbNewsFeeds: [],
     availableCategoriesAsArray: [],
     newsSectionDescriptionAsHtml: '',
-    draftToText: () => {},
-    handleBlockTextClick: () => {}
+    draftToText: () => { },
+    handleBlockTextClick: () => { }
   });
   const {
     containerClassName,
@@ -101,48 +104,51 @@ const NewsFeedSection = props => {
       const {
         isTKoTMedia,
         dbNewsFeeds: dbNewsFeedsPassedIn,
-        newsSectionDescription
+        newsSectionDescription,
+        doNotRetrieveData
       } = props;
-      const dbNewsFeeds = dbNewsFeedsPassedIn
-        ? dbNewsFeedsPassedIn
-        : await getNewsFeeds(isTKoTMedia
-          ? 'isTKoTMedia'
-          : 'isFeatured');
-      const filteredDbNewsFeeds = searchCategory
-        ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
-        : dbNewsFeeds;
-      const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds
-        .filter(item =>
-          (!isTKoTMedia && !item.isTKoTMedia) ||
-          (isTKoTMedia && item.isTKoTMedia)
-        );
-      const availableCategories = groupBy(filteredDbNewsFeedsAndEPanui, 'category');
-      const availableCategoriesAsArray = [];
-      Object.keys(availableCategories).map(k => {
-        const categories = k.split(',').map(c => c.trim());
-        categories.map(c => {
-          if (!availableCategoriesAsArray.includes(c)) {
-            availableCategoriesAsArray.push(c);
-          }
+      if (!doNotRetrieveData) {
+        const dbNewsFeeds = Array.isArray(dbNewsFeedsPassedIn) && dbNewsFeedsPassedIn.length > 0
+          ? dbNewsFeedsPassedIn
+          : await getNewsFeeds(isTKoTMedia
+            ? 'isTKoTMedia'
+            : 'isFeatured');
+        const filteredDbNewsFeeds = searchCategory
+          ? dbNewsFeeds.filter(dbnf => dbnf.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
+          : dbNewsFeeds;
+        const filteredDbNewsFeedsAndEPanui = filteredDbNewsFeeds
+          .filter(item =>
+            (!isTKoTMedia && !item.isTKoTMedia) ||
+            (isTKoTMedia && item.isTKoTMedia)
+          );
+        const availableCategories = groupBy(filteredDbNewsFeedsAndEPanui, 'category');
+        const availableCategoriesAsArray = [];
+        Object.keys(availableCategories).map(k => {
+          const categories = k.split(',').map(c => c.trim());
+          categories.map(c => {
+            if (!availableCategoriesAsArray.includes(c)) {
+              availableCategoriesAsArray.push(c);
+            }
+            return null;
+          })
           return null;
-        })
-        return null;
-      });
-      // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
-      sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'desc');
-      const {
-        default: draftToHtml
-      } = await import(/* webpackPrefetch: true, webpackChunkName: 'draftjs-to-html' */'draftjs-to-html');
-      const newsSectionDescriptionAsHtml = draftToHtml(JSON.parse(newsSectionDescription || '{}'));
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
-        availableCategoriesAsArray,
-        newsSectionDescriptionAsHtml,
-        draftToText,
-        handleBlockTextClick
-      }));
+        });
+        // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
+        sortArray(filteredDbNewsFeedsAndEPanui, 'date', 'desc');
+        const {
+          default: draftToHtml
+        } = await import(/* webpackPrefetch: true, webpackChunkName: 'draftjs-to-html' */'draftjs-to-html');
+        const newsSectionDescriptionAsHtml = draftToHtml(JSON.parse(newsSectionDescription || '{}'));
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbNewsFeeds: filteredDbNewsFeedsAndEPanui,
+          availableCategoriesAsArray,
+          newsSectionDescriptionAsHtml,
+          draftToText,
+          handleBlockTextClick
+        }));
+      }
     };
     if (isLoading) {
       retrieveData();

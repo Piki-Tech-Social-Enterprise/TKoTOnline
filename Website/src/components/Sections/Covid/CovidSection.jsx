@@ -10,7 +10,8 @@ import {
   draftToText,
   sortArray,
   handleBlockTextClick,
-  groupBy
+  groupBy,
+  withSuspense
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -29,7 +30,7 @@ const CardHeader = lazy(async () => await import(/* webpackPrefetch: true, webpa
 const Badge = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-badge' */'reactstrap/es/Badge'));
 const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
-const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption'));
+const NewsFeedCaption = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption')), 'app-newsfeed-caption');
 const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
 const {
   covidListPage
@@ -90,36 +91,39 @@ const CovidSection = props => {
       };
       const {
         isHomePage,
-        dbCovidList: dbCovidListPassedIn
+        dbCovidList: dbCovidListPassedIn,
+        doNotRetrieveData
       } = props;
-      const dbCovidList = dbCovidListPassedIn
-        ? dbCovidListPassedIn
-        : await getDbCovidList(isHomePage
-          ? 'isFeatured'
-          : 'active');
-      const filteredDbCovidList = searchCategory
-        ? dbCovidList.filter(dbcv => dbcv.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
-        : dbCovidList;
-      const availableCategories = groupBy(filteredDbCovidList, 'category');
-      const availableCategoriesAsArray = [];
-      Object.keys(availableCategories).map(k => {
-        const categories = k.split(',').map(c => c.trim());
-        categories.map(c => {
-          if (!availableCategoriesAsArray.includes(c)) {
-            availableCategoriesAsArray.push(c);
-          }
+      if (!doNotRetrieveData) {
+        const dbCovidList = Array.isArray(dbCovidListPassedIn) && dbCovidListPassedIn.length > 0
+          ? dbCovidListPassedIn
+          : await getDbCovidList(isHomePage
+            ? 'isFeatured'
+            : 'active');
+        const filteredDbCovidList = searchCategory
+          ? dbCovidList.filter(dbcv => dbcv.category.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1)
+          : dbCovidList;
+        const availableCategories = groupBy(filteredDbCovidList, 'category');
+        const availableCategoriesAsArray = [];
+        Object.keys(availableCategories).map(k => {
+          const categories = k.split(',').map(c => c.trim());
+          categories.map(c => {
+            if (!availableCategoriesAsArray.includes(c)) {
+              availableCategoriesAsArray.push(c);
+            }
+            return null;
+          })
           return null;
-        })
-        return null;
-      });
-      // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
-      sortArray(filteredDbCovidList, 'date', 'desc');
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbCovidList: filteredDbCovidList,
-        availableCategoriesAsArray
-      }));
+        });
+        // console.log(`availableCategoriesAsArray: ${JSON.stringify(availableCategoriesAsArray, null, 2)}`);
+        sortArray(filteredDbCovidList, 'date', 'desc');
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbCovidList: filteredDbCovidList,
+          availableCategoriesAsArray
+        }));
+      }
     };
     if (isLoading) {
       getCovidList();

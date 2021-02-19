@@ -1,5 +1,6 @@
 import {
-  useEffect
+  useEffect,
+  Suspense
 } from 'react';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment-mini/moment.min';
@@ -7,6 +8,8 @@ import Routes from 'components/Routes/routes';
 import {
   dirname
 } from 'path';
+import PageLoadingSpinner from 'components/App/PageLoadingSpinner';
+import LoadingSpinner from 'components/App/LoadingSpinner';
 
 const useWindowEvent = (event, callback) => {
   useEffect(() => {
@@ -67,7 +70,7 @@ const defaultPageSetup = async (init = defaultInit) => {
     classList: bodyClassNames
   } = body;
   const navOpenClassName = 'nav-open';
-  const initIsBoolean = isBoolean(init, true);
+  const initIsBoolean = isBoolean(init);
   const {
     isLoading,
     classNames
@@ -79,16 +82,16 @@ const defaultPageSetup = async (init = defaultInit) => {
     document.documentElement.classList.remove(navOpenClassName);
     window.scrollTo(0, 0);
     body.scrollTop = 0;
-  } else {
-    if (bodyClassNames) {
-      const {
-        remove
-      } = bodyClassNames;
-      if (typeof remove === 'function') {
-        remove(indexPageClassName);
-        remove(sidebarCollapseClassName);
-      }
-    }
+    // } else {
+    //   if (bodyClassNames) {
+    //     const {
+    //       remove
+    //     } = bodyClassNames;
+    //     if (typeof remove === 'function') {
+    //       remove(indexPageClassName);
+    //       remove(sidebarCollapseClassName);
+    //     }
+    //   }
   }
 };
 const isNumber = value => value && !isNaN(value);
@@ -171,21 +174,21 @@ const getNavItems = isHomePage => {
     home,
     iwiMembersAnchor,
     aboutUs,
-    // newsFeedAnchor,
+    newsFeedAnchor,
     newsFeeds,
-    // eventsAnchor,
+    eventsAnchor,
     events,
-    // projectsAnchor,
+    projectsAnchor,
     projectsPage,
-    // resourcesAnchor,
+    resourcesAnchor,
     resourcesPage,
     contactUs,
     facebookLinks,
-    // economicDevelopmentsAnchor,
+    economicDevelopmentsAnchor,
     economicDevelopmentsPage,
-    // mediaListAnchor,
+    mediaListAnchor,
     mediaListPage,
-    // covidListAnchor,
+    covidListAnchor,
     covidListPage
   } = Routes;
   const navItems = [{
@@ -209,54 +212,54 @@ const getNavItems = isHomePage => {
     group: 'left'
   }, {
     id: `covidListNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? covidListAnchor : covidListPage,
-    route: covidListPage,
+    route: isHomePage ? covidListAnchor : covidListPage,
+    // route: covidListPage,
     name: 'Covid',
     tooltip: 'Kowheori',
     group: 'left'
   }, {
     id: `newsFeedNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? newsFeedAnchor : newsFeeds,
-    route: newsFeeds,
+    route: isHomePage ? newsFeedAnchor : newsFeeds,
+    // route: newsFeeds,
     name: 'News',
     tooltip: 'He Karere',
     group: 'right',
     menu: 'News'
   }, {
     id: `mediaListNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? mediaListAnchor : mediaListPage,
-    route: mediaListPage,
+    route: isHomePage ? mediaListAnchor : mediaListPage,
+    // route: mediaListPage,
     name: 'Media',
     tooltip: 'Toirau',
     group: 'right',
     menu: 'News'
   }, {
     id: `resourcesNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? resourcesAnchor : resourcesPage,
-    route: resourcesPage,
+    route: isHomePage ? resourcesAnchor : resourcesPage,
+    // route: resourcesPage,
     name: 'Resources',
     tooltip: 'Rauemi Ipurangi',
     group: 'right',
     menu: 'Resources'
   }, {
     id: `economicDevelopmentsNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
-    route: economicDevelopmentsPage,
+    route: isHomePage ? economicDevelopmentsAnchor : economicDevelopmentsPage,
+    // route: economicDevelopmentsPage,
     name: 'Economic Development',
     tooltip: 'Whanaketanga Ohaoha',
     group: 'right',
     menu: 'Resources'
   }, {
     id: `projectsNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? projectsAnchor : projectsPage,
-    route: projectsPage,
+    route: isHomePage ? projectsAnchor : projectsPage,
+    // route: projectsPage,
     name: 'Projects',
     tooltip: 'Kaupapa',
     group: 'right'
   }, {
     id: `eventsNavItem${(!isHomePage && '_alt') || ''}`,
-    // route: isHomePage ? eventsAnchor : events,
-    route: events,
+    route: isHomePage ? eventsAnchor : events,
+    // route: events,
     name: 'Wānanga/Events',
     tooltip: 'Wānanga',
     group: 'right'
@@ -364,6 +367,13 @@ const refactorObject = async rest => {
   }));
   return refactoredObject;
 };
+const withSuspense = (Component, caller, usePageLoadingSpinner = true) => props => (
+  <Suspense fallback={
+    usePageLoadingSpinner
+      ? <PageLoadingSpinner caller={caller} />
+      : <LoadingSpinner caller={caller} />
+  }><Component {...props} /></Suspense>
+);
 
 export {
   useWindowEvent,
@@ -403,5 +413,6 @@ export {
   getImageURLToUse,
   fromCamelcaseToTitlecase,
   Nz,
-  refactorObject
+  refactorObject,
+  withSuspense
 };

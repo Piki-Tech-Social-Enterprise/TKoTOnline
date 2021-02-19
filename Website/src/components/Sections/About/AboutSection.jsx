@@ -62,7 +62,6 @@ const AboutSection = props => {
   return (
     <>
       <div className="tkot-section" style={{
-        height: '100%',
         minHeight: '30rem'
       }}>
         <a id="Home" href="#TKoTOnline" className="tkot-anchor">&nbsp;</a>
@@ -77,7 +76,7 @@ const AboutSection = props => {
                 <Container className="py-5 text-center">
                   <Row>
                     <Col xs={12} sm={6}>
-                      <img alt="..." className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkot20pcImage} width="300" height="267" />
+                      <img alt="Te Kaha o Taonui" className="hero-image-tkot-logo pt-2 my-1 lazyload" data-src={tkotImage} src={tkot20pcImage} width="300" height="267" />
                     </Col>
                     <Col xs={12} sm={6} className="text-left text-white h5 pt-5 pt-sm-0 my-auto">
                       <div className="my-3">

@@ -87,7 +87,9 @@ const HomeNavbar = props => {
       retrieveData();
     }
     return () => {
-      !isLoading && window.removeEventListener(scrollEventName, updateNavbarColor);
+      if (!isLoading) {
+        window.removeEventListener(scrollEventName, updateNavbarColor);
+      }
     }
   }, [props, isLoading]);
   return (
@@ -112,7 +114,7 @@ const HomeNavbar = props => {
                 </div>
                 <Collapse className="justify-content-center" isOpen={state.collapseOpen} navbar>
                   <a href="/">
-                    <img alt="..." className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlackUrl} src={tkotLogoOnlyBlackUrl} width="32" height="62" />
+                    <img alt="Te Kaha o Taonui" className="n-logo mx-3 d-none d-lg-inline lazyload" data-src={tkotLogoOnlyBlackUrl} src={tkotLogoOnlyBlackUrl} width="32" height="62" />
                   </a>
                   <Nav navbar>
                     <NavItems

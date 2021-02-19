@@ -6,6 +6,9 @@ import {
   withFirebase
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  withSuspense
+} from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
 const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
@@ -18,8 +21,8 @@ const Label = lazy(async () => await import(/* webpackPrefetch: true, webpackChu
 const Input = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-input' */'reactstrap/es/Input'));
 const Button = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-button' */'reactstrap/es/Button'));
 const CustomInput = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-custominput' */'reactstrap/es/CustomInput'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
+const HomeNavbar = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar')), 'app-home-navbar');
+const HomeFooter = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter')), 'components/Footers/HomeFooter');
 const INITIAL_STATE = {
   isLoading: true,
   contact: {

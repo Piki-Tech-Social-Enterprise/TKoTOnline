@@ -43,13 +43,13 @@ const FirebaseImage = props => {
   });
   const {
     className,
+    width,
+    height
   } = props;
   const {
     isLoading,
     alt,
-    src,
-    width,
-    height
+    src
   } = state;
   useEffect(() => {
     const retrieveData = async () => {
@@ -94,9 +94,7 @@ const FirebaseImage = props => {
         ...s,
         isLoading: false,
         alt: alt,
-        src: imageSrc,
-        width,
-        height
+        src: imageSrc
       }));
     };
     if (isLoading) {

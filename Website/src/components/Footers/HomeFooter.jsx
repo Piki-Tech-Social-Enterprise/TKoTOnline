@@ -213,7 +213,7 @@ const HomeFooter = props => {
                 <Row className="footer-content px-0 mx-0">
                   <Col xs={12} lg={3} className="footer-logo text-left text-lg-right">
                     <a href="/">
-                      <img alt="..." className="footer-tkot-logo py-3 lazyload" width="289" height="164" data-src={tkotLogo} src={tkotLogo} />
+                      <img alt="Te Kaha o Taonui" className="footer-tkot-logo py-3 lazyload" width="289" height="164" data-src={tkotLogo} src={tkotLogo} />
                     </a>
                   </Col>
                   <Col xs={12} lg={3}>

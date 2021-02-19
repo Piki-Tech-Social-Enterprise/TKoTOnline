@@ -10,14 +10,12 @@ import {
 import {
   draftToText,
   useWindowEvent,
-  fromCamelcaseToTitlecase
+  fromCamelcaseToTitlecase,
+  withSuspense
 } from 'components/App/Utilities';
 import {
   sendEvent
 } from 'components/App/GoogleAnalytics';
-import {
-  IwiChairsSection
-} from 'components/Sections/IwiMembers';
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 
@@ -27,14 +25,15 @@ const Col = lazy(async () => await import(/* webpackPrefetch: true, webpackChunk
 const {
   aboutUs
 } = Routes;
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
-const TKoTHelmet = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-tkot-helmet' */'components/App/TKoTHelmet'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
-const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
+const TKoTHelmet = withSuspense(lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-tkot-helmet' */'components/App/TKoTHelmet')), 'app-tkot-helmet');
+const HomeNavbar = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar')), 'app-home-navbar');
+const IwiChairsSection = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-iwi-chairs-section' */'components/Sections/IwiMembers/IwiChairsSection')), );
+const HomeFooter = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter')), 'components/Footers/HomeFooter');
+const FirebaseImage = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage')), 'app-firebase-image');
 const AboutUsView = props => {
   const [state, setState] = useState({
     isLoading: true,
+    settings: {},
     aboutPageDescriptionAsHtml: '',
     aboutPageTKoTBackOfficeStructureDescriptionAsHtml: '',
     aboutPageExtraDescriptionAsHtml: ''
@@ -124,41 +123,36 @@ const AboutUsView = props => {
           tkotLogoOnlyBlackUrl
         ]}
       />
-      {
-        isLoading
-          ? <PageLoadingSpinner caller="AboutUsView" />
-          : <>
-            <HomeNavbar
-              initalTransparent
-              colorOnScrollValue={25}
+      <HomeNavbar
+        initalTransparent
+        colorOnScrollValue={25}
+      />
+      <Container className="p-5 mt-5">
+        <Row>
+          <Col className="px-0 mt-5">
+            <h3 className="text-uppercase text-center">About Us</h3>
+            <iframe
+              title="TKoT"
+              width="100%"
+              height="320"
+              src={settings.homePageVideoSourceUrl}
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              ref={iframeRefCallback}
+              className="lazyload"
             />
-            <Container className="p-5 mt-5">
-              <Row>
-                <Col className="px-0 mt-5">
-                  <h3 className="text-uppercase text-center">About Us</h3>
-                  {
-                    settings.homePageVideoSourceUrl
-                      ? <iframe
-                        title="TKoT"
-                        width="100%"
-                        height="320"
-                        src={settings.homePageVideoSourceUrl}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        ref={iframeRefCallback}
-                        className="lazyload"
-                      />
-                      : null
-                  }
-                  <div
-                    dangerouslySetInnerHTML={{ __html: aboutPageDescriptionAsHtml }}
-                  />
-                  <IwiChairsSection />
-                  <div
-                    className="mt-5 pt-5"
-                    dangerouslySetInnerHTML={{ __html: aboutPageTKoTBackOfficeStructureDescriptionAsHtml }}
-                  />
+            <div
+              dangerouslySetInnerHTML={{ __html: aboutPageDescriptionAsHtml }}
+            />
+            <IwiChairsSection />
+            <div
+              className="mt-5 pt-5"
+              dangerouslySetInnerHTML={{ __html: aboutPageTKoTBackOfficeStructureDescriptionAsHtml }}
+            />
+            {
+              settings.aboutPageTKoTBackOfficeStructureImageUrl
+                ? <>
                   <FirebaseImage
                     className="my-3 w-100"
                     imageURL={settings.aboutPageTKoTBackOfficeStructureImageUrl}
@@ -168,15 +162,16 @@ const AboutUsView = props => {
                     loadingIconSize="lg"
                     imageResize="lg"
                   />
-                  <div
-                    dangerouslySetInnerHTML={{ __html: aboutPageExtraDescriptionAsHtml }}
-                  />
-                </Col>
-              </Row>
-            </Container>
-            <HomeFooter />
-          </>
-      }
+                </>
+                : null
+            }
+            <div
+              dangerouslySetInnerHTML={{ __html: aboutPageExtraDescriptionAsHtml }}
+            />
+          </Col>
+        </Row>
+      </Container>
+      <HomeFooter />
     </>
   );
 };

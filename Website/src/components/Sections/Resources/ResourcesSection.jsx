@@ -55,38 +55,41 @@ const ResourcesSection = props => {
       const {
         firebase,
         isHomePage,
-        dbResources: dbResourcesPassedIn
+        dbResources: dbResourcesPassedIn,
+        doNotRetrieveData
       } = props;
-      const {
-        storageRepository
-      } = firebase;
-      const {
-        getStorageFileDownloadURL
-      } = storageRepository;
-      const dbResources = dbResourcesPassedIn
-        ? dbResourcesPassedIn
-        : await getDbResources(isHomePage
-          ? 'isFeatured'
-          : 'active');
-      const dbCategorisedResources = {};
-      await Promise.all(dbResources.map(async dbResource => {
+      if (!doNotRetrieveData) {
         const {
-          resourceUrl,
-          category
-        } = dbResource;
-        const dbCategorisedResource = (dbCategorisedResources[category] || []);
-        dbResource.resourceDownloadUrl = resourceUrl.startsWith('/resources')
-          ? await getStorageFileDownloadURL(resourceUrl)
-          : resourceUrl;
-        dbCategorisedResource.push(dbResource);
-        dbCategorisedResources[category] = dbCategorisedResource;
-        return null;
-      }));
-      setState(s => ({
-        ...s,
-        isLoading: false,
-        dbCategorisedResources
-      }));
+          storageRepository
+        } = firebase;
+        const {
+          getStorageFileDownloadURL
+        } = storageRepository;
+        const dbResources = Array.isArray(dbResourcesPassedIn) && dbResourcesPassedIn.length > 0
+          ? dbResourcesPassedIn
+          : await getDbResources(isHomePage
+            ? 'isFeatured'
+            : 'active');
+        const dbCategorisedResources = {};
+        await Promise.all(dbResources.map(async dbResource => {
+          const {
+            resourceUrl,
+            category
+          } = dbResource;
+          const dbCategorisedResource = (dbCategorisedResources[category] || []);
+          dbResource.resourceDownloadUrl = resourceUrl.startsWith('/resources')
+            ? await getStorageFileDownloadURL(resourceUrl)
+            : resourceUrl;
+          dbCategorisedResource.push(dbResource);
+          dbCategorisedResources[category] = dbCategorisedResource;
+          return null;
+        }));
+        setState(s => ({
+          ...s,
+          isLoading: false,
+          dbCategorisedResources
+        }));
+      }
     };
     if (isLoading) {
       getResources();

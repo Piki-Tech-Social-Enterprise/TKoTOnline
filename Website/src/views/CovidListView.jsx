@@ -7,11 +7,13 @@ import {
 } from 'components/Firebase';
 import Routes from 'components/Routes/routes';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  withSuspense
+} from 'components/App/Utilities';
 
-const PageLoadingSpinner = lazy(async () => await import(/* webpackPreload: true, webpackChunkName: 'app-page-loading-spinner' */'components/App/PageLoadingSpinner'));
-const HomeNavbar = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar'));
-const HomeFooter = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter'));
-const CovidSection = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-covid-section' */'components/Sections/Covid'));
+const HomeNavbar = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-navbar' */'components/Navbars/HomeNavbar')), 'app-home-navbar');
+const HomeFooter = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-home-footer' */'components/Footers/HomeFooter')), 'components/Footers/HomeFooter');
+const CovidSection = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-covid-section' */'components/Sections/Covid')), 'app-covid-section');
 const {
   // covidList,
   mediaListPage
@@ -61,22 +63,17 @@ const CovidListView = props => {
   }, [props, isLoading]);
   return (
     <>
-      {
-        isLoading
-          ? <PageLoadingSpinner caller="CovidListView" />
-          : <>
-            <HomeNavbar
-              initalTransparent
-              colorOnScrollValue={25}
-            />
-            <CovidSection
-              containerClassName="mt-5"
-              isTKoTMedia={isTKoTMedia}
-              dbCovidList={dbCovidList}
-            />
-            <HomeFooter />
-          </>
-      }
+      <HomeNavbar
+        initalTransparent
+        colorOnScrollValue={25}
+      />
+      <CovidSection
+        containerClassName="mt-5"
+        isTKoTMedia={isTKoTMedia}
+        dbCovidList={dbCovidList}
+        doNotRetrieveData={dbCovidList.length === 0}
+      />
+      <HomeFooter />
     </>
   );
 };

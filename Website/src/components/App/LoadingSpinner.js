@@ -44,8 +44,8 @@ LoadingSpinner.propTypes = {
   delayMs: PropTypes.number
 };
 LoadingSpinner.defaultProps = {
-  outerClassName: 'my-5 p-5',
-  innerClassName: 'my-5 p-5',
+  outerClassName: 'mx-auto my-5 p-5',
+  innerClassName: 'mx-auto my-5 p-5',
   iconClassName: 'fas tkot-logo fa-spin',
   delayMs: 0
 };
