@@ -1,3 +1,67 @@
+const restApiDatabase = () => {
+  const restApiDatabaseDataSnapshot = async path => {
+    const {
+      REACT_APP_FIREBASE_PROJECT_ID
+    } = process.env;
+    const fullPath = `https://${REACT_APP_FIREBASE_PROJECT_ID}.firebaseio.com/${path}`;
+    console.log(`restApiDatabaseDataSnapshot::fullPath: ${fullPath}`);
+    const _self = {
+      response: await fetch(fullPath),
+      val: async () => {
+        const {
+          response
+        } = _self;
+        return await response.json();
+      }
+    };
+    return _self;
+  };
+  const restApiDatabaseReference = path => {
+    const _self = {
+      basePath: path,
+      orderByChild: path => {
+        _self._orderByChildPath = path;
+        return _self;
+      },
+      equalTo: path => {
+        _self._equalToPath = path;
+        return _self;
+      },
+      limitToFirst: limit => {
+        _self._limitToFirst = limit;
+        return _self;
+      },
+      once: async eventType => {
+        const newPath = _buildPath();
+        return await restApiDatabaseDataSnapshot(newPath);
+      }
+    };
+    const _buildPath = () => {
+      const generateParam = (key, value, isFirstParam = false) => {
+        const param = `${isFirstParam ? '?' : '&'}${key}=${value}`;
+        return param;
+      };
+      let newPath = `${_self.basePath}.json`;
+      if (_self._orderByChildPath) {
+        newPath = `${newPath}${generateParam('orderBy', `"${encodeURIComponent(_self._orderByChildPath)}"`, Boolean(newPath.indexOf('?') === -1))}`;
+      }
+      if (_self._equalToPath) {
+        newPath = `${newPath}${generateParam('equalTo', `${encodeURIComponent(_self._equalToPath)}`, Boolean(newPath.indexOf('?') === -1))}`;
+      }
+      if (_self._limitToFirst) {
+        newPath = `${newPath}${generateParam('limitToFirst', _self._limitToFirst, Boolean(newPath.indexOf('?') === -1))}`;
+      }
+      return newPath;
+    };
+    return _self;
+  };
+  const _self = {
+    ref: path => {
+      return restApiDatabaseReference(path);
+    }
+  };
+  return _self;
+};
 const dbTables = {
   contacts: {
     name: 'contacts',
@@ -51,7 +115,7 @@ const dbTables = {
   }
 };
 const initDbRepository = async initOptions => {
-  await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
+  // await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
   const {
     isBoolean,
     isNullOrEmpty,
@@ -61,10 +125,14 @@ const initDbRepository = async initOptions => {
     initialisedFirebaseApp,
     dbTableName: dbTableNamePassedIn
   } = initOptions;
-  let _dbTableName = null;
-  const database = initialisedFirebaseApp.database();
+  let _dbTableName = dbTableNamePassedIn;
+  // const database = initialisedFirebaseApp.database();
+  const database = restApiDatabase();
+  const _getDbItems = dbItemId => {
+    return database.ref(`${_dbTableName}${!isNullOrEmpty(dbItemId) ? `/${dbItemId}` : ''}`);
+  };
   const getDbItems = () => {
-    return database.ref(_dbTableName || dbTableNamePassedIn);
+    return _getDbItems();
   };
   const getDbItemWithFieldNames = async (dbItem, fieldNames) => {
     if (fieldNames.length === 0) {
@@ -97,7 +165,7 @@ const initDbRepository = async initOptions => {
     return dbItemsAsArray;
   };
   const getDbItem = dbItemId => {
-    return database.ref(`${_dbTableName || dbTableNamePassedIn}/${dbItemId}`);
+    return _getDbItems(dbItemId);
   };
   const getDbItemValue = async (dbItemId, fieldNames = []) => {
     const existingDbItem = getDbItem(dbItemId);
@@ -110,7 +178,7 @@ const initDbRepository = async initOptions => {
     await Promise.all(Object.keys(queryItems).map(async key => {
       const queryItem = queryItems[key];
       const {
-        dbTableName,
+        dbTableName: multipleDbItemsTableName,
         includeInactive: includeInactiveAsString,
         childName,
         childValue: childValueAsString,
@@ -129,21 +197,20 @@ const initDbRepository = async initOptions => {
           .filter(fieldName =>
             !isNullOrEmpty(fieldName)
           );
-      _dbTableName = dbTableName;
+      _dbTableName = multipleDbItemsTableName;
       const dbItemsAsArray = await getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
       queryItemResponses[key] = dbItemsAsArray;
-      _dbTableName = null;
+      _dbTableName = dbTableNamePassedIn;
       return null;
     }));
     return queryItemResponses;
   };
   const saveDbItem = async item => {
-    const dbTableName = _dbTableName || dbTableNamePassedIn;
     const {
       active,
       created,
       createdBy,
-      [dbTables[dbTableName].primaryKeyName]: primaryKey,
+      [dbTables[_dbTableName].primaryKeyName]: primaryKey,
       updated,
       updatedBy,
       version,
@@ -154,27 +221,27 @@ const initDbRepository = async initOptions => {
     const nowAsString = (new Date()).toString();
     const preparedItem = {
       active: active || (isBoolean(active) ? false : undefined),
-      [dbTables[dbTableName].primaryKeyName]: primaryKey,
+      [dbTables[_dbTableName].primaryKeyName]: primaryKey,
       updated: updated || nowAsString,
       updatedBy: updatedBy || '',
       version: parseInt(version) || 1
     };
     let errorMessage = null;
-    let existingDbItem = getDbItem(dbTableName, primaryKey);
+    let existingDbItem = getDbItem(_dbTableName, primaryKey);
     let dbItemSnapshot = null;
     let dbItem = null;
     if (isNew) {
       preparedItem.created = created || nowAsString;
       preparedItem.createdBy = createdBy || '';
       if (primaryKey) {
-        preparedItem[dbTables[dbTableName].primaryKeyName] = primaryKey;
+        preparedItem[dbTables[_dbTableName].primaryKeyName] = primaryKey;
         existingDbItem.set({
           ...preparedItem,
           ...refactoredRest
         });
       } else {
         dbItemSnapshot = await existingDbItem.push();
-        preparedItem[dbTables[dbTableName].primaryKeyName] = await dbItemSnapshot.getKey();
+        preparedItem[dbTables[_dbTableName].primaryKeyName] = await dbItemSnapshot.getKey();
         dbItemSnapshot.set({
           ...preparedItem,
           ...refactoredRest
@@ -188,7 +255,7 @@ const initDbRepository = async initOptions => {
           active: dbItemActive,
           created: dbItemCreated,
           createdBy: dbItemCreatedBy,
-          [dbTables[dbTableName].primaryKeyName]: dbItemPrimaryKey,
+          [dbTables[_dbTableName].primaryKeyName]: dbItemPrimaryKey,
           updated: dbItemUpdated,
           updatedBy: dbItemUpdatedBy,
           version: dbItemVersion,
@@ -198,7 +265,7 @@ const initDbRepository = async initOptions => {
           const refactoredDbItemRest = await refactorObject(dbItemRest);
           preparedItem.version = (parseInt(version) || 0) + 1;
           existingDbItem.set({
-            [dbTables[dbTableName].primaryKeyName]: preparedItem[dbTables[dbTableName].primaryKeyName] || dbItemPrimaryKey || undefined,
+            [dbTables[_dbTableName].primaryKeyName]: preparedItem[dbTables[_dbTableName].primaryKeyName] || dbItemPrimaryKey || undefined,
             active: preparedItem.active,
             created: dbItemCreated,
             createdBy: dbItemCreatedBy,
@@ -216,10 +283,10 @@ const initDbRepository = async initOptions => {
       }
     }
     if (errorMessage) {
-      console.log(`Save Db ${dbTables[dbTableName].objectSingularName} Error: ${errorMessage}`);
+      console.log(`Save Db ${dbTables[_dbTableName].objectSingularName} Error: ${errorMessage}`);
       throw new Error(errorMessage);
     }
-    return preparedItem[dbTables[dbTableName].primaryKeyName];
+    return preparedItem[dbTables[_dbTableName].primaryKeyName];
   };
   return {
     initialisedFirebaseApp,

@@ -10,8 +10,7 @@ import {
   draftToText,
   sortArray,
   handleBlockTextClick,
-  groupBy,
-  withSuspense
+  groupBy
 } from 'components/App/Utilities';
 import {
   sendEvent
@@ -30,7 +29,7 @@ const CardHeader = lazy(async () => await import(/* webpackPrefetch: true, webpa
 const Badge = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-badge' */'reactstrap/es/Badge'));
 const LoadingSpinner = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-loading-spinner' */'components/App/LoadingSpinner'));
 const NoDataToDisplayDiv = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-no-data-to-display-div' */'components/App/NoDataToDisplayDiv'));
-const NewsFeedCaption = withSuspense(lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption')), 'app-newsfeed-caption');
+const NewsFeedCaption = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-newsfeed-caption' */'components/App/NewsFeedCaption'));
 const FirebaseImage = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-image' */'components/App/FirebaseImage'));
 const {
   covidListPage

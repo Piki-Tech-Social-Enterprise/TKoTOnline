@@ -115,7 +115,8 @@ const HomeView = props => {
           fieldNames: [
             'homePageAboutDescription',
             'newsSectionDescription'
-          ]
+          ],
+          topLimit: 1
         },
         dbIwiMembers: {
           dbTableName: 'iwiMembers',
