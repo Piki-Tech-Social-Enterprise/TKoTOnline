@@ -7,7 +7,8 @@ import {
 } from 'components/Firebase';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
 import {
-  withSuspense
+  withSuspense,
+  handleFieldChange
 } from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
@@ -43,22 +44,7 @@ const ContactUsView = props => {
     contact,
     isSubmitting
   } = state;
-  const handleChange = async e => {
-    const {
-      name,
-      value,
-      checked
-    } = e.target;
-    const checkedNames = ['subscribed'];
-    const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    console.log(`name: ${name}, value: ${value}`);
-    setState(s => ({
-      ...s,
-      [name]: useChecked
-        ? checked
-        : value
-    }));
-  };
+  const handleChange = e => handleFieldChange(e, setState, ['contact.subscribed'].findIndex(name => name === e.target.name));
   const handleGotoParent = () => {
     props.history.push('/');
   };
@@ -89,6 +75,7 @@ const ContactUsView = props => {
         displayMessage = 'Email is invalid.';
       } else {
         await firebase.contactRepository.saveDbContact({
+          isNew: true,
           active: true,
           created: now.toString(),
           createdBy: email,
@@ -159,24 +146,24 @@ const ContactUsView = props => {
                       <Form noValidate onSubmit={handleSubmit}>
                         <FormGroup>
                           <Label>First Name</Label>
-                          <Input placeholder="First Name" name="firstName" value={contact.firstName} onChange={handleChange} type="text" />
+                          <Input placeholder="First Name" name="contact.firstName" value={contact.firstName} onChange={handleChange} type="text" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Last Name</Label>
-                          <Input placeholder="Last Name" name="lastName" value={contact.lastName} onChange={handleChange} type="text" />
+                          <Input placeholder="Last Name" name="contact.lastName" value={contact.lastName} onChange={handleChange} type="text" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Email</Label>
-                          <Input placeholder="Email" name="email" value={contact.email} onChange={handleChange} type="email" />
+                          <Input placeholder="Email" name="contact.email" value={contact.email} onChange={handleChange} type="email" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Message</Label>
-                          <Input placeholder="Message" name="message" value={contact.message} onChange={handleChange} type="textarea" className="mh-100" rows={5} />
+                          <Input placeholder="Message" name="contact.message" value={contact.message} onChange={handleChange} type="textarea" className="mh-100" rows={5} />
                         </FormGroup>
                         <FormGroup>
                           <CustomInput
                             label="Sign up to our newsletter to be informed of upcoming wānanga, events and pānui."
-                            name="subscribed"
+                            name="contact.subscribed"
                             checked={contact.subscribed}
                             onChange={handleChange}
                             type="switch"

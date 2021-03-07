@@ -115,7 +115,6 @@ const dbTables = {
   }
 };
 const initDbRepository = async initOptions => {
-  // await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
   const {
     isBoolean,
     isNullOrEmpty,
@@ -123,11 +122,16 @@ const initDbRepository = async initOptions => {
   } = await import(/* webpackPreload: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
   const {
     initialisedFirebaseApp,
-    dbTableName: dbTableNamePassedIn
+    dbTableName: dbTableNamePassedIn,
+    useSDKDatabase
   } = initOptions;
   let _dbTableName = dbTableNamePassedIn;
-  // const database = initialisedFirebaseApp.database();
-  const database = restApiDatabase();
+  if (useSDKDatabase) {
+    await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
+  }
+  const database = useSDKDatabase
+    ? initialisedFirebaseApp.database()
+    : restApiDatabase();
   const _getDbItems = dbItemId => {
     return database.ref(`${_dbTableName}${!isNullOrEmpty(dbItemId) ? `/${dbItemId}` : ''}`);
   };
@@ -227,7 +231,7 @@ const initDbRepository = async initOptions => {
       version: parseInt(version) || 1
     };
     let errorMessage = null;
-    let existingDbItem = getDbItem(_dbTableName, primaryKey);
+    let existingDbItem = getDbItem(primaryKey);
     let dbItemSnapshot = null;
     let dbItem = null;
     if (isNew) {

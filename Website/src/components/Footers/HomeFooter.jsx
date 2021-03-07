@@ -16,6 +16,9 @@ import tkotLogo from 'assets/img/tkot/tkot-logo-white.webp';
 import meaLogo from 'assets/img/tkot/mea-logo-165x165.webp';
 import pikitechLogo from 'assets/img/tkot/piki-tech-logo-white-transparent-165x165.webp';
 import lazy from 'react-lazy-no-flicker/lib/lazy';
+import {
+  handleFieldChange
+} from 'components/App/Utilities';
 
 const Container = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-container' */'reactstrap/es/Container'));
 const Row = lazy(async () => await import(/* webpackPrefetch: true, webpackChunkName: 'reactstrap-row' */'reactstrap/es/Row'));
@@ -100,22 +103,7 @@ const HomeFooter = props => {
     contact,
     isSubmitting
   } = state;
-  const handleChange = async e => {
-    const {
-      name,
-      value,
-      checked
-    } = e.target;
-    const checkedNames = ['active'];
-    const useChecked = checkedNames.findIndex(checkedName => checkedName === name) > -1;
-    console.log(`name: ${name}, value: ${value}`);
-    setState(s => ({
-      ...s,
-      [name]: useChecked
-        ? checked
-        : value
-    }));
-  };
+  const handleChange = e => handleFieldChange(e, setState, ['contact.active'].findIndex(name => name === e.target.name));
   const handleSubmit = async e => {
     e.preventDefault();
     setState(s => ({
@@ -142,6 +130,7 @@ const HomeFooter = props => {
         displayMessage = 'Email is invalid.';
       } else {
         await firebase.contactRepository.saveDbContact({
+          isNew: true,
           active: true,
           created: now.toString(),
           createdBy: email,

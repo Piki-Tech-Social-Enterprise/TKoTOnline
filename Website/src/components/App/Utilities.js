@@ -374,6 +374,59 @@ const withSuspense = (Component, caller, usePageLoadingSpinner = true) => props 
       : <LoadingSpinner caller={caller} />
   }><Component {...props} /></Suspense>
 );
+const getNewState = (s, nps, i, v) => {
+  const np = nps[i];
+  const stateToUse = i === 0
+    ? s
+    : {};
+  const isLastNamePart = i === (nps.length - 1);
+  const property = s[np]
+    ? s[np]
+    : {};
+  const newValue = isLastNamePart
+    ? v !== property ? v : property
+    : {
+      ...property,
+      ...getNewState(property, nps, (i + 1), v)
+    };
+  const newState = {
+    ...stateToUse,
+    [np]: newValue
+  }; // debugger;
+  return newState;
+};
+const handleFieldChange = (e, setState, isCheckedOrCallbackFunction = undefined) => {
+  const {
+    name,
+    value,
+    checked,
+    options
+  } = e.target;
+  const isCheckedOrCallbackFunctionType = typeof isCheckedOrCallbackFunction;
+  const isChecked = isCheckedOrCallbackFunctionType === 'boolean' && isCheckedOrCallbackFunction === true;
+  const isCallbackFunction = isCheckedOrCallbackFunctionType === 'function';
+  const valueToUse = options
+    ? (() => {
+      const filteredOptions = Object.keys(options)
+        .map(optionKey =>
+          options[optionKey].selected && options[optionKey].value)
+        .filter(v =>
+          v !== false);
+      if (filteredOptions.length === 1) {
+        return filteredOptions[0];
+      } else {
+        return filteredOptions;
+      }
+    })()
+    : isChecked
+      ? checked
+      : value;
+  const nameParts = name.split('.');
+  setState(s => getNewState(s, nameParts, 0, valueToUse));
+  if (isCallbackFunction) {
+    isCheckedOrCallbackFunction(e);
+  }
+};
 
 export {
   useWindowEvent,
@@ -414,5 +467,7 @@ export {
   fromCamelcaseToTitlecase,
   Nz,
   refactorObject,
-  withSuspense
+  withSuspense,
+  getNewState,
+  handleFieldChange
 };

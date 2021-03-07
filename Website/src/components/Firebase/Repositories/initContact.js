@@ -4,7 +4,8 @@ const initContact = async initialisedFirebaseApp => {
   } = await import(/* webpackPrefetch: true, webpackChunkName: 'app-firebase-repositories-db-repository' */'./initDbRepository');
   const dbRepository = await initDbRepository({
     initialisedFirebaseApp,
-    dbTableName: 'contacts'
+    dbTableName: 'contacts',
+    useSDKDatabase: true
   });
   const getDbContactsAsArray = async (includeInactive = false, childName = 'active', childValue = true, topLimit = NaN, fieldNames = []) => {
     return await dbRepository.getDbItemsAsArray(includeInactive, childName, childValue, topLimit, fieldNames);
