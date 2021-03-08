@@ -374,24 +374,24 @@ const withSuspense = (Component, caller, usePageLoadingSpinner = true) => props 
       : <LoadingSpinner caller={caller} />
   }><Component {...props} /></Suspense>
 );
-const getNewState = (s, nps, i, v) => {
-  const np = nps[i];
-  const stateToUse = i === 0
-    ? s
+const getNewState = (state, nameParts, index, value) => {
+  const namePart = nameParts[index];
+  const stateToUse = index === 0
+    ? state
     : {};
-  const isLastNamePart = i === (nps.length - 1);
-  const property = s[np]
-    ? s[np]
+  const isLastNamePart = index === (nameParts.length - 1);
+  const property = state[namePart]
+    ? state[namePart]
     : {};
   const newValue = isLastNamePart
-    ? v !== property ? v : property
+    ? value !== property ? value : property
     : {
       ...property,
-      ...getNewState(property, nps, (i + 1), v)
+      ...getNewState(property, nameParts, (index + 1), value)
     };
   const newState = {
     ...stateToUse,
-    [np]: newValue
+    [namePart]: newValue
   }; // debugger;
   return newState;
 };
@@ -405,19 +405,21 @@ const handleFieldChange = (e, setState, isCheckedOrCallbackFunction = undefined)
   const isCheckedOrCallbackFunctionType = typeof isCheckedOrCallbackFunction;
   const isChecked = isCheckedOrCallbackFunctionType === 'boolean' && isCheckedOrCallbackFunction === true;
   const isCallbackFunction = isCheckedOrCallbackFunctionType === 'function';
+  const getSelectedOption = options => {
+    const filteredOptions = Object
+      .keys(options)
+      .map(optionKey =>
+        options[optionKey].selected && options[optionKey].value
+      )
+      .filter(v =>
+        v !== false
+      );
+    return filteredOptions.length === 1
+      ? filteredOptions[0]
+      : filteredOptions;
+  };
   const valueToUse = options
-    ? (() => {
-      const filteredOptions = Object.keys(options)
-        .map(optionKey =>
-          options[optionKey].selected && options[optionKey].value)
-        .filter(v =>
-          v !== false);
-      if (filteredOptions.length === 1) {
-        return filteredOptions[0];
-      } else {
-        return filteredOptions;
-      }
-    })()
+    ? getSelectedOption(options)
     : isChecked
       ? checked
       : value;
