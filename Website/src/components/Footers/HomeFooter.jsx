@@ -103,7 +103,7 @@ const HomeFooter = props => {
     contact,
     isSubmitting
   } = state;
-  const handleChange = e => handleFieldChange(e, setState, ['contact.active'].findIndex(name => name === e.target.name));
+  const handleChange = e => handleFieldChange(e, setState, ['contact.active'].findIndex(name => name === e.target.name) > -1);
   const handleSubmit = async e => {
     e.preventDefault();
     setState(s => ({

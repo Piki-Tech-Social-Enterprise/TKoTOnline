@@ -44,7 +44,7 @@ const ContactUsView = props => {
     contact,
     isSubmitting
   } = state;
-  const handleChange = e => handleFieldChange(e, setState, ['contact.subscribed'].findIndex(name => name === e.target.name));
+  const handleChange = e => handleFieldChange(e, setState, ['contact.subscribed'].findIndex(name => name === e.target.name) > -1);
   const handleGotoParent = () => {
     props.history.push('/');
   };
