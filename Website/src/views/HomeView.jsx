@@ -83,7 +83,11 @@ const HomeView = props => {
   const {
     REACT_APP_FIREBASE_STORAGE_BUCKET
   } = process.env;
-  const size = getSize(window.screen.width <= 400 && 'md');
+  const {
+    width: screenWidth
+  } = window.screen
+  const imageResize = ((screenWidth <= 150 && 'sm') || (screenWidth <= 400 && 'md') || (screenWidth <= 768 && 'lg'));
+  const size = getSize(imageResize);
   const sizeAsString = isNumber(size)
     ? `@s_${size}`
     : '';

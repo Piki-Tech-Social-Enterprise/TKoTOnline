@@ -148,12 +148,15 @@ const AuthSettingsView = props => {
       } else {
         if (homePageHeaderImageUrlFile && homePageHeaderImageUrlFile.name) {
           homePageHeaderImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, homePageHeaderImageUrlFile.name, '');
+          await firebase.saveStorageFile(homePageHeaderImageUrl, homePageHeaderImageUrlFile);
         }
         if (homePageAboutImageUrlFile && homePageAboutImageUrlFile.name) {
           homePageAboutImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, homePageAboutImageUrlFile.name, '');
+          await firebase.saveStorageFile(homePageAboutImageUrl, homePageAboutImageUrlFile);
         }
         if (aboutPageTKoTBackOfficeStructureImageUrlFile && aboutPageTKoTBackOfficeStructureImageUrlFile.name) {
           aboutPageTKoTBackOfficeStructureImageUrl = getImageUrl(settingHomePageHeaderImageUrlFormat, settingKeyFormat, sid, settingFilenameFormat, aboutPageTKoTBackOfficeStructureImageUrlFile.name, '');
+          await firebase.saveStorageFile(aboutPageTKoTBackOfficeStructureImageUrl, aboutPageTKoTBackOfficeStructureImageUrlFile);
         }
         await firebase.saveDbSettings({
           active: true,
@@ -174,15 +177,6 @@ const AuthSettingsView = props => {
           updated: now.toString(),
           updatedBy: uid
         });
-        if (homePageHeaderImageUrlFile) {
-          await firebase.saveStorageFile(homePageHeaderImageUrl, homePageHeaderImageUrlFile);
-        }
-        if (homePageAboutImageUrlFile) {
-          await firebase.saveStorageFile(homePageAboutImageUrl, homePageAboutImageUrlFile);
-        }
-        if (aboutPageTKoTBackOfficeStructureImageUrlFile) {
-          await firebase.saveStorageFile(aboutPageTKoTBackOfficeStructureImageUrl, aboutPageTKoTBackOfficeStructureImageUrlFile);
-        }
         displayIcon = 'success';
         displayTitle = 'Updating Settings Successful';
         displayMessage = 'Changes saved';
