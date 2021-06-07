@@ -27,7 +27,7 @@
   "scripts": {
     "updateDependencies": "ncu -u && pnpm i",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "pnpm run startLocal-p",
+    "start": "pnpm run startLocal",
     "start:og": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -61,7 +61,7 @@
     "tkot-compile-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css",
     "tkot-minify-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.min.css --output-style compressed",
     "tkot-map-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css --source-map true",
-    "firebaseServe": "firebase serve --port 5000",
+    "firebaseServe": "firebase serve --port 5020",
     "firebaseDeploy": "firebase deploy -m \"\"\"$REACT_APP_WEB_NAME v$REACT_APP_WEB_BUILD_VERSION\"\"\" --except functions",
     "firebaseUseTest": "firebase use \"tkot-online-test\"",
     "firebaseUseProd": "firebase use \"tkot-online-prod\"",
