@@ -52,7 +52,7 @@
     "tkot-compile-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css",
     "tkot-minify-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.min.css --output-style compressed",
     "tkot-map-sass": "node-sass src/assets/scss/tkot.scss src/assets/css/tkot.css --source-map true",
-    "firebaseServe": "firebase serve --port 5005",
+    "firebaseServe": "firebase serve --port 5025",
     "firebaseDeploy": "firebase deploy -m \"\"\"$REACT_APP_PWA_NAME v$REACT_APP_PWA_BUILD_VERSION\"\"\" --except functions",
     "firebaseUseTest": "firebase use \"tkot-online-test\"",
     "firebaseUseProd": "firebase use \"tkot-online-prod\"",
