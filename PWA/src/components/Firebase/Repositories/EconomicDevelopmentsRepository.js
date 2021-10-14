@@ -1,12 +1,7 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 
-class EconomicDevelopmentsRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class EconomicDevelopmentsRepository extends DbBaseRepository {
   getDbEconomicDevelopments = async () => {
     return await this.db.ref('economicDevelopments');
   }

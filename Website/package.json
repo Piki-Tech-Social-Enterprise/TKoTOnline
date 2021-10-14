@@ -6,23 +6,23 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
     "draftjs-to-html": "^0.9.1",
-    "firebase": "^8.2.10",
-    "lazysizes": "^5.3.0",
+    "firebase": "^9.1.2",
+    "lazysizes": "^5.3.2",
     "moment-mini": "^2.24.0",
     "prop-types": "^15.7.2",
-    "query-string": "^6.14.1",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "query-string": "^7.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-ga": "^3.3.0",
     "react-helmet": "^6.1.0",
     "react-lazy-no-flicker": "^1.0.2",
-    "react-router": "5.2.0",
-    "react-router-dom": "5.2.0",
-    "reactstrap": "8.9.0",
+    "react-router": "5.2.1",
+    "react-router-dom": "5.3.0",
+    "reactstrap": "8.10.0",
     "reactstrap-scrollspy": "^0.1.1",
-    "sweetalert2": "^10.15.5"
+    "sweetalert2": "^11.1.7"
   },
   "scripts": {
     "updateDependencies": "ncu -u && pnpm i",
@@ -118,10 +118,10 @@
     "firebaseEmulatorFunctionsLocal": "run-s -sn firebaseUseTest \"envCmdLocal firebaseEmulatorFunctions\"",
     "firebaseEmulatorFunctionsTest": "run-s -sn firebaseUseTest \"envCmdTest firebaseEmulatorFunctions\"",
     "firebaseEmulatorFunctionsProd": "run-s -sn firebaseUseProd \"envCmdProd firebaseEmulatorFunctions\"",
-    "uploadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest uploadTestSupportFiles\"",
-    "uploadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd uploadProdSupportFiles\"",
-    "downloadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest downloadTestSupportFiles\"",
-    "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadProdSupportFiles\"",
+    "uploadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest uploadDevSupportFiles\"",
+    "uploadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd uploadDevSupportFiles\"",
+    "downloadDevSupportFilesTest": "run-s -sn firebaseUseTest \"envCmdTest downloadDevSupportFiles\"",
+    "downloadDevSupportFilesProd": "run-s -sn firebaseUseProd \"envCmdProd downloadDevSupportFiles\"",
     "buildAndAnalzeLocal": "run-s -sn firebaseUseTest \"envCmdLocal build analyze\"",
     "buildAndAnalzeTest": "run-s -sn firebaseUseTest \"envCmdTest build analyze\"",
     "buildAndAnalzeProd": "run-s -sn firebaseUseProd \"envCmdProd build analyze\"",
@@ -148,21 +148,21 @@
     ]
   },
   "optionalDependencies": {
-    "typescript": "4.2.3"
+    "typescript": "4.4.4"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.2",
     "env-cmd": "^10.1.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "react-router-sitemap": "^1.2.0",
     "react-scripts": "^4.0.3",
     "source-map-explorer": "^2.5.2",
     "unused-webpack-plugin": "^2.4.0",
-    "webpack-bundle-analyzer": "^4.4.0"
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }

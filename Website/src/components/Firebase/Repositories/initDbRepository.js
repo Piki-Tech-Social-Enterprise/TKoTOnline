@@ -58,6 +58,9 @@ const restApiDatabase = () => {
   const _self = {
     ref: path => {
       return restApiDatabaseReference(path);
+    },
+    useEmulator: (url, port) => {
+      
     }
   };
   return _self;
@@ -118,7 +121,8 @@ const initDbRepository = async initOptions => {
   const {
     isBoolean,
     isNullOrEmpty,
-    refactorObject
+    refactorObject,
+    isNumber
   } = await import(/* webpackPreload: true, webpackChunkName: 'app-utilities' */'components/App/Utilities');
   const {
     initialisedFirebaseApp,
@@ -127,11 +131,19 @@ const initDbRepository = async initOptions => {
   } = initOptions;
   let _dbTableName = dbTableNamePassedIn;
   if (useSDKDatabase) {
-    await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/database');
+    await import(/* webpackPreload: true, webpackChunkName: 'firebase-database' */'firebase/compat/database');
   }
   const database = useSDKDatabase
     ? initialisedFirebaseApp.database()
     : restApiDatabase();
+  const {
+    REACT_APP_USE_EMULATOR,
+    REACT_APP_DTB_PORT
+  } = process.env;
+  if (isBoolean(REACT_APP_USE_EMULATOR, true) && isNumber(REACT_APP_DTB_PORT)) { // && this.db._delegate._repoInternal.repoInfo_._host !== `localhost:${REACT_APP_DTB_PORT}`) {
+    database.useEmulator('localhost', Number(REACT_APP_DTB_PORT));
+    console.log(`initDbRepository.database.useEmulator is set to: 'localhost:${REACT_APP_DTB_PORT}'`);
+  }
   const _getDbItems = dbItemId => {
     return database.ref(`${_dbTableName}${!isNullOrEmpty(dbItemId) ? `/${dbItemId}` : ''}`);
   };

@@ -1,5 +1,5 @@
 import BaseRepository from './BaseRepository';
-import 'firebase/auth';
+import 'firebase/compat/auth';
 import {
   undefinedRole
 } from '../../Domains/Roles';
@@ -8,11 +8,23 @@ import {
   UserRepository,
   StorageRepository
 } from '../Repositories';
+import {
+  isBoolean,
+  isNumber
+} from '../../App/Utilities';
 
 class AuthenticationRepository extends BaseRepository {
   constructor(firebaseApp) {
     super();
     this.auth = firebaseApp.auth();
+    const {
+      REACT_APP_USE_EMULATOR,
+      REACT_APP_ATH_PORT
+    } = process.env;
+    if (isBoolean(REACT_APP_USE_EMULATOR, true) && isNumber(REACT_APP_ATH_PORT)) {
+      this.auth.useEmulator(`http://localhost:${REACT_APP_ATH_PORT}`, { disableWarnings: true });
+      console.log(`AuthenticationRepository.auth.useEmulator is set to: 'localhost:${REACT_APP_ATH_PORT}'`);
+    }
     this.userRepository = new UserRepository(firebaseApp);
     this.emailAuthProvider = firebaseApp.auth.EmailAuthProvider;
     this.storageRepository = new StorageRepository(firebaseApp);

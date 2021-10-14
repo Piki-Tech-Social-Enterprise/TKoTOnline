@@ -1,16 +1,11 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 import {
   isEmptyString,
   isDate
 } from 'components/App/Utilities';
 
-class EventsRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class EventsRepository extends DbBaseRepository {
   getDbEvents = async () => {
     return await this.db.ref('events');
   }

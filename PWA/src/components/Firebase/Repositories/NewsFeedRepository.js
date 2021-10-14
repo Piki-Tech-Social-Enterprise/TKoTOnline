@@ -1,12 +1,7 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 
-class NewsFeedRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class NewsFeedRepository extends DbBaseRepository {
   getDbNewsFeeds = async () => {
     return await this.db.ref('newsFeeds');
   }

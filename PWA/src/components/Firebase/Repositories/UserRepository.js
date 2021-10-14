@@ -1,16 +1,10 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
 import {
   isEmptyString,
   isBoolean
 } from '../../App/Utilities';
 
-class UserRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class UserRepository extends DbBaseRepository {
   getDbUsers = async () => {
     return await this.db.ref('users');
   }

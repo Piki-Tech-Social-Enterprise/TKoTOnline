@@ -221,7 +221,7 @@ class Notifications extends React.Component {
                 <CardBody>
                   <div className="places-buttons">
                     <Row>
-                      <Col md={6} className="ml-auto mr-auto text-center">
+                      <Col md={6} className="mx-auto text-center">
                         <CardTitle tag="h4">
                           Notifications Places
                           <p className="category">
@@ -231,7 +231,7 @@ class Notifications extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg={8} xs={12} className="ml-auto mr-auto">
+                      <Col lg={8} xs={12} className="mx-auto">
                         <Row>
                           <Col md={4} xs={12}>
                             <Button
@@ -264,7 +264,7 @@ class Notifications extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg={8} xs={12} className="ml-auto mr-auto">
+                      <Col lg={8} xs={12} className="mx-auto">
                         <Row>
                           <Col md={4} xs={12}>
                             <Button

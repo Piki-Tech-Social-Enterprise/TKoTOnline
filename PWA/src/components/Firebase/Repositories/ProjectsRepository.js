@@ -1,12 +1,7 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 
-class ProjectsRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class ProjectsRepository extends DbBaseRepository {
   getDbProjects = async () => {
     return await this.db.ref('projects');
   }

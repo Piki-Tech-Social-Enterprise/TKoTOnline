@@ -1,4 +1,5 @@
 import BaseRepository from './BaseRepository';
+import DbBaseRepository from './DbBaseRepository';
 import AuthenticationRepository from './AuthenticationRepository';
 import UserRepository from './UserRepository';
 import StorageRepository from './StorageRepository';
@@ -19,6 +20,7 @@ import CovidListRepository from './CovidListRepository';
 
 export default BaseRepository;
 export {
+  DbBaseRepository,
   AuthenticationRepository,
   UserRepository,
   StorageRepository,

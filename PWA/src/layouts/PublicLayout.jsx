@@ -23,7 +23,7 @@ const PublicLayout = props => {
       ></div>
       <div className="content">
         <Container>
-          <Col className="ml-auto mr-auto py-3 py-lg-5" md="8">
+          <Col className="mx-auto py-3 py-lg-5" md="8">
             <div className="p-3">
               <Switch>
                 <Suspense fallback={<LoadingOverlayModal />}>

@@ -1,21 +1,23 @@
 import BaseRepository from './BaseRepository';
-import 'firebase/auth';
-import 'firebase/functions';
+import 'firebase/compat/functions';
 import axios from 'axios';
+import {
+  isBoolean,
+  isNumber
+} from '../../App/Utilities';
 
 class FunctionsRepository extends BaseRepository {
   constructor(firebaseApp) {
     super();
-    const {
-      REACT_APP_ENV_NAME,
-      REACT_APP_FIREBASE_FUNCTIONS_EMULATOR_URL: FFE_URL
-    } = process.env;
-    this.auth = firebaseApp.auth();
     this.functions = firebaseApp.functions();
-    if (REACT_APP_ENV_NAME === 'local' && FFE_URL) {
-      this.functions.useFunctionsEmulator(FFE_URL);
-      console.log(`FunctionsRepository.functions.useFunctionsEmulator is set to: '${FFE_URL}')`);
-    };
+    const {
+      REACT_APP_USE_EMULATOR,
+      REACT_APP_FNC_PORT
+    } = process.env;
+    if (isBoolean(REACT_APP_USE_EMULATOR, true) && isNumber(REACT_APP_FNC_PORT)) {
+      this.functions.useEmulator('localhost', Number(REACT_APP_FNC_PORT));
+      console.log(`FunctionsRepository.functions.useEmulator is set to: 'localhost:${REACT_APP_FNC_PORT}'`);
+    }
   }
   _buildUrl = options => {
     const {

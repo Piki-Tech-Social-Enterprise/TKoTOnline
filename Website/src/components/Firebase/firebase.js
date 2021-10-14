@@ -21,7 +21,7 @@ const Firebase = props => {
       } = props;
       const {
         default: firebaseApp
-      } = await import(/* webpackPrefetch: true, webpackChunkName: 'firebase-app' */'firebase/app');
+      } = await import(/* webpackPrefetch: true, webpackChunkName: 'firebase-app' */'firebase/compat/app');
       const initialisedFirebaseApp = firebaseApp.apps.length
         ? firebaseApp.app()
         : firebaseApp.initializeApp(firebaseConfigOverride || MasterFirebaseConfig);

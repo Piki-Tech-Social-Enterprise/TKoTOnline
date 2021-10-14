@@ -1,12 +1,7 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 
-class CommunityLinksRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class CommunityLinksRepository extends DbBaseRepository {
   getDbCommunityLinks = async () => {
     return await this.db.ref('communityLinks');
   }

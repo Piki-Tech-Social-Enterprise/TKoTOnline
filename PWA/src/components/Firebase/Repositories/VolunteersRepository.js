@@ -1,15 +1,10 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 import {
   undefinedRole
 } from '../../Domains/VolunteerRoles';
 
-class VolunteersRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class VolunteersRepository extends DbBaseRepository {
   getDbVolunteers = async () => {
     return await this.db.ref('volunteers');
   }

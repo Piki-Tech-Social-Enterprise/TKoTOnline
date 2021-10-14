@@ -1,4 +1,4 @@
-import firebaseApp from 'firebase/app';
+import firebaseApp from 'firebase/compat/app';
 import {
   AuthenticationRepository,
   UserRepository,

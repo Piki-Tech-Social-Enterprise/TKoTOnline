@@ -1,12 +1,7 @@
-import BaseRepository from './BaseRepository';
-import 'firebase/database';
+import DbBaseRepository from './DbBaseRepository';
+import 'firebase/compat/database';
 
-class EPanuiListRepository extends BaseRepository {
-  constructor(firebaseApp) {
-    super();
-    this.db = firebaseApp.database();
-  }
-
+class EPanuiListRepository extends DbBaseRepository {
   getDbEPanuiList = async () => {
     return await this.db.ref('ePanuiList');
   }
